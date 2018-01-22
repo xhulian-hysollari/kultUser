@@ -22,6 +22,8 @@ import './css/style.css'
 import './js/jquery.min.js'
 import './js/bootstrap.min.js'
 import './js/slick.min.js'
+//
+//
 
 $(document).ready(function(){
   var trigger = $('.hamburger'),
@@ -89,5 +91,9 @@ new Vue({
   router,
   store,
   template: '<App/>',
-  components: { App }
+  components: { App },
+  created(){
+    this.$store.state.auth.firebaseApp = firebase.initializeApp(config)
+    this.$store.commit('defineDbDef')
+  }
 })

@@ -238,7 +238,7 @@ button:focus, a:focus, .btn:focus, .btn:active, .btn:active:focus {
 }
 .main_menu > li.has_submenu > a::after {
     content: "";
-    background: url('../images/down-arrow.svg');
+    background: url('../../static/img/images/down-arrow.svg');
     width: 7px;
     height: 8px;
     -webkit-background-size: contain;
@@ -284,7 +284,7 @@ button:focus, a:focus, .btn:focus, .btn:active, .btn:active:focus {
     background-color: #f5e3e7;
     position: relative;
     margin-bottom: 60px;
-    background-image: url('../images/girl-model@2x.jpg'), url('../images/cosmetics@2x.jpg');
+    background-image: url('../../static/img/images/girl-model@2x.jpg'), url('../../static/img/images/cosmetics@2x.jpg');
     background-position: left center, 99% center;
     -webkit-background-size: 640px, 440px;
     background-size: 640px, 440px;
@@ -412,7 +412,7 @@ button:focus, a:focus, .btn:focus, .btn:active, .btn:active:focus {
     content: "";
     left: 17px;
     top: 8px;
-    background: url('../images/flame.svg') center no-repeat;
+    background: url('../../static/img/images/flame.svg') center no-repeat;
     width: 9px;
     height: 15px;
     -webkit-background-size: contain;
@@ -642,7 +642,7 @@ button:focus, a:focus, .btn:focus, .btn:active, .btn:active:focus {
     height: 100%;
     top: 0;
     content: "";
-    background: url('../images/cashback-5@2x.jpg') center no-repeat;
+    background: url('../../static/img/images/cashback-5@2x.jpg') center no-repeat;
     background-color: #f6e3e7;
     -webkit-background-size: contain;
     background-size: contain;
@@ -781,7 +781,7 @@ button:focus, a:focus, .btn:focus, .btn:active, .btn:active:focus {
 .subscribe_form label::after {
     width: 9px;
     height: 6px;
-    background: url('../images/checked.svg') center no-repeat;
+    background: url('../../static/img/images/checked.svg') center no-repeat;
     -webkit-background-size: contain;
     background-size: contain;
     content: "";
@@ -1212,7 +1212,7 @@ footer hr {
     content: "";
     width: 7px;
     height: 7px;
-    background: url('../images/shape.svg') center no-repeat;
+    background: url('../../static/img/images/shape.svg') center no-repeat;
     -webkit-background-size: contain;
     background-size: contain;
 }
@@ -1220,7 +1220,7 @@ footer hr {
     top: 15px;
     width: 8px;
     height: 8px;
-    background: url('../images/shape-1.svg') center no-repeat;
+    background: url('../../static/img/images/shape-1.svg') center no-repeat;
     -webkit-background-size: contain;
     background-size: contain;
 }
@@ -1543,7 +1543,7 @@ nav#sidebar-wrapper {
     overflow-y: auto;
 }
 .sidebar-nav li {
-    position: relative; 
+    position: relative;
     line-height: 20px;
     display: inline-block;
     width: 100%;
@@ -1580,7 +1580,7 @@ nav#sidebar-wrapper {
     display: block;
     color: #ddd;
     text-decoration: none;
-    padding: 10px 15px 10px 30px;    
+    padding: 10px 15px 10px 30px;
 }
 .sidebar-nav li a:hover,
 .sidebar-nav li a:active,
