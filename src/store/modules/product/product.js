@@ -1,50 +1,163 @@
 import gen from '../gen'
-import product_category from './product_category'
 
 const state = {
-
+  cProduct : 0, //count of queried product // to stop the loader // to make async
+  //
+  products : {},
+  productsLoader : false,
+  //
+  lastQueried_product : {}
 }
 
 const getters = {
-
+  products: state => state.products,
+  productsLoader: state => state.productsLoader,
 }
 
 const mutations = {
+  //
   getProducts(state2, payload){
+    //console.log(payload)
     //
-    console.log("Get Product Payload =>", payload)
+    state.productsLoader = true
+    //
+    //console.log("[Firestore] in product_category =>", gen.state.firestore)
+    //
+    gen.state.firestore //Query 1
+    //.collection("shopOption").doc(payload.shopOption)
+    //.collection("category").doc(payload.category)
+      .doc(payload.routePath)
+      .collection("product")
+      .orderBy("date")
+      .limit(3)
+      .get().then((queryproducts)=>{
+
+      //
+      if(queryproducts.size == 0){
+        //turn loader off
+        state.productsLoader = false
+      }
+
+      state.cProduct = 0
+      queryproducts.forEach((queryproductsDoc)=>{
+
+        if(queryproductsDoc.exists){
+          //
+          //
+          //console.log(queryproductsDoc.id) //need only this => product id
+          //console.log(queryproductsDoc.data())
+          //
+          //get Product Details
+          //
+          mutations.getProductDetail(state, { //query product detail
+            pId: queryproductsDoc.id,
+            //cProduct: cCategoryProduct,
+            cProductSize: queryproducts.size,
+            //
+          })
+
+          //
+          state.lastQueried_product = queryproducts.docs[queryproducts.docs.length-1];
+          //console.log("last queried product was =====> ", state.lastQueried_product);
+          ////console.log(state.lastQueried_product.id)
+        }
+      })
+
+    })
+  },
+  //
+  loadMoreProducts(state2, payload){
+    //console.log(payload)
+    //
+    //state.productsLoader = true
+    //
+    //console.log("[Firestore] in product_category =>", gen.state.firestore)
+    //
+    //console.log("last queried product was [in Load More 1] =====> ", state.lastQueried_product);
+    //
+    gen.state.firestore //Query 1
+    //.collection("shopOption").doc(payload.shopOption)
+    //.collection("category").doc(payload.category)
+      .doc(payload.routePath)
+      .collection("product")
+      .orderBy("date")
+      .startAfter(state.lastQueried_product)
+      .limit(3)
+      .get().then((queryproducts)=>{
+
+      //
+      if(queryproducts.size == 0){
+        //turn loader off
+        //state.productsLoader = false
+        //
+        //$store.complete(); //infinte Loader
+      }
+
+      product.state.cProduct = 0
+      queryproducts.forEach((queryproductsDoc)=>{
+
+        if(queryproductsDoc.exists){
+          //
+          //
+          //console.log(queryproductsDoc.id) //need only this => product id
+          //console.log(queryproductsDoc.data())
+          //
+          //get Product Details
+          //
+          mutations.getProductDetail(state, {
+            pId: queryproductsDoc.id,
+            //cProduct: cCategoryProduct,
+            cProductSize: queryproducts.size
+          })
+
+          //
+          state.lastQueried_product = queryproducts.docs[queryproducts.docs.length-1];
+          //console.log("last queried product was [in Load More 2] =====> ", state.lastQueried_product);
+
+          //
+          //$store.loaded();  //infinite Loader
+        }
+      })
+
+    })
+  },
+  //
+  getProductDetail(state2, payload){
+    //
+    //console.log("Get Product Payload =>", payload)
     //
     gen.state.firestore //Query 2
       .collection("product").doc(payload.pId)
       .get().then((queryProductDetail)=>{
 
-      payload.cProduct++
+      state.cProduct++
+      //console.log("cCategoryProduct =>",state.cProduct)
       //
       if(queryProductDetail.exists){
         //
-        console.log(queryProductDetail.id) //product id
-        console.log(queryProductDetail.data()) //product detail
+        //console.log(queryProductDetail.id) //product id
+        //console.log(queryProductDetail.data()) //product detail
 
         //
-        product_category.state.productCategory[queryProductDetail.id] = {
+        state.products[queryProductDetail.id] = {
           pBasicDetail : queryProductDetail.data().pBasicDetail,
           pOtherDetail: queryProductDetail.data().pOtherDetail
         }
       }
 
-      console.log('cCategoryProduct => ' + payload.cProduct + ' | ' + 'queryProductCategory.size => ' + payload.cProductSize)
-      if(payload.cProduct == payload.cProductSize){
+      //console.log('cCategoryProduct => ' + state.cProduct + ' | ' + 'queryproducts.size => ' + payload.cProductSize)
+      if(state.cProduct == payload.cProductSize){
         //
-        product_category.state.productCategoryLoader = false
+        state.productsLoader = false
         //
-        console.log("***** PRODUCT CATEGORY QUERIED *****")
+        //console.log("***** PRODUCT QUERIED *****")
         //
-        console.log('[PRODUCT QUERIED FINAL]', product_category.state.productCategory)
+        console.log('[PRODUCT QUERIED FINAL]', state.products)
       }
 
     })
     //
-  }
+  },
 }
 
 const actions = {
