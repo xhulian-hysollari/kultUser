@@ -21,9 +21,12 @@
             filterName : filterName,
             filterPara: filterPara,
           },
+          //
           routePath: 'shopOption/' + $route.params.shopOption +
             '/category/' + $route.params.category +
-            '/filter' //add link further
+            '/filter',
+          //
+          compPath: '/productCategory/' + $route.params.shopOption + '/' +  $route.params.category
           })"
         >
             {{filterPara}}
@@ -48,6 +51,8 @@
 
   export default {
     created(){
+      this.$store.state.gen.thisOfVueComp = this // needed at *start* of created.
+      //
       this.$store.commit('getProducts', {
         routePath: 'shopOption/' + this.$route.params.shopOption + '/category/' + this.$route.params.category
       })
@@ -56,7 +61,16 @@
         routePath: 'shopOption/' + this.$route.params.shopOption + '/category/' + this.$route.params.category
       })
       //
-      this.$store.state.gen.thisOfVueComp = this
+      if( Object.keys(this.$route.query).length != 0 ){
+        console.log("[GOT SEL ROUTE FROM URL]", JSON.parse(this.$route.query.selFilter))
+        //
+        this.$store.commit('send_SelFilter_toCloud_toGetProducts_accordingToFilter', {
+          sel_setOfFilters : JSON.parse(this.$route.query.selFilter),
+          routePath: 'shopOption/' + this.$route.params.shopOption +
+          '/category/' + this.$route.params.category +
+          '/filter'
+        })
+      }
     },
     //
     methods:{

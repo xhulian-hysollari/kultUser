@@ -1,5 +1,8 @@
 import axios from 'axios'
+import router from '../../../router'
+//
 import gen from '../gen'
+import product from '../product/product'
 
 const state = {
   filter : {},
@@ -140,7 +143,9 @@ const mutations ={
     }
     //
     console.log("[Selected Filter] => ", state.selectedFilters)
-    gen.state.thisOfVueComp.$forceUpdate() //update dom => the tick on filter
+    //append these filter to route, in case of refresh, will query from there
+    router.push({ path: payload.compPath , query: { selFilter: JSON.stringify(state.selectedFilters) } })
+    //
     //
     //axios call to return product on basis of filter
     //
@@ -155,8 +160,10 @@ const mutations ={
   //
   send_SelFilter_toCloud_toGetProducts_accordingToFilter(state, payload){
     //
-    console.log("[AXIOS FILTER CATEGORY]",payload)
+    //console.log("[AXIOS FILTER CATEGORY]",payload)
     //
+    gen.state.thisOfVueComp.$forceUpdate() //update dom => the tick on filter
+    state.selectedFilters = payload.sel_setOfFilters // if this func is called directly from => comp on basis of filter in url.
     //
     axios.get('https://us-central1-kult-2.cloudfunctions.net/productFilter', {
       params: {
@@ -164,9 +171,11 @@ const mutations ={
         routePath: payload.routePath
       }
     }).then(function (response) {
-      console.log(response);
-      console.log(response.data)
+      //console.log(response);
+      //console.log(response.data)
       //
+      product.state.products = response.data // update products according to filter.
+      console.log("[FILTER APPLIED] [UPDATE PRODUCTS]", product.state.products)
       //
       state.filterLoader = false //filter loader stops
       //
