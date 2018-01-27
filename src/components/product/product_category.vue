@@ -3,7 +3,7 @@
 
     Products of Category i.e Face
 
-    <!-- load more button -->
+    <!-- load more button --> <!-- only for product, hide for filter product -->
     <button @click="loadMoreProducts({
       routePath: 'shopOption/' + $route.params.shopOption + '/category/' + $route.params.category
     })">
@@ -23,10 +23,9 @@
           },
           //
           routePath: 'shopOption/' + $route.params.shopOption +
-            '/category/' + $route.params.category +
-            '/filter',
+            '/category/' + $route.params.category , //add filter later
           //
-          compPath: '/productCategory/' + $route.params.shopOption + '/' +  $route.params.category
+          compRoutePath: '/productCategory/' + $route.params.shopOption + '/' + $route.params.category
           })"
         >
             {{filterPara}}
@@ -42,46 +41,43 @@
     </div>
     <!-- show filters ends-->
 
+    <!-- hidden ele (patch)-->
+    <span style="visibility: hidden;">
+
+    </span>
+
+
   </div>
 </template>
 
 <script>
   import {mapMutations} from 'vuex'
   import {mapGetters} from 'vuex'
+  //
+  import productNfilter from '../../mixins/productNfilter'
 
   export default {
+    mixins:[productNfilter],
+    //
     created(){
-      this.$store.state.gen.thisOfVueComp = this // needed at *start* of created.
-      //
-      this.$store.commit('getProducts', {
-        routePath: 'shopOption/' + this.$route.params.shopOption + '/category/' + this.$route.params.category
-      })
-      //
-      this.$store.commit('getFilters',{
-        routePath: 'shopOption/' + this.$route.params.shopOption + '/category/' + this.$route.params.category
-      })
-      //
-      if( Object.keys(this.$route.query).length != 0 ){
-        console.log("[GOT SEL ROUTE FROM URL]", JSON.parse(this.$route.query.selFilter))
+      this.productsOrFilterProducts_initCompCreatedFunc({
         //
-        this.$store.commit('send_SelFilter_toCloud_toGetProducts_accordingToFilter', {
-          sel_setOfFilters : JSON.parse(this.$route.query.selFilter),
-          routePath: 'shopOption/' + this.$route.params.shopOption +
-          '/category/' + this.$route.params.category +
-          '/filter'
-        })
-      }
+        thisOfVueComp: this,
+        routePath: 'shopOption/' + this.$route.params.shopOption + '/category/' + this.$route.params.category,
+        routeQuery: this.$route.query
+        //
+      })
     },
     //
     methods:{
       ...mapMutations([
-        'loadMoreProducts','sel_disSel_thisFilter'
+        'loadMoreProducts'
       ])
     },
     //
     computed:{
       ...mapGetters([
-        'filter','selectedFilters'
+        'filter'
       ])
     }
   }

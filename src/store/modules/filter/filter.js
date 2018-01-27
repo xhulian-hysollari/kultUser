@@ -8,19 +8,19 @@ const state = {
   filter : {},
   filterLoader : false,
   //
-  selectedFilters : {},
+  //selectedFilters : {},
 }
 
 const getters = {
   filter: state => state.filter,
   filterLoader : state => state.filterLoader,
   //
-  selectedFilters:state => state.selectedFilters,
+  //selectedFilters:state => state.selectedFilters,
 }
 
 const mutations ={
   //
-  getFilters(state2, payload){ //this can be common too !
+  getFilters(state2, payload){
     //console.log(payload)
     //
     state.filterLoader = true
@@ -104,65 +104,14 @@ const mutations ={
     })
   },
   //
-  sel_disSel_thisFilter(state2, payload) {
-    //
-    state.filterLoader = true //Filter Loader start
-    //
-    console.log(payload)
-    //
-    if (Object.keys(state.selectedFilters).indexOf(payload.sel_filterDetail.filterName) == -1) { // filterName not found
-
-      //console.log("*** (1) add filter name & para ! ***")
-      //
-      state.selectedFilters[payload.sel_filterDetail.filterName] = {}
-      state.selectedFilters[payload.sel_filterDetail.filterName][payload.sel_filterDetail.filterPara] = {}
-
-    } else { // filterName found
-
-      if (Object.keys(state.selectedFilters[payload.sel_filterDetail.filterName]).indexOf(payload.sel_filterDetail.filterPara) == -1) { // filterPara not found
-
-        //console.log("*** (2) add filter para ! ***")
-        //
-        state.selectedFilters[payload.sel_filterDetail.filterName][payload.sel_filterDetail.filterPara] = {}
-
-      } else { // filterPara found
-
-        //console.log("*** (3) delete filter para ! ***")
-        //
-        delete state.selectedFilters[payload.sel_filterDetail.filterName][payload.sel_filterDetail.filterPara]
-
-        if (Object.keys(state.selectedFilters[payload.sel_filterDetail.filterName]).length == 0) {
-
-          //console.log("*** (4) delete filter name ! ***")
-          //
-          delete state.selectedFilters[payload.sel_filterDetail.filterName]
-        }
-
-      }
-
-    }
-    //
-    console.log("[Selected Filter] => ", state.selectedFilters)
-    //append these filter to route, in case of refresh, will query from there
-    router.push({ path: payload.compPath , query: { selFilter: JSON.stringify(state.selectedFilters) } })
-    //
-    //
-    //axios call to return product on basis of filter
-    //
-    let payload_2 = {
-      sel_setOfFilters : state.selectedFilters,
-      routePath: payload.routePath
-    }
-    //
-    mutations.send_SelFilter_toCloud_toGetProducts_accordingToFilter(state, payload_2)
-  },
-  //
-  //
-  send_SelFilter_toCloud_toGetProducts_accordingToFilter(state, payload){
+  send_SelFilter_toCloud_toGetProducts_accordingToFilter_2(state, payload){
     //
     //console.log("[AXIOS FILTER CATEGORY]",payload)
+    //console.log(payload.sel_setOfFilters)
+    //console.log(payload.routePath)
     //
     gen.state.thisOfVueComp.$forceUpdate() //update dom => the tick on filter
+    //
     state.selectedFilters = payload.sel_setOfFilters // if this func is called directly from => comp on basis of filter in url.
     //
     axios.get('https://us-central1-kult-2.cloudfunctions.net/productFilter', {
@@ -173,6 +122,8 @@ const mutations ={
     }).then(function (response) {
       //console.log(response);
       //console.log(response.data)
+      //
+      product.state.products = {}
       //
       product.state.products = response.data // update products according to filter.
       console.log("[FILTER APPLIED] [UPDATE PRODUCTS]", product.state.products)

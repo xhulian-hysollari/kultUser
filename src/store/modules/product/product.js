@@ -39,6 +39,7 @@ const mutations = {
       }
 
       state.cProduct = 0
+      state.products = {}
       queryproducts.forEach((queryproductsDoc)=>{
 
         if(queryproductsDoc.exists){
