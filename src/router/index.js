@@ -28,7 +28,23 @@ const brand_product = resolve => {
     resolve(require('@/components/brand/brand_product'));
   });
 };
-//
+//special
+const globalBestSeller_product = resolve => {
+  require.ensure(['@/components/special/globalBestSeller_product'],()=>{
+    resolve(require('@/components/special/globalBestSeller_product'));
+  });
+};
+const kultPick_product = resolve => {
+  require.ensure(['@/components/special/kultPick_product'],()=>{
+    resolve(require('@/components/special/kultPick_product'));
+  });
+};
+//howTo
+const howTo = resolve => {
+  require.ensure(['@/components/howTo/howTo'],()=>{
+    resolve(require('@/components/howTo/howTo'));
+  });
+};
 //
 Vue.use(Router)
 
@@ -42,5 +58,10 @@ export default new Router({
     //brand
     { path: '/brandAll', name: 'Brand All', component: brand_all},
     { path: '/brandProduct/:brand', name: 'Brand Product', component: brand_product},
+    //special
+    { path: '/globalBestSeller', name: 'Global Best Seller', component: globalBestSeller_product },
+    { path: '/kultPick', name: 'Kult Pick', component: kultPick_product },
+    //howTo
+    { path: '/howTo', name: 'How To', component: howTo }
   ]
 })

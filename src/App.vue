@@ -23,7 +23,13 @@
   export default {
     computed:{
       ...mapGetters([
-        'dbRefLoader'
+        'dbRefLoader',
+        // SHOP DROPDOWN
+        'shopOptions', // shop dropdown var
+        'shopOptionLoader', //its true till shop dropdown is not loaded.
+        // BRAND DROPDOWN
+        'brandCat', // brand dropdown var
+        'allBrandLoader' , //its true till brand dropdown is not loaded.
       ])
     },
     components:{

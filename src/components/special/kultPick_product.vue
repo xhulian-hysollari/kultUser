@@ -2,9 +2,9 @@
   <div>
 
     <product :routeDet = "{
-        routePath: 'brandCat/A-Z Brands/brand/' + $route.params.brand ,
+        routePath: 'kultPickGlobalBestSeller/kultPick', //db path
         routeQuery: $route.query,
-        compRoutePath: '/brandProduct/' + $route.params.brand
+        compRoutePath: '/kultPick'
       }"
     >
     </product>
@@ -13,6 +13,7 @@
 </template>
 
 <script>
+
   import product from '@/components/product/product.vue'
   //
   export default {

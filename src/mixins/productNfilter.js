@@ -15,48 +15,38 @@ export default {
       this.routePath = payload.routePath // update route path in global var, will be used later in watch, cant pass in func
       console.log(this.routePath)
       //
-      this.$store.state.filter.filterLoader = true //Filter Loader start
+      //this.$store.state.filter.filterLoader = true //Filter Loader start
       //
       //console.log(payload)
-      //
       if (Object.keys(this.selectedFilters).indexOf(payload.sel_filterDetail.filterName) == -1) { // filterName not found
-
-        //console.log("*** (1) add filter name & para ! ***")
         //
+        //console.log("*** (1) add filter name & para ! ***")
         this.selectedFilters[payload.sel_filterDetail.filterName] = {}
         this.selectedFilters[payload.sel_filterDetail.filterName][payload.sel_filterDetail.filterPara] = {}
         //
-
       } else { // filterName found
-
         if (Object.keys(this.selectedFilters[payload.sel_filterDetail.filterName]).indexOf(payload.sel_filterDetail.filterPara) == -1) { // filterPara not found
-
+          //
           //console.log("*** (2) add filter para ! ***")
-          //
           this.selectedFilters[payload.sel_filterDetail.filterName][payload.sel_filterDetail.filterPara] = {}
-
-        } else { // filterPara found
-
-          //console.log("*** (3) delete filter para ! ***")
           //
+        } else { // filterPara found
+          //
+          //console.log("*** (3) delete filter para ! ***")
           delete this.selectedFilters[payload.sel_filterDetail.filterName][payload.sel_filterDetail.filterPara]
-
+          //
           if (Object.keys(this.selectedFilters[payload.sel_filterDetail.filterName]).length == 0) {
-
             //console.log("*** (4) delete filter name ! ***")
-            //
             delete this.selectedFilters[payload.sel_filterDetail.filterName]
+            //
           }
-
         }
-
       }
       this.selectedFilters_str = JSON.stringify(this.selectedFilters) //just for watch, doesnot work on Obj properly
       //
       console.log("[Selected Filter] => ", this.selectedFilters)
       //
       //axios call to return product on basis of filter
-      //
       this.$router.push({ path:payload.compRoutePath , query: { selFilters:  this.selectedFilters_str } })
     },
     //
@@ -64,19 +54,19 @@ export default {
     send_SelFilter_toCloud_toGetProducts_accordingToFilter_1(){
       console.log("Watching selectedFilters")
       //db
-      let payload = {
-        sel_setOfFilters : window.thisOfVueComp_filterMixin.selectedFilters, //need these var on created //will get from url
-        routePath: window.thisOfVueComp_filterMixin.routePath + '/filter' //need these var on created // can get from components only
-      }
       //
-      console.log("communicate to db [filter] ", payload)
-      //
-      if( Object.keys(payload.sel_setOfFilters).length == 0 ){ //not a situation
+      if( Object.keys(window.thisOfVueComp_filterMixin.selectedFilters).length == 0 ){ //not a situation
         console.log("Z1")
         this.$store.commit('getProducts', {
           routePath: window.thisOfVueComp_filterMixin.routePath
         })
       }else{
+        //
+        let payload = {
+          sel_setOfFilters : window.thisOfVueComp_filterMixin.selectedFilters, //need these var on created //will get from url
+          routePath: window.thisOfVueComp_filterMixin.routePath + '/filter' //need these var on created // can get from components only
+        }
+        //
         console.log("Z2")
         window.thisOfVueComp_filterMixin.$store.commit('send_SelFilter_toCloud_toGetProducts_accordingToFilter_2', payload)
       }
@@ -119,19 +109,23 @@ export default {
           //
           //this.selectedFilters_str = this.$route.query.selFilters //trigger
           //
-          this.send_SelFilter_toCloud_toGetProducts_accordingToFilter_1()
+          this.send_SelFilter_toCloud_toGetProducts_accordingToFilter_1() // 2 is in store
         }
       }
     }
   },
   //
   watch: {
-    //selectedFilters_str: ()=>{
-      //window.thisOfVueComp_filterMixin.send_SelFilter_toCloud_toGetProducts_accordingToFilter_1()
-    //},
     '$route' (to, from) {
       console.log('// react to route changes...')
-      window.thisOfVueComp_filterMixin.selectedFilters = JSON.parse(window.thisOfVueComp_filterMixin.$route.query.selFilters) // was not getting updated by route value changes on back forward
+      //
+      //update var => selectedFilters
+      if( Object.keys(window.thisOfVueComp_filterMixin.$route.query).length != 0 ){
+        // was not getting updated by route value changes on back forward
+        window.thisOfVueComp_filterMixin.selectedFilters = JSON.parse(window.thisOfVueComp_filterMixin.$route.query.selFilters)
+      } else {
+        window.thisOfVueComp_filterMixin.selectedFilters = {}
+      }
       //
       window.thisOfVueComp_filterMixin.send_SelFilter_toCloud_toGetProducts_accordingToFilter_1()
       window.thisOfVueComp_filterMixin.$forceUpdate()

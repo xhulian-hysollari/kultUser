@@ -110,6 +110,9 @@ const mutations ={
     //console.log(payload.sel_setOfFilters)
     //console.log(payload.routePath)
     //
+    state.filterLoader = true //also turn on filter loader :P
+    product.state.productsLoader = true // will load product, on basis of changed filter
+    //
     gen.state.thisOfVueComp.$forceUpdate() //update dom => the tick on filter
     //
     state.selectedFilters = payload.sel_setOfFilters // if this func is called directly from => comp on basis of filter in url.
@@ -129,13 +132,18 @@ const mutations ={
       console.log("[FILTER APPLIED] [UPDATE PRODUCTS]", product.state.products)
       //
       state.filterLoader = false //filter loader stops
+      product.state.productsLoader = false
       //
       //
     }).catch(function (error) {
       console.log(error);
       //alert(error.data)
+      //
+      state.filterLoader = false // :P
+      product.state.productsLoader = false
     });
   }
+  //
 }
 
 const actions = {

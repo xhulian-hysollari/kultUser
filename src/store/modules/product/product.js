@@ -94,7 +94,7 @@ const mutations = {
         //$store.complete(); //infinte Loader
       }
 
-      product.state.cProduct = 0
+      state.cProduct = 0
       queryproducts.forEach((queryproductsDoc)=>{
 
         if(queryproductsDoc.exists){

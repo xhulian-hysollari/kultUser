@@ -13,6 +13,8 @@ const getters = {
 const mutations = {
   getBrandCat(state2){
     //
+    //console.log("calling get brand cat ")
+    //
     state.brandCatLoader = true
     //
     gen.state.firestore
@@ -20,6 +22,7 @@ const mutations = {
       .get().then((queryBrandCat)=>{
       //
       if(queryBrandCat.size == 0){
+        //console.log("calling get brand cat, query brand cat is size 0 ")
         //stop loader
         state.brandCatLoader = false
       }
@@ -30,8 +33,6 @@ const mutations = {
         //
         //
         if(queryBrandCatDoc.exists){
-
-          cQueryBrandCat++
 
           //console.log(queryBrandCatDoc.id) //only this is req
           //console.log(queryBrandCatDoc.data())
@@ -45,9 +46,14 @@ const mutations = {
             .collection("brand")
             .get().then((queryBrand)=>{
 
-            if(queryBrand.size == 0){
+            cQueryBrandCat++
+
+            //console.log("0 => " + cQueryBrandCat + " | " + queryBrandCat.size)
+            if(queryBrand.size == 0 && cQueryBrandCat == queryBrandCat.size){
               //stop loader
               state.brandCatLoader = false
+              //
+              console.log("Brand Category [Final]", state.brandCat)
             }
 
             let cQueryBrand = 0
@@ -67,6 +73,8 @@ const mutations = {
                 //
                 //
                 //
+                //console.log("1 => " + cQueryBrandCat + ' | ' + queryBrandCat.size)
+                //console.log("2 => " + cQueryBrand + " | " + queryBrand.size )
                 if(cQueryBrandCat == queryBrandCat.size && queryBrand.size == cQueryBrand){
                   state.brandCatLoader = false
                   //
