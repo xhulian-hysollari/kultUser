@@ -83,6 +83,7 @@ const mutations = {
           state.howToVidLoader = false
         }
 
+        state.howToVid = {}
         queryHowToCatVid.forEach((queryHowToCatVidDoc)=>{
 
           //
