@@ -45,7 +45,13 @@ const howTo = resolve => {
     resolve(require('@/components/howTo/howTo'));
   });
 };
-//
+//blog
+const blog = resolve => {
+  require.ensure(['@/components/blog/blog'],()=>{
+    resolve(require('@/components/blog/blog'));
+  });
+};
+
 Vue.use(Router)
 
 export default new Router({
@@ -62,6 +68,8 @@ export default new Router({
     { path: '/globalBestSeller', name: 'Global Best Seller', component: globalBestSeller_product },
     { path: '/kultPick', name: 'Kult Pick', component: kultPick_product },
     //howTo
-    { path: '/howTo', name: 'How To', component: howTo }
+    { path: '/howTo', name: 'How To', component: howTo },
+    //blog
+    { path: '/blog', name: 'Blog', component: blog}
   ]
 })

@@ -72,7 +72,7 @@ export default {
       }
     },
     //
-    //
+    // created thing
     productsOrFilterProducts_initCompCreatedFunc(payload){
       console.log(payload)
       //

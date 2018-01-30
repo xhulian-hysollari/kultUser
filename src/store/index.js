@@ -14,6 +14,8 @@ import filter from './modules/filter/filter'
 import brand_all from './modules/brand/brand_all'
 //howTo
 import howTo from './modules/howTo/howTo'
+//blog
+import blog from './modules/blog/blog'
 
 Vue.use(Vuex)
 
@@ -32,6 +34,8 @@ export const store = new Vuex.Store({
     //
     brand_all,
     //
-    howTo
+    howTo,
+    //
+    blog
   }
 })

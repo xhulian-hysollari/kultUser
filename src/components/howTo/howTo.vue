@@ -5,7 +5,8 @@
     <div v-for="(vidCatDet ,vidCatName) in howToCat"  @click="getHowToCatVid({
       howToCat: vidCatName
     })">
-      {{vidCatName}}
+      <span v-if=" $route.query.selVidCat == vidCatName ">{{vidCatName}} tick !</span>
+      <span v-else>{{vidCatName}}</span>
     </div>
 
     <br>
