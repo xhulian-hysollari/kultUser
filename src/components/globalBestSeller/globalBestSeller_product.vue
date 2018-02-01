@@ -2,16 +2,18 @@
   <div>
 
     <product :routeDet = "{
-        routePath: 'kultPickGlobalBestSeller/kultPick', //db path
+        routePath: 'kultPickGlobalBestSeller/globalBestSeller', //db path
         routeQuery: $route.query,
-        compRoutePath: '/kultPick'
+        compRoutePath: '/globalBestSeller'
       }"
     >
     </product>
 
+    <br>
+    SHOP OPTIONS=>
     <div
       v-for="(shopOptionDet, shopOption) in shopOptions"
-      @click="goTo('/kultPick/shopOption/' + shopOption)"
+      @click="goTo('/globalBestSeller/shopOption/' + shopOption)"
     >
       {{shopOption}}
     </div>
@@ -40,7 +42,7 @@
       ])
     },
     created(){
-      window.thisOfVueComp = this
+      window.thisOfVueComp_3 = this
     }
   }
 </script>

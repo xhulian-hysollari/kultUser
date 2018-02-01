@@ -129,8 +129,10 @@ const mutations = {
             querySubCategories.size == cSubCategory
           ){
             console.log("ShopOptions [Final] ==>", state.shopOptions)
-            //
-            window.thisOfVueComp.$forceUpdate()
+            window.thisOfVueComp_2.$forceUpdate()
+            if( Object.keys(window).indexOf('thisOfVueComp_3') != -1 ){
+              window.thisOfVueComp_3.$forceUpdate()
+            }
             //
             //console.log("*******SHOP OPTION QUERY COMPLETE !*******")
             //

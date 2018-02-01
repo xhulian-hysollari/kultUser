@@ -154,6 +154,7 @@ const mutations = {
         //console.log("***** PRODUCT QUERIED *****")
         //
         console.log('[PRODUCT QUERIED FINAL]', state.products)
+        window.thisOfVueComp.$forceUpdate()
       }
 
     })

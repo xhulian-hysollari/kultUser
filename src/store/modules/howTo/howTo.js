@@ -31,37 +31,38 @@ const mutations = {
       if(queryHowToCat.size == 0){
         //console.log("//if there is no cat to show, hence no vid to show, turn loader cat off")
         state.howToCatLoader = false
-      }
-      //
-      queryHowToCat.forEach((queryHowToCatDoc)=>{
+      }else{
+        //
+        queryHowToCat.forEach((queryHowToCatDoc)=>{
 
-        //
-        //console.log(queryHowToCatDoc.id) // cat
-        //console.log(queryHowToCatDoc.data()) // empty
-        //
-        state.howToCat[queryHowToCatDoc.id] = {}
-        //
-      })
-
-      //if any vid category is not selected => it's in query (route), in that case sel 1st one by default
-      if( Object.keys(router.currentRoute.query).length == 0 ){
-        //console.log("1")
-        //
-        mutations.getHowToCatVid(state, {
-          howToCat: Object.keys(state.howToCat)[0]
+          //
+          //console.log(queryHowToCatDoc.id) // cat
+          //console.log(queryHowToCatDoc.data()) // empty
+          //
+          state.howToCat[queryHowToCatDoc.id] = {}
+          //
         })
-      }else { //if there is already some cat selected, on refresh load that only
-        //console.log("2")
-        //
-        mutations.getHowToCatVid(state, {
-          howToCat: router.currentRoute.query.selVidCat
-        })
-      }
 
-      //
-      state.howToCatLoader = false
-      //
-      window.thisOfVueComp.$forceUpdate()
+        //if any vid category is not selected => it's in query (route), in that case sel 1st one by default
+        if( Object.keys(router.currentRoute.query).length == 0 ){
+          //console.log("1")
+          //
+          mutations.getHowToCatVid(state, {
+            howToCat: Object.keys(state.howToCat)[0]
+          })
+        }else { //if there is already some cat selected, on refresh load that only
+          //console.log("2")
+          //
+          mutations.getHowToCatVid(state, {
+            howToCat: router.currentRoute.query.selVidCat
+          })
+        }
+
+        //
+        state.howToCatLoader = false
+        //
+        window.thisOfVueComp.$forceUpdate()
+      }
     })
   },
   //

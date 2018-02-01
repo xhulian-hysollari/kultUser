@@ -28,26 +28,26 @@ const brand_product = resolve => {
     resolve(require('@/components/brand/brand_product'));
   });
 };
-//special
+//global Best Seller
 const globalBestSeller_product = resolve => {
-  require.ensure(['@/components/special/globalBestSeller_product'],()=>{
-    resolve(require('@/components/special/globalBestSeller_product'));
+  require.ensure(['@/components/globalBestSeller/globalBestSeller_product'],()=>{
+    resolve(require('@/components/globalBestSeller/globalBestSeller_product'));
   });
 };
 const globalBestSellerShopOption_product = resolve => {
-  require.ensure(['@/components/special/globalBestSellerShopOption_product'],()=>{
-    resolve(require('@/components/special/globalBestSellerShopOption_product'));
+  require.ensure(['@/components/globalBestSeller/globalBestSellerShopOption_product'],()=>{
+    resolve(require('@/components/globalBestSeller/globalBestSellerShopOption_product'));
   });
 };
-//
+//kult pick
 const kultPick_product = resolve => {
-  require.ensure(['@/components/special/kultPick_product'],()=>{
-    resolve(require('@/components/special/kultPick_product'));
+  require.ensure(['@/components/kultPick/kultPick_product'],()=>{
+    resolve(require('@/components/kultPick/kultPick_product'));
   });
 };
 const kultPickShopOption_product = resolve => {
-  require.ensure(['@/components/special/kultPickShopOption_product'],()=>{
-    resolve(require('@/components/special/kultPickShopOption_product'));
+  require.ensure(['@/components/kultPick/kultPickShopOption_product'],()=>{
+    resolve(require('@/components/kultPick/kultPickShopOption_product'));
   });
 };
 //howTo

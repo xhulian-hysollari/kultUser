@@ -1,6 +1,7 @@
 <template>
   <div>
 
+    VIDEO CAT =>
     <!-- video cat -->
     <div v-for="(vidCatDet ,vidCatName) in howToCat"  @click="getHowToCatVid({
       howToCat: vidCatName
@@ -9,8 +10,9 @@
       <span v-else>{{vidCatName}}</span>
     </div>
 
-    <br>
 
+    <br>
+    VIDEOS =>
     <!-- videos in vid cat -->
     <div v-for="(vidDet, vidName) in howToVid" @click="getCatVidProduct({ //click to open video in popup, i.e when product will get load
       vidCat: $route.query.selVidCat,
@@ -19,6 +21,10 @@
       {{vidName}}
       {{vidDet}}
     </div>
+
+    <br>
+    PRODUCTS =>
+    {{products}} <!-- show when a video is selected -->
 
   </div>
 </template>
@@ -38,6 +44,8 @@
       ...mapGetters([
         'howToCat',
         'howToVid',
+        'products',
+          //
         'howToCatLoader', // loader for vid cat
         'howToVidLoader', // loader for videos in cat
         'productsLoader'  // loader for products associated with videos

@@ -129,6 +129,7 @@ const mutations = {
             //console.log(c + " | " + queryBlogOfThisTag.size)
             if(c == queryBlogOfThisTag.size){
               console.log("[Blog of this Tag]", state.blogs)
+              window.thisOfVueComp.$forceUpdate()
               state.blogLoader = false
             }
           }

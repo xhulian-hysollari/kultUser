@@ -1,6 +1,7 @@
 <template>
   <div>
 
+    TAGS =>
     <div
       v-for="(blogTagDet, blogTagName) in blogTags"
       @click="getBlogsOfThisTag({
@@ -9,6 +10,11 @@
     >
       {{blogTagName}}
     </div>
+
+
+    <br>
+    BLOGS =>
+    {{blogs}}
 
   </div>
 </template>

@@ -1,6 +1,10 @@
 <template>
   <div>
 
+    PRODUCTS=>
+    {{products}}
+
+
     <!-- load more button --> <!-- only for product, hide for filter products -->
     <button @click="loadMoreProducts({
       routePath: routeDet.routePath
@@ -9,7 +13,8 @@
     </button>
     <!--load more button ends -->
 
-
+    <br>
+    FILTERS =>
     <!-- show filters -->
     <div v-for="(filteNameContent, filterName) in filter">
       {{filterName}}
@@ -68,6 +73,8 @@
     },
     //
     created(){
+      window.thisOfVueComp = this
+      //
       this.productsOrFilterProducts_initCompCreatedFunc({
         //
         thisOfVueComp: this, //

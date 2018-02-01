@@ -5,6 +5,9 @@
     <div v-else>
 
       Header
+      {{shopOptions}}
+      {{brandCat}}
+
       <br>
       <router-view></router-view>
       <br>
@@ -36,7 +39,7 @@
       loader
     },
     created(){
-      window.thisOfVueComp = this
+      window.thisOfVueComp_2 = this
     }
   }
 </script>
