@@ -130,6 +130,8 @@ const mutations = {
           ){
             console.log("ShopOptions [Final] ==>", state.shopOptions)
             //
+            window.thisOfVueComp.$forceUpdate()
+            //
             //console.log("*******SHOP OPTION QUERY COMPLETE !*******")
             //
             state.shopOptionLoader = false

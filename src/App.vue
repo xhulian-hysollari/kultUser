@@ -34,6 +34,9 @@
     },
     components:{
       loader
+    },
+    created(){
+      window.thisOfVueComp = this
     }
   }
 </script>

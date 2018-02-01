@@ -34,9 +34,20 @@ const globalBestSeller_product = resolve => {
     resolve(require('@/components/special/globalBestSeller_product'));
   });
 };
+const globalBestSellerShopOption_product = resolve => {
+  require.ensure(['@/components/special/globalBestSellerShopOption_product'],()=>{
+    resolve(require('@/components/special/globalBestSellerShopOption_product'));
+  });
+};
+//
 const kultPick_product = resolve => {
   require.ensure(['@/components/special/kultPick_product'],()=>{
     resolve(require('@/components/special/kultPick_product'));
+  });
+};
+const kultPickShopOption_product = resolve => {
+  require.ensure(['@/components/special/kultPickShopOption_product'],()=>{
+    resolve(require('@/components/special/kultPickShopOption_product'));
   });
 };
 //howTo
@@ -66,7 +77,10 @@ export default new Router({
     { path: '/brandProduct/:brand', name: 'Brand Product', component: brand_product},
     //special
     { path: '/globalBestSeller', name: 'Global Best Seller', component: globalBestSeller_product },
+    { path: '/globalBestSeller/shopOption/:shopOption', name: 'Global Best Seller - Shop', component: globalBestSellerShopOption_product},
+    //
     { path: '/kultPick', name: 'Kult Pick', component: kultPick_product },
+    { path: '/kultPick/shopOption/:shopOption', name: 'Kult Pick - Shop', component: kultPickShopOption_product},
     //howTo
     { path: '/howTo', name: 'How To', component: howTo },
     //blog
