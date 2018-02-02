@@ -2,7 +2,11 @@
   <div>
 
     PRODUCTS=>
-    {{products}}
+    <!-- if a product doesnot have priceStartsFrom or have value such as NaN or 999999999, the product is out of stock -->
+    <div v-for="(pDet, pId) in products" @click="goTo('/particularProduct/' + pId)">
+      {{pId}}
+      {{pDet}}
+    </div>
 
 
     <!-- load more button --> <!-- only for product, hide for filter products -->
@@ -59,7 +63,7 @@
     //
     methods:{
       ...mapMutations([
-        'loadMoreProducts'
+        'loadMoreProducts','goTo'
       ])
     },
     //

@@ -7,6 +7,11 @@ const Hello = resolve => {
   });
 };
 //product
+const product_particularProduct = resolve => {
+  require.ensure(['@/components/product/particularProduct'],()=>{
+    resolve(require('@/components/product/particularProduct'));
+  });
+};
 const product_category = resolve => {
   require.ensure(['@/components/product/product_category'],()=>{
     resolve(require('@/components/product/product_category'));
@@ -70,6 +75,7 @@ export default new Router({
   routes: [
     { path: '/', name: 'Hello', component: Hello },
     //product
+    { path: '/particularProduct/:pId', name: 'Particular Product', component: product_particularProduct},
     { path: '/productCategory/:shopOption/:category', name: 'Product Category', component: product_category},
     { path: '/productSubCategory/:shopOption/:category/:subCategory', name: 'Product SubCategory', component: product_subCategory},
     //brand

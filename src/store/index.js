@@ -8,6 +8,7 @@ import header_shopOption from './modules/header/header_shopOption'
 import header_brand from './modules/header/header_brand'
 //product
 import product from './modules/product/product'
+import particularProduct from './modules/product/particularProduct'
 //filter
 import filter from './modules/filter/filter'
 //brand
@@ -29,6 +30,7 @@ export const store = new Vuex.Store({
     header_brand,
     //
     product,
+    particularProduct,
     //
     filter,
     //
