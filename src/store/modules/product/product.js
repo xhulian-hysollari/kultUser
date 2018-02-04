@@ -142,7 +142,8 @@ const mutations = {
         //
         state.products[queryProductDetail.id] = {
           pBasicDetail : queryProductDetail.data().pBasicDetail,
-          pOtherDetail: queryProductDetail.data().pOtherDetail
+          pOtherDetail: queryProductDetail.data().pOtherDetail,
+          priceStartsFrom: queryProductDetail.data().priceStartsFrom
         }
       }
 
