@@ -69,11 +69,13 @@ const mutations = {
                 //
               }
               state.pTypes[queryPTypeDoc.id]['affliateDomains'][queryPTypeLinkDoc.id] = {
-                link: queryPTypeLinkDoc.data().link
+                link: queryPTypeLinkDoc.data().link,
+                price: queryPTypeLinkDoc.data().price
               }
             }
             state.pTypes[queryPTypeDoc.id]['affliateDomains'][queryPTypeLinkDoc.id] = {
-              link: queryPTypeLinkDoc.data().link
+              link: queryPTypeLinkDoc.data().link,
+              price: queryPTypeLinkDoc.data().price
             }
           })
           //
