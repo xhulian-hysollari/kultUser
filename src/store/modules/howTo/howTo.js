@@ -94,12 +94,14 @@ const mutations = {
           state.howToVid[queryHowToCatVidDoc.id] = { // Id by video name
             videoLink: queryHowToCatVidDoc.data().howToCatVidLink,
             //added later
+            videoImgUrl: queryHowToCatVidDoc.data().howToCatVidImgUrl,
+            //
             videoShopNowLink: queryHowToCatVidDoc.data().howToCatVidShopNowLink,
             videoSubTitle: queryHowToCatVidDoc.data().howToCatVidSubTitle,
             videoSubTitleTag: queryHowToCatVidDoc.data().howToCatVidSubTitleTag,
             videoSubTitleTagLink: queryHowToCatVidDoc.data().howToCatVidSubTitleTagLink,
             //
-            videoProductTitle: queryHowToCatVidDoc.data().howToCatVidProductTitle
+            videoProductTitle: queryHowToCatVidDoc.data().howToCatVidProductTitle,
           }
         })
 
