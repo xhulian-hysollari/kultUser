@@ -11,6 +11,10 @@
       {{blogTagName}}
     </div>
 
+    <br>
+    BLOGS AT HOME =>
+    {{blogsAtHome}}
+    <br>
 
     <br>
     BLOGS =>
@@ -30,6 +34,7 @@
       //
       this.$store.commit('getBlogs')
       this.$store.commit('getBlogTags')
+      this.$store.commit('getBlogsAtHome')
     },
     //
     methods:{
@@ -40,11 +45,14 @@
     //
     computed:{
       ...mapGetters([
-        'blogs', // blogs & details
+        'blogs', // blogs & details (right side category wise(small))
         'blogLoader', //loader for blog
         //
         'blogTags', // blog tags
-        'blogTagLoader' // blog tag loader
+        'blogTagLoader', // blog tag loader,
+        //
+        'blogsAtHome',  //blog to show on home page(large left side blogs)
+        'blogsAtHomeLoader' //loader for blogs at home (left side)
       ])
     }
   }
