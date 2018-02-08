@@ -1,4 +1,5 @@
 import gen from '../gen'
+import axios from 'axios'
 
 const state = {
   blogs : {},
@@ -150,6 +151,7 @@ const mutations = {
               blogContent: queryBlogDet.data().blogContent,
               blogImgUrl: queryBlogDet.data().blogImgUrl,
               blogTag: queryBlogDet.data().blogTag,
+              blogCat: queryBlogOfThisTagDoc.data().blogCat
               //
             }
 
@@ -202,6 +204,7 @@ const mutations = {
               blogContent: queryBlogDoc.data().blogContent,
               blogImgUrl: queryBlogDoc.data().blogImgUrl,
               blogTag: queryBlogDoc.data().blogTag,
+              blogCat: queryBlogsAtHome.data().blogCat
               //
             }
 
@@ -217,6 +220,39 @@ const mutations = {
         })
       })
     })
+  },
+  //
+  blogView(state2, payload){
+    //
+    axios.get('https://us-central1-kult-2.cloudfunctions.net/blogView', {
+      params: {
+        blogCat: payload.blogCat,
+        blogName: payload.blogName
+      }
+    }).then(function (response) {
+        console.log(response);
+    }).catch(function (error) {
+        console.log(error);
+    });
+  },
+  //
+  blogLike(state2, payload){
+    //
+    axios.get('https://us-central1-kult-2.cloudfunctions.net/blogLike', {
+      params: {
+        blogCat: payload.blogCat,
+        blogName: payload.blogName,
+        userUid: payload.userUid
+      }
+    }).then(function (response) {
+      console.log(response); // return true or false
+      // true => user has liked it
+      // false => no
+
+      //
+    }).catch(function (error) {
+      console.log(error);
+    });
   }
 }
 

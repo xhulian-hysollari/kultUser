@@ -7,13 +7,14 @@ const state = {
 }
 
 const getters = {
+  //
   pTypes : state => state.pTypes,
   pTypeLoader: state => state.pTypeLoader
 }
 
 const mutations = {
   //
-  getTypeNLinkOfThisProduct(state2, payload){
+  getTypeNLinkOfThisProduct(state2, payload) {
     //console.log(payload) // product id, get from url
     //
     state.pTypeLoader = true
@@ -67,10 +68,6 @@ const mutations = {
             if( Object.keys(state.pTypes[queryPTypeDoc.id]).indexOf('affliateDomains') == -1 ){
               state.pTypes[queryPTypeDoc.id]['affliateDomains'] = {
                 //
-              }
-              state.pTypes[queryPTypeDoc.id]['affliateDomains'][queryPTypeLinkDoc.id] = {
-                link: queryPTypeLinkDoc.data().link,
-                price: queryPTypeLinkDoc.data().price
               }
             }
             state.pTypes[queryPTypeDoc.id]['affliateDomains'][queryPTypeLinkDoc.id] = {
