@@ -3,16 +3,29 @@
 
     <loader v-if="dbRefLoader"></loader>
     <div v-else>
+      <loader v-if="authLoader"></loader>
+      <div v-else>
 
-      Header
-      {{shopOptions}}
-      {{brandCat}}
+        Header
+        {{shopOptions}}
+        {{brandCat}}
 
-      <br>
-      <router-view></router-view>
-      <br>
-      Footer
+        <br>
+        USER=>
+        <div v-if="isLoggedIn">
+          Email: {{user.email}} <br>  <!-- take whatever is needed ! -->
+          Name: {{user.displayName}}
+          <button @click="logout">
+            LOGOUT
+          </button>
+        </div>
 
+        <br>
+        <router-view></router-view>
+        <br>
+        Footer
+
+      </div>
     </div>
 
   </div>
@@ -20,6 +33,7 @@
 
 <script>
   import {mapGetters} from 'vuex'
+  import {mapMutations} from 'vuex'
   import loader from '@/components/gen/loader'
   //
   //
@@ -33,6 +47,16 @@
         // BRAND DROPDOWN
         'brandCat', // brand dropdown var
         'allBrandLoader' , //its true till brand dropdown is not loaded.
+        //
+        'user', //user object
+        'isLoggedIn',
+        //
+        'authLoader'
+      ])
+    },
+    methods:{
+      ...mapMutations([
+        'logout'
       ])
     },
     components:{
@@ -40,6 +64,9 @@
     },
     created(){
       window.thisOfVueComp_2 = this
+    },
+    updated(){
+      this.$store.commit('getLoginStatus')
     }
   }
 </script>

@@ -6,6 +6,7 @@ import router from '../../router'
 import header_shopOption from './header/header_shopOption'
 import header_brand from './header/header_brand'
 //
+import auth from './auth'
 
 const state = {
   storage: {},
@@ -13,11 +14,14 @@ const state = {
   //
   dbRefLoader: true,
   //
-  thisOfVueComp : {}
+  thisOfVueComp : {},
+  //
+  btnLoader: false
 }
 
 const getters = {
-  dbRefLoader: state => state.dbRefLoader
+  dbRefLoader: state => state.dbRefLoader,
+  btnLoader: state => state.btnLoader
 }
 
 const mutations = {
@@ -76,6 +80,16 @@ const mutations = {
     header_shopOption.mutations.getShopOptions(state) // get shop dropdown content
     header_brand.mutations.getBrandCat(state) // brand dropdown content
     //
+  },
+  //
+  profile_checkIfLoggedIn(state2){
+    //
+    if(!auth.state.isLoggedIn){ //if not logged in
+      //
+      router.push({
+        path: '/'
+      })
+    }
   }
 }
 

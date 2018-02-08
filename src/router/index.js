@@ -67,6 +67,48 @@ const blog = resolve => {
     resolve(require('@/components/blog/blog'));
   });
 };
+//auth
+const auth_login = resolve => {
+  require.ensure(['@/components/auth/login'],()=>{
+    resolve(require('@/components/auth/login'));
+  });
+};
+const auth_signup = resolve => {
+  require.ensure(['@/components/auth/signup'],()=>{
+    resolve(require('@/components/auth/signup'));
+  });
+};
+const emailVer = resolve => {
+  require.ensure(['@/components/auth/emailVer'],()=>{
+    resolve(require('@/components/auth/emailVer'));
+  });
+};
+const forgotPassword = resolve => {
+  require.ensure(['@/components/auth/forgotPassword'],()=>{
+    resolve(require('@/components/auth/forgotPassword'));
+  });
+};
+//profile
+const editProfile = resolve => {
+  require.ensure(['@/components/profile/editProfile'],()=>{
+    resolve(require('@/components/profile/editProfile'));
+  });
+};
+const changePassword = resolve => {
+  require.ensure(['@/components/profile/changePassword'],()=>{
+    resolve(require('@/components/profile/changePassword'));
+  });
+};
+const deleteAccount = resolve => {
+  require.ensure(['@/components/profile/deleteAccount'],()=>{
+    resolve(require('@/components/profile/deleteAccount'));
+  });
+};
+const updatePhoneNo = resolve => {
+  require.ensure(['@/components/profile/updatePhoneNo'],()=>{
+    resolve(require('@/components/profile/updatePhoneNo'));
+  });
+};
 
 Vue.use(Router)
 
@@ -90,6 +132,16 @@ export default new Router({
     //howTo
     { path: '/howTo', name: 'How To', component: howTo },
     //blog
-    { path: '/blog', name: 'Blog', component: blog}
+    { path: '/blog', name: 'Blog', component: blog},
+    //auth
+    { path: '/login', name: 'Login', component: auth_login },
+    { path: '/signup', name: 'Signup', component: auth_signup },
+    { path: '/emailVer', name: 'Email Verification', component: emailVer },
+    { path: '/forgotPassword', name: 'Forgot Password', component: forgotPassword },
+    //profile
+    { path: '/editProfile', name: 'Edit Profile', component: editProfile },
+    { path: '/changePassword', name: 'Change Password', component: changePassword },
+    { path: '/deleteAccount', name: 'Delete Account', component: deleteAccount },
+    { path: '/updatePhoneNo', name: 'Update Phone No', component: updatePhoneNo }
   ]
 })
