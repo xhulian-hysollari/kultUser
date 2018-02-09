@@ -1,6 +1,18 @@
 <template>
   <div>
-
+    <div class="banner_strip"></div>
+    <div class="breads">
+      <div class="container">
+        <ul class="list-unstyled list-inline">
+          <li><a href="#">Shop</a></li>
+          <li><span>></span></li>
+          <li  v-for="(shopOptionDet, shopOption) in shopOptions"
+               @click="goTo('/kultPick/shopOption/' + shopOption)"> {{shopOption}}
+          </li>
+        </ul>
+        <h3>Kult Picks</h3>
+      </div>
+    </div>
     <product :routeDet = "{
         routePath: 'kultPickGlobalBestSeller/kultPick', //db path
         routeQuery: $route.query,
