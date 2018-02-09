@@ -292,7 +292,6 @@
   import {mapGetters} from 'vuex'
   import {mapMutations} from 'vuex'
   import loader from '@/components/gen/loader'
-  import {mapMutations} from 'vuex'
   import VExpansionPanel from "vuetify/es5/components/VExpansionPanel/VExpansionPanel";
   import VCard from "vuetify/es5/components/VCard/VCard";
   //
