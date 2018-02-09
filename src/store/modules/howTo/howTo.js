@@ -92,7 +92,16 @@ const mutations = {
           //console.log(queryHowToCatVidDoc.data()) // link
           //
           state.howToVid[queryHowToCatVidDoc.id] = { // Id by video name
-            videoLink: queryHowToCatVidDoc.data().howToCatVidLink
+            videoLink: queryHowToCatVidDoc.data().howToCatVidLink,
+            //added later
+            videoImgUrl: queryHowToCatVidDoc.data().howToCatVidImgUrl,
+            //
+            videoShopNowLink: queryHowToCatVidDoc.data().howToCatVidShopNowLink,
+            videoSubTitle: queryHowToCatVidDoc.data().howToCatVidSubTitle,
+            videoSubTitleTag: queryHowToCatVidDoc.data().howToCatVidSubTitleTag,
+            videoSubTitleTagLink: queryHowToCatVidDoc.data().howToCatVidSubTitleTagLink,
+            //
+            videoProductTitle: queryHowToCatVidDoc.data().howToCatVidProductTitle,
           }
         })
 
@@ -113,7 +122,7 @@ const mutations = {
     state.productsLoader = true
     //
     gen.state.firestore
-      .collection("howTo").doc(payload.vidCat)
+      .collection("howToCat").doc(payload.vidCat)
       .collection("vid").doc(payload.vidName)
       .collection("product")
       .get()

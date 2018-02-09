@@ -1,25 +1,8 @@
 <template>
   <div>
 
-    EMAIL PASSWORD LOGIN =>
-    <input
-      v-model="$store.state.auth.email"
-      placeholder="Email"
-    />
-
-    <input
-      v-model="$store.state.auth.password"
-      placeholder="Password"
-    />
-
-    <button
-      @click="emailPasswordLogin({
-        email: $store.state.auth.email,
-        password: $store.state.auth.password
-      })"
-    >
-      LOGIN
-    </button> <br>
+    Login with your provider first to set a password !
+    <!-- recent login require to reset password -->
 
     FACEBOOK LOGIN =>
     <button
@@ -47,7 +30,7 @@
       })"
     >
       twitter
-    </button>
+    </button> <br>
 
   </div>
 </template>
@@ -55,14 +38,12 @@
 <script>
   import {mapMutations} from 'vuex'
   //
-  export default {
+  export default{
     methods:{
       ...mapMutations([
         'googleP',
         'fbP',
-        'twitterP',
-        //
-        'emailPasswordLogin'
+        'twitterP'
       ])
     }
   }

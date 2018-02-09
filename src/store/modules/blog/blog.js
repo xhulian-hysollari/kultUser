@@ -1,11 +1,15 @@
 import gen from '../gen'
+import axios from 'axios'
 
 const state = {
   blogs : {},
   blogLoader : false,
   //
   blogTags: {},
-  blogTagLoader : false
+  blogTagLoader : false,
+  //
+  blogsAtHome : {},
+  blogsAtHomeLoader : false
 }
 
 const getters = {
@@ -13,7 +17,10 @@ const getters = {
   blogLoader: state => state.blogLoader,
   //
   blogTags: state => state.blogTags,
-  blogTagLoader: state => state.blogTagLoader
+  blogTagLoader: state => state.blogTagLoader,
+  //
+  blogsAtHome: state => state.blogsAtHome,
+  blogsAtHomeLoader: state => state.blogsAtHomeLoader
 }
 
 const mutations = {
@@ -25,35 +32,55 @@ const mutations = {
     state.blogs = {}
     //
     gen.state.firestore
-      .collection("blog")
+      .collection("blogCat")
       .get()
-      .then((queryBlogs)=>{
+      .then((queryBlogCat)=>{
         //
-        if(queryBlogs.size == 0){
-          //stop loader if no blogs
+        if(queryBlogCat.size == 0){
+          //
           state.blogLoader = false
         }
         //
-        queryBlogs.forEach((queryBlogsDoc)=>{
+        let c = 0
+        //
+        queryBlogCat.forEach((queryBlogCatDoc)=>{
 
           //
           //console.log(queryBlogsDoc.id) // blog name
           //console.log(queryBlogsDoc.data()) // blog detail
-
           //
-          state.blogs[queryBlogsDoc.id] = {
-            //
-            blogContent: queryBlogsDoc.data().blogContent,
-            blogImgUrl: queryBlogsDoc.data().blogImgUrl,
-            blogTag: queryBlogsDoc.data().blogTag,
+
+          state.blogs[queryBlogCatDoc.id] = {
             //
           }
+          //
+          gen.state.firestore
+            .collection("blogCat").doc(queryBlogCatDoc.id)
+            .collection("blog")
+            .get().then((queryBlog)=>{
+
+            c++
+            //
+            queryBlog.forEach((queryBlogDoc)=>{
+              //
+              state.blogs[queryBlogCatDoc.id][queryBlogDoc.id] = {
+                //
+                blogContent: queryBlogDoc.data().blogContent,
+                blogImgUrl: queryBlogDoc.data().blogImgUrl,
+                blogTag: queryBlogDoc.data().blogTag,
+                date: queryBlogDoc.data().date
+                //
+              }
+            })
+            //
+            if(c == queryBlogCat.size){
+              //
+              console.log("[BLOGS] => ", state.blogs)
+              window.thisOfVueComp.$forceUpdate()
+              state.blogLoader = false
+            }
+          })
         })
-        //
-        //
-        console.log("[BLOGS] => ", state.blogs)
-        window.thisOfVueComp.$forceUpdate()
-        state.blogLoader = false
       })
   },
   //
@@ -89,9 +116,9 @@ const mutations = {
   getBlogsOfThisTag(state2, payload){
     //console.log(payload)
     //
-    state.blogLoader = true
+    state.blogsAtHomeLoader = true
     //
-    state.blogs = {}
+    state.blogsAtHome = {}
     //
     gen.state.firestore
       .collection("blogTag").doc(payload.tagName)
@@ -100,7 +127,7 @@ const mutations = {
 
       if(queryBlogOfThisTag.size == 0){
         // if no blogs of this tag
-        state.blogLoader = false
+        state.blogsAtHomeLoader = false
       }
 
       let c = 0
@@ -108,34 +135,124 @@ const mutations = {
 
         //
         //console.log(queryBlogOfThisTagDoc.id) // blog name
-        //console.log(queryBlogOfThisTagDoc.data()) //empty
+        //console.log(queryBlogOfThisTagDoc.data()) //empty //blog cat
         //
 
         gen.state.firestore
+          .collection("blogCat").doc(queryBlogOfThisTagDoc.data().blogCat)
           .collection("blog").doc(queryBlogOfThisTagDoc.id)
           .get().then((queryBlogDet)=>{
 
           c++
           //
           if(queryBlogDet.exists){
-            state.blogs[queryBlogOfThisTagDoc.id] = {
+            state.blogsAtHome[queryBlogOfThisTagDoc.id] = {
               //
               blogContent: queryBlogDet.data().blogContent,
               blogImgUrl: queryBlogDet.data().blogImgUrl,
               blogTag: queryBlogDet.data().blogTag,
+              blogCat: queryBlogOfThisTagDoc.data().blogCat
               //
             }
 
             //console.log(c + " | " + queryBlogOfThisTag.size)
             if(c == queryBlogOfThisTag.size){
-              console.log("[Blog of this Tag]", state.blogs)
+              //
+              console.log("[blogs at home page][this tag blog on home]", state.blogsAtHome)
               window.thisOfVueComp.$forceUpdate()
-              state.blogLoader = false
+              state.blogsAtHomeLoader = false
             }
           }
         })
       })
     })
+  },
+  //
+  getBlogsAtHome(state2){
+    state.blogsAtHomeLoader = true
+    //
+    gen.state.firestore
+      .collection("blogHome")
+      .get().then((queryBlogsAtHome)=>{
+
+      let queryBlogsAtHomeSize = queryBlogsAtHome.size
+      //
+      if(queryBlogsAtHome.size == 0){
+        state.blogsAtHomeLoader = false
+      }
+
+      let c = 0
+      //
+      queryBlogsAtHome.forEach((queryBlogsAtHome)=>{
+        //console.log(queryBlogsAtHome.id) //blog name
+        //console.log(queryBlogsAtHome.data()) //blog cat
+
+        gen.state.firestore
+          .collection("blogCat").doc(queryBlogsAtHome.data().blogCat)
+          .collection("blog").doc(queryBlogsAtHome.id)
+          .get().then((queryBlogDoc)=>{
+
+          //console.log("b=>",queryBlogDoc.id)
+          //console.log("b=>",queryBlogDoc.data())
+
+          //
+          if(queryBlogDoc.exists){
+
+            //
+            state.blogsAtHome[queryBlogsAtHome.id] = {
+              //
+              blogContent: queryBlogDoc.data().blogContent,
+              blogImgUrl: queryBlogDoc.data().blogImgUrl,
+              blogTag: queryBlogDoc.data().blogTag,
+              blogCat: queryBlogsAtHome.data().blogCat
+              //
+            }
+
+            c++
+            //
+            //console.log(c + " | " + queryBlogsAtHomeSize)
+            if(c == queryBlogsAtHomeSize){
+              console.log("[blogs at home page]", state.blogsAtHome)
+              window.thisOfVueComp.$forceUpdate()
+              state.blogsAtHomeLoader = false
+            }
+          }
+        })
+      })
+    })
+  },
+  //
+  blogView(state2, payload){
+    //
+    axios.get('https://us-central1-kult-2.cloudfunctions.net/blogView', {
+      params: {
+        blogCat: payload.blogCat,
+        blogName: payload.blogName
+      }
+    }).then(function (response) {
+        console.log(response);
+    }).catch(function (error) {
+        console.log(error);
+    });
+  },
+  //
+  blogLike(state2, payload){
+    //
+    axios.get('https://us-central1-kult-2.cloudfunctions.net/blogLike', {
+      params: {
+        blogCat: payload.blogCat,
+        blogName: payload.blogName,
+        userUid: payload.userUid
+      }
+    }).then(function (response) {
+      console.log(response); // return true or false
+      // true => user has liked it
+      // false => no
+
+      //
+    }).catch(function (error) {
+      console.log(error);
+    });
   }
 }
 

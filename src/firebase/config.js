@@ -1,6 +1,6 @@
 export const config = {
   apiKey: "AIzaSyCRK7ymGRwirW91Jp7eVLnQVwOEiXPZnuQ",
-  thDomain: "kultuser.firebaseapp.com",
+  authDomain: "kult-2.firebaseapp.com",
   databaseURL: "https://kult-2.firebaseio.com",
   projectId: "kult-2",
   storageBucket: "kult-2.appspot.com",
