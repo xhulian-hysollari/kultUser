@@ -1,6 +1,5 @@
 <template>
   <div>
-
     <product :routeDet = "{
         routePath: 'kultPickGlobalBestSeller/globalBestSeller/shopOption/' + $route.params.shopOption, //db path
         routeQuery: $route.query,

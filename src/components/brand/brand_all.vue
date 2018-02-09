@@ -1,6 +1,5 @@
 <template>
   <div>
-
     <div v-for="(brandDet ,brand) in allBrands">
       <span @click="goTo('/brandProduct/' + brand)">{{brand}}</span>
     </div>
