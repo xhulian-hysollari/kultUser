@@ -36,6 +36,8 @@ const mutations = {
       if(queryproducts.size == 0){
         //turn loader off
         state.productsLoader = false
+       // console.log(this.selected)
+
       }
 
       state.cProduct = 0

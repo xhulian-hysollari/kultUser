@@ -6,11 +6,13 @@ const state = {
   //
   showReAuth_2 : false,
   //
-  firstTimePassword: ''
+  firstTimePassword: '',
+  setPass:true
 }
 
 const getters = {
-  showReAuth_2: state => state.showReAuth_2
+  showReAuth_2: state => state.showReAuth_2,
+  setPass:state=>state.setPass
 }
 
 const mutations = {

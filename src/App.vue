@@ -27,14 +27,21 @@
                     <p class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                       <a href="#">
                         <img src="/static/images/user-profile.svg" alt="user-profile">
-                        <span>Login/Register</span>
-                        <img class="drop_arrow" src="/static/images/down.svg" alt="down">
+                        <span v-if="!isLoggedIn">Login/Register</span>
+                        <span @click="logout" v-if="isLoggedIn">Logout</span>
+                        <img  class="drop_arrow" src="/static/images/down.svg" alt="down">
                       </a>
                     </p>
-                    <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu2">
+                    <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu2" v-if="isLoggedIn">
                       <li><span>Your Account</span></li>
-                      <li><a data-toggle="modal" data-target="#loginModal" href="#">Login</a></li>
-                      <li><a data-toggle="modal" data-target="#regModal" href="#">Create an Account</a></li>
+                      <li><a >{{user.displayName}}</a></li>
+                      <li><a >{{user.email}}</a></li>
+                      <li><a >EDIT PROFILE</a></li>
+                    </ul>
+                    <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu2" v-if="!isLoggedIn">
+                      <li><span>Your Account</span></li>
+                      <li><a data-toggle="modal" data-target="#loginModal" href="#" >Login</a></li>
+                      <li><a data-toggle="modal" data-target="#regModal" href="#" >Create an Account</a></li>
                     </ul>
                   </div>
                 </div>
@@ -48,7 +55,7 @@
                     <span class="hamb-middle"></span>
                     <span class="hamb-bottom"></span>
                   </button>
-                  <a href="index.html" class="logo visible-xs"><img src="/static/images/logo.svg" alt="logo"></a>
+                  <a @click="goTo('/')" class="logo visible-xs"><img src="/static/images/logo.svg" alt="logo"></a>
                   <ul class="top_quick_links">
                     <li>
                       <a href="#">
@@ -67,7 +74,7 @@
                 </div>
                 <div class="col-sm-8 col-xs-12 pull-left">
                   <div class="search_form">
-                    <a href="index.html" class="logo hidden-xs"><img src="/static/images/logo.svg" alt="logo"></a>
+                    <a @click="goTo('/')"  class="logo hidden-xs"><img src="/static/images/logo.svg" alt="logo"></a>
                     <form>
                       <input type="text" placeholder="What are you looking for?" class="form-control">
                       <button><img src="/static/images/search.svg" alt="search"></button>
@@ -197,19 +204,39 @@
                     </v-card>
                   </v-expansion-panel-content>
                 </v-expansion-panel>
+                <v-expansion-panel >
+                  <v-expansion-panel-content v-if="!isLoggedIn">
+                    <div slot="header"  class="white ml_5">LOGIN/REGISTER</div>
+                    <v-card  class="white ml_20" >
+                      <v-card-text >
+                       <li data-toggle="modal" data-target="#loginModal" href="#" @click="hamburger_cross()"> LOGIN</li>
+                      </v-card-text>
+                      <v-card-text >
+                        <li data-toggle="modal" data-target="#regModal" href="#" @click="hamburger_cross()"> CREATE AN ACCOUNT</li>
+                      </v-card-text>
+                    </v-card>
+                  </v-expansion-panel-content>
+                </v-expansion-panel>
+                <v-expansion-panel >
+                  <v-expansion-panel-content v-if="isLoggedIn">
+                    <div slot="header"  class="white ml_5" @click="logout">LOGOUT</div>
+                  </v-expansion-panel-content>
+                </v-expansion-panel>
               </ul>
             </nav>
 
           </header>
+          <login_form></login_form>
+          <signup_form></signup_form>
           <!--div id="opts">{{shopOptions}}</div-->
           <!--{{brandCat}}-->
-          <div v-if="isLoggedIn">
+          <!--div v-if="isLoggedIn">
             Email: {{user.email}} <br>  <!-- take whatever is needed ! -->
-            Name: {{user.displayName}}
+           <!-- Name: {{user.displayName}}
             <button @click="logout">
               LOGOUT
             </button>
-          </div>
+          </div-->
           <br>
           <div class="min_height">
             <router-view></router-view>
@@ -248,12 +275,18 @@
                   </div>
                 </div>
                 <div class="col-sm-5 col-xs-12">
-                  <div class="foot_subscribe">
+                  <div >
                     <h4><em>Gain expert advice for looking red-carpet ready  24/7.</em></h4>
-                    <form>
-                      <input type="text" placeholder="Enter your email to subscribe" class="form-control">
-                      <button><img src="/static/images/tail-right.svg" alt="tail-right"></button>
-                    </form>
+                    <div v-if="!showNewsletterInput"><btn-loader></btn-loader></div>
+                    <div v-if="showNewsletterInput">
+                      <el-input placeholder="Enter your email to subscribe" v-model="$store.state.gen.newsLetterEmail" class="input-with-select ">
+                        <el-button slot="append" icon="fa fa-arrow-right" @click="newsletter_saveEmail"></el-button>
+                      </el-input>
+                    </div>
+                    <!--form>
+                      <input type="text" placeholder="Enter your email to subscribe" v-model="$store.state.gen.newsLetterEmail" class="form-control">
+                      <button @click="newsletter_saveEmail"><img src="/static/images/tail-right.svg" alt="tail-right"></button>
+                    </form-->
                     <h6>Secure Payments</h6>
                     <img src="/static/images/group-18.svg" alt="payments">
                   </div>
@@ -262,7 +295,7 @@
               <hr>
               <div class="row copy_right">
                 <div class="col-sm-3 col-xs-6">
-                  <a href="index.html" class="foot_logo"><img src="/static/images/logo-white.svg" alt="logo"></a>
+                  <a href="/" class="foot_logo"><img src="/static/images/logo-white.svg" alt="logo"></a>
                 </div>
                 <div class="col-sm-3 text-right cust_center pull-right col-xs-6">
                   <ul class="foot_social list-unstyled list-inline">
@@ -294,6 +327,9 @@
   import loader from '@/components/gen/loader'
   import VExpansionPanel from "vuetify/es5/components/VExpansionPanel/VExpansionPanel";
   import VCard from "vuetify/es5/components/VCard/VCard";
+  import login_form from '@/components/auth/login.vue'
+  import signup_form from '@/components/auth/signup.vue'
+  import btnLoader from '@/components/gen/btnLoader'
   //
   //
   export default {
@@ -325,7 +361,9 @@
     },
     methods:{
       ...mapMutations([
-        'goTo'
+        'goTo',
+        'logout',
+        'newsletter_saveEmail'
       ]),
         hamburger_cross(){
           let vm = this
@@ -355,18 +393,18 @@
         'user', //user object
         'isLoggedIn',
         //
-        'authLoader'
-      ])
-    },
-    methods:{
-      ...mapMutations([
-        'logout'
+        'authLoader',
+        'showAuthPopup',
+        'showNewsletterInput'
       ])
     },
     components:{
       VCard,
       VExpansionPanel,
-      loader
+      loader,
+      login_form,
+      signup_form,
+      btnLoader
     },
    beforeMount(){
 

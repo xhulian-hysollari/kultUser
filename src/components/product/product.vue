@@ -1,6 +1,7 @@
 <template>
   <div>
-    <div>
+    <loader v-if="productsLoader"></loader>
+    <div v-if="!productsLoader">
 
         <div class="top_sortarea">
           <div class="container">
@@ -41,6 +42,35 @@
                         <div class="filter_title">
                           <a href="#" @click="closeFilter(filterName)">{{filterName}}</a>
                         </div>
+
+
+
+                        <!--div v-for="(filteNameContent, filterName) in filter">
+                          {{filterName}}
+                          <div v-for="(fitlerParaContent, filterPara) in filteNameContent">
+                            <div @click="sel_disSel_thisFilter({
+          sel_filterDetail : {
+            filterName : filterName,
+            filterPara: filterPara,
+          },
+          //
+          routePath: routeDet.routePath , //add filter later
+          //
+          compRoutePath: routeDet.compRoutePath
+          })"
+                            >
+                              {{filterPara}}
+
+                              <span v-if=" Object.keys(selectedFilters).indexOf(filterName) != -1 ">
+            <span v-if=" Object.keys(selectedFilters[filterName]).indexOf(filterPara) != -1 ">
+              tick !
+            </span>
+          </span>
+
+                            </div>
+                          </div>
+                        </div-->
+
                         <div class="filter_cont">
                           <div class="comm_radio">
                             <div class="radio radio-primary" v-for="(fitlerParaContent, filterPara) in filteNameContent" @click="sel_disSel_thisFilter({
@@ -79,7 +109,7 @@
                 <div class="cat_prodarea">
                   <el-row :gutter="15" >
                     <el-col :xs="12" :sm="12" :md="8" :lg="8" v-for="(pDet, pId) in products" >
-                      <div @click="goTo('/particularProduct/' + pId)">
+                      <div @click="$router.push({path:`/particularProduct/${pId}`,query:{prodDet:JSON.stringify(pDet)}})">
                         <div class="grid-content pa-2" >
                           <a class="prod_image" href="#">
                             <img :src="pDet.pBasicDetail.pPicUrl" alt="product">
@@ -90,7 +120,7 @@
                           </div>
                           <div class="prod_misc">
                             <div class="float"><rating :num="Math.round(pDet.pBasicDetail.pRating)" ></rating></div>
-                            <div class="half text-right">From <img src="/static/images/rupee-2.svg" alt="currency"> 2,036</div>
+                            <div class="half text-right">From <img src="/static/images/rupee-2.svg" alt="currency">{{pDet.priceStartsFrom}}</div>
                           </div>
                           <a href="#" class="prod_compare">Compare price <img src="/static/images/wishlist-add.svg" alt="wishlist-add"></a>
                           <a href="#" class="go_store">Go to store</a>
@@ -106,17 +136,12 @@
         </div>
     </div>
 
-
-
-
-
-
-   <!-- PRODUCTS=>
+   PRODUCTS=>
     <!-- if a product doesnot have priceStartsFrom or have value such as NaN or 999999999, the product is out of stock -->
-    <!--div v-for="(pDet, pId) in products" @click="goTo('/particularProduct/' + pId)">
+    <div v-for="(pDet, pId) in products" @click="goTo('/particularProduct/' + pId)">
       {{pId}}
       {{pDet}}
-    </div-->
+    </div>
     <!--infinite-loading @infinite="loadMoreProducts({
       routePath: routeDet.routePath
     })">
@@ -140,6 +165,7 @@
   import {mapMutations} from 'vuex'
   import {mapGetters} from 'vuex'
   import rating from '@/components/rating'
+  import loader from '@/components/gen/loader'
   //
   import productNfilter from '../../mixins/productNfilter'
   import VIcon from "vuetify/es5/components/VIcon/VIcon";
@@ -156,7 +182,8 @@
     components: {
       VIcon,
       rating,
-      infiniteLoading:InfiniteLoading
+      infiniteLoading:InfiniteLoading,
+      loader
     },
     mixins:[productNfilter],
     props: ['routeDet'],
@@ -198,6 +225,7 @@
     },
     //
    updated(){
+      //console.log(this.$store.state.product.products)
       if(this.$router.currentRoute.fullPath.indexOf('selFilters') !== -1){
         if(this.$router.currentRoute.fullPath.indexOf('selFilters=%7B%7D') === -1)
           this.cnt = this.$router.currentRoute.fullPath.split(',').length

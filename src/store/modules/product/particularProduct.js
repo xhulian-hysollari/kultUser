@@ -3,13 +3,17 @@ import product from './product'
 
 const state = {
   pTypes: {},
-  pTypeLoader : false
+  pTypeLoader : false,
+  prodArr:[],
+  selected:{}
 }
 
 const getters = {
   //
   pTypes : state => state.pTypes,
-  pTypeLoader: state => state.pTypeLoader
+  pTypeLoader: state => state.pTypeLoader,
+  prodArr: state => state.prodArr,
+  selected: state => state.selected,
 }
 
 const mutations = {
@@ -56,6 +60,7 @@ const mutations = {
           if(queryPTypeLink.size == 0){
             if(c1 == queryPType.size){
               state.pTypeLoader = false //stop loader
+
             }
           }
 
@@ -81,7 +86,12 @@ const mutations = {
             console.log("[PARTICULAR PRODUCT DETAIL FINAL]", state.pTypes)
             //force update dom
             window.thisOfVueComp.$forceUpdate()
-            state.pTypeLoader = false //stop loader
+            actions.getProd().then(function (snap) {
+              state.selected = state.prodArr[0]
+              console.log(state.selected)
+            }).then(function () {
+              state.pTypeLoader = false //stop loader
+            })
           }
           //
         })
@@ -91,7 +101,24 @@ const mutations = {
 }
 
 const actions = {
-
+  getProd(){
+    return new Promise(function (resolve) {
+      state.prodArr=[]
+      let cnt = 0
+      for(let i in state.pTypes){
+        cnt++
+        let temp = {
+          key:i,
+          det:state.pTypes[i]
+        }
+        state.prodArr.push(temp)
+        if(cnt === Object.keys(state.pTypes).length){
+          resolve('done')
+        }
+      }
+     // console.log(state.prodArr)
+    })
+  },
 }
 
 export default {

@@ -52,34 +52,46 @@
                     <h4>
                       {{vidName}}
                     </h4>
-                    <a href="#" class="shop_btn">Shop Now</a>
+                    <a :href="vidDet.videoShopNowLink" class="shop_btn">Shop Now</a>
                   </div>
                   <img src="static/images/item-11@2x.jpg" alt="item"><!--thumbnail image-->
                 </div>
                 <div class="title_part">
-                  <h5>Running Late Routine</h5><!--Video Tag-->
-                  <a class="title_link">5 Minutes Makeup Look.</a>
-                  <a class="go_btn" data-toggle="modal" data-target="#videoModal" href="#" @click="getCatVidProduct({vidCat: $route.query.selVidCat,vidName })">
+                  <h5>{{vidDet.videoSubTitle}}</h5><!--Video Tag-->
+                  <a class="title_link" :href="vidDet.videoSubTitleTagLink">{{vidDet.videoSubTitleTag}}</a>
+                  <a class="go_btn hidden-xs" data-toggle="modal" data-target="#videoModal" href="#" @click="getCatVidProduct({vidCat: $route.query.selVidCat,vidName })">
+                    <img src="static/images/player.svg" alt="player">
+                  </a>
+                  <a class="go_btn hidden-sm hidden-lg hidden-md"  @click="dialog = true" >
                     <img src="static/images/player.svg" alt="player">
                   </a>
                 </div>
-
-
-                <div class="modal fade" id="videoModal" tabindex="-1" role="dialog" aria-labelledby="videoModal">
+                <el-dialog
+                  :visible.sync="dialog"
+                  width="100%"
+                  center>
+                  <div class="modal_video">
+                    <div class="embed-responsive embed-responsive-16by9">
+                      <!--:src="vidDet.videoLink"-->
+                      <iframe class="embed-responsive-item" width="560" height="315"  frameborder="0" src="https://www.youtube.com/embed/R6v5uZwoUtg?rel=0&amp;showinfo=0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                    </div>
+                  </div>
+                </el-dialog>
+                <div class="modal fade" id="videoModal" tabindex="-1" role="dialog" aria-labelledby="videoModal" >
                   <div class="modal-dialog modal-lg" role="document">
                     <div class="modal-content comm_modal">
-                      <button type="button" class="modal_close" data-dismiss="modal" aria-label="Close"><img src="static/images/close.svg" alt="close"></button>
+                      <button type="button" class="modal_close" data-dismiss="modal" aria-label="Close" @click="dialog= false"><img src="static/images/close.svg" alt="close"></button>
                       <div class="modal_video">
                         <div class="embed-responsive embed-responsive-16by9">
                           <iframe class="embed-responsive-item" width="560" height="315" :src="vidDet.videoLink" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
                         </div>
                       </div>
-                      <div class="modal_video_right hidden-xs hidden-sm ">
-                        <div v-for="p in products">
-                          <h4 class="text-center">Contouring with Cream</h4>
+                      <div class="modal_video_right hidden-xs hidden-sm scroll_card" >
+                        <div v-for="(p,k) in products">
+                          <!--h4 class="text-center">Contouring with Cream</h4-->
                           <div class="prod_repeat">
-                            <a class="prod_image" href="#">
-                              <img :src="p.pBasicDetail.pPicUrl" alt="product">
+                            <a class="prod_image" >
+                              <img :src="p.pBasicDetail.pPicUrl" alt="product" >
                             </a>
                             <div class="prod_cont">
                               <h4><a href="#">{{p.pBasicDetail.pBrand}}</a></h4>
@@ -88,9 +100,9 @@
                             <rating :num="Math.round(p.pBasicDetail.pRating)"></rating>
                             <div class="prod_misc">
                               <!--div class="half"><img src="static/images/rate-4.svg" alt="rating"></div-->
-                              <div class="half text-right">From <img src="static/images/rupee-2.svg" alt="currency"> 2,036</div><!--price-->
+                              <div class="half text-right">From <img src="static/images/rupee-2.svg" alt="currency">{{p.priceStartsFrom}}</div><!--price-->
                             </div>
-                            <a href="#" class="prod_compare">Compare price <img src="static/images/wishlist-add.svg" alt="wishlist-add"></a>
+                            <a @click="$router.push({path:`/particularProduct/${k}`,query:{prodDet:JSON.stringify(p)}})"data-dismiss="modal" class="prod_compare">Compare price <img src="static/images/wishlist-add.svg" alt="wishlist-add"></a>
                             <a href="#" class="go_store">Go to store</a>
                           </div>
                         </div>
@@ -99,8 +111,6 @@
                     </div>
                   </div>
                 </div>
-
-
               </div>
             </div>
           </div>
@@ -145,6 +155,11 @@
   //
   export default {
     //
+    data(){
+      return{
+        dialog:false
+      }
+    },
     components:{
       rating
     },
@@ -166,9 +181,14 @@
     },
     methods:{
       ...mapMutations([
-        'getHowToCatVid','getCatVidProduct'
+        'getHowToCatVid','getCatVidProduct','goTo'
       ])
     }
   }
 </script>
-
+<style>
+  .scroll_card{
+    max-height: 500px;
+    overflow: scroll
+  }
+</style>

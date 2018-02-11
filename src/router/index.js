@@ -67,6 +67,11 @@ const blog = resolve => {
     resolve(require('@/components/blog/blog'));
   });
 };
+const article = resolve => {
+  require.ensure(['@/components/blog/article'],()=>{
+    resolve(require('@/components/blog/article'));
+  });
+};
 //auth
 const auth_login = resolve => {
   require.ensure(['@/components/auth/login'],()=>{
@@ -133,6 +138,7 @@ export default new Router({
     { path: '/howTo', name: 'How To', component: howTo },
     //blog
     { path: '/blog', name: 'Blog', component: blog},
+    { path: '/article', name: 'Article', component: article},
     //auth
     { path: '/login', name: 'Login', component: auth_login },
     { path: '/signup', name: 'Signup', component: auth_signup },

@@ -1,5 +1,6 @@
 import firebase from 'firebase'
 import 'firebase/firestore'
+import axios from 'axios'
 //
 import router from '../../router'
 //
@@ -16,15 +17,39 @@ const state = {
   //
   thisOfVueComp : {},
   //
-  btnLoader: false
+  btnLoader: false,
+  //
+  newsLetterEmail:'',
+  showNewsletterInput:true
 }
 
 const getters = {
   dbRefLoader: state => state.dbRefLoader,
-  btnLoader: state => state.btnLoader
+  btnLoader: state => state.btnLoader,
+  showNewsletterInput:state=>state.showNewsletterInput
 }
 
 const mutations = {
+  newsletter_saveEmail(){
+    actions.validateEmail(state,state.newsLetterEmail).then(function (valid) {
+     if(valid){
+       state.showNewsletterInput=false
+       axios.get('https://us-central1-kult-2.cloudfunctions.net/newsletter_saveEmail', {
+         params: {
+           email:state.newsLetterEmail,
+         }
+       }).then(function (response) {
+         alert("You Subscribed to Newsletter")
+         state.showNewsletterInput=true
+       }).catch(function (error) {
+         alert(error.data)
+         state.showNewsletterInput=true
+       })
+     }else{
+       alert('Not a valid Email')
+     }
+    })
+  },
   //go to => route function
   goTo(state,path){
     router.push(path)
@@ -94,6 +119,12 @@ const mutations = {
 }
 
 const actions = {
+  validateEmail({commit}, email) {
+    return new Promise(function(resolve){
+      let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      resolve(re.test(email))
+    })
+  },
 
 }
 

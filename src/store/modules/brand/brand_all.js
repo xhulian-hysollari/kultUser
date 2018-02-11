@@ -2,6 +2,7 @@ import gen from '../gen'
 
 const state = {
   allBrands: {},
+  brandWithKey:{},
   allBrandLoader : false
 }
 
