@@ -1,7 +1,146 @@
 <template>
   <div>
 
-    TAGS =>
+
+
+    <div class="banner_strip"></div>
+    <div class="comm_pagebreads">
+      <div class="container">
+        <div class="max_width">
+          <div class="row">
+            <div class="col-sm-5 col-xs-12 comm_page_title">
+              <span>Welcome</span>
+              <h2>Kult Blog</h2>
+            </div>
+            <div class="col-sm-7 col-xs-12 text-right cust_left">
+              <loader v-if="blogTagLoader"></loader>
+              <ul class="comm_pagemenus" v-if="!blogTagLoader">
+                <div   v-for="(blogTagDet, blogTagName) in blogTags"
+                       @click="getBlogsOfThisTag({
+                          tagName: blogTagName
+                        })"
+                >
+                  <li ><a href="#">{{blogTagName}}</a></li>
+                </div>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="comm_pagearea">
+      <div class="container">
+        <div class="max_width">
+          <div class="row">
+            <div class="col-sm-7 col-xs-12 blog_left">
+              <loader v-if="blogsAtHomeLoader"></loader>
+              <div v-if="!blogsAtHomeLoader">
+                <div class="blog_repeat" v-for="(blog,k) in blogsAtHome">
+                  <div class="blog_image">
+                    <a href="#"><img :src="blog.blogImgUrl" alt="blog"></a>
+                    <a href="#" class="blog_tag" v-for="i in blog.blogTag ">#{{i}}</a>
+                  </div>
+                  <div class="blog_cont">
+                    <h3>{{k}}</h3>
+                    <span class="blog_date">{{dates(blog.date)}}</span>
+                    <span v-for="(b,j) in blog.blogContent" v-show="j <= 30">
+                    <span >{{b}}</span>
+                  </span>
+                    <span v-if="blog.blogContent.length > 31">...</span>
+                    <a @click="$router.push({path:'/article', query:{name:k,selArticle:articleBlog(blog),sideBlogs:articleBlog(blogs)}})" class="blog_read">Read more</a>
+
+                  </div>
+                </div>
+                <div class="blog_repeat">
+                  <div class="blog_contact">
+                    <h4>Get in touch</h4>
+                    <ul class="list-unstyled list-inline">
+                      <li><a href="#" target="_blank"><i class="fa fa-facebook"></i></a></li>
+                      <li><a href="#" target="_blank"><i class="fa fa-twitter"></i></a></li>
+                      <li><a href="#" target="_blank"><i class="fa fa-instagram"></i></a></li>
+                      <li><a href="#" target="_blank"><i class="fa fa-pinterest"></i></a></li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-5 col-xs-12 hidden-xs sidebar" >
+              <div class="side_box">
+                <loader v-if="blogLoader || blogsAtHomeLoader"></loader>
+                <div v-if="!blogLoader && !blogsAtHomeLoader">
+                          <div class="blog_repeat">
+                            <div class="blog_image">
+                              {{Object.keys(blogsAtHome)[(Object.values(blogsAtHome).length) -1]}}
+                              <a href="#" ><img :src="Object.values(blogsAtHome)[(Object.values(blogsAtHome).length) -1].blogImgUrl" alt="blog" ></a>
+                              <a href="#" class="blog_tag" v-for="tag in Object.values(blogsAtHome)[(Object.values(blogsAtHome).length) -1].blogTag">#{{tag}}</a>
+                            </div>
+                            <div class="blog_cont">
+                              <h3>{{Object.keys(blogsAtHome)[(Object.values(blogsAtHome).length) -1]}}</h3>
+                              <span class="blog_date">{{dates(Object.values(blogsAtHome)[(Object.values(blogsAtHome).length) -1].date)}}</span>
+                              <span v-for="(b,j) in Object.values(blogsAtHome)[(Object.values(blogsAtHome).length) -1].blogContent" v-show="j <= 30">
+                                  <span >{{b}}</span>
+                              </span>
+                              <span v-if="Object.values(blogsAtHome)[(Object.values(blogsAtHome).length) -1].blogContent.length > 31">...</span>
+                              <a href="#" class="blog_read" @click="$router.push({path:'/article', query:{name:Object.keys(blogsAtHome)[(Object.values(blogsAtHome).length) -1],selArticle:articleBlog(Object.values(blogsAtHome)[(Object.values(blogsAtHome).length) -1]),sideBlogs:articleBlog(blogs)}})">Read more</a>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="side_box" >
+                          <div class="blog_repeat" >
+                            <div class="blog_contact">
+                              <h4>Get in touch</h4>
+                              <ul class="list-unstyled list-inline">
+                                <li><a href="#" target="_blank"><i class="fa fa-facebook"></i></a></li>
+                                <li><a href="#" target="_blank"><i class="fa fa-twitter"></i></a></li>
+                                <li><a href="#" target="_blank"><i class="fa fa-instagram"></i></a></li>
+                                <li><a href="#" target="_blank"><i class="fa fa-pinterest"></i></a></li>
+                              </ul>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="side_box">
+                          <div class="blog_sidecat" v-for="(b,cat) in blogs">
+                            <h4>{{cat}}</h4>
+                            <div class="cat_side" v-for="(blog,name) in b">
+                              <a href="#" class="cat_img" @click="$router.push({path:'/article', query:{name,selArticle:articleBlog(blog),sideBlogs:articleBlog(blogs)}})"><img :src="blog.blogImgUrl" alt="image"></a>
+                              <div class="cat_cont">
+                                <h5><a href="#">{{name}}</a></h5>
+                                <a href="#" class="cat_link" v-for="i in blog.blogTag ">{{i}}</a>
+                                <ul class="list-unstyled list-inline blog_views">
+                                  <li><img src="/static/images/view.svg" alt="view">{{blog.views}}</li>
+                                  <li><img src="/static/images/heart-icon.svg" alt="view">{{blog.likes}}</li>
+                                </ul>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="ads">
+                            <a href="#">
+                              <img src="/static/images/ads@2x.jpg" alt="ads">
+                            </a>
+                            </div>
+                          </div>
+                        </div>
+                        </div>
+                      </div>
+                    </div>
+                    </div>
+                </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <!--  TAGS =>
     <div
       v-for="(blogTagDet, blogTagName) in blogTags"
       @click="getBlogsOfThisTag({
@@ -18,7 +157,7 @@
 
     <br>
     BLOGS =>
-    {{blogs}}
+    {{blogs}}-->
 
   </div>
 </template>
@@ -26,9 +165,14 @@
 <script>
   import {mapGetters} from 'vuex'
   import {mapMutations} from 'vuex'
+  import moment from 'moment'
+  import loader from '@/components/gen/loader'
   //
   export default {
     //
+    components:{
+      loader
+    },
     created(){
       window.thisOfVueComp = this
       //
@@ -39,8 +183,19 @@
     //
     methods:{
       ...mapMutations([
-        'getBlogsOfThisTag'
-      ])
+        'getBlogsOfThisTag',
+        'goTo'
+      ]),
+      dates(date){
+        let newDate = moment(date).format('MMMM D YYYY')
+        return newDate
+      },
+      articleBlog(blog){
+        console.log(blog)
+        let selBlog = JSON.stringify(blog)
+        console.log(selBlog)
+        return selBlog
+      },
     },
     //
     computed:{
@@ -52,8 +207,8 @@
         'blogTagLoader', // blog tag loader,
         //
         'blogsAtHome',  //blog to show on home page(large left side blogs)
-        'blogsAtHomeLoader' //loader for blogs at home (left side)
-      ])
+        'blogsAtHomeLoader', //loader for blogs at home (left side)
+      ]),
     }
   }
 </script>

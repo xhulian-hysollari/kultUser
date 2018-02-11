@@ -1,6 +1,7 @@
 import gen from '../gen'
 import axios from 'axios'
-
+import blogFunc from './blogFunctions'
+import article from './article'
 const state = {
   blogs : {},
   blogLoader : false,
@@ -68,16 +69,23 @@ const mutations = {
                 blogContent: queryBlogDoc.data().blogContent,
                 blogImgUrl: queryBlogDoc.data().blogImgUrl,
                 blogTag: queryBlogDoc.data().blogTag,
-                date: queryBlogDoc.data().date
+                date: queryBlogDoc.data().date,
+                blogCat:queryBlogCatDoc.id
                 //
               }
             })
             //
             if(c == queryBlogCat.size){
               //
-              console.log("[BLOGS] => ", state.blogs)
-              window.thisOfVueComp.$forceUpdate()
-              state.blogLoader = false
+              for(let j in state.blogs){
+                let cnt = 0
+                for(let k in state.blogs[j] ){
+                  cnt++
+                  blogFunc.actions.getLikes(state,{blogCat:j,blogName:k,blog:'blog',cnt,c}).then(function (likes) {
+                    mutations.blogView(state2, {blogCat:j,blogName:k,blog:'blog',cnt,c,likes})
+                  })
+                }
+              }
             }
           })
         })
@@ -151,7 +159,8 @@ const mutations = {
               blogContent: queryBlogDet.data().blogContent,
               blogImgUrl: queryBlogDet.data().blogImgUrl,
               blogTag: queryBlogDet.data().blogTag,
-              blogCat: queryBlogOfThisTagDoc.data().blogCat
+              blogCat: queryBlogOfThisTagDoc.data().blogCat,
+              date: queryBlogDet.data().date
               //
             }
 
@@ -204,7 +213,8 @@ const mutations = {
               blogContent: queryBlogDoc.data().blogContent,
               blogImgUrl: queryBlogDoc.data().blogImgUrl,
               blogTag: queryBlogDoc.data().blogTag,
-              blogCat: queryBlogsAtHome.data().blogCat
+              blogCat: queryBlogsAtHome.data().blogCat,
+              date: queryBlogDoc.data().date
               //
             }
 
@@ -230,7 +240,20 @@ const mutations = {
         blogName: payload.blogName
       }
     }).then(function (response) {
-        console.log(response);
+       // console.log(response.data);
+        if(payload.blog==='blog'){
+          let cat = payload.blogCat
+          let name = payload.blogName
+          state.blogs[cat][name].views = response.data
+          state.blogs[cat][name].likes = payload.likes
+          if(payload.cnt === payload.c){
+           // console.log("[BLOGS] => ", state.blogs)
+            window.thisOfVueComp.$forceUpdate()
+            state.blogLoader = false
+          }
+        }else{
+          article.state.articleViews=response.data
+        }
     }).catch(function (error) {
         console.log(error);
     });
@@ -238,6 +261,7 @@ const mutations = {
   //
   blogLike(state2, payload){
     //
+    article.state.likeBtnLoader=true
     axios.get('https://us-central1-kult-2.cloudfunctions.net/blogLike', {
       params: {
         blogCat: payload.blogCat,
@@ -245,14 +269,31 @@ const mutations = {
         userUid: payload.userUid
       }
     }).then(function (response) {
-      console.log(response); // return true or false
+      console.log(response) // return true or false
+        if(response.data === 'added'){
+          article.state.userLike=true
+          blogFunc.actions.getLikes(state,{blogCat:payload.blogCat,blogName:payload.blogName}).then(function (num) {
+            article.state.articleLike=num
+          }).then(function () {
+            article.state.likeBtnLoader=false
+          })
+        }
+        else{
+          article.state.userLike=false
+          blogFunc.actions.getLikes(state,{blogCat:payload.blogCat,blogName:payload.blogName}).then(function (num) {
+            article.state.articleLike=num
+          }).then(function () {
+            article.state.likeBtnLoader=false
+          })
+        }
+
       // true => user has liked it
       // false => no
 
       //
     }).catch(function (error) {
       console.log(error);
-    });
+    })
   }
 }
 

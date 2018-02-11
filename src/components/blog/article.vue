@@ -1,0 +1,139 @@
+<template>
+  <div>
+    <div class="banner_strip"></div>
+    <div class="comm_pagebreads">
+      <div class="container">
+        <div class="max_width">
+          <div class="row">
+            <div class="col-sm-5 col-xs-12 comm_page_title">
+              <span>Welcome</span>
+              <h2>Kult Blog</h2>
+            </div>
+            <div class="col-sm-7 col-xs-12 text-right cust_left">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="blog_inn">
+      <div class="container">
+        <div class="max_width">
+          <div class="row">
+            <div class="col-xs-12">
+              <div class="blog_in_title">
+                <span class="blog_inndate">{{dates(blogDet.date)}}</span>
+                <h2>{{blogName}}</h2>
+              </div>
+            </div>
+            <div class="clearfix"></div>
+            <div class="col-sm-7 col-xs-12 blog_left">
+              <div class="blog_inncont">
+                <div class="blog_image">
+                  <img :src="blogDet.blogImgUrl" alt="blog">
+                </div>
+                <ul class="list-unstyled list-inline blog_views">
+                  <li><img src="/static/images/view.svg" alt="view">{{articleViews}}</li>
+                  <btn-loader v-show="likeBtnLoader" ></btn-loader>
+                  <li  v-show="!likeBtnLoader" v-if="isLoggedIn"><img src="/static/images/heart-icon.svg" alt="view" v-if="!userLike" @click="blogLike({blogCat:blogDet.blogCat,blogName:$route.query.name,userUid:user.uid})">
+                    <span v-if="userLike" @click="blogLike({blogCat:blogDet.blogCat,blogName:$route.query.name,userUid:user.uid})"><i class="fa fa-heart"></i></span>
+                    {{articleLike}}</li>
+                  <li v-if="!isLoggedIn"><img src="/static/images/heart-icon.svg" alt="view"  data-toggle="modal" data-target="#loginModal">{{articleLike}}</li>
+                </ul>
+                <ul class="list-unstyled list-inline blog_share">
+                  <li><a href="#" target="_blank"><i class="fa fa-facebook"></i></a></li>
+                  <li><a href="#" target="_blank"><i class="fa fa-twitter"></i></a></li>
+                  <li><a href="#" target="_blank"><i class="fa fa-envelope"></i></a></li>
+                  <li><a href="#" target="_blank"><i class="fa fa-link"></i></a></li>
+                </ul>
+                <p>
+                  {{blogDet.blogContent}}
+                </p>
+              </div>
+              <div class="blog_innbtm">
+                <h3>Kult Blog</h3>
+                <p>Get latest news and articles.</p>
+                <a href="#">Read more</a>
+              </div>
+            </div>
+            <div class="col-sm-5 col-xs-12 hidden-xs sidebar">
+              <div class="side_box">
+                <div class="blog_sidecat" v-for="(b,cat) in sideBlogs">
+                  <h4>{{cat}}</h4>
+                  <div class="cat_side" v-for="(blog,name) in b">
+                    <a href="#" class="cat_img"  @click="$router.push({path:'/article', query:{name,selArticle:articleBlog(blog),sideBlogs:articleBlog(sideBlogs)}})"><img :src="blog.blogImgUrl" alt="image"></a>
+                    <div class="cat_cont">
+                      <h5><a href="#">{{name}}</a></h5>
+                      <a href="#" class="cat_link" v-for="i in blog.blogTag ">{{i}}</a>
+                      <ul class="list-unstyled list-inline blog_views">
+                        <li><img src="/static/images/view.svg" alt="view">{{blog.views}}</li>
+                        <li><img src="/static/images/heart-icon.svg" alt="view">{{blog.likes}}</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                <div class="ads">
+                  <a href="#">
+                    <img src="/static/images/ads@2x.jpg" alt="ads">
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <login></login>
+  <!--div style="background-color:yellow ">{{this.$store.state.article.blogName}}</div>
+    {{$store.state.article.blogDet}}-->
+  {{$store.state.article.sideBlogs}}
+  </div>
+</template>
+<script>
+  import btnLoader from '@/components/gen/btnLoader'
+  import moment from 'moment'
+  import {mapGetters} from 'vuex'
+  import {mapMutations} from 'vuex'
+  import login from '@/components/auth/login'
+  export default {
+    components:{
+      login,
+      btnLoader
+    },
+    methods:{
+      ...mapMutations([
+        'blogLike'
+      ]),
+      dates(date){
+        let newDate = moment(date).format('MMMM D YYYY')
+        return newDate
+      },
+      articleBlog(blog){
+        console.log(blog)
+        let selBlog = JSON.stringify(blog)
+        console.log(selBlog)
+        return selBlog
+      },
+    },
+    watch:{
+      $route:function () {
+        this.$store.commit('articleContents')
+      }
+    },
+    computed:{
+      ...mapGetters([
+        'blogName',
+        'blogDet',
+        'sideBlogs',
+        'articleLike',
+        'articleViews',
+        'isLoggedIn',
+        'user',
+        'userLike',
+        'likeBtnLoader'
+      ])
+    },
+    created(){
+      this.$store.commit('articleContents')
+    }
+  }
+</script>

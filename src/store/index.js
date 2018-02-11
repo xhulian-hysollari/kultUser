@@ -17,6 +17,8 @@ import brand_all from './modules/brand/brand_all'
 import howTo from './modules/howTo/howTo'
 //blog
 import blog from './modules/blog/blog'
+import blogFunc from './modules/blog/blogFunctions'
+import article from './modules/blog/article'
 //profile
 import editProfile from './modules/profile/editProfile'
 import changePassword from "./modules/profile/changePassword"
@@ -45,10 +47,12 @@ export const store = new Vuex.Store({
     howTo,
     //
     blog,
+    blogFunc,
+    article,
     //
     editProfile,
     changePassword,
     deleteAccount,
-    updatePhoneNo
+    updatePhoneNo,
   }
 })

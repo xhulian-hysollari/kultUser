@@ -16,7 +16,9 @@ const state = {
   user: {},
   isLoggedIn : false,
   //
-  authLoader: true
+  authLoader: true,
+  showForgot:false,
+  showAuthPopup:''
 }
 
 const getters = {
@@ -27,7 +29,9 @@ const getters = {
   user : state => state.user,
   isLoggedIn: state => state.isLoggedIn,
   //
-  authLoader : state => state.authLoader
+  authLoader : state => state.authLoader,
+  showForgot : state => state.showForgot,
+  showAuthPopup : state => state.showAuthPopup
 }
 
 const mutations = {
@@ -40,6 +44,7 @@ const mutations = {
         //
         state.isLoggedIn = true
         state.user = user
+
         //
         console.log("user => ", user)
         //
@@ -158,6 +163,7 @@ const mutations = {
                 phone : payload.phone
               }).then(()=>{
               console.log("dob updated!")
+             // state.showAuthPopup=false
             })
           },100)
           //
@@ -184,6 +190,7 @@ const mutations = {
   //
   //
   emailPasswordLogin(state2, payload){
+    let c = 0
     console.log(payload)
     //
     firebase.auth().signInWithEmailAndPassword(payload.email, payload.password)
@@ -197,7 +204,7 @@ const mutations = {
       //
       // ...
       alert("Error: " + error.message)
-    });
+    })
   },
   //
   // LOGOUT
