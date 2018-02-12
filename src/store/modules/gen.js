@@ -9,6 +9,7 @@ import header_brand from './header/header_brand'
 //
 import auth from './auth'
 
+
 const state = {
   storage: {},
   firestore: {},
@@ -104,6 +105,7 @@ const mutations = {
     //
     header_shopOption.mutations.getShopOptions(state) // get shop dropdown content
     header_brand.mutations.getBrandCat(state) // brand dropdown content
+
     //
   },
   //

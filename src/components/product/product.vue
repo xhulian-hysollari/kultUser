@@ -109,7 +109,7 @@
                 <div class="cat_prodarea">
                   <el-row :gutter="15" >
                     <el-col :xs="12" :sm="12" :md="8" :lg="8" v-for="(pDet, pId) in products" >
-                      <div @click="$router.push({path:`/particularProduct/${pId}`,query:{prodDet:JSON.stringify(pDet)}})">
+                      <div>
                         <div class="grid-content pa-2" >
                           <a class="prod_image" href="#">
                             <img :src="pDet.pBasicDetail.pPicUrl" alt="product">
@@ -120,9 +120,15 @@
                           </div>
                           <div class="prod_misc">
                             <div class="float"><rating :num="Math.round(pDet.pBasicDetail.pRating)" ></rating></div>
-                            <div class="half text-right">From <img src="/static/images/rupee-2.svg" alt="currency">{{pDet.priceStartsFrom}}</div>
+                            <div class="half text-right" v-if="Object.keys(pDet).indexOf(pDet.priceStartsFrom) != -1">From <img src="/static/images/rupee-2.svg" alt="currency" >{{pDet.priceStartsFrom}}</div>
                           </div>
-                          <a href="#" class="prod_compare">Compare price <img src="/static/images/wishlist-add.svg" alt="wishlist-add"></a>
+                          <a  class="prod_compare" v-if="isLoggedIn"><span @click="$router.push({path:`/particularProduct/${pId}`,query:{prodDet:JSON.stringify(pDet)}})">Compare price</span>
+                            <img src="/static/images/wishlist-add.svg" alt="wishlist-add" v-if="Object.keys(wishlistObj).indexOf(pId) === -1" @click="addWishlist(pId),$forceUpdate()">
+                            <img src="/static/images/wishlist-hover.svg" alt="wishlist-hover" v-if="Object.keys(wishlistObj).indexOf(pId) !== -1" @click="removeWishlist(pId),$forceUpdate()">
+                          </a>
+                          <a  class="prod_compare" v-if="!isLoggedIn"><span @click="$router.push({path:`/particularProduct/${pId}`,query:{prodDet:JSON.stringify(pDet)}})">Compare price</span>
+                            <img src="/static/images/wishlist-add.svg" alt="wishlist-add" @click="$store.state.auth.showLoginPopup = true">
+                          </a>
                           <a href="#" class="go_store">Go to store</a>
                         </div>
                       </div>
@@ -136,12 +142,12 @@
         </div>
     </div>
 
-   PRODUCTS=>
+  <!-- PRODUCTS=>
     <!-- if a product doesnot have priceStartsFrom or have value such as NaN or 999999999, the product is out of stock -->
-    <div v-for="(pDet, pId) in products" @click="goTo('/particularProduct/' + pId)">
+   <!-- <div v-for="(pDet, pId) in products" @click="goTo('/particularProduct/' + pId)">
       {{pId}}
       {{pDet}}
-    </div>
+    </div> -->
     <!--infinite-loading @infinite="loadMoreProducts({
       routePath: routeDet.routePath
     })">
@@ -190,7 +196,9 @@
     //
     methods:{
       ...mapMutations([
-        'loadMoreProducts','goTo'
+        'loadMoreProducts','goTo',
+        'addWishlist',
+        'removeWishlist'
       ]),
       closeFilter(name){
         if(this.filterBoxes[name] !== false){
@@ -220,7 +228,10 @@
         'filter', // all filters // to show all filters properly on DOM
         'filterLoader', // till filter is not loaded this is true.
         'products', // all products gets loaded in this, show in DOM
-        'productsLoader' // till products are loaded this is true
+        'productsLoader', // till products are loaded this is true
+        'wishlistObj',
+        'isLoggedIn',
+
       ])
     },
     //

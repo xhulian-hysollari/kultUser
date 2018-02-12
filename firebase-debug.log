@@ -1,0 +1,71 @@
+[debug] [2018-02-11T21:32:26.810Z] ----------------------------------------------------------------------
+[debug] [2018-02-11T21:32:26.815Z] Command:       /usr/local/bin/node /usr/local/bin/firebase serve
+[debug] [2018-02-11T21:32:26.816Z] CLI Version:   3.11.0
+[debug] [2018-02-11T21:32:26.816Z] Platform:      darwin
+[debug] [2018-02-11T21:32:26.816Z] Node Version:  v6.11.3
+[debug] [2018-02-11T21:32:26.816Z] Time:          Mon Feb 12 2018 03:02:26 GMT+0530 (IST)
+[debug] [2018-02-11T21:32:26.816Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2018-02-11T21:32:26.844Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2018-02-11T21:32:26.844Z] > authorizing via signed-in user
+[debug] [2018-02-11T21:32:26.846Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2018-02-11T21:32:26.846Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token { refresh_token: '1/XFj6o9RK2MB-1mKkwVfBfJ4vlzejd1-yXlMu2AOVk2A',
+  client_id: '563584335869-fgrhgmd47bqnekij5i8b5pr03ho849e6.apps.googleusercontent.com',
+  client_secret: 'j9iVZfS8kkCEFUPaAeJV0sAi',
+  grant_type: 'refresh_token',
+  scope: 'email https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/cloudplatformprojects.readonly https://www.googleapis.com/auth/firebase openid' } 
+ Mon Feb 12 2018 03:02:26 GMT+0530 (IST)
+[debug] [2018-02-11T21:32:27.830Z] <<< HTTP RESPONSE 200
+[debug] [2018-02-11T21:32:27.846Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/kultuser  
+ Mon Feb 12 2018 03:02:27 GMT+0530 (IST)
+[debug] [2018-02-11T21:32:29.666Z] <<< HTTP RESPONSE 200
+[debug] [2018-02-11T21:32:29.668Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/kultuser/tokens  
+ Mon Feb 12 2018 03:02:29 GMT+0530 (IST)
+[debug] [2018-02-11T21:32:31.609Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Serving from '/Users/priyanshu/Desktop/projects/kultUser'...
+[info] 
+[debug] [2018-02-11T21:32:31.615Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/kultuser  
+ Mon Feb 12 2018 03:02:31 GMT+0530 (IST)
+[debug] [2018-02-11T21:32:33.862Z] <<< HTTP RESPONSE 200
+[debug] [2018-02-11T21:32:33.863Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/391277220635/clients/_:getWebAppConfig  
+ Mon Feb 12 2018 03:02:33 GMT+0530 (IST)
+[debug] [2018-02-11T21:32:36.118Z] <<< HTTP RESPONSE 200
+[info] i  hosting: Serving hosting files from: dist
+[info] ✔  hosting: Local server: http://localhost:5000
+
+[debug] [2018-02-11T21:36:29.278Z] ----------------------------------------------------------------------
+[debug] [2018-02-11T21:36:29.281Z] Command:       /usr/local/bin/node /usr/local/bin/firebase serve
+[debug] [2018-02-11T21:36:29.282Z] CLI Version:   3.11.0
+[debug] [2018-02-11T21:36:29.282Z] Platform:      darwin
+[debug] [2018-02-11T21:36:29.282Z] Node Version:  v6.11.3
+[debug] [2018-02-11T21:36:29.284Z] Time:          Mon Feb 12 2018 03:06:29 GMT+0530 (IST)
+[debug] [2018-02-11T21:36:29.285Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2018-02-11T21:36:29.307Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2018-02-11T21:36:29.308Z] > authorizing via signed-in user
+[debug] [2018-02-11T21:36:29.310Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/kultuser  
+ Mon Feb 12 2018 03:06:29 GMT+0530 (IST)
+[debug] [2018-02-11T21:36:31.950Z] <<< HTTP RESPONSE 200
+[debug] [2018-02-11T21:36:31.952Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/kultuser/tokens  
+ Mon Feb 12 2018 03:06:31 GMT+0530 (IST)
+[debug] [2018-02-11T21:36:33.582Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Serving from '/Users/priyanshu/Desktop/projects/kultUser'...
+[info] 
+[debug] [2018-02-11T21:36:33.588Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/kultuser  
+ Mon Feb 12 2018 03:06:33 GMT+0530 (IST)
+[debug] [2018-02-11T21:36:35.833Z] <<< HTTP RESPONSE 200
+[debug] [2018-02-11T21:36:35.834Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/391277220635/clients/_:getWebAppConfig  
+ Mon Feb 12 2018 03:06:35 GMT+0530 (IST)
+[debug] [2018-02-11T21:36:37.675Z] <<< HTTP RESPONSE 200
+[warn] ⚠  hosting: Port 5000 is not available. Trying another port...
+[debug] [2018-02-11T21:36:37.723Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/kultuser  
+ Mon Feb 12 2018 03:06:37 GMT+0530 (IST)
+[debug] [2018-02-11T21:36:39.345Z] <<< HTTP RESPONSE 200
+[debug] [2018-02-11T21:36:39.346Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/391277220635/clients/_:getWebAppConfig  
+ Mon Feb 12 2018 03:06:39 GMT+0530 (IST)
+[debug] [2018-02-11T21:36:40.542Z] <<< HTTP RESPONSE 200
+[info] i  hosting: Serving hosting files from: dist
+[info] ✔  hosting: Local server: http://localhost:5004
+

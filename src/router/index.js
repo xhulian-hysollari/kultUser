@@ -99,6 +99,11 @@ const editProfile = resolve => {
     resolve(require('@/components/profile/editProfile'));
   });
 };
+const wishlist = resolve => {
+  require.ensure(['@/components/wishlist/wishlist'],()=>{
+    resolve(require('@/components/wishlist/wishlist'));
+  });
+};
 const changePassword = resolve => {
   require.ensure(['@/components/profile/changePassword'],()=>{
     resolve(require('@/components/profile/changePassword'));
@@ -148,6 +153,8 @@ export default new Router({
     { path: '/editProfile', name: 'Edit Profile', component: editProfile },
     { path: '/changePassword', name: 'Change Password', component: changePassword },
     { path: '/deleteAccount', name: 'Delete Account', component: deleteAccount },
-    { path: '/updatePhoneNo', name: 'Update Phone No', component: updatePhoneNo }
+    { path: '/updatePhoneNo', name: 'Update Phone No', component: updatePhoneNo },
+    //wishlist
+    { path: '/wishlist', name: 'Wishlist', component: wishlist }
   ]
 })

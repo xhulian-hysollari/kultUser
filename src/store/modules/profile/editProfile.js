@@ -8,6 +8,7 @@ const state = {
   uName: '',
   //
   uPhone: '',
+  uRefcode:'',
   //
   uDetLoader : false,
   //
@@ -62,6 +63,7 @@ const mutations = {
         console.log(queryUserDet.data()) // .dob
         state.uDob = queryUserDet.data().dob //dob
         state.uPhone = queryUserDet.data().phone //phone
+        state.uRefcode=queryUserDet.data().refCode
       }
       //
       console.log(state.uEmail + " | " + state.uName + " | " +  state.uDob)
@@ -109,16 +111,17 @@ const mutations = {
         console.log("//name updated")
         //
         let tmpObj = {}
-        if(payload.phone){
+        //if(payload.phone){
           tmpObj = {
             dob: payload.dob,
-            phone: payload.phone
+            phone: payload.phone,
+            refCode:payload.refCode
           }
-        }else{
-          tmpObj = {
-            dob: payload.dob
-          }
-        }
+       // }else{
+         // tmpObj = {
+          //  dob: payload.dob
+         // }
+       // }
         //
         gen.state.firestore
           .collection("user").doc(auth.state.user.uid)
