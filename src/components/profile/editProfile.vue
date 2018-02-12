@@ -46,8 +46,13 @@
                       </div>
                       <div class="clearfix"></div>
                       <div class="col-xs-12">
-                        <label>Number (Required)</label>
+                        <label>Number</label>
                         <input type="text" v-model="$store.state.editProfile.uPhone" class="form-control">
+                      </div>
+                      <div class="clearfix"></div>
+                      <div class="col-xs-12">
+                        <label>Refral Code</label>
+                        <input type="text" v-model="$store.state.editProfile.uRefcode" class="form-control">
                       </div>
                       <div class="clearfix"></div>
                     </div>
@@ -59,7 +64,8 @@
                         name: $store.state.editProfile.uName,
                         email: $store.state.editProfile.uEmail,
                         dob: $store.state.editProfile.uDob,
-                        phone: $store.state.editProfile.uPhone
+                        phone: $store.state.editProfile.uPhone,
+                        refCode:$store.state.editProfile.uRefcode
                       })"
                     >Save changes
                     </button>

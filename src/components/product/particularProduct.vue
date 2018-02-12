@@ -36,9 +36,9 @@
                     <li  v-if="selected.key===i.key" class="active"><a href="#"> {{i.key}}</a></li>
                   </span>
                 </ul>
-                <div class="prod_pricerange">
+              <!--  <div class="prod_pricerange" v-if="Object.keys(JSON.parse($route.query.prodDet)).indexOf(priceStartsFrom) != -1">
                   From <strong>{{JSON.parse($route.query.prodDet).priceStartsFrom}}</strong>Rupee
-                </div>
+                </div> -->
                 <div class="prod_storelinks">
                   <div class="store_nos">
                     <!--img src="/static/images/price-2.svg" alt="price">
@@ -180,7 +180,7 @@
 
 
     <!-- sometimes there isn't price for a domain, in this case hide the links too -->
-    <!--{{pTypes}}-->
+    {{pTypes}}
 
   </div>
 </template>

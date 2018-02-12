@@ -40,7 +40,7 @@
                     </ul>
                     <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu2" v-if="!isLoggedIn">
                       <li><span>Your Account</span></li>
-                      <li><a data-toggle="modal" data-target="#loginModal" href="#" >Login</a></li>
+                      <li @click="$store.state.auth.showLoginPopup=true"><a data-toggle="modal" data-target="#loginModal" href="#" >Login</a></li>
                       <li><a data-toggle="modal" data-target="#regModal" href="#" >Create an Account</a></li>
                     </ul>
                   </div>
@@ -55,12 +55,16 @@
                     <span class="hamb-middle"></span>
                     <span class="hamb-bottom"></span>
                   </button>
-                  <a @click="goTo('/')" class="logo visible-xs"><img src="/static/images/logo.svg" alt="logo"></a>
+                  <a class="logo visible-xs" ><img src="/static/images/logo.svg" alt="logo"></a>
                   <ul class="top_quick_links">
                     <li>
-                      <a href="#">
+                      <a href="#" v-if="isLoggedIn">
                         <img src="/static/images/wishlist.svg" alt="wishlist">
-                        <span class="hidden-xs">Wishlist (0)</span>
+                        <span class="hidden-xs" @click="goTo('/wishlist')" >Wishlist (0)</span>
+                      </a>
+                      <a href="#" v-if="!isLoggedIn"  @click="$store.state.auth.showLoginPopup = true" >
+                        <img src="/static/images/wishlist.svg" alt="wishlist">
+                        <span class="hidden-xs" @click="goTo('/wishlist')" v-if="isLoggedIn">Wishlist (0)</span>
                       </a>
                     </li>
                     <li class="sec">
@@ -209,10 +213,10 @@
                     <div slot="header"  class="white ml_5">LOGIN/REGISTER</div>
                     <v-card  class="white ml_20" >
                       <v-card-text >
-                       <li data-toggle="modal" data-target="#loginModal" href="#" @click="hamburger_cross()"> LOGIN</li>
+                       <li href="#" data-toggle="modal" data-target="#regModal" @click="hamburger_cross()  "> LOGIN</li>
                       </v-card-text>
                       <v-card-text >
-                        <li data-toggle="modal" data-target="#regModal" href="#" @click="hamburger_cross()"> CREATE AN ACCOUNT</li>
+                        <li data-toggle="modal" data-target="#regModal" href="#" @click="hamburger_cross()  "> CREATE AN ACCOUNT</li>
                       </v-card-text>
                     </v-card>
                   </v-expansion-panel-content>
@@ -382,6 +386,7 @@
     },
     computed:{
       ...mapGetters([
+        'showNewsletterInput',
         'dbRefLoader',
         // SHOP DROPDOWN
         'shopOptions', // shop dropdown var
@@ -395,7 +400,6 @@
         //
         'authLoader',
         'showAuthPopup',
-        'showNewsletterInput'
       ])
     },
     components:{
@@ -405,9 +409,6 @@
       login_form,
       signup_form,
       btnLoader
-    },
-   beforeMount(){
-
     },
     created(){
       window.thisOfVueComp_2 = this

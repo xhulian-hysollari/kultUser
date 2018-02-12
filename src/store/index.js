@@ -24,7 +24,8 @@ import editProfile from './modules/profile/editProfile'
 import changePassword from "./modules/profile/changePassword"
 import deleteAccount from './modules/profile/deleteAccount'
 import updatePhoneNo from './modules/profile/updatePhoneNo'
-
+//wishlist
+import wishlist from './modules/wishlist/wishlist'
 
 Vue.use(Vuex)
 
@@ -54,5 +55,7 @@ export const store = new Vuex.Store({
     changePassword,
     deleteAccount,
     updatePhoneNo,
+    //
+    wishlist
   }
 })

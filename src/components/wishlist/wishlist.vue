@@ -1,0 +1,147 @@
+<template>
+  <div>
+    <div class="banner_strip"></div>
+    <div class="comm_account">
+      <div class="container">
+        <div class="accont_box">
+          <div class="acount_top text-center">
+            <a href="#" class="edit_account">
+              <img src="/static/images/icon-135-pen-angled.svg" alt="icon">
+              Edit Account
+            </a>
+            <div class="account_pic">
+              <div class="acount_name">{{$store.state.auth.user.displayName[0].toUpperCase()}}</div>
+              <div class="full_name" >{{$store.state.auth.user.displayName}}</div>
+            </div>
+            <div class="acc_menu">
+              <ul>
+                <li><a href="#">CREDIT</a></li>
+                <li class="active"><a href="#">WISHLIST</a></li>
+                <li><a href="#">MY ORDER</a></li>
+                <li><a href="#">WITHDRAWAL</a></li>
+                <li><a href="#">AMAZON CASHBACK REQUEST</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="acount_btm">
+            <div class="row">
+              <div class="col-xs-12 col-md-4">
+                <h4>Wishlist</h4>
+                <div class="order_commit">
+                  <p>Total Cashback Amount</p>
+                  <p class="sm"><span>₹ 0</span> Confirmed &nbsp; <span>₹ 0</span> Unconfirmed</p>
+                </div>
+              </div>
+              <div class="text-right entries col-xs-12 col-md-8 wishlist-control">
+                <span href="#" onclick="window.print();" class="print-wishlist">Print</span>
+                <span href="#" class="share-wishlist">Share</span>
+                <div class="wishlist-sort-wrapper">
+                  <label for="wishlist-sort">Sort by</label>
+                  <select name="wishlist-sort" id="wishlist-sort">
+                    <option value="most-recent">Most recently added</option>
+                    <option value="lowest-price">Lowest price first</option>
+                  </select>
+                </div>
+                <div class="view-switcher">
+                  <div class="grid-view">
+                    <span class="grid-box"></span>
+                    <span class="grid-box"></span>
+                    <span class="grid-box"></span>
+                    <span class="grid-box"></span>
+                    <span class="grid-box"></span>
+                    <span class="grid-box"></span>
+                    <span class="grid-box"></span>
+                    <span class="grid-box"></span>
+                    <span class="grid-box"></span>
+                  </div>
+                  <div class="list-view active">
+                    <span class="list-box"></span>
+                    <span class="list-box"></span>
+                    <span class="list-box"></span>
+                    <span class="list-box"></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="wishlist-main">
+              <div class="wishlist-options">
+
+              </div>
+              <div class="wishlist-products">
+                <div class="prod_repeater">
+                  <div class="prod_repeat prod_repeat1" v-for="(pDet, pId) in wishlistObj" >
+                    <a class="prod_image" href="#">
+                      <img :src="pDet.pBasicDetail.pPicUrl" alt="product">
+                    </a>
+                    <div class="prod_cont">
+                      <h4><a href="#">{{pDet.pBasicDetail.pBrand}}</a></h4>
+                      <p>{{pDet.pBasicDetail.pName}}</p>
+                    </div>
+                    <div class="prod_misc">
+                      <div class="float"><rating :num="Math.round(pDet.pBasicDetail.pRating)" ></rating></div>
+                      <div class="half text-right" v-if="Object.keys(pDet).indexOf(pDet.priceStartsFrom) != -1">From <img src="/static/images/rupee-2.svg" alt="currency" >{{pDet.priceStartsFrom}}</div>
+                    </div>
+                    <a  class="prod_compare" v-if="isLoggedIn"><span @click="$router.push({path:`/particularProduct/${pId}`,query:{prodDet:JSON.stringify(pDet)}})">Compare price</span>
+                      <img src="/static/images/wishlist-add.svg" alt="wishlist-add" v-if="Object.keys(wishlistObj).indexOf(pId) === -1" @click="addWishlist(pId),$forceUpdate()">
+                      <img src="/static/images/wishlist-hover.svg" alt="wishlist-hover" v-if="Object.keys(wishlistObj).indexOf(pId) !== -1" @click="removeWishlist(pId),$forceUpdate()">
+                    </a>
+                    <a  class="prod_compare" v-if="!isLoggedIn"><span @click="$router.push({path:`/particularProduct/${pId}`,query:{prodDet:JSON.stringify(pDet)}})">Compare price</span>
+                      <img src="/static/images/wishlist-add.svg" alt="wishlist-add" @click="$store.state.auth.showLoginPopup = true">
+                    </a>
+                    <a href="#" class="go_store">Go to store</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+<script>
+  import InfiniteLoading from 'vue-infinite-loading';
+  import {mapMutations} from 'vuex'
+  import {mapGetters} from 'vuex'
+  import rating from '@/components/rating'
+  import loader from '@/components/gen/loader'
+  //
+  import productNfilter from '../../mixins/productNfilter'
+  import VIcon from "vuetify/es5/components/VIcon/VIcon";
+  //
+  export default{
+    //
+    data(){
+      return{
+        cnt:0,
+        filterBoxes:[],
+        toggler:false
+      }
+    },
+    components: {
+      VIcon,
+      rating,
+      infiniteLoading:InfiniteLoading,
+      loader
+    },
+    mixins:[productNfilter],
+    props: ['routeDet'],
+    //
+    methods:{
+      ...mapMutations([
+        'loadMoreProducts','goTo',
+        'addWishlist',
+        'removeWishlist'
+      ]),
+    },
+    computed:{
+      ...mapGetters([
+        'products', // all products gets loaded in this, show in DOM
+        'productsLoader', // till products are loaded this is true
+        'wishlistObj',
+        'isLoggedIn',
+
+      ])
+    }
+  }
+</script>

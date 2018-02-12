@@ -1,6 +1,7 @@
 import firebase from 'firebase'
 import editProfile from './profile/editProfile'
 import gen from './gen'
+import wishlist from './wishlist/wishlist'
 
 const state = {
   //email-pass
@@ -18,7 +19,11 @@ const state = {
   //
   authLoader: true,
   showForgot:false,
-  showAuthPopup:''
+  showAuthPopup:'',
+  phoneNumber:'',
+  refCode:'',
+  showRefCode:false,
+  showLoginPopup:false
 }
 
 const getters = {
@@ -31,10 +36,29 @@ const getters = {
   //
   authLoader : state => state.authLoader,
   showForgot : state => state.showForgot,
-  showAuthPopup : state => state.showAuthPopup
+  showAuthPopup : state => state.showAuthPopup,
+  showRefCode:state=>state.showRefCode,
+  showLoginPopup:state=>state.showLoginPopup
+
 }
 
 const mutations = {
+  afterLogin_userDetail(state2, payload){ //phone and refCode
+    //
+    gen.state.btnLoader = true
+    //
+    gen.state.firestore
+      .collection("user").doc(state.user.uid)
+      .set({
+        refCode: payload.refCode, //para 1
+        phone: payload.phone //para 2
+      }, {merge: true}).then(()=>{
+      //
+      gen.state.btnLoader = false
+      state.showRefCode=false
+      alert('Details Saved !')
+    })
+  },
   //
   //LOGIN STATUS
   getLoginStatus(state2){
@@ -46,7 +70,9 @@ const mutations = {
         state.user = user
 
         //
+        state.showRefCode=true
         console.log("user => ", user)
+        wishlist.mutations.getWishlist(state)
         //
         //
       } else {
