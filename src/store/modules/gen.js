@@ -21,7 +21,9 @@ const state = {
   btnLoader: false,
   //
   newsLetterEmail:'',
-  showNewsletterInput:true
+  showNewsletterInput:true,
+  //
+  pObj: {}
 }
 
 const getters = {
@@ -117,17 +119,84 @@ const mutations = {
         path: '/'
       })
     }
-  }
+  },
+  //
+  uploadImg(state2, payload){
+    //
+    let pUrl = URL.createObjectURL(payload.event.target.files[0])
+    let pKey = pUrl.slice(pUrl.lastIndexOf('/') + 1)
+    //
+    let pBlob = payload.event.target.files[0]
+    //
+    state.pObj = {}
+    //
+    //if(!payload.mulImg){ // if not multiple image clear obj
+      //state.pObj = {}
+    //}
+    //
+    state.pObj = {
+      pBlob,
+      pUrl
+    }
+    //
+    console.log(state.pObj)
+    //
+    //window.tag.$forceUpdate() //no need not showing pic
+  },
+  //
 }
 
 const actions = {
+  //
   validateEmail({commit}, email) {
     return new Promise(function(resolve){
       let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
       resolve(re.test(email))
     })
   },
+  //
+  isEmpty(state, payload){
+    return new Promise((res)=>{
+      let re = /([^\s])/
+      if(!re.test(payload)){
+        res(true)
+        //
+        alert('Empty Field !')
+        state.showSnackBar = true
+      }else{
+        res(false)
+      }
+    })
+  },
+  //
+  saveImgInStorage(state2, payload){
 
+    let pKey =   payload.pUrl.slice(payload.pUrl.lastIndexOf('/')+1)
+
+    console.log("2 => ",state.storage)
+    //
+    console.log(payload)
+    console.log(pKey)
+    console.log(payload.pBlob)
+    //
+    return new Promise((res)=>{
+      //
+      let uploadTask = state.storage.ref('amazonCashback/' + pKey).put(payload.pBlob)
+
+      //
+      uploadTask.on('state_changed', function(snapshot) {
+
+      }, function(error){
+        //
+        console.log(error)
+        //
+      },function() {
+        console.log(uploadTask.snapshot.downloadURL)
+        //
+        res(uploadTask.snapshot.downloadURL)
+      })
+    })
+  }
 }
 
 export default {

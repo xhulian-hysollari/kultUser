@@ -26,6 +26,11 @@ import deleteAccount from './modules/profile/deleteAccount'
 import updatePhoneNo from './modules/profile/updatePhoneNo'
 //wishlist
 import wishlist from './modules/wishlist/wishlist'
+//cashback
+import amazonCashbackReq from './modules/cashback/amazonCashbackReq'
+import credit from './modules/cashback/credit'
+import myOrder from './modules/cashback/myOrder'
+import withdrawReq from './modules/cashback/withdrawReq'
 
 Vue.use(Vuex)
 
@@ -56,6 +61,11 @@ export const store = new Vuex.Store({
     deleteAccount,
     updatePhoneNo,
     //
-    wishlist
+    wishlist,
+    //
+    amazonCashbackReq,
+    credit,
+    myOrder,
+    withdrawReq
   }
 })
