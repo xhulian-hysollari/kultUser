@@ -11,6 +11,7 @@ import auth from './auth'
 
 
 const state = {
+  searchList:{},
   storage: {},
   firestore: {},
   //
@@ -22,6 +23,8 @@ const state = {
   //
   newsLetterEmail:'',
   showNewsletterInput:true,
+  searchInput:'',
+
   //
   pObj: {}
 }
@@ -29,7 +32,8 @@ const state = {
 const getters = {
   dbRefLoader: state => state.dbRefLoader,
   btnLoader: state => state.btnLoader,
-  showNewsletterInput:state=>state.showNewsletterInput
+  showNewsletterInput:state=>state.showNewsletterInput,
+  searchList:state=>state.searchList
 }
 
 const mutations = {
@@ -120,6 +124,22 @@ const mutations = {
       })
     }
   },
+  search(){
+   // alert('hi')
+   // alert(document.getElementById('search').value)
+    axios.get('https://us-central1-kult-2.cloudfunctions.net/searchProduct', {
+      params: {
+        qStr:state.searchInput
+      }
+    }).then(function (response) {
+      console.log(response.data)
+      state.searchList={}
+      state.searchList = response.data
+      console.log(Object.keys(response.data).length)
+    }).catch(function (error) {
+      console.log(error)
+    })
+  },
   //
   uploadImg(state2, payload){
     //
@@ -144,6 +164,7 @@ const mutations = {
     //window.tag.$forceUpdate() //no need not showing pic
   },
   //
+
 }
 
 const actions = {

@@ -15,9 +15,9 @@
             </div>
             <div class="acc_menu">
               <ul>
-                <li><a href="#">EDIT PROFILE</a></li>
-                <li class="active"><a href="#">CHANGE PASSWORD</a></li>
-                <li><a href="#">CLOSE ACCOUNT</a></li>
+                <li><a @click="$router.replace('/editProfile')">EDIT PROFILE</a></li>
+                <li class="active"><a >CHANGE PASSWORD</a></li>
+                <li><a @click="$router.replace('/deleteAccount')">CLOSE ACCOUNT</a></li>
               </ul>
             </div>
           </div>
@@ -148,6 +148,9 @@
       ])
     },
     created(){
+      if(!this.$store.state.auth.isLoggedIn){
+        this.$router.push('/')
+      }
       let vm = this
       window.thisOfVueComp = this
       //

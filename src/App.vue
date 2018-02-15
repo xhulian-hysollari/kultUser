@@ -2,14 +2,14 @@
   <div >
 
     <loader v-if="dbRefLoader"></loader>
-    <div v-else>
+    <div v-else >
       <loader v-if="authLoader"></loader>
       <div v-else>
         <div class="wrapper" >
           <header>
             <div class="top_strip">
               <div class="container text-center">
-                <p>
+                <p @click="goTo('/cashback')">
                   <img src="/static/images/price.svg" alt="price">
                   Get 5% Cashback on all your purchases.
                   <img src="/static/images/arrow.svg" alt="price">
@@ -36,12 +36,12 @@
                       <li><span>Your Account</span></li>
                       <li><a >{{user.displayName}}</a></li>
                       <li><a >{{user.email}}</a></li>
-                      <li><a >EDIT PROFILE</a></li>
+                      <li><a >Edit Profile</a></li>
                     </ul>
                     <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu2" v-if="!isLoggedIn">
                       <li><span>Your Account</span></li>
-                      <li @click="$store.state.auth.showLoginPopup=true"><a data-toggle="modal" data-target="#loginModal" href="#" >Login</a></li>
-                      <li><a data-toggle="modal" data-target="#regModal" href="#" >Create an Account</a></li>
+                      <li @click="$store.state.auth.showLoginPopup=true"><a >Login</a></li>
+                      <li @click="$store.state.auth.showRegisterPopup=true"><a  >Create an Account</a></li>
                     </ul>
                   </div>
                 </div>
@@ -60,11 +60,11 @@
                     <li>
                       <a href="#" v-if="isLoggedIn">
                         <img src="/static/images/wishlist.svg" alt="wishlist">
-                        <span class="hidden-xs" @click="goTo('/wishlist')" >Wishlist (0)</span>
+                        <span class="hidden-xs" @click="goTo('/wishlist')" >Wishlist ({{wishlistCnt}})</span>
                       </a>
                       <a href="#" v-if="!isLoggedIn"  @click="$store.state.auth.showLoginPopup = true" >
                         <img src="/static/images/wishlist.svg" alt="wishlist">
-                        <span class="hidden-xs" @click="goTo('/wishlist')" v-if="isLoggedIn">Wishlist (0)</span>
+                        <span class="hidden-xs" @click="goTo('/wishlist')" v-if="isLoggedIn">Wishlist </span>
                       </a>
                     </li>
                     <li class="sec">
@@ -79,19 +79,31 @@
                 <div class="col-sm-8 col-xs-12 pull-left">
                   <div class="search_form">
                     <a @click="goTo('/')"  class="logo hidden-xs"><img src="/static/images/logo.svg" alt="logo"></a>
-                    <form>
-                      <input type="text" placeholder="What are you looking for?" class="form-control">
-                      <button><img src="/static/images/search.svg" alt="search"></button>
+                    <div>
+                      <input type="text" v-model="$store.state.gen.searchInput" @keyup="search()" placeholder="What are you looking for?" class="form-control">
+                      <button ><img src="/static/images/search.svg" alt="search"></button>
                       <img class="search_close" src="/static/images/64-px-close.svg" alt="search">
-                    </form>
+                    </div>
+                    <el-card class="box-card" v-show=" searchList !== {} && $store.state.gen.searchInput !== ''">
+                      <div v-for="search in searchList" class="text item">
+                        <!--{{search}}-->
+                        <img :src="search.pBasicDetail.pPicUrl" width="50px" height="50px">
+                        <span v-for="(i,j) in search.pBasicDetail.pName" v-show="j < 16">
+                          <span>{{i}}</span>
+                        </span>
+                        <span v-if="search.pBasicDetail.pName.length > 15">...</span>
+                      </div>
+                    </el-card>
                   </div>
                 </div>
               </div>
             </div>
             <div class="container hidden-xs">
               <ul class="main_menu">
-                <li class="has_submenu shop" ><a href="#" >SHOP</a>
-                  <el-card class="opts">
+                <li class="has_submenu " @mouseover="showdiv=true"><a  >SHOP</a>
+
+
+                  <!--el-card class="opts">
                     <div class="opts" v-for="(shop,i) in Object.keys(shopOptions)">
                       {{shop.toUpperCase()}}
                       <span class="sub_opt" v-for="j in Object.keys(shopOptions[shop])">
@@ -104,20 +116,17 @@
                         {{shopOptions[i]}}
                       </div>
                     </div>
-                  </el-card>
+                  </el-card-->
                 </li>
                 <li class="has_submenu shop"><a href="#">BRANDS</a>
                   <el-card class="opts">
+                    <div @click="goTo(`/brandAll`)">
+                      <b>Brands A to Z</b>
+                    </div>
                     <div class="opts" v-for="(shop,i) in Object.keys(brandCat)">
-                      <div @click="goTo(`/brandAll`)">
-                        <b>Brands A to Z</b>
-                      </div>
-                      {{shop.toUpperCase()}}
-                      <div v-for="j in Object.keys(brandCat[shop])">
-                        <b>{{j.toUpperCase()}}</b>
-                        <div v-for="k in Object.keys(brandCat[shop][j])">
-                          {{k.toUpperCase()}}
-                        </div>
+                      <b>{{shop.toUpperCase()}}</b>
+                      <div v-for="j in Object.keys(brandCat[shop])" @click="goTo(`/brandProduct/${j}`)">
+                        <div>{{j.toUpperCase()}}</div>
                       </div>
                       <div class="cat" >
                         {{brandCat[i]}}
@@ -132,8 +141,9 @@
                     </div>
                   </div-->
                 </li>
-                <li><a href="#">KILT PICKS</a></li>
-                <li><a href="#">GLOBAL BESTSELLERS</a></li>
+
+                <li><a @click="goTo('/kultPick')">KILT PICKS</a></li>
+                <li><a @click="goTo('/globalBestseller')">GLOBAL BESTSELLERS</a></li>
                 <li class="has_submenu shop"><a href="#">BEAUTY GUIDE</a>
                   <el-card class="opts">
                     <div class="opts" v-for="guide in beautyGuideArr">
@@ -141,28 +151,48 @@
                     </div>
                   </el-card>
                 </li>
-                <li><a href="#">EDITOR’S BLOG</a></li>
-                <li class="has_submenu"><a href="#">KULT TV</a></li>
+                <li><a @click="goTo('/blog')">EDITOR’S BLOG</a></li>
+                <li ><a @click="goTo('/howTo')">KULT TV</a></li>
               </ul>
+
+            </div>
+            <div  @mouseleave="showdiv=false" v-if="showdiv" style="min-height: 300px">
+              <div  v-for="(shop,i) in Object.keys(shopOptions)" class="shop_pa">
+                <div class="shop_pa">
+                  <span class="shop_pa">{{shop.toUpperCase()}}</span>
+                  <div class="row make-columns shop_child">
+                    <div class="col-xs-6 col-md-4 col-lg-6 col-lg-push-4"  v-for="j in Object.keys(shopOptions[shop])" >
+                      <div class="panel panel-default">
+                        <div >
+                          <b @click="goTo(`/productSubCategory/${shop}/${j}`)">{{j.toUpperCase()}}</b>
+                          <div v-for="k in Object.keys(shopOptions[shop][j])" v-if="k.toUpperCase() !== 'DUMMY'" @click="goTo(`/productSubCategory/${shop}/${j}/${k}`)">
+                            {{k.toUpperCase()}}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
             <nav class="navbar navbar-inverse navbar-fixed-top visible-xs" id="sidebar-wrapper" role="navigation" >
               <ul class="nav sidebar-nav"  >
                 <v-expansion-panel expand >
                   <v-expansion-panel-content >
                     <div slot="header" class="white ml_5"   >SHOP</div>
-                    <v-card>
+                    <v-card flat>
                       <v-card-text  class="white" >
                         <v-expansion-panel expand v-for="(shop,i) in Object.keys(shopOptions)">
                           <v-expansion-panel-content >
                             <div slot="header" class="white"  >{{shop.toUpperCase()}}</div>
-                            <v-card>
+                            <v-card flat>
                               <v-card-text  class="white" >
                                 <v-expansion-panel expand  v-for="j in Object.keys(shopOptions[shop])">
                                   <v-expansion-panel-content >
-                                    <div slot="header" class="white" >{{j.toUpperCase()}}</div>
+                                    <div slot="header" class="white" @click="goTo(`/productSubCategory/${shop}/${j}`)">{{j.toUpperCase()}}</div>
                                     <v-card>
                                       <v-card-text  class="white" v-for="k in Object.keys(shopOptions[shop][j])">
-                                        <div class="ml_20">{{k.toUpperCase()}}</div>
+                                        <div class="ml_20" v-if="k.toUpperCase() !== 'DUMMY'" @click="goTo(`/productSubCategory/${shop}/${j}/${k}`)">{{k.toUpperCase()}}</div>
                                       </v-card-text>
                                     </v-card>
                                   </v-expansion-panel-content>
@@ -178,16 +208,22 @@
                 <v-expansion-panel expand >
                   <v-expansion-panel-content >
                     <div slot="header" class='white ml_5'  >BRANDS</div>
-                    <v-card>
+                    <v-card flat>
                       <v-card-text  class="white">
+                        <div class="white" @click="goTo('/brandAll')" >BRANDS A TO Z</div>
+                        <!--v-expansion-panel >
+                          <v-expansion-panel-content >
+
+                          </v-expansion-panel-content>
+                        </v-expansion-panel-->
                         <v-expansion-panel v-for="(shop,i) in Object.keys(brandCat)">
                           <v-expansion-panel-content >
                             <div slot="header" class="white" >{{shop.toUpperCase()}}</div>
-                            <v-card>
+                            <v-card flat>
                               <v-card-text  class="white" >
                                 <div  v-for="j in Object.keys(brandCat[shop])">
                                   <div >
-                                    <div  class="white ml_20"  >{{j.toUpperCase()}}</div>
+                                    <div  class="white ml_20"   @click="goTo(`/brandProduct/${j}`)">{{j.toUpperCase()}}</div>
                                   </div>
                                 </div>
                               </v-card-text>
@@ -199,9 +235,9 @@
                   </v-expansion-panel-content>
                 </v-expansion-panel>
                 <v-expansion-panel  v-for="name in headerCatNames">
-                  <v-expansion-panel-content >
-                    <div slot="header"  class="white ml_5">{{name.toUpperCase()}}</div>
-                    <v-card v-if="name==='beauty guide'" class="white ml_20" >
+                  <v-expansion-panel-content v-if="name.name!=='beauty guide'">
+                    <div slot="header"  class="white ml_5"  @click="goTo(name.funcPath)">{{name.name.toUpperCase()}}</div>
+                    <v-card flat v-if="name.name==='beauty guide'" class="white ml_20" >
                       <v-card-text v-for="guide in beautyGuideArr">
                         {{guide.toUpperCase()}}
                       </v-card-text>
@@ -211,14 +247,19 @@
                 <v-expansion-panel >
                   <v-expansion-panel-content v-if="!isLoggedIn">
                     <div slot="header"  class="white ml_5">LOGIN/REGISTER</div>
-                    <v-card  class="white ml_20" >
+                    <v-card flat class="white ml_20" >
                       <v-card-text >
-                       <li href="#" data-toggle="modal" data-target="#regModal" @click="hamburger_cross()  "> LOGIN</li>
+                       <li  @click="hamburger_cross() ; $store.state.auth.showLoginPopup=true "> LOGIN</li>
                       </v-card-text>
                       <v-card-text >
-                        <li data-toggle="modal" data-target="#regModal" href="#" @click="hamburger_cross()  "> CREATE AN ACCOUNT</li>
+                        <li @click="hamburger_cross() ; $store.state.auth.showRegisterPopup=true  "> CREATE AN ACCOUNT</li>
                       </v-card-text>
                     </v-card>
+                  </v-expansion-panel-content>
+                </v-expansion-panel>
+                <v-expansion-panel >
+                  <v-expansion-panel-content v-if="isLoggedIn">
+                    <div slot="header"  class="white ml_5">MY PROFILE</div>
                   </v-expansion-panel-content>
                 </v-expansion-panel>
                 <v-expansion-panel >
@@ -255,25 +296,27 @@
                     <div class="col-md-3 col-xs-4">
                       <h4>KULT.IN</h4>
                       <ul class="foot_menu">
-                        <li><a href="#">About Us</a></li>
-                        <li><a href="#">Contact us</a></li>
-                        <li><a href="#">Terms of Cashback</a></li>
-                        <li><a href="#">Blog</a></li>
+                        <li @click="goTo('/about')"><a >About Us</a></li>
+                        <li @click="goTo('/contact')"><a >Contact us</a></li>
+                        <li @click="goTo('/tnc')"><a >Terms of Cashback</a></li>
+                        <li @click="goTo('/blog')"><a >Blog</a></li>
                       </ul>
                     </div>
                     <div class="col-md-3 col-xs-4">
                       <h4>Account</h4>
                       <ul class="foot_menu">
-                        <li><a href="#">My Account</a></li>
-                        <li><a href="#">Wishlist</a></li>
-                        <li><a href="#">Register</a></li>
+                        <li v-if="isLoggedIn" @click="goTo('/editProfile')"><a >My Account</a></li>
+                        <li v-else @click="$store.state.auth.showLoginPopup=true"><a >My Account</a></li>
+                        <li v-if="isLoggedIn" @click="goTo('/wishlist')"><a >Wishlist</a></li>
+                        <li v-else @click="$store.state.auth.showLoginPopup=true"><a >Wishlist</a></li>
+                        <li v-if="!isLoggedIn" @click="$store.state.auth.showRegisterPopup=true"><a >Register</a></li>
                       </ul>
                     </div>
                     <div class="col-md-3 col-xs-4">
                       <h4>Support</h4>
                       <ul class="foot_menu">
-                        <li><a href="#">Info@Kult.in</a></li>
-                        <li><a href="#">How to’s</a></li>
+                        <li><a  href= "mailto:info@kult.in" target="_top">Info@Kult.In</a></li>
+                        <li @click="goTo(`/howTo`)"><a >How to’s</a></li>
                       </ul>
                     </div>
                   </div>
@@ -303,10 +346,10 @@
                 </div>
                 <div class="col-sm-3 text-right cust_center pull-right col-xs-6">
                   <ul class="foot_social list-unstyled list-inline">
-                    <li><a href="#" target="_blank"><i class="fa fa-facebook"></i></a></li>
-                    <li><a href="#" target="_blank"><i class="fa fa-instagram"></i></a></li>
-                    <li><a href="#" target="_blank"><i class="fa fa-pinterest"></i></a></li>
-                    <li><a href="#" target="_blank"><i class="fa fa-twitter"></i></a></li>
+                    <!--li><a href="#" target="_blank"><i class="fa fa-facebook"></i></a></li-->
+                    <li><a href="https://www.instagram.com/kult.in/" target="_blank"><i class="fa fa-instagram"></i></a></li>
+                    <li><a href="https://goo.gl/UHWH1o" target="_blank"><i class="fa fa-youtube-play"></i></a></li>
+                    <!--li><a href="#" target="_blank"><i class="fa fa-twitter"></i></a></li-->
                   </ul>
                 </div>
                 <div class="col-sm-6 text-center col-xs-12">
@@ -341,12 +384,13 @@
       return{
         isClosed:false,
         headerCatNames:[
-          'kult picks',
-          'global bestsellers',
-          'beauty guide',
-          `editor's blog`,
-          'kult tv'
+          {name:'kult picks',funcPath:'/kultPick'},
+          {name:'global bestsellers',funcPath:'/globalBestSeller'},
+          {name:'beauty guide',funcPath:'/beautyGuide'},
+          {name:`editor's blog`,funcPath:'/blog'},
+          {name:'kult Tv',funcPath:'/howTo'},
         ],
+        showdiv:false,
         beautyGuideArr:[
           'Blush',
           'Contouring',
@@ -367,7 +411,8 @@
       ...mapMutations([
         'goTo',
         'logout',
-        'newsletter_saveEmail'
+        'newsletter_saveEmail',
+        'search'
       ]),
         hamburger_cross(){
           let vm = this
@@ -382,7 +427,7 @@
             vm.isClosed = true;
           }
           $('.wrapper').toggleClass('toggled');
-        }
+        },
     },
     computed:{
       ...mapGetters([
@@ -400,6 +445,9 @@
         //
         'authLoader',
         'showAuthPopup',
+        'wishlistObj',
+        'wishlistCnt',
+        'searchList'
       ])
     },
     components:{
@@ -449,6 +497,7 @@
   .sub_opt{
     display: none;
   }
+
   .min_height{
     min-height: 300px;
   }
@@ -460,6 +509,41 @@
   }
   .ml_5{
     margin-left: 5px;
+  }
+  .row.make-columns {
+    -moz-column-width: 19em;
+    -webkit-column-width: 19em;
+    -moz-column-gap: 1em;
+    -webkit-column-gap:1em;
+    border-color: transparent;
+
+  }
+  .shop_child{
+    display: none;
+  }
+
+  .shop_pa:hover .shop_child{
+    display: block;
+    top: 0;
+    left: 100%;
+    margin-top: -1px;
+    padding: 40px;
+  }
+  .row.make-columns > div {
+    display: inline-block;
+    padding:  .5rem;
+    width:  100%;
+  }
+
+  /* demo only* */
+  .panel {
+    box-shadow: 0 0px 0px rgba(0,0,0,0) ! important ;
+    height: 100%;
+    width:  100%;
+
+  }
+  .panel-default {
+    border-color: #fff ! important;
   }
 </style>
 

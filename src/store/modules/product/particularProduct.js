@@ -19,6 +19,7 @@ const getters = {
 const mutations = {
   //
   getTypeNLinkOfThisProduct(state2, payload) {
+    state.pTypes={}
     //console.log(payload) // product id, get from url
     //
     state.pTypeLoader = true

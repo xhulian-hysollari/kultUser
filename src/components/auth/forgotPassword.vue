@@ -4,13 +4,13 @@
       <input type="text" placeholder="Enter Email"  v-model="$store.state.auth.email" class="form-control">
     </div>
     <div id="right_tab4"class="right_tabs active text-center" >
-      <el-button style="background-color:  #eca8b5;" class="text-center"
+      <button  class="login_btn"
                  @click="forgotPassword({
                     email: $store.state.auth.email
                   })"
                   >
         CONFIRM
-      </el-button>
+      </button>
     </div>
 
     <p class="forgot_pass" @click="$store.state.auth.showForgot=false" style="margin-top: 30px"><a href="#">Login with email</a></p>

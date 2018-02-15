@@ -7,17 +7,23 @@
       <input type="text" placeholder="Enter Refral Code"  v-model="$store.state.auth.refCode" class="form-control">
     </div>
     <div id="right_tab4"class="right_tabs active text-center" >
-      <el-button style="background-color:  #eca8b5;" class="text-center"
+      <button class="login_btn"
+              v-if="btnLoader"
+      >
+        <i class='fa fa-spinner fa-spin '></i>
+      </button>
+      <button class="login_btn"
+              v-else
                  @click="afterLogin_userDetail({
                  phone:$store.state.auth.number,
                  refCode:$store.state.auth.refCode
                  })"
       >
-        CONFIRM
-      </el-button>
-      <el-button style="background-color:  #eca8b5;" class="text-center" data-dismiss="modal">
+        <span v-if="!btnLoader">CONFIRM</span>
+      </button>
+      <button class="login_btn" v-if="!btnLoader" @click="$store.state.auth.showLoginPopup=false">
         CANCEL
-      </el-button>
+      </button>
     </div>
 
   </div>
@@ -25,11 +31,15 @@
 <script>
   import {mapMutations} from 'vuex'
   import {mapGetters} from 'vuex'
+  import btn from '@/components/gen/btnLoader'
   //
   export default {
+    components:{
+      btn
+    },
     computed:{
       ...mapGetters([
-
+          'btnLoader'
       ])
     },
     methods:{

@@ -1,6 +1,7 @@
 <template>
   <div>
     <div class="container">
+      <div class="banner_strip"></div>
       <div class="brands_title">
         <h2>Brand List</h2>
       </div>
@@ -21,8 +22,6 @@
         </div>
       </div>
     </div>
-
-    <div class="banner_strip"></div>
     <main>
       <!--div class="container brands">
         <div class="row brands_row">

@@ -39,11 +39,12 @@
                     {{articleLike}}</li>
                   <li v-if="!isLoggedIn"><img src="/static/images/heart-icon.svg" alt="view"  data-toggle="modal" data-target="#loginModal">{{articleLike}}</li>
                 </ul>
-                <ul class="list-unstyled list-inline blog_share">
-                  <li><a href="#" target="_blank"><i class="fa fa-facebook"></i></a></li>
-                  <li><a href="#" target="_blank"><i class="fa fa-twitter"></i></a></li>
-                  <li><a href="#" target="_blank"><i class="fa fa-envelope"></i></a></li>
-                  <li><a href="#" target="_blank"><i class="fa fa-link"></i></a></li>
+                <ul class="list-unstyled list-inline">
+                  <li><a href="https://www.instagram.com/kult.in/" target="_blank"><i class="fa fa-instagram"></i></a></li>
+                  <li><a href="https://goo.gl/UHWH1o" target="_blank"><i class="fa fa-youtube-play"></i></a></li>
+                  <!--li><a href="#" target="_blank"><i class="fa fa-facebook"></i></a></li>
+                  <li><a href="#" target="_blank"><i class="fa fa-instagram"></i></a></li>
+                  <li><a href="#" target="_blank"><i class="fa fa-pinterest"></i></a></li-->
                 </ul>
                 <p>
                   {{blogDet.blogContent}}

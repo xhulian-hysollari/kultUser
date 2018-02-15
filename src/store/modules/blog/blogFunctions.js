@@ -10,6 +10,7 @@ const actions = {
           blogName: payload.blogName
         }
       }).then(function (response) {
+        console.log(response)
         resolve(response.data)
       }).catch(function (error) {
         resolve('error')
@@ -22,6 +23,7 @@ const actions = {
   },
   getLikeStatus(state,payload){
     return new Promise(function (resolve) {
+      console.log( payload.blogCat+"-------------"+payload.blogName+"------------"+payload.userUid)
       axios.get('https://us-central1-kult-2.cloudfunctions.net/getBlogLikeStatus', {
         params: {
           blogCat: payload.blogCat,
@@ -29,7 +31,7 @@ const actions = {
           userUid:payload.userUid
         }
       }).then(function (response) {
-        //console.log(response)
+        console.log(response)
         if(response.data==='liked'){
           article.state.userLike=true
         }else{

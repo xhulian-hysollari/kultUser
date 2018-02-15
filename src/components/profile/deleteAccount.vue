@@ -14,9 +14,9 @@
             </div>
             <div class="acc_menu">
               <ul>
-                <li><a href="#">EDIT PROFILE</a></li>
-                <li><a href="#">CHANGE PASSWORD</a></li>
-                <li class="active"><a href="#">CLOSE ACCOUNT</a></li>
+                <li><a @click="$router.replace('/editProfile')">EDIT PROFILE</a></li>
+                <li><a @click="$router.replace('/changePassword')">CHANGE PASSWORD</a></li>
+                <li class="active"><a >CLOSE ACCOUNT</a></li>
               </ul>
             </div>
           </div>
@@ -73,6 +73,9 @@
     //
     created(){
       //
+      if(!this.$store.state.auth.isLoggedIn){
+        this.$router.push('/')
+      }
       this.$store.commit('profile_checkIfLoggedIn')
     }
   }
