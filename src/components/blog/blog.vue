@@ -55,10 +55,11 @@
                   <div class="blog_contact">
                     <h4>Get in touch</h4>
                     <ul class="list-unstyled list-inline">
-                      <li><a href="#" target="_blank"><i class="fa fa-facebook"></i></a></li>
-                      <li><a href="#" target="_blank"><i class="fa fa-twitter"></i></a></li>
+                      <li><a href="https://www.instagram.com/kult.in/" target="_blank"><i class="fa fa-instagram"></i></a></li>
+                      <li><a href="https://goo.gl/UHWH1o" target="_blank"><i class="fa fa-youtube-play"></i></a></li>
+                      <!--li><a href="#" target="_blank"><i class="fa fa-facebook"></i></a></li>
                       <li><a href="#" target="_blank"><i class="fa fa-instagram"></i></a></li>
-                      <li><a href="#" target="_blank"><i class="fa fa-pinterest"></i></a></li>
+                      <li><a href="#" target="_blank"><i class="fa fa-pinterest"></i></a></li-->
                     </ul>
                   </div>
                 </div>
@@ -90,10 +91,11 @@
                             <div class="blog_contact">
                               <h4>Get in touch</h4>
                               <ul class="list-unstyled list-inline">
-                                <li><a href="#" target="_blank"><i class="fa fa-facebook"></i></a></li>
-                                <li><a href="#" target="_blank"><i class="fa fa-twitter"></i></a></li>
+                                <li><a href="https://www.instagram.com/kult.in/" target="_blank"><i class="fa fa-instagram"></i></a></li>
+                                <li><a href="https://goo.gl/UHWH1o" target="_blank"><i class="fa fa-youtube-play"></i></a></li>
+                                <!--li><a href="#" target="_blank"><i class="fa fa-facebook"></i></a></li>
                                 <li><a href="#" target="_blank"><i class="fa fa-instagram"></i></a></li>
-                                <li><a href="#" target="_blank"><i class="fa fa-pinterest"></i></a></li>
+                                <li><a href="#" target="_blank"><i class="fa fa-pinterest"></i></a></li-->
                               </ul>
                             </div>
                           </div>

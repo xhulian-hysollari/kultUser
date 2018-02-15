@@ -5,7 +5,7 @@
       <div class="container">
         <div class="accont_box">
           <div class="acount_top text-center">
-            <a href="#" class="edit_account">
+            <a @click="goTo('/editProfile')" class="edit_account">
               <img src="/static/images/icon-135-pen-angled.svg" alt="icon">
               Edit Account
             </a>
@@ -34,14 +34,6 @@
               </div>
               <div class="text-right entries col-xs-12 col-md-8 wishlist-control">
                 <span href="#" onclick="window.print();" class="print-wishlist">Print</span>
-                <span href="#" class="share-wishlist">Share</span>
-                <div class="wishlist-sort-wrapper">
-                  <label for="wishlist-sort">Sort by</label>
-                  <select name="wishlist-sort" id="wishlist-sort">
-                    <option value="most-recent">Most recently added</option>
-                    <option value="lowest-price">Lowest price first</option>
-                  </select>
-                </div>
                 <div class="view-switcher">
                   <div class="grid-view">
                     <span class="grid-box"></span>
@@ -67,7 +59,39 @@
               <div class="wishlist-options">
 
               </div>
-              <div class="wishlist-products">
+              <el-row :gutter="15" >
+                <el-col :xs="12" :sm="12" :md="8" :lg="8" v-for="(pDet,index) in wishlistArr"  >
+                  <div >
+                    <div class="grid-content pa-2" >
+                      <a class="prod_image" href="#">
+                        <img :src="pDet.pBasicDetail.pPicUrl" style="height:286px "  alt="product">
+                      </a>
+                      <div class="prod_cont">
+                        <h4><a href="#">{{pDet.pBasicDetail.pBrand}}</a></h4>
+                        <span v-for="(i,k) in pDet.pBasicDetail.pName" v-if="k < 30">{{i}}</span><span v-if="pDet.pBasicDetail.pName.length > 30">...</span>
+                      </div>
+                      <div class="prod_misc">
+                        <div class="float"><rating :num="Math.round(pDet.pBasicDetail.pRating)" ></rating></div>
+                        <div class="half text-right" v-if="pDet.priceStartsFrom !== undefined" >
+                          <div v-if="pDet.priceStartsFrom !== 999999999 || pDet.priceStartsFrom !== NAN">
+                            From <img src="/static/images/rupee-2.svg" alt="currency" >
+                            {{pDet.priceStartsFrom}}
+                          </div>
+                          <span  style="float: right" class="half text-right" v-else>
+                                Out Of Stock
+                              </span>
+                        </div>
+                        <div style="float: right" class="half text-right" v-else>Out Of Stock</div>
+                      </div>
+                      <a  class="prod_compare" v-if="isLoggedIn"><span @click="$router.push({path:`/particularProduct/${pDet.key}`,query:{prodDet:JSON.stringify(pDet)}})">Compare price</span>
+                        <img src="/static/images/wishlist-hover.svg" alt="wishlist-hover" @click="removeWishlist({pId:pDet.key,pDet});delete wishlistObj[pDet.key]; removeFromWishArr(index);$forceUpdate">
+                      </a>
+                      <a href="#" class="go_store">Go to store</a>
+                    </div>
+                  </div>
+                </el-col>
+              </el-row>
+              <!--div-- class="wishlist-products">
                 <div class="prod_repeater">
                   <div class="prod_repeat prod_repeat1" v-for="(pDet, pId) in wishlistObj" >
                     <a class="prod_image" href="#">
@@ -91,7 +115,7 @@
                     <a href="#" class="go_store">Go to store</a>
                   </div>
                 </div>
-              </div>
+              </div-->
             </div>
           </div>
         </div>
@@ -113,9 +137,7 @@
     //
     data(){
       return{
-        cnt:0,
-        filterBoxes:[],
-        toggler:false
+       wishlistArr:[]
       }
     },
     components: {
@@ -124,8 +146,6 @@
       infiniteLoading:InfiniteLoading,
       loader
     },
-    mixins:[productNfilter],
-    props: ['routeDet'],
     //
     methods:{
       ...mapMutations([
@@ -133,6 +153,39 @@
         'addWishlist',
         'removeWishlist'
       ]),
+      removeFromWishArr(index){
+        this.wishlistArr.splice(index,1)
+
+      },
+      sortWishList(key){
+        //alert('hey')
+        let c = 0
+        console.log(this.$store.state.wishlist.wishlistBool)
+        if(this.$store.state.wishlist.wishlistBool !== false){
+          for(let i in this.$store.state.wishlist.wishlistObj){
+            c++
+            //alert(i)
+            let temp = this.$store.state.wishlist.wishlistObj[i]
+            temp.key = i
+            this.wishlistArr.push(temp)
+            console.log(c ,'=====================', Object.keys(this.$store.state.wishlist.wishlistObj).length)
+            if(c === Object.keys(this.$store.state.wishlist.wishlistObj).length){
+              function compare(a,b){
+                if (a[key] < b[key])
+                  return -1;
+                if (a[key] > b[key])
+                  return 1;
+                return 0;
+              }
+
+              this.wishlistArr.sort(compare)
+              console.log(this.wishlistArr)
+            }
+          }
+        }else{
+          setTimeout(()=>this.sortWishList('date'),100)
+        }
+      }
     },
     computed:{
       ...mapGetters([
@@ -142,6 +195,41 @@
         'isLoggedIn',
 
       ])
+    },
+    created(){
+      this.sortWishList('date')
+      if(!this.$store.state.auth.isLoggedIn){
+        this.$router.push('/')
+      }
+      window.vueCompProduct= this
     }
   }
 </script>
+<style>
+  .row.make-columns {
+    -moz-column-width: 19em;
+    -webkit-column-width: 19em;
+    -moz-column-gap: 1em;
+    -webkit-column-gap:1em;
+    border-color: transparent;
+
+  }
+
+  .row.make-columns > div {
+    display: inline-block;
+    padding:  .5rem;
+    width:  100%;
+  }
+
+  /* demo only* */
+  .panel {
+    box-shadow: 0 0px 0px rgba(0,0,0,0) ! important ;
+    display: inline-block;
+    height: 100%;
+    width:  100%;
+
+  }
+  .panel-default {
+    border-color: #fff ! important;
+  }
+</style>

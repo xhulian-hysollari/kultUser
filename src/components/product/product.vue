@@ -29,6 +29,59 @@
                     <span class="hide_toggler">{{toggler}}</span>
                     <a>ACTIVE FILTER <span>{{cnt}}</span></a>
                   </div>
+
+
+                  <div >
+                    <div v-show="filterBoxes['priceRange']===false">
+                      <div class="filter_box" >
+                        <div class="filter_title">
+                          <a href="#" @click="closeFilter('priceRange')">priceRange</a>
+                        </div>
+                      </div>
+                    </div>
+                    <div v-show="filterBoxes['priceRange']===true || filterBoxes['priceRange']===undefined">
+                      <div class="filter_box active" >
+                        <div class="filter_title">
+                          <a href="#" @click="closeFilter('priceRange')">priceRange</a>
+                        </div>
+                        <div class="filter_cont">
+                          <div class="comm_radio">
+                            <div class="radio radio-primary" v-for="i in priceArr" @click="sel_disSel_thisFilter({
+                            sel_filterDetail : {
+                              filterName : 'priceRange',
+                              filterPara: i,
+                            },
+
+                              routePath: routeDet.routePath , //add filter later
+                              //
+                              compRoutePath: routeDet.compRoutePath
+                              })">
+                             <span v-if=" Object.keys(selectedFilters).indexOf('priceRange') != -1 ">
+                              <span v-if=" Object.keys(selectedFilters['priceRange']).indexOf('priceRange') != -1 ">
+                                <div class="selected_filter" >
+                                  <span><i class="material-icons ">radio_button_checked</i></span>
+                                  <span class="radio_btn">{{i}}</span>
+                                </div>
+                              </span>
+                               <div v-else class="unselected_filter">
+                                 <span><i class="material-icons" >radio_button_unchecked</i></span>
+                                 <span class="radio_btn" >{{i}}</span>
+                               </div>
+                            </span>
+                              <div v-else class="unselected_filter">
+                                <span><i class="material-icons" >radio_button_unchecked</i></span>
+                                <span class="radio_btn" >{{i}}</span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+
+
+
                   <div v-for="(filteNameContent, filterName) in filter">
                     <div v-show="filterBoxes[filterName]===false">
                       <div class="filter_box" >
@@ -67,6 +120,37 @@
             </span>
           </span>
 
+                            </div>
+                          </div>
+                        </div-->
+                        <!--div class="filter_cont">
+                          <div class="comm_radio">
+                            <div class="radio radio-primary" v-for="para in priceArr" @click="sel_disSel_thisFilter({
+                            sel_filterDetail : {
+                              filterName : 'priceRange',
+                              filterPara: priceArr[para],
+                            },
+
+                              routePath: routeDet.routePath , //add filter later
+                              //
+                              compRoutePath: routeDet.compRoutePath
+                              })">
+                             <span v-if=" Object.keys(selectedFilters).indexOf('priceRange') != -1 ">
+                              <span v-if=" Object.keys(selectedFilters[priceArr[para]]).indexOf(priceArr[para]) != -1 ">
+                                <div class="selected_filter" >
+                                  <span><i class="material-icons ">radio_button_checked</i></span>
+                                  <span class="radio_btn">{{priceArr[para]}}</span>
+                                </div>
+                              </span>
+                               <div v-else class="unselected_filter">
+                                 <span><i class="material-icons" >radio_button_unchecked</i></span>
+                                 <span class="radio_btn" >{{priceArr[para]}}</span>
+                               </div>
+                            </span>
+                              <div v-else class="unselected_filter">
+                                <span><i class="material-icons" >radio_button_unchecked</i></span>
+                                <span class="radio_btn" >{{fpriceArr[para]}}</span>
+                              </div>
                             </div>
                           </div>
                         </div-->
@@ -112,19 +196,28 @@
                       <div>
                         <div class="grid-content pa-2" >
                           <a class="prod_image" href="#">
-                            <img :src="pDet.pBasicDetail.pPicUrl" alt="product">
+                            <img :src="pDet.pBasicDetail.pPicUrl"  style="height:286px " alt="product">
                           </a>
                           <div class="prod_cont">
                             <h4><a href="#">{{pDet.pBasicDetail.pBrand}}</a></h4>
-                            <p>{{pDet.pBasicDetail.pName}}</p>
+                            <span v-for="(i,k) in pDet.pBasicDetail.pName" v-if="k < 30">{{i}}</span><span v-if="pDet.pBasicDetail.pName.length > 30">...</span>
                           </div>
                           <div class="prod_misc">
-                            <div class="float"><rating :num="Math.round(pDet.pBasicDetail.pRating)" ></rating></div>
-                            <div class="half text-right" v-if="Object.keys(pDet).indexOf(pDet.priceStartsFrom) != -1">From <img src="/static/images/rupee-2.svg" alt="currency" >{{pDet.priceStartsFrom}}</div>
+                            <div class="float" ><rating :num="Math.round(pDet.pBasicDetail.pRating)" ></rating></div>
+                            <div class="half text-right" v-if="pDet.priceStartsFrom !== undefined" >
+                              <div v-if="pDet.priceStartsFrom !== 999999999 || pDet.priceStartsFrom !== NAN">
+                                From <img src="/static/images/rupee-2.svg" alt="currency" >
+                                {{pDet.priceStartsFrom}}
+                              </div>
+                              <span  style="float: right" class="half text-right" v-else>
+                                Out Of Stock
+                              </span>
+                            </div>
+                            <div style="float: right" class="half text-right" v-else>Out Of Stock</div>
                           </div>
                           <a  class="prod_compare" v-if="isLoggedIn"><span @click="$router.push({path:`/particularProduct/${pId}`,query:{prodDet:JSON.stringify(pDet)}})">Compare price</span>
-                            <img src="/static/images/wishlist-add.svg" alt="wishlist-add" v-if="Object.keys(wishlistObj).indexOf(pId) === -1" @click="addWishlist(pId),$forceUpdate()">
-                            <img src="/static/images/wishlist-hover.svg" alt="wishlist-hover" v-if="Object.keys(wishlistObj).indexOf(pId) !== -1" @click="removeWishlist(pId),$forceUpdate()">
+                            <img src="/static/images/wishlist-add.svg" alt="wishlist-add" v-if="Object.keys(wishlistObj).indexOf(pId) === -1" @click="addWishlist({pId,pDet}); wishlistObj[pId] = pDet; $forceUpdate()">
+                            <img src="/static/images/wishlist-hover.svg" alt="wishlist-hover" v-if="Object.keys(wishlistObj).indexOf(pId) !== -1" @click="removeWishlist({pId,pDet}); delete wishlistObj[pId]; $forceUpdate()">
                           </a>
                           <a  class="prod_compare" v-if="!isLoggedIn"><span @click="$router.push({path:`/particularProduct/${pId}`,query:{prodDet:JSON.stringify(pDet)}})">Compare price</span>
                             <img src="/static/images/wishlist-add.svg" alt="wishlist-add" @click="$store.state.auth.showLoginPopup = true">
@@ -133,6 +226,16 @@
                         </div>
                       </div>
                     </el-col>
+                    <button class="login_btn" type="info"
+                    v-show="productsLoader">
+                      <i class='fa fa-spinner fa-spin ' ></i>
+                    </button>
+                    <button class="login_btn" type="info" @click="loadMoreProducts({
+                      routePath: routeDet.routePath
+                    })" v-if="Object.keys(products).length !== totalProds"
+                    v-show="!productsLoader">
+                      Load More
+                    </button>
                   </el-row>
                 </div>
                 <div class="clearfix"></div>
@@ -141,6 +244,7 @@
           </div>
         </div>
     </div>
+
 
   <!-- PRODUCTS=>
     <!-- if a product doesnot have priceStartsFrom or have value such as NaN or 999999999, the product is out of stock -->
@@ -157,11 +261,6 @@
 
 
     <!-- load more button --> <!-- only for product, hide for filter products -->
-    <button @click="loadMoreProducts({
-      routePath: routeDet.routePath
-    })">
-      Load More Button => Products of Category i.e Face.....
-    </button>
     <!--load more button ends -->
   </div>
 </template>
@@ -182,7 +281,17 @@
       return{
         cnt:0,
         filterBoxes:[],
-        toggler:false
+        toggler:false,
+        priceArr:[
+          '0 - 499',
+          '500 - 999',
+          '1000 - 1499',
+          '1500 - 1999',
+          '2000 - 2999',
+          '3000 - 3999',
+          '4000 - 4999',
+          '5000 - 10000'
+        ]
       }
     },
     components: {
@@ -200,6 +309,9 @@
         'addWishlist',
         'removeWishlist'
       ]),
+      timeout(){
+        setTimeout(()=>{ this.$forceUpdate() },1500)
+      },
       closeFilter(name){
         if(this.filterBoxes[name] !== false){
           this.filterBoxes[name]=false
@@ -231,6 +343,7 @@
         'productsLoader', // till products are loaded this is true
         'wishlistObj',
         'isLoggedIn',
+        'totalProds'
 
       ])
     },
@@ -258,6 +371,7 @@
         routeQuery: this.routeDet.routeQuery // (2)
         //
       })
+      setTimeout(()=>{this.$forceUpdate()},3000)
     }
   }
 </script>

@@ -96,12 +96,12 @@ const mutations = {
             //added later
             videoImgUrl: queryHowToCatVidDoc.data().howToCatVidImgUrl,
             //
-            videoShopNowLink: queryHowToCatVidDoc.data().howToCatVidShopNowLink,
-            videoSubTitle: queryHowToCatVidDoc.data().howToCatVidSubTitle,
-            videoSubTitleTag: queryHowToCatVidDoc.data().howToCatVidSubTitleTag,
-            videoSubTitleTagLink: queryHowToCatVidDoc.data().howToCatVidSubTitleTagLink,
+            //videoShopNowLink: queryHowToCatVidDoc.data().howToCatVidShopNowLink,
+            //videoSubTitle: queryHowToCatVidDoc.data().howToCatVidSubTitle,
+            //videoSubTitleTag: queryHowToCatVidDoc.data().howToCatVidSubTitleTag,
+            //videoSubTitleTagLink: queryHowToCatVidDoc.data().howToCatVidSubTitleTagLink,
             //
-            videoProductTitle: queryHowToCatVidDoc.data().howToCatVidProductTitle,
+            //videoProductTitle: queryHowToCatVidDoc.data().howToCatVidProductTitle,
           }
         })
 

@@ -119,13 +119,36 @@ const updatePhoneNo = resolve => {
     resolve(require('@/components/profile/updatePhoneNo'));
   });
 };
-
+const about = resolve => {
+  require.ensure(['@/components/gen/about'],()=>{
+    resolve(require('@/components/gen/about'));
+  });
+};
+const contact = resolve => {
+  require.ensure(['@/components/gen/contact'],()=>{
+    resolve(require('@/components/gen/contact'));
+  });
+};
+const tnc = resolve => {
+  require.ensure(['@/components/gen/tnc'],()=>{
+    resolve(require('@/components/gen/tnc'));
+  });
+};
+const cashback = resolve => {
+  require.ensure(['@/components/gen/cashback'],()=>{
+    resolve(require('@/components/gen/cashback'));
+  });
+};
 Vue.use(Router)
 
 export default new Router({
   mode: 'history',
   routes: [
     { path: '/', name: 'Hello', component: Hello },
+    { path: '/about', name: 'About', component: about },
+    { path: '/contact', name: 'About', component: contact },
+    { path: '/tnc', name: 'T&C', component: tnc },
+    { path: '/cashback', name: 'Cashback', component: cashback },
     //product
     { path: '/particularProduct/:pId', name: 'Particular Product', component: product_particularProduct},
     { path: '/productCategory/:shopOption/:category', name: 'Product Category', component: product_category},

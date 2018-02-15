@@ -1,38 +1,43 @@
 import axios from 'axios'
 import auth from '../auth'
+import gen from '../gen'
+import router from '@/router'
 const state = {
-  wishlistObj:{}
+  wishlistObj:{},
+  wishlistBool :false,
+  wishlistCnt:0
 }
 const getters = {
-  wishlistObj:state=>state.wishlistObj
+  wishlistObj:state=>state.wishlistObj,
+  wishlistCnt:state=>state.wishlistCnt
 }
 const mutations = {
-  addWishlist(state,pid){
-    alert(pid)
+  addWishlist(state,payload){
+    gen.state.btnLoader=true
     if(auth.state.isLoggedIn){
       axios.get('https://us-central1-kult-2.cloudfunctions.net/addWishlist', {
         params: {
           uid:auth.state.user.uid,
-          pid
+          pid:payload.pId
         }
       }).then(function (response) {
         console.log(response.data)
-        mutations.getWishlist()
+        state.wishlistCnt++
       }).catch(function (error) {
-        console.log(error)
+      //  console.log(error)
       })
     }
   },
-  removeWishlist(state,pid){
+  removeWishlist(state,payload){
     if(auth.state.isLoggedIn){
       axios.get('https://us-central1-kult-2.cloudfunctions.net/removeWishlist', {
         params: {
           uid:auth.state.user.uid,
-          pid
+          pid:payload.pId
         }
       }).then(function (response) {
-        console.log(response.data)
-        mutations.getWishlist()
+       // alert(response.data)
+        state.wishlistCnt--
       }).catch(function (error) {
         console.log(error)
       })
@@ -40,28 +45,30 @@ const mutations = {
   },
   getWishlist(){
     if(auth.state.isLoggedIn){
-      axios.get('https://us-central1-kult-2.cloudfunctions.net/getWishlist', {
-        params: {
-          uid:auth.state.user.uid
-        }
-      }).then(function (response) {
-        console.log(response.data)
-        if(response.data!=='noProductAdded'){
-          state.wishlistObj={}
-         for(let i in response.data){
-            console.log(response.data[i])
-           state.wishlistObj[i] = response.data[i]
+     // if(state.wishlistBool === false){
+        axios.get('https://us-central1-kult-2.cloudfunctions.net/getWishlist', {
+          params: {
+            uid:auth.state.user.uid
+          }
+        }).then(function (response) {
+          // console.log(response.data)
+          if(response.data!=='noProductAdded'){
+            state.wishlistObj={}
+              state.wishlistBool = true
+              state.wishlistObj= response.data
+              state.wishlistCnt=Object.keys(state.wishlistObj).length
 
-         }
-         console.log(state.wishlistObj)
-        }
-      }).catch(function (error) {
-        console.log(error)
-      }).then(function () {
-
-      })
+            //   console.log(state.wishlistObj)
+          }else{
+            state.wishlistBool = true
+            state.wishlistObj={}
+          }
+        }).catch(function (error) {
+          // console.log(error)
+        })
+     // }
     }
-  }
+  },
 }
 export default {
   mutations,

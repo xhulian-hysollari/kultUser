@@ -56,7 +56,9 @@
       ])
     },
     created(){
-
+      if(!this.$store.state.auth.isLoggedIn){
+        this.$router.push('/')
+      }
     },
     components:{
       loader

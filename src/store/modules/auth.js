@@ -23,7 +23,9 @@ const state = {
   phoneNumber:'',
   refCode:'',
   showRefCode:false,
-  showLoginPopup:false
+  showLoginPopup:false,
+  showRegisterPopup:false,
+  loginBtnLoader:false
 }
 
 const getters = {
@@ -38,7 +40,9 @@ const getters = {
   showForgot : state => state.showForgot,
   showAuthPopup : state => state.showAuthPopup,
   showRefCode:state=>state.showRefCode,
-  showLoginPopup:state=>state.showLoginPopup
+  showLoginPopup:state=>state.showLoginPopup,
+  showRegisterPopup:state=>state.showRegisterPopup,
+  loginBtnLoader:state=>state.loginBtnLoader
 
 }
 
@@ -56,6 +60,7 @@ const mutations = {
       //
       gen.state.btnLoader = false
       state.showRefCode=false
+      state.showLoginPopup=false
       alert('Details Saved !')
     })
   },
@@ -64,15 +69,17 @@ const mutations = {
   getLoginStatus(state2){
     firebase.auth().onAuthStateChanged(function(user) {
       if (user) {
-        console.log("// User is signed in.", user.uid)
+       // console.log("// User is signed in.", user.uid)
         //
         state.isLoggedIn = true
         state.user = user
 
         //
         state.showRefCode=true
-        console.log("user => ", user)
-        wishlist.mutations.getWishlist(state)
+       // console.log("user => ", user)
+        if(!wishlist.state.wishlistBool){
+          wishlist.mutations.getWishlist(state)
+        }
         //
         //
       } else {
@@ -171,6 +178,7 @@ const mutations = {
   //
   //email & password => signup
   emailPasswordSignup(state2, payload){
+    gen.state.btnLoader=true
     console.log(payload)
     //
     firebase.auth().createUserWithEmailAndPassword(payload.email,payload.password)
@@ -186,9 +194,11 @@ const mutations = {
               .collection("user").doc(state.user.uid)
               .set({
                 dob: payload.dob,
-                phone : payload.phone
+             //   phone : payload.phone
               }).then(()=>{
+              state.showRegisterPopup= false
               console.log("dob updated!")
+              gen.state.btnLoader=false
              // state.showAuthPopup=false
             })
           },100)
@@ -216,6 +226,7 @@ const mutations = {
   //
   //
   emailPasswordLogin(state2, payload){
+    state.loginBtnLoader=true
     let c = 0
     console.log(payload)
     //
@@ -223,12 +234,14 @@ const mutations = {
       .then(()=>{
         //
         //
+        state.loginBtnLoader=false
       }).catch(function(error) {
       // Handle Errors here.
       var errorCode = error.code;
       var errorMessage = error.message;
       //
       // ...
+      state.loginBtnLoader=false
       alert("Error: " + error.message)
     })
   },

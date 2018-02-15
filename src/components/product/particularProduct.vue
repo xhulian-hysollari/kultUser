@@ -10,7 +10,7 @@
       <div class="banner_strip"></div>
       <div class="go_back">
         <div class="container">
-          <a href="#" class="go_link"><i class="fa fa-angle-left"></i> Go Back</a>
+          <a @click="$router.go(-1)"class="go_link"><i class="fa fa-angle-left"></i> Go Back</a>
         </div>
       </div>
       <div class="prod_single">
@@ -24,16 +24,33 @@
                   <h3>{{JSON.parse($route.query.prodDet).pBasicDetail.pName}}</h3>
                   <div class="prod_wishadd">
                     <div class="prod_rate float"><rating :num="Math.round(JSON.parse($route.query.prodDet).pBasicDetail.pRating)"></rating></div>
-                    <a href="#" class="ml_40"><img src="/static/images/wishlist-add.svg" alt="wishlist-add"></a>
+                    <a v-if="isLoggedIn">
+                      <img src="/static/images/wishlist-add.svg" alt="wishlist-add" v-if="Object.keys(wishlistObj).indexOf($router.currentRoute.params.pId) === -1"
+                           @click="addWishlist({pId:$router.currentRoute.params.pId,pDet:JSON.parse($route.query.prodDet)});
+                           wishlistObj[$router.currentRoute.params.pId] = JSON.parse($route.query.prodDet); $forceUpdate()">
+                      <img src="/static/images/wishlist-hover.svg" alt="wishlist-hover" v-if="Object.keys(wishlistObj).indexOf($router.currentRoute.params.pId) !== -1"
+                           @click="removeWishlist({pId:$router.currentRoute.params.pId,pDet:JSON.parse($route.query.prodDet)});
+                           delete wishlistObj[$router.currentRoute.params.pId]; $forceUpdate()">
+                    </a>
+                    <a   v-if="!isLoggedIn">
+                      <img src="/static/images/wishlist-add.svg" alt="wishlist-add" @click="$store.state.auth.showLoginPopup = true">
+                    </a>
                   </div>
                 </div>
                 <ul class="prod_type_list">
-                  <span v-for="i in prodArr" v-if="i.det.swatchImgUrl !== ''"><img :src="i.det.swatchImgUrl"></span>
-                  <span v-for="i in prodArr" v-if="i.det.swatchImgUrl === ''">
+                  <span v-for="i in prodArr" v-if="i.det.swatchImgUrl !== ''">
+                    <span v-if="selected.key!==i.key" @click="$store.state.particularProduct.selected = i">
+                      <img :src="i.det.swatchImgUrl" style="max-height: 50px;max-width: 50px">
+                    </span>
+                     <span v-if="selected.key===i.key" class="active">
+                      <img :src="i.det.swatchImgUrl" style="max-height: 50px;max-width: 50px">
+                    </span>
+                  </span>
+                  <span v-for="i in prodArr"  v-if="i.det.swatchImgUrl === ''">
                     <li  v-if="selected.key!==i.key" @click="$store.state.particularProduct.selected = i">
-                      <a href="#"> {{i.key}}</a>
+                      <a> {{i.key}}</a>
                     </li>
-                    <li  v-if="selected.key===i.key" class="active"><a href="#"> {{i.key}}</a></li>
+                    <li  v-if="selected.key===i.key" class="active"><a > {{i.key}}</a></li>
                   </span>
                 </ul>
               <!--  <div class="prod_pricerange" v-if="Object.keys(JSON.parse($route.query.prodDet)).indexOf(priceStartsFrom) != -1">
@@ -48,12 +65,39 @@
                   <!--div class="prod_pricerange">
                     From <strong>2,036</strong> to <strong>7,999</strong> Rupee
                   </div-->
-                  <li class="prod_shoplinks list-unstyled">
-                    <a v-for="i in selected.det.affliateDomains" :href="i.link" target="_blank">
-                      <span >{{Object.keys(selected.det.affliateDomains)[0]}}</span>
+                  <!---*********************** Show when Price is available for affliate!!! To Do once price is uploaded*******---->
+                  <li class="prod_shoplinks list-unstyled"  v-if="!isLoggedIn">
+                    <a  @click="$store.state.auth.showLoginPopup=true"
+                        v-for="(l,k) in selected.det.affliateDomains"
+                    >
+                      <span >{{k}}</span>
                       <span  style="float: right" >
                           <strong>BUY NOW</strong>
                       </span>
+                      <br>
+                    </a>
+                  </li>
+                  <li class="prod_shoplinks list-unstyled"  v-if="isLoggedIn && email">
+                    <a v-for="(j,k) in selected.det.affliateDomains"
+                       target="_blank"
+                       :href="j.link + '&subid=' + $store.state.auth.user.email"
+                    >
+                      <span >{{k}}</span>
+                      <span  style="float: right" >
+                          <strong>BUY NOW</strong>
+                      </span>
+                      <br>
+                    </a>
+                  </li>
+                  <li class="prod_shoplinks list-unstyled"  v-if="isLoggedIn &&   !email">
+                    <a v-for="(j,k) in selected.det.affliateDomains"
+                      @click="alertEmailNotVerified()"
+                    >
+                      <span >{{k}}</span>
+                      <span  style="float: right" >
+                          <strong>BUY NOW</strong>
+                      </span>
+                      <br>
                     </a>
                   </li>
                 </div>
@@ -61,7 +105,7 @@
             </div>
             <div class="col-md-7 col-xs-12">
               <div class="prod_gallery">
-                <div class="gall_main">
+                <div class="gall_main" v-if="selected.det !== undefined">
                   <a :href="selected.det.pTypeImgUrl">
                     <img class="main_image" :src="selected.det.pTypeImgUrl" alt="gallery">
                     <span class="zoom"><img src="/static/images/zoom-in.svg" alt="zomm"></span>
@@ -99,10 +143,11 @@
                 <h3>Product Details</h3>
               </div>
               <ul class="prod_social">
-                <li><a href="#" target="_blank"><i class="fa fa-facebook"></i></a></li>
-                <li><a href="#" target="_blank"><i class="fa fa-instagram"></i></a></li>
+                <li><a href="https://www.instagram.com/kult.in/" target="_blank"><i class="fa fa-instagram"></i></a></li>
+                <li><a href="https://goo.gl/UHWH1o" target="_blank"><i class="fa fa-youtube-play"></i></a></li>
+                <!--li><a href="#" target="_blank"><i class="fa fa-facebook"></i></a></li>
                 <li><a href="#" target="_blank"><i class="fa fa-pinterest"></i></a></li>
-                <li><a href="#" target="_blank"><i class="fa fa-twitter"></i></a></li>
+                <li><a href="#" target="_blank"><i class="fa fa-twitter"></i></a></li-->
               </ul>
             </div>
           </div>
@@ -180,7 +225,7 @@
 
 
     <!-- sometimes there isn't price for a domain, in this case hide the links too -->
-    {{pTypes}}
+    <!--{{pTypes}}-->
 
   </div>
 </template>
@@ -189,27 +234,55 @@
   import rating from '@/components/rating'
   import {mapGetters} from 'vuex'
   import loader from '@/components/gen/loader'
+  import {mapMutations} from 'vuex'
   //
   export default{
+    data(){
+      return{
+        email:false
+      }
+    },
     components:{
       loader,
       rating
     },
     computed:{
       ...mapGetters([
+        'wishlistObj',
         'pTypes',
         'prodArr',
         'selected',
-        'pTypeLoader'
+        'pTypeLoader',
+        'isLoggedIn'
 
       ])
     },
+    methods:{
+      ...mapMutations([
+        'addWishlist',
+        'removeWishlist'
+      ]),
+      alertEmailNotVerified(){
+        alert('Email not Verified')
+      }
+    },
     created(){
+      let vm = this
       window.thisOfVueComp = this
       //
       this.$store.commit('getTypeNLinkOfThisProduct', {
         pId: this.$route.params.pId
       })
+      for(let i in Object.values(vm.$store.state.auth.user.providerData)){
+        console.log(vm.$store.state.auth.user)
+      if(Object.values(vm.$store.state.auth.user.providerData)[i].providerId === 'password'){
+       if(vm.$store.state.auth.user.emailVerified){
+            vm.email= true
+        }
+      }else{
+        vm.email=true
+      }
+      }
     },
   }
 </script>

@@ -11,6 +11,7 @@ import auth from './auth'
 
 
 const state = {
+  searchList:{},
   storage: {},
   firestore: {},
   //
@@ -21,13 +22,15 @@ const state = {
   btnLoader: false,
   //
   newsLetterEmail:'',
-  showNewsletterInput:true
+  showNewsletterInput:true,
+  searchInput:''
 }
 
 const getters = {
   dbRefLoader: state => state.dbRefLoader,
   btnLoader: state => state.btnLoader,
-  showNewsletterInput:state=>state.showNewsletterInput
+  showNewsletterInput:state=>state.showNewsletterInput,
+  searchList:state=>state.searchList
 }
 
 const mutations = {
@@ -117,6 +120,22 @@ const mutations = {
         path: '/'
       })
     }
+  },
+  search(){
+   // alert('hi')
+   // alert(document.getElementById('search').value)
+    axios.get('https://us-central1-kult-2.cloudfunctions.net/searchProduct', {
+      params: {
+        qStr:state.searchInput
+      }
+    }).then(function (response) {
+      console.log(response.data)
+      state.searchList={}
+      state.searchList = response.data
+      console.log(Object.keys(response.data).length)
+    }).catch(function (error) {
+      console.log(error)
+    })
   }
 }
 

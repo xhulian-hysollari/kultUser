@@ -1,17 +1,21 @@
 import gen from '../gen'
-
+import axios from 'axios'
 const state = {
   cProduct : 0, //count of queried product // to stop the loader // to make async
   //
   products : {},
   productsLoader : false,
   //
-  lastQueried_product : {}
+  lastQueried_product : {},
+  //
+  totalProds:0
 }
 
 const getters = {
   products: state => state.products,
   productsLoader: state => state.productsLoader,
+  totalProds:state=>state.totalProds
+
 }
 
 const mutations = {
@@ -122,10 +126,25 @@ const mutations = {
         }
       })
 
+    }).then(function(){
+      mutations.getLoadMoreCnt(state,payload.routePath)
+    })
+  },
+  //
+  getLoadMoreCnt(state,path){
+    axios.get('https://us-central1-kult-2.cloudfunctions.net/productCountInPage', {
+      params: {
+        routePath:path
+      }
+    }).then(function (response) {
+      state.totalProds=response.data
+    }).catch(function (error) {
+      console.log(error)
     })
   },
   //
   getProductDetail(state2, payload){
+
     //
     //console.log("Get Product Payload =>", payload)
     //
