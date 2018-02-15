@@ -139,6 +139,29 @@ const cashback = resolve => {
     resolve(require('@/components/gen/cashback'));
   });
 };
+//cashback
+const amazonCashbackReq = resolve => {
+  require.ensure(['@/components/cashback/amazonCashbackReq'],()=>{
+    resolve(require('@/components/cashback/amazonCashbackReq'));
+  });
+};
+const credit = resolve => {
+  require.ensure(['@/components/cashback/credit'],()=>{
+    resolve(require('@/components/cashback/credit'));
+  });
+};
+const myOrder = resolve => {
+  require.ensure(['@/components/cashback/myOrder'],()=>{
+    resolve(require('@/components/cashback/myOrder'));
+  });
+};
+const withdrawReq = resolve => {
+  require.ensure(['@/components/cashback/withdrawReq'],()=>{
+    resolve(require('@/components/cashback/withdrawReq'));
+  });
+};
+
+
 Vue.use(Router)
 
 export default new Router({
@@ -178,6 +201,11 @@ export default new Router({
     { path: '/deleteAccount', name: 'Delete Account', component: deleteAccount },
     { path: '/updatePhoneNo', name: 'Update Phone No', component: updatePhoneNo },
     //wishlist
-    { path: '/wishlist', name: 'Wishlist', component: wishlist }
+    { path: '/wishlist', name: 'Wishlist', component: wishlist },
+    //cashback
+    { path: '/amazonCashbackReq' , name: 'Amazon Cashback Request', component: amazonCashbackReq},
+    { path: '/credit' , name: 'Credit', component: credit},
+    { path: '/myOrder', name : 'My Order', component: myOrder},
+    { path: '/withdrawReq' , name : 'Withdraw Request', component: withdrawReq}
   ]
 })
