@@ -48,11 +48,8 @@
           </div>
           <div class="tv_right">
             <div class="row" >
-              <div class="col-md-4 col-xs-12 comm_imp" v-for="(vidDet, vidName) in howToVid">
+              <div class="col-md-6 col-xs-12 comm_imp" v-for="(vidDet, vidName) in howToVid">
                 <div class="image_box hidden-xs" data-toggle="modal" data-target="#videoModal" @click="getCatVidProduct({vidCat: $route.query.selVidCat,vidName }); selectedLink=vidDet.videoLink" >
-                  <div class="cont_part">
-                    <a class="shop_btn">Shop Now</a>
-                  </div>
                   <img :src="vidDet.videoImgUrl" alt="item"  ><!--thumbnail image-->
                 </div>
                 <div class="image_box visible-xs"   @click="dialog = true ; selectedLink=vidDet.videoLink" >
@@ -63,7 +60,7 @@
                 </div>
                 <div class="title_part hidden-xs" data-toggle="modal" data-target="#videoModal" @click="getCatVidProduct({vidCat: $route.query.selVidCat,vidName });selectedLink=vidDet.videoLink" >
                   <h5>Watch Videos and Get Inspired</h5><!--Video Tag-->
-                  <a class="shop_btn">Learn More</a>
+                  <a class="shop_btn">Shop Now</a> | <a class="shop_btn">Learn More</a>
                   <a class="go_btn">
                     <img src="static/images/player.svg" alt="player">
                   </a>
@@ -84,12 +81,12 @@
                           <iframe class="embed-responsive-item" width="560" height="315" :src="selectedLink" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
                         </div>
                       </div>
-                      <div>
+                      <div class="modal_video_right hidden-xs hidden-sm  scroll_card" >
                         <div v-for="(p,k) in products" class="modal_video_right hidden-xs hidden-sm" >
 
-                          <div class="prod_repeat scroll_card">
-                            <loader v-if="productsLoader" class="modal_video_right hidden-xs hidden-sm"></loader>
-                            <div>
+                          <div class="prod_repeat">
+                            <loader v-if="productsLoader" ></loader>
+                            <div >
                               <a class="prod_image" >
                                 <img :src="p.pBasicDetail.pPicUrl" alt="product" >
                               </a>
@@ -211,8 +208,19 @@
   }
 </script>
 <style>
-.scroll_card{
-  max-height: 430px;
-  overflow-y: scroll;
+  .scroll_card{
+    max-height: 500px;
+    overflow: scroll
+  }
+  .tv_left ul {
+    padding: 0;
+     margin: 0px 0 !important;
+    list-style: none;
+  }
+
+
+ul, ol {
+margin-top: 0;
+ margin-bottom: 10px !important;
 }
 </style>

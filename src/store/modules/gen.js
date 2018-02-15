@@ -124,7 +124,21 @@ const mutations = {
       })
     }
   },
-  search(){
+  //get details of selected search
+  getSearchDet(state,payload){
+    console.log(payload.key)
+    axios.get('https://us-central1-kult-2.cloudfunctions.net/getParticularProductDetailByPid', {
+      params: {
+        pid:payload.key,
+      }
+    }).then(function (response) {
+      console.log(response.data)
+      router.push({path:`/particularProduct/${payload.key}`,query:{prodDet:JSON.stringify(response.data)}})
+    }).catch(function (error) {
+      console.log(error)
+    })
+  },
+ /* search(){
    // alert('hi')
    // alert(document.getElementById('search').value)
     axios.get('https://us-central1-kult-2.cloudfunctions.net/searchProduct', {
@@ -139,7 +153,7 @@ const mutations = {
     }).catch(function (error) {
       console.log(error)
     })
-  },
+  },*/
   //
   uploadImg(state2, payload){
     //

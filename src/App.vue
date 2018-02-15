@@ -36,7 +36,7 @@
                       <li><span>Your Account</span></li>
                       <li><a >{{user.displayName}}</a></li>
                       <li><a >{{user.email}}</a></li>
-                      <li><a >Edit Profile</a></li>
+                      <li @click="goTo('/editProfile')"><a >Edit Profile</a></li>
                     </ul>
                     <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu2" v-if="!isLoggedIn">
                       <li><span>Your Account</span></li>
@@ -55,21 +55,21 @@
                     <span class="hamb-middle"></span>
                     <span class="hamb-bottom"></span>
                   </button>
-                  <a class="logo visible-xs" ><img src="/static/images/logo.svg" alt="logo"></a>
+                  <a class="logo visible-xs" @click="goTo('/')"><img src="/static/images/logo.svg" alt="logo"></a>
                   <ul class="top_quick_links">
                     <li>
-                      <a href="#" v-if="isLoggedIn">
+                      <a  v-if="isLoggedIn" @click="goTo('/wishlist')">
                         <img src="/static/images/wishlist.svg" alt="wishlist">
-                        <span class="hidden-xs" @click="goTo('/wishlist')" >Wishlist ({{wishlistCnt}})</span>
+                        <span class="hidden-xs"  >Wishlist ({{wishlistCnt}})</span>
                       </a>
-                      <a href="#" v-if="!isLoggedIn"  @click="$store.state.auth.showLoginPopup = true" >
+                      <a  v-if="!isLoggedIn"  @click="$store.state.auth.showLoginPopup = true"  >
                         <img src="/static/images/wishlist.svg" alt="wishlist">
-                        <span class="hidden-xs" @click="goTo('/wishlist')" v-if="isLoggedIn">Wishlist </span>
+                        <span class="hidden-xs"  v-if="isLoggedIn">Wishlist </span>
                       </a>
                     </li>
                     <li class="sec">
-                      <a href="#">
-                        <span class="rupee"><img src="/static/images/rupee.svg" alt="rupee"></span>
+                      <a  @click="goTo('/credit')">
+                        <span class="rupee" ><img src="/static/images/rupee.svg" alt="rupee" ></span>
                         <img src="/static/images/wallet.svg" alt="wallet">
                         <span class="hidden-xs">Kult Wallet</span>
                       </a>
@@ -80,18 +80,18 @@
                   <div class="search_form">
                     <a @click="goTo('/')"  class="logo hidden-xs"><img src="/static/images/logo.svg" alt="logo"></a>
                     <div>
-                      <input type="text" v-model="$store.state.gen.searchInput" @keyup="search()" placeholder="What are you looking for?" class="form-control">
+                      <input type="text" v-model="input" @keyup="search()" placeholder="What are you looking for?" class="form-control">
                       <button ><img src="/static/images/search.svg" alt="search"></button>
                       <img class="search_close" src="/static/images/64-px-close.svg" alt="search">
                     </div>
-                    <el-card class="box-card" v-show=" searchList !== {} && $store.state.gen.searchInput !== ''">
-                      <div v-for="search in searchList" class="text item">
+                    <el-card class="box-card" v-show=" searchList !== {} && input !== ''">
+                      <div v-for="(search,key) in searchList" class="text item" @click="getSearchDet({key,search})">
                         <!--{{search}}-->
-                        <img :src="search.pBasicDetail.pPicUrl" width="50px" height="50px">
-                        <span v-for="(i,j) in search.pBasicDetail.pName" v-show="j < 16">
+                        <img :src="search.pBasicDetail.pPicUrl" style="width:20px;height: 20px;">
+                        <span v-for="(i,j) in search.pBasicDetail.pName" v-show="j < 26">
                           <span>{{i}}</span>
                         </span>
-                        <span v-if="search.pBasicDetail.pName.length > 15">...</span>
+                        <span v-if="search.pBasicDetail.pName.length > 25">...</span>
                       </div>
                     </el-card>
                   </div>
@@ -156,9 +156,9 @@
               </ul>
 
             </div>
-            <div  @mouseleave="showdiv=false" v-if="showdiv" style="min-height: 300px">
+            <div  @mouseleave="showdiv=false" v-if="showdiv" style="min-height: 1000px">
               <div  v-for="(shop,i) in Object.keys(shopOptions)" class="shop_pa">
-                <div class="shop_pa">
+                <el-card class="shop_pa">
                   <span class="shop_pa">{{shop.toUpperCase()}}</span>
                   <div class="row make-columns shop_child">
                     <div class="col-xs-6 col-md-4 col-lg-6 col-lg-push-4"  v-for="j in Object.keys(shopOptions[shop])" >
@@ -172,7 +172,7 @@
                       </div>
                     </div>
                   </div>
-                </div>
+                </el-card>
               </div>
             </div>
             <nav class="navbar navbar-inverse navbar-fixed-top visible-xs" id="sidebar-wrapper" role="navigation" >
@@ -258,8 +258,8 @@
                   </v-expansion-panel-content>
                 </v-expansion-panel>
                 <v-expansion-panel >
-                  <v-expansion-panel-content v-if="isLoggedIn">
-                    <div slot="header"  class="white ml_5">MY PROFILE</div>
+                  <v-expansion-panel-content v-if="isLoggedIn" >
+                    <div slot="header"  class="white ml_5" @click="goTo('/editProfile')">MY PROFILE</div>
                   </v-expansion-panel-content>
                 </v-expansion-panel>
                 <v-expansion-panel >
@@ -377,6 +377,7 @@
   import login_form from '@/components/auth/login.vue'
   import signup_form from '@/components/auth/signup.vue'
   import btnLoader from '@/components/gen/btnLoader'
+  import axios from 'axios'
   //
   //
   export default {
@@ -390,6 +391,7 @@
           {name:`editor's blog`,funcPath:'/blog'},
           {name:'kult Tv',funcPath:'/howTo'},
         ],
+        input:'',
         showdiv:false,
         beautyGuideArr:[
           'Blush',
@@ -412,7 +414,8 @@
         'goTo',
         'logout',
         'newsletter_saveEmail',
-        'search'
+        'search',
+        'getSearchDet'
       ]),
         hamburger_cross(){
           let vm = this
@@ -428,6 +431,24 @@
           }
           $('.wrapper').toggleClass('toggled');
         },
+      search(){
+          let vm = this
+          console.log()
+        // alert('hi')
+        // alert(document.getElementById('search').value)
+        axios.get('https://us-central1-kult-2.cloudfunctions.net/searchProduct', {
+          params: {
+            qStr:vm.input
+          }
+        }).then(function (response) {
+          console.log(response.data)
+          vm.$store.state.gen.searchList = response.data
+          console.log(vm.$store.state.gen.searchList)
+         // console.log(Object.keys(response.data).length)
+        }).catch(function (error) {
+          console.log(error)
+        })
+      },
     },
     computed:{
       ...mapGetters([

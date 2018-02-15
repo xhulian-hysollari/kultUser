@@ -15,11 +15,11 @@
             </div>
             <div class="acc_menu">
               <ul>
-                <li><a href="#">CREDIT</a></li>
-                <li class="active"><a href="#">WISHLIST</a></li>
-                <li><a href="#">MY ORDER</a></li>
-                <li><a href="#">WITHDRAWAL</a></li>
-                <li><a href="#">AMAZON CASHBACK REQUEST</a></li>
+                <li @click="$router.replace('/credit')"><a >CREDIT</a></li>
+                <li class="active" ><a >WISHLIST</a></li>
+                <li @click="$router.replace('/myOrder')"><a >MY ORDER</a></li>
+                <li @click="$router.replace('/withdrawReq')"><a >WITHDRAWAL</a></li>
+                <li @click="$router.replace('/amazonCashbackReq')"><a>AMAZON CASHBACK REQUEST</a></li>
               </ul>
             </div>
           </div>
@@ -33,6 +33,13 @@
                 </div>
               </div>
               <div class="text-right entries col-xs-12 col-md-8 wishlist-control">
+                <el-select v-model="selected" placeholder="Sort By">
+                  <el-option
+                    v-for="item in options"
+                    :label="item"
+                    :value="item">
+                  </el-option>
+                </el-select>
                 <span href="#" onclick="window.print();" class="print-wishlist">Print</span>
                 <div class="view-switcher">
                   <div class="grid-view">
@@ -137,7 +144,15 @@
     //
     data(){
       return{
+        selected:'',
+        options: ['date','price'
+        ],
        wishlistArr:[]
+      }
+    },
+    watch:{
+      selected:function () {
+        this.sortWishList('date')
       }
     },
     components: {

@@ -169,7 +169,7 @@ export default new Router({
   routes: [
     { path: '/', name: 'Hello', component: Hello },
     { path: '/about', name: 'About', component: about },
-    { path: '/contact', name: 'About', component: contact },
+    { path: '/contact', name: 'Contact', component: contact },
     { path: '/tnc', name: 'T&C', component: tnc },
     { path: '/cashback', name: 'Cashback', component: cashback },
     //product

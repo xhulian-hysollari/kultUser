@@ -6,22 +6,22 @@
       <div class="container">
         <div class="accont_box">
           <div class="acount_top text-center">
-            <a href="#" class="edit_account">
+            <a @click="goTo('/editProfile')" class="edit_account">
               <img src="/static/images/icon-135-pen-angled.svg" alt="icon">
               Edit Account
             </a>
             <div class="account_pic">
-              <div class="acount_name">DG</div>
-              <div class="full_name">Deepti Gupta</div>
-              <a href="#" target="_blank" class="social_link">@karish2308</a>
+              <div class="acount_name">{{$store.state.auth.user.displayName[0].toUpperCase()}}</div>
+              <div class="full_name">{{$store.state.auth.user.displayName}}</div>
+              <!--a href="#" target="_blank" class="social_link">@karish2308</a-->
             </div>
             <div class="acc_menu">
               <ul>
-                <li><a href="#">CREDIT</a></li>
-                <li><a href="#">WISHLIST</a></li>
-                <li><a href="#">MY ORDER</a></li>
-                <li class="active"><a href="#">WITHDRAWAL</a></li>
-                <li ><a href="#">AMAZON CASHBACK REQUEST</a></li>
+                <li @click="$router.replace('/credit')"><a >CREDIT</a></li>
+                <li @click="$router.replace('/wishlist')"><a >WISHLIST</a></li>
+                <li @click="$router.replace('/myOrder')"><a >MY ORDER</a></li>
+                <li class="active"><a >WITHDRAWAL</a></li>
+                <li @click="$router.replace('/amazonCashbackReq')"><a>AMAZON CASHBACK REQUEST</a></li>
               </ul>
             </div>
           </div>
@@ -171,10 +171,14 @@
     },
     methods:{
       ...mapMutations([
-        'sendWithdrawalReq'
+        'sendWithdrawalReq',
+        'goTo'
       ])
     },
     created(){
+      if(!this.$store.state.auth.isLoggedIn){
+        this.$router.push('/')
+      }
       window.thisOfVueComp = this
       this.$store.commit('getMyOrders')
     }
