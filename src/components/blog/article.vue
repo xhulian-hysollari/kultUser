@@ -30,6 +30,7 @@
               <div class="blog_inncont">
                 <div class="blog_image">
                   <img :src="blogDet.blogImgUrl" alt="blog">
+                  <span style="margin-left: 40px"><span  class="blog_tag" v-for="i in blogDet.blogTag ">#{{i}}</span></span>
                 </div>
                 <ul class="list-unstyled list-inline blog_views">
                   <li><img src="/static/images/view.svg" alt="view">{{articleViews}}</li>
@@ -40,31 +41,25 @@
                   <li v-if="!isLoggedIn"><img src="/static/images/heart-icon.svg" alt="view"  data-toggle="modal" data-target="#loginModal">{{articleLike}}</li>
                 </ul>
                 <ul class="list-unstyled list-inline">
-                  <li><a href="https://www.instagram.com/kult.in/" target="_blank"><i class="fa fa-instagram"></i></a></li>
+                  <li><a href="https://www.instagram.com/kult.in/" target="_blank"><i class="fa fa-instagram icon_size" ></i></a></li>
                   <li><a href="https://goo.gl/UHWH1o" target="_blank"><i class="fa fa-youtube-play"></i></a></li>
-                  <!--li><a href="#" target="_blank"><i class="fa fa-facebook"></i></a></li>
-                  <li><a href="#" target="_blank"><i class="fa fa-instagram"></i></a></li>
-                  <li><a href="#" target="_blank"><i class="fa fa-pinterest"></i></a></li-->
+                  <!--li><a  target="_blank"><i class="fa fa-facebook"></i></a></li>
+                  <li><a  target="_blank"><i class="fa fa-instagram"></i></a></li>
+                  <li><a  target="_blank"><i class="fa fa-pinterest"></i></a></li-->
                 </ul>
-                <p>
-                  {{blogDet.blogContent}}
+                <p v-html="blogDet.blogContent">
                 </p>
-              </div>
-              <div class="blog_innbtm">
-                <h3>Kult Blog</h3>
-                <p>Get latest news and articles.</p>
-                <a href="#">Read more</a>
               </div>
             </div>
             <div class="col-sm-5 col-xs-12 hidden-xs sidebar">
               <div class="side_box">
-                <div class="blog_sidecat" v-for="(b,cat) in sideBlogs">
+                <div class="blog_sidecat" v-for="(b,cat) in sideBlogs"  @click="$router.push({path:'/article', query:{name,selArticle:articleBlog(blog),sideBlogs:articleBlog(sideBlogs)}})">
                   <h4>{{cat}}</h4>
                   <div class="cat_side" v-for="(blog,name) in b">
-                    <a href="#" class="cat_img"  @click="$router.push({path:'/article', query:{name,selArticle:articleBlog(blog),sideBlogs:articleBlog(sideBlogs)}})"><img :src="blog.blogImgUrl" alt="image"></a>
+                    <a  class="cat_img blog_img_side" ><img :src="blog.blogImgUrl"  alt="image"></a>
                     <div class="cat_cont">
-                      <h5><a href="#">{{name}}</a></h5>
-                      <a href="#" class="cat_link" v-for="i in blog.blogTag ">{{i}}</a>
+                      <h5><a >{{name}}</a></h5>
+                      <ul class="comm_pagemenus "><span v-for="i in blog.blogTag "><li><a  class="cat_link" >{{i}}</a></li></span></ul>
                       <ul class="list-unstyled list-inline blog_views">
                         <li><img src="/static/images/view.svg" alt="view">{{blog.views}}</li>
                         <li><img src="/static/images/heart-icon.svg" alt="view">{{blog.likes}}</li>
@@ -73,7 +68,7 @@
                   </div>
                 </div>
                 <div class="ads">
-                  <a href="#">
+                  <a >
                     <img src="/static/images/ads@2x.jpg" alt="ads">
                   </a>
                 </div>
@@ -138,3 +133,9 @@
     }
   }
 </script>
+<style>
+  .blog_img_side{
+    height: 109.531px !important;
+    width: 91.266px !important;
+  }
+</style>

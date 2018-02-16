@@ -4,13 +4,13 @@
     <div v-if="!productsLoader">
 
         <div class="top_sortarea">
-          <div class="container">
+          <div class="container min_hight_prod">
             <div class="row">
               <div class="col-xs-5" >
                 <p>
                   <img class="filter_icon" src="/static/images/filter.svg" alt="filter" @click="filters($event)" >
                   FILTER
-                  <a href="#" class="visible-xs mob_filter" @click="filters($event)"></a>
+                  <a  class="visible-xs mob_filter" @click="filters($event)"></a>
                 </p>
               </div>
               <div class="col-xs-7 text-right">
@@ -29,71 +29,18 @@
                     <span class="hide_toggler">{{toggler}}</span>
                     <a>ACTIVE FILTER <span>{{cnt}}</span></a>
                   </div>
-
-
-                  <div >
-                    <div v-show="filterBoxes['priceRange']===false">
-                      <div class="filter_box" >
-                        <div class="filter_title">
-                          <a href="#" @click="closeFilter('priceRange')">priceRange</a>
-                        </div>
-                      </div>
-                    </div>
-                    <div v-show="filterBoxes['priceRange']===true || filterBoxes['priceRange']===undefined">
-                      <div class="filter_box active" >
-                        <div class="filter_title">
-                          <a href="#" @click="closeFilter('priceRange')">priceRange</a>
-                        </div>
-                        <div class="filter_cont">
-                          <div class="comm_radio">
-                            <div class="radio radio-primary" v-for="i in priceArr" @click="sel_disSel_thisFilter({
-                            sel_filterDetail : {
-                              filterName : 'priceRange',
-                              filterPara: i,
-                            },
-
-                              routePath: routeDet.routePath , //add filter later
-                              //
-                              compRoutePath: routeDet.compRoutePath
-                              })">
-                             <span v-if=" Object.keys(selectedFilters).indexOf('priceRange') != -1 ">
-                              <span v-if=" Object.keys(selectedFilters['priceRange']).indexOf('priceRange') != -1 ">
-                                <div class="selected_filter" >
-                                  <span><i class="material-icons ">radio_button_checked</i></span>
-                                  <span class="radio_btn">{{i}}</span>
-                                </div>
-                              </span>
-                               <div v-else class="unselected_filter">
-                                 <span><i class="material-icons" >radio_button_unchecked</i></span>
-                                 <span class="radio_btn" >{{i}}</span>
-                               </div>
-                            </span>
-                              <div v-else class="unselected_filter">
-                                <span><i class="material-icons" >radio_button_unchecked</i></span>
-                                <span class="radio_btn" >{{i}}</span>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-
-
-
                   <div v-for="(filteNameContent, filterName) in filter">
                     <div v-show="filterBoxes[filterName]===false">
                       <div class="filter_box" >
                         <div class="filter_title">
-                          <a href="#" @click="closeFilter(filterName)">{{filterName}}</a>
+                          <a  @click="closeFilter(filterName)">{{filterName}}</a>
                         </div>
                       </div>
                     </div>
                     <div v-show="filterBoxes[filterName]===true || filterBoxes[filterName]===undefined">
                       <div class="filter_box active" >
                         <div class="filter_title">
-                          <a href="#" @click="closeFilter(filterName)">{{filterName}}</a>
+                          <a  @click="closeFilter(filterName)">{{filterName}}</a>
                         </div>
 
 
@@ -195,11 +142,11 @@
                     <el-col :xs="12" :sm="12" :md="8" :lg="8" v-for="(pDet, pId) in products" >
                       <div>
                         <div class="grid-content pa-2" >
-                          <a class="prod_image" href="#">
+                          <a class="prod_image" >
                             <img :src="pDet.pBasicDetail.pPicUrl"  style="height:286px " alt="product">
                           </a>
                           <div class="prod_cont">
-                            <h4><a href="#">{{pDet.pBasicDetail.pBrand}}</a></h4>
+                            <h4><a >{{pDet.pBasicDetail.pBrand}}</a></h4>
                             <span v-for="(i,k) in pDet.pBasicDetail.pName" v-if="k < 30">{{i}}</span><span v-if="pDet.pBasicDetail.pName.length > 30">...</span>
                           </div>
                           <div class="prod_misc">
@@ -222,15 +169,14 @@
                           <a  class="prod_compare" v-if="!isLoggedIn"><span @click="$router.push({path:`/particularProduct/${pId}`,query:{prodDet:JSON.stringify(pDet)}})">Compare price</span>
                             <img src="/static/images/wishlist-add.svg" alt="wishlist-add" @click="$store.state.auth.showLoginPopup = true">
                           </a>
-                          <a href="#" class="go_store">Go to store</a>
                         </div>
                       </div>
                     </el-col>
-                    <button class="login_btn" type="info"
+                    <!--button class="login_btn load_more_btn" type="info"
                     v-show="productsLoader">
                       <i class='fa fa-spinner fa-spin ' ></i>
-                    </button>
-                    <button class="login_btn" type="info" @click="loadMoreProducts({
+                    </button-->
+                    <button class="login_btn load_more_btn" type="info" @click="loadMoreProducts({
                       routePath: routeDet.routePath
                     })" v-if="Object.keys(products).length !== totalProds"
                     v-show="!productsLoader">
@@ -410,5 +356,12 @@
   .unselected_filter{
    color: #959595;
     display: flex
+  }
+  .load_more_btn{
+    margin-top: 40px !important;
+    display: initial !important;
+  }
+  .min_height_prod{
+    min-height: 900px;
   }
 </style>

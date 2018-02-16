@@ -19,20 +19,30 @@
             <div class="col-md-5 col-xs-12">
               <div class="prod_left">
                 <div class="prod_leftmisc">
-                  <a class="prod_cat" href="#">Make Up</a>
+                  <a class="prod_cat" >Make Up</a>
                   <h2>{{JSON.parse($route.query.prodDet).pBasicDetail.pBrand}}</h2>
                   <h3>{{JSON.parse($route.query.prodDet).pBasicDetail.pName}}</h3>
                   <div class="prod_wishadd">
-                    <div class="prod_rate float"><rating :num="Math.round(JSON.parse($route.query.prodDet).pBasicDetail.pRating)"></rating></div>
-                    <a v-if="isLoggedIn">
+                    <div class="prod_rate float">
+
+                        <span v-for="icon in 5" >
+                          <span v-if="icon <= Math.round(JSON.parse($route.query.prodDet).pBasicDetail.pRating)"  >
+                              <i class="material-icons p_star"  >star</i>
+                          </span>
+                           <span v-else>
+                              <i class="material-icons p_star_unchecked" >star</i>
+                          </span>
+                      </span>
+                    </div>
+                    <a v-if="isLoggedIn" class="ml_24" >
                       <img src="/static/images/wishlist-add.svg" alt="wishlist-add" v-if="Object.keys(wishlistObj).indexOf($router.currentRoute.params.pId) === -1"
                            @click="addWishlist({pId:$router.currentRoute.params.pId,pDet:JSON.parse($route.query.prodDet)});
                            wishlistObj[$router.currentRoute.params.pId] = JSON.parse($route.query.prodDet); $forceUpdate()">
-                      <img src="/static/images/wishlist-hover.svg" alt="wishlist-hover" v-if="Object.keys(wishlistObj).indexOf($router.currentRoute.params.pId) !== -1"
+                      <img src="/static/images/wishlist-hover.svg" alt="wishlist-hover"class="ml_24" v-if="Object.keys(wishlistObj).indexOf($router.currentRoute.params.pId) !== -1"
                            @click="removeWishlist({pId:$router.currentRoute.params.pId,pDet:JSON.parse($route.query.prodDet)});
                            delete wishlistObj[$router.currentRoute.params.pId]; $forceUpdate()">
                     </a>
-                    <a   v-if="!isLoggedIn">
+                    <a   v-if="!isLoggedIn"  class="ml_24">
                       <img src="/static/images/wishlist-add.svg" alt="wishlist-add" @click="$store.state.auth.showLoginPopup = true">
                     </a>
                   </div>
@@ -145,9 +155,9 @@
               <ul class="prod_social">
                 <li><a href="https://www.instagram.com/kult.in/" target="_blank"><i class="fa fa-instagram"></i></a></li>
                 <li><a href="https://goo.gl/UHWH1o" target="_blank"><i class="fa fa-youtube-play"></i></a></li>
-                <!--li><a href="#" target="_blank"><i class="fa fa-facebook"></i></a></li>
-                <li><a href="#" target="_blank"><i class="fa fa-pinterest"></i></a></li>
-                <li><a href="#" target="_blank"><i class="fa fa-twitter"></i></a></li-->
+                <!--li><a  target="_blank"><i class="fa fa-facebook"></i></a></li>
+                <li><a  target="_blank"><i class="fa fa-pinterest"></i></a></li>
+                <li><a  target="_blank"><i class="fa fa-twitter"></i></a></li-->
               </ul>
             </div>
           </div>
@@ -157,64 +167,64 @@
             </div>
             <div class="prod_repeater">
               <div class="prod_repeat prod_repeat1">
-                <a class="prod_image" href="#">
+                <a class="prod_image" >
                   <img src="/static/images/item-1@2x.jpg" alt="product">
                 </a>
                 <div class="prod_cont">
-                  <h4><a href="#">MAXFACOR</a></h4>
+                  <h4><a >MAXFACOR</a></h4>
                   <p>Miracle Touch Foundation</p>
                 </div>
                 <div class="prod_misc">
                   <div class="half"><img src="/static/images/rate-4.svg" alt="rating"></div>
                   <div class="half text-right">From <img src="/static/images/rupee-2.svg" alt="currency"> 2,036</div>
                 </div>
-                <a href="#" class="prod_compare">Compare price <img src="/static/images/wishlist-add.svg" alt="wishlist-add"></a>
-                <a href="#" class="go_store">Go to store</a>
+                <a  class="prod_compare">Compare price <img src="/static/images/wishlist-add.svg" alt="wishlist-add"></a>
+                <a  class="go_store">Go to store</a>
               </div>
               <div class="prod_repeat prod_repeat2">
-                <a class="prod_image" href="#">
+                <a class="prod_image" >
                   <img src="/static/images/item-2@2x.jpg" alt="product">
                 </a>
                 <div class="prod_cont">
-                  <h4><a href="#">CLINIQUE</a></h4>
+                  <h4><a >CLINIQUE</a></h4>
                   <p>Even Better Glow</p>
                 </div>
                 <div class="prod_misc">
                   <div class="half"><img src="/static/images/rate-4.svg" alt="rating"></div>
                   <div class="half text-right">From <img src="/static/images/rupee-2.svg" alt="currency"> 2,036</div>
                 </div>
-                <a href="#" class="prod_compare">Compare price <img src="/static/images/wishlist-add.svg" alt="wishlist-add"></a>
-                <a href="#" class="go_store">Go to store</a>
+                <a  class="prod_compare">Compare price <img src="/static/images/wishlist-add.svg" alt="wishlist-add"></a>
+                <a  class="go_store">Go to store</a>
               </div>
               <div class="prod_repeat prod_repeat3">
-                <a class="prod_image" href="#">
+                <a class="prod_image" >
                   <img src="/static/images/item-3@2x.jpg" alt="product">
                 </a>
                 <div class="prod_cont">
-                  <h4><a href="#">ELF</a></h4>
+                  <h4><a >ELF</a></h4>
                   <p>Glossy Lipstick</p>
                 </div>
                 <div class="prod_misc">
                   <div class="half"><img src="/static/images/rate-4.svg" alt="rating"></div>
                   <div class="half text-right">From <img src="/static/images/rupee-2.svg" alt="currency"> 2,036</div>
                 </div>
-                <a href="#" class="prod_compare">Compare price <img src="/static/images/wishlist-add.svg" alt="wishlist-add"></a>
-                <a href="#" class="go_store">Go to store</a>
+                <a  class="prod_compare">Compare price <img src="/static/images/wishlist-add.svg" alt="wishlist-add"></a>
+                <a  class="go_store">Go to store</a>
               </div>
               <div class="prod_repeat prod_repeat4">
-                <a class="prod_image" href="#">
+                <a class="prod_image" >
                   <img src="/static/images/item-4@2x.jpg" alt="product">
                 </a>
                 <div class="prod_cont">
-                  <h4><a href="#">NYX</a></h4>
+                  <h4><a >NYX</a></h4>
                   <p>Eyeshadow Palette</p>
                 </div>
                 <div class="prod_misc">
                   <div class="half"><img src="/static/images/rate-4.svg" alt="rating"></div>
                   <div class="half text-right">From <img src="/static/images/rupee-2.svg" alt="currency"> 2,036</div>
                 </div>
-                <a href="#" class="prod_compare">Compare price <img src="/static/images/wishlist-add.svg" alt="wishlist-add"></a>
-                <a href="#" class="go_store">Go to store</a>
+                <a  class="prod_compare">Compare price <img src="/static/images/wishlist-add.svg" alt="wishlist-add"></a>
+                <a  class="go_store">Go to store</a>
               </div>
             </div>
           </div-->
@@ -292,5 +302,16 @@
   }
   .float{
     float: left;
+  }
+  .p_star{
+    font-size: 20px;
+    color: #eca8b5 ;
+  }
+  .p_star_unchecked{
+    font-size: 20px;
+    color: #959595;
+  }
+  .ml_24{
+    margin-left: 24px !important;
   }
 </style>

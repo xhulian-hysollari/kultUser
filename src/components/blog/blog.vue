@@ -1,4 +1,4 @@
-<template>
+<template xmlns="http://www.w3.org/1999/html">
   <div>
 
 
@@ -14,14 +14,14 @@
             </div>
             <div class="col-sm-7 col-xs-12 text-right cust_left">
               <loader v-if="blogTagLoader"></loader>
-              <ul class="comm_pagemenus" v-if="!blogTagLoader">
-                <div   v-for="(blogTagDet, blogTagName) in blogTags"
+              <ul class="comm_pagemenus blog_tags" v-if="!blogTagLoader">
+                <span   v-for="(blogTagDet, blogTagName) in blogTags"
                        @click="getBlogsOfThisTag({
                           tagName: blogTagName
                         })"
                 >
-                  <li ><a href="#">{{blogTagName}}</a></li>
-                </div>
+                  <li ><a >{{blogTagName}}</a></li>
+                </span>
               </ul>
             </div>
           </div>
@@ -37,8 +37,8 @@
               <div v-if="!blogsAtHomeLoader">
                 <div class="blog_repeat" v-for="(blog,k) in blogsAtHome">
                   <div class="blog_image">
-                    <a href="#"><img :src="blog.blogImgUrl" alt="blog"></a>
-                    <a href="#" class="blog_tag" v-for="i in blog.blogTag ">#{{i}}</a>
+                    <a ><img :src="blog.blogImgUrl" alt="blog"></a>
+                    <a  class="blog_tag" v-for="i in blog.blogTag ">#{{i}}</a>
                   </div>
                   <div class="blog_cont">
                     <h3>{{k}}</h3>
@@ -55,11 +55,11 @@
                   <div class="blog_contact">
                     <h4>Get in touch</h4>
                     <ul class="list-unstyled list-inline">
-                      <li><a href="https://www.instagram.com/kult.in/" target="_blank"><i class="fa fa-instagram"></i></a></li>
+                      <li><a href="https://www.instagram.com/kult.in/" target="_blank"><i class="fa fa-instagram" ></i></a></li>
                       <li><a href="https://goo.gl/UHWH1o" target="_blank"><i class="fa fa-youtube-play"></i></a></li>
-                      <!--li><a href="#" target="_blank"><i class="fa fa-facebook"></i></a></li>
-                      <li><a href="#" target="_blank"><i class="fa fa-instagram"></i></a></li>
-                      <li><a href="#" target="_blank"><i class="fa fa-pinterest"></i></a></li-->
+                      <!--li><a  target="_blank"><i class="fa fa-facebook"></i></a></li>
+                      <li><a  target="_blank"><i class="fa fa-instagram"></i></a></li>
+                      <li><a  target="_blank"><i class="fa fa-pinterest"></i></a></li-->
                     </ul>
                   </div>
                 </div>
@@ -67,13 +67,12 @@
             </div>
             <div class="col-sm-5 col-xs-12 hidden-xs sidebar" >
               <div class="side_box">
-                <loader v-if="blogLoader || blogsAtHomeLoader"></loader>
-                <div v-if="!blogLoader && !blogsAtHomeLoader">
+                <loader v-if=" blogsAtHomeLoader"></loader>
+                <div v-if="!blogsAtHomeLoader">
                           <div class="blog_repeat">
                             <div class="blog_image">
-                              {{Object.keys(blogsAtHome)[(Object.values(blogsAtHome).length) -1]}}
-                              <a href="#" ><img :src="Object.values(blogsAtHome)[(Object.values(blogsAtHome).length) -1].blogImgUrl" alt="blog" ></a>
-                              <a href="#" class="blog_tag" v-for="tag in Object.values(blogsAtHome)[(Object.values(blogsAtHome).length) -1].blogTag">#{{tag}}</a>
+                              <a  ><img :src="Object.values(blogsAtHome)[(Object.values(blogsAtHome).length) -1].blogImgUrl" alt="blog" ></a>
+                              <a  class="blog_tag" v-for="tag in Object.values(blogsAtHome)[(Object.values(blogsAtHome).length) -1].blogTag">#{{tag}}</a>
                             </div>
                             <div class="blog_cont">
                               <h3>{{Object.keys(blogsAtHome)[(Object.values(blogsAtHome).length) -1]}}</h3>
@@ -82,7 +81,7 @@
                                   <span >{{b}}</span>
                               </span>
                               <span v-if="Object.values(blogsAtHome)[(Object.values(blogsAtHome).length) -1].blogContent.length > 31">...</span>
-                              <a href="#" class="blog_read" @click="$router.push({path:'/article', query:{name:Object.keys(blogsAtHome)[(Object.values(blogsAtHome).length) -1],selArticle:articleBlog(Object.values(blogsAtHome)[(Object.values(blogsAtHome).length) -1]),sideBlogs:articleBlog(blogs)}})">Read more</a>
+                              <a  class="blog_read" @click="$router.push({path:'/article', query:{name:Object.keys(blogsAtHome)[(Object.values(blogsAtHome).length) -1],selArticle:articleBlog(Object.values(blogsAtHome)[(Object.values(blogsAtHome).length) -1]),sideBlogs:articleBlog(blogs)}})">Read more</a>
                             </div>
                           </div>
                         </div>
@@ -93,21 +92,21 @@
                               <ul class="list-unstyled list-inline">
                                 <li><a href="https://www.instagram.com/kult.in/" target="_blank"><i class="fa fa-instagram"></i></a></li>
                                 <li><a href="https://goo.gl/UHWH1o" target="_blank"><i class="fa fa-youtube-play"></i></a></li>
-                                <!--li><a href="#" target="_blank"><i class="fa fa-facebook"></i></a></li>
-                                <li><a href="#" target="_blank"><i class="fa fa-instagram"></i></a></li>
-                                <li><a href="#" target="_blank"><i class="fa fa-pinterest"></i></a></li-->
+                                <!--li><a  target="_blank"><i class="fa fa-facebook"></i></a></li>
+                                <li><a  target="_blank"><i class="fa fa-instagram"></i></a></li>
+                                <li><a  target="_blank"><i class="fa fa-pinterest"></i></a></li-->
                               </ul>
                             </div>
                           </div>
                         </div>
                         <div class="side_box">
-                          <div class="blog_sidecat" v-for="(b,cat) in blogs">
+                          <div class="blog_sidecat" v-for="(b,cat) in blogs" @click="$router.push({path:'/article', query:{name,selArticle:articleBlog(blog),sideBlogs:articleBlog(blogs)}})">
                             <h4>{{cat}}</h4>
                             <div class="cat_side" v-for="(blog,name) in b">
-                              <a href="#" class="cat_img" @click="$router.push({path:'/article', query:{name,selArticle:articleBlog(blog),sideBlogs:articleBlog(blogs)}})"><img :src="blog.blogImgUrl" alt="image"></a>
+                              <a  class="cat_img" ><img :src="blog.blogImgUrl" alt="image"></a>
                               <div class="cat_cont">
-                                <h5><a href="#">{{name}}</a></h5>
-                                <a href="#" class="cat_link" v-for="i in blog.blogTag ">{{i}}</a>
+                                <h5><a >{{name}}</a></h5>
+                                <ul class="comm_pagemenus "><span v-for="i in blog.blogTag "><li><a  class="cat_link" >{{i}}</a></li></span></ul>
                                 <ul class="list-unstyled list-inline blog_views">
                                   <li><img src="/static/images/view.svg" alt="view">{{blog.views}}</li>
                                   <li><img src="/static/images/heart-icon.svg" alt="view">{{blog.likes}}</li>
@@ -116,7 +115,7 @@
                             </div>
                           </div>
                           <div class="ads">
-                            <a href="#">
+                            <a >
                               <img src="/static/images/ads@2x.jpg" alt="ads">
                             </a>
                             </div>

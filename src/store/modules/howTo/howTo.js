@@ -70,7 +70,9 @@ const mutations = {
   getHowToCatVid(state2, payload){
     //console.log(payload.howToCat)
     //
-    state.howToVidLoader = true
+    setTimeout(()=>{
+      state.howToVidLoader = false
+    })
     //
     gen.state.firestore
       .collection('howToCat').doc(payload.howToCat)
@@ -111,7 +113,9 @@ const mutations = {
         router.push({ path:'/howTo' , query: { selVidCat: payload.howToCat  } }) //use here(current route), only when sure
         //this cant be called outside component
         //
-        state.howToVidLoader = false
+        setTimeout(()=>{
+          state.howToVidLoader = false
+        })
         window.thisOfVueComp.$forceUpdate()
       })
   },

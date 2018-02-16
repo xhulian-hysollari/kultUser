@@ -13,7 +13,7 @@
       </button>
     </div>
 
-    <p class="forgot_pass" @click="$store.state.auth.showForgot=false" style="margin-top: 30px"><a href="#">Login with email</a></p>
+    <p class="forgot_pass" @click="$store.state.auth.showForgot=false" style="margin-top: 30px"><a >Login with email</a></p>
 
 
 

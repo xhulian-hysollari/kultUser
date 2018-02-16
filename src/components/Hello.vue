@@ -39,14 +39,14 @@
       <div class="top_tags">
         <h3>Trending Searches</h3>
         <ul>
-          <li><a href="#">Body Moisturizer</a></li>
-          <li><a href="#">Men’s Perfume</a></li>
-          <li><a href="#">Makeup Remover</a></li>
-          <li><a href="#">Glossy Lipstick</a></li>
-          <li><a href="#">Hair Dryers</a></li>
-          <li><a href="#">Eye Brushes</a></li>
-          <li><a href="#">Lip Sunscreen</a></li>
-          <li><a href="#">Dry Shampoo</a></li>
+          <li><a >Body Moisturizer</a></li>
+          <li><a >Men’s Perfume</a></li>
+          <li><a >Makeup Remover</a></li>
+          <li><a >Glossy Lipstick</a></li>
+          <li><a >Hair Dryers</a></li>
+          <li><a >Eye Brushes</a></li>
+          <li><a >Lip Sunscreen</a></li>
+          <li><a >Dry Shampoo</a></li>
         </ul>
         <div class="clearfix"></div>
       </div>
