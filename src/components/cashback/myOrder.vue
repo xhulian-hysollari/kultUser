@@ -84,8 +84,8 @@
                   </td>
                 </tr>
 
-                <tr v-if=" Object.keys(myOrders.orders).length == 0 ">
-                  <td colspan="6">
+                <tr v-if=" typeof myOrders.orders === 'object' ">
+                  <td colspan="6" v-if=" Object.keys(myOrders.orders).length == 0 ">
                     <div class="no_data text-center">
                       <img src="/static/images/sad.svg" alt="sad">
                       No data available in the table

@@ -57,9 +57,13 @@ export default {
       //
       if( Object.keys(window.thisOfVueComp_filterMixin.selectedFilters).length == 0 ){ //not a situation
         console.log("Z1")
-        this.$store.commit('getProducts', {
-          routePath: window.thisOfVueComp_filterMixin.routePath
-        })
+        //
+        //
+        setTimeout(()=>{
+          this.$store.commit('getProducts', {
+            routePath: window.routePath_7
+          })
+        },500)
       }else{
         //
         let payload = {
