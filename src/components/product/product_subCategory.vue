@@ -20,5 +20,11 @@
     components:{
       product
     },
+    created(){
+      window.routePath_7 =  'shopOption/' + this.$route.params.shopOption + '/category/' + this.$route.params.category + '/sub/' + this.$route.params.subCategory //  7 :{
+    },
+    updated(){
+      window.routePath_7 =  'shopOption/' + this.$route.params.shopOption + '/category/' + this.$route.params.category + '/sub/' + this.$route.params.subCategory
+    }
   }
 </script>

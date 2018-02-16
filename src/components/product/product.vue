@@ -1,6 +1,6 @@
 <template>
   <div>
-    {{routeDet}}
+
     <loader v-if="productsLoader"></loader>
     <div v-if="!productsLoader">
 
@@ -313,6 +313,7 @@
      console.log(this.routeDet)
       window.thisOfVueComp = this
       //
+      //
       this.productsOrFilterProducts_initCompCreatedFunc({
         //
         thisOfVueComp: this, //
@@ -320,7 +321,7 @@
         routeQuery: this.routeDet.routeQuery // (2)
         //
       })
-
+      //setTimeout(()=>{this.$forceUpdate()},3000)
     }
   }
 </script>

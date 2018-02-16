@@ -20,6 +20,11 @@
     components:{
       product
     },
-
+    created(){
+      window.routePath_7 = 'shopOption/' + this.$route.params.shopOption + '/category/' + this.$route.params.category//  7 :{
+    },
+    updated(){
+      window.routePath_7 =  'shopOption/' + this.$route.params.shopOption + '/category/' + this.$route.params.category
+    }
   }
 </script>

@@ -34,7 +34,7 @@ const mutations = {
       .doc(payload.routePath)
       .collection("product")
       .orderBy("date")
-      .limit(3)
+      .limit(6)
       .get().then((queryproducts)=>{
 
       //
@@ -90,7 +90,7 @@ const mutations = {
       .collection("product")
       .orderBy("date")
       .startAfter(state.lastQueried_product)
-      .limit(3)
+      .limit(6)
       .get().then((queryproducts)=>{
 
       //

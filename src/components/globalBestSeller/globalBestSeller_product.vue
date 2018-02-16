@@ -55,7 +55,10 @@
     },
     created(){
       window.thisOfVueComp_3 = this
-
+      window.routePath_7 =  'kultPickGlobalBestSeller/globalBestSeller' //  7 :{
+    },
+    updated(){
+      window.routePath_7 =  'kultPickGlobalBestSeller/globalBestSeller'
     }
   }
 </script>

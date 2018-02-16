@@ -20,8 +20,13 @@
     components:{
       product
     },
+    updated(){
+      window.routePath_7 =  'brandCat/A-Z Brands/brand/' + this.$route.params.brand
+    },
     created(){
-      window.productParent=this
+      //
+      window.routePath_7 =  'brandCat/A-Z Brands/brand/' + this.$route.params.brand //  7 :{
+      //
     }
   }
 </script>
