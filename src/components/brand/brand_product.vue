@@ -19,6 +19,9 @@
     //
     components:{
       product
+    },
+    created(){
+      window.productParent=this
     }
   }
 </script>

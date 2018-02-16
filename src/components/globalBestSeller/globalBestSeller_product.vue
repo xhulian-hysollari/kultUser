@@ -55,6 +55,7 @@
     },
     created(){
       window.thisOfVueComp_3 = this
+
     }
   }
 </script>

@@ -51,12 +51,12 @@
                 </p>
               </div>
             </div>
-            <div class="col-sm-5 col-xs-12 hidden-xs sidebar">
+            <div class="col-sm-5 col-xs-12 hidden-xs sidebar" >
               <div class="side_box">
                 <div class="blog_sidecat" v-for="(b,cat) in sideBlogs"  @click="$router.push({path:'/article', query:{name,selArticle:articleBlog(blog),sideBlogs:articleBlog(sideBlogs)}})">
                   <h4>{{cat}}</h4>
                   <div class="cat_side" v-for="(blog,name) in b">
-                    <a  class="cat_img blog_img_side" ><img :src="blog.blogImgUrl"  alt="image"></a>
+                    <a  class="cat_img " ><img :src="blog.blogImgUrl"  alt="image" class="blog_img_side"></a>
                     <div class="cat_cont">
                       <h5><a >{{name}}</a></h5>
                       <ul class="comm_pagemenus "><span v-for="i in blog.blogTag "><li><a  class="cat_link" >{{i}}</a></li></span></ul>

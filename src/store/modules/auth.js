@@ -49,20 +49,25 @@ const getters = {
 const mutations = {
   afterLogin_userDetail(state2, payload){ //phone and refCode
     //
-    gen.state.btnLoader = true
-    //
-    gen.state.firestore
-      .collection("user").doc(state.user.uid)
-      .set({
-        refCode: payload.refCode, //para 1
-        phone: payload.phone //para 2
-      }, {merge: true}).then(()=>{
+    if(payload.refCode !== '' || payload.phone !== undefined){
+      gen.state.btnLoader = true
       //
-      gen.state.btnLoader = false
-      state.showRefCode=false
-      state.showLoginPopup=false
-      alert('Details Saved !')
-    })
+      gen.state.firestore
+        .collection("user").doc(state.user.uid)
+        .set({
+          refCode: payload.refCode, //para 1
+          phone: payload.phone //para 2
+        }, {merge: true}).then(()=>{
+        //
+        gen.state.btnLoader = false
+        state.showRefCode=false
+        state.showLoginPopup=false
+        alert('Details Saved !')
+      })
+    }else{
+      alert('Nothing To Save')
+    }
+
   },
   //
   //LOGIN STATUS

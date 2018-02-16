@@ -23,6 +23,7 @@ const mutations = {
   getProducts(state2, payload){
     //console.log(payload)
     //
+    console.log(payload)
     state.productsLoader = true
     //
     //console.log("[Firestore] in product_category =>", gen.state.firestore)

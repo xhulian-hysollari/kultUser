@@ -19,11 +19,9 @@
                  refCode:$store.state.auth.refCode
                  })"
       >
-        <span v-if="!btnLoader">CONFIRM</span>
+        <span v-if="!btnLoader">SAVE</span>
       </button>
-      <button class="login_btn" v-if="!btnLoader" @click="$store.state.auth.showLoginPopup=false">
-        CANCEL
-      </button>
+      <p class="forgot_pass float_right" v-if="!btnLoader" @click="$store.state.auth.showLoginPopup=false" ><a >Skip</a></p>
     </div>
 
   </div>
@@ -49,3 +47,8 @@
     }
   }
 </script>
+<style>
+  .float_right{
+    float: right;
+  }
+</style>

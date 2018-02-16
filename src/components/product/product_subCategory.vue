@@ -19,6 +19,6 @@
     //
     components:{
       product
-    }
+    },
   }
 </script>

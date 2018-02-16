@@ -19,7 +19,6 @@
             <div class="col-md-5 col-xs-12">
               <div class="prod_left">
                 <div class="prod_leftmisc">
-                  <a class="prod_cat" >Make Up</a>
                   <h2>{{JSON.parse($route.query.prodDet).pBasicDetail.pBrand}}</h2>
                   <h3>{{JSON.parse($route.query.prodDet).pBasicDetail.pName}}</h3>
                   <div class="prod_wishadd">
@@ -38,7 +37,7 @@
                       <img src="/static/images/wishlist-add.svg" alt="wishlist-add" v-if="Object.keys(wishlistObj).indexOf($router.currentRoute.params.pId) === -1"
                            @click="addWishlist({pId:$router.currentRoute.params.pId,pDet:JSON.parse($route.query.prodDet)});
                            wishlistObj[$router.currentRoute.params.pId] = JSON.parse($route.query.prodDet); $forceUpdate()">
-                      <img src="/static/images/wishlist-hover.svg" alt="wishlist-hover"class="ml_24" v-if="Object.keys(wishlistObj).indexOf($router.currentRoute.params.pId) !== -1"
+                      <img src="/static/images/wishlist-hover.svg" alt="wishlist-hover" v-if="Object.keys(wishlistObj).indexOf($router.currentRoute.params.pId) !== -1"
                            @click="removeWishlist({pId:$router.currentRoute.params.pId,pDet:JSON.parse($route.query.prodDet)});
                            delete wishlistObj[$router.currentRoute.params.pId]; $forceUpdate()">
                     </a>
@@ -47,25 +46,37 @@
                     </a>
                   </div>
                 </div>
-                <ul class="prod_type_list">
-                  <span v-for="i in prodArr" v-if="i.det.swatchImgUrl !== ''">
-                    <span v-if="selected.key!==i.key" @click="$store.state.particularProduct.selected = i">
-                      <img :src="i.det.swatchImgUrl" style="max-height: 50px;max-width: 50px">
-                    </span>
-                     <span v-if="selected.key===i.key" class="active">
-                      <img :src="i.det.swatchImgUrl" style="max-height: 50px;max-width: 50px">
-                    </span>
+                <ul class="prod_type_list ">
+                  <div >
+                      <span v-for="i in prodArr" v-if="i.det.swatchImgUrl !== ''">
+                    <li v-if="selected.key!==i.key" @click="$store.state.particularProduct.selected = i">
+                      <img :src="i.det.swatchImgUrl" style="height: 50px;width: 50px">
+                    </li>
+                     <li v-if="selected.key===i.key" class="active">
+                      <img :src="i.det.swatchImgUrl" style="height: 50px;width: 50px">
+                    </li>
                   </span>
-                  <span v-for="i in prodArr"  v-if="i.det.swatchImgUrl === ''">
+                  </div>
+                </ul>
+                <ul class="prod_type_list mt_30">
+                  <div>
+                      <span v-for="i in prodArr" >
                     <li  v-if="selected.key!==i.key" @click="$store.state.particularProduct.selected = i">
                       <a> {{i.key}}</a>
                     </li>
                     <li  v-if="selected.key===i.key" class="active"><a > {{i.key}}</a></li>
                   </span>
+                  </div>
+                  <!--span-- v-for="i in prodArr"  v-if="i.det.swatchImgUrl === ''">
+                    <li  v-if="selected.key!==i.key" @click="$store.state.particularProduct.selected = i">
+                      <a> {{i.key}}</a>
+                    </li>
+                    <li  v-if="selected.key===i.key" class="active"><a > {{i.key}}</a></li>
+                  </span-->
                 </ul>
-              <!--  <div class="prod_pricerange" v-if="Object.keys(JSON.parse($route.query.prodDet)).indexOf(priceStartsFrom) != -1">
-                  From <strong>{{JSON.parse($route.query.prodDet).priceStartsFrom}}</strong>Rupee
-                </div> -->
+                <!--  <div class="prod_pricerange" v-if="Object.keys(JSON.parse($route.query.prodDet)).indexOf(priceStartsFrom) != -1">
+                    From <strong>{{JSON.parse($route.query.prodDet).priceStartsFrom}}</strong>Rupee
+                  </div> -->
                 <div class="prod_storelinks">
                   <div class="store_nos">
                     <!--img src="/static/images/price-2.svg" alt="price">
@@ -75,8 +86,57 @@
                   <!--div class="prod_pricerange">
                     From <strong>2,036</strong> to <strong>7,999</strong> Rupee
                   </div-->
+
+                  <ul class="prod_shoplinks list-unstyled" v-if="!isLoggedIn " >
+                    <li  v-for="(l,k) in selected.det.affliateDomains" v-if="l.price!==undefined && l.price!==999999999">
+                      <a @click="$store.state.auth.showLoginPopup=true; $store.state.particularProduct.selectedLink =l.link" >
+                        <span class="aff_name">{{k.toUpperCase()}}</span>
+                        <!--span class="aff_price" v-if="l.price===undefined || l.price===999999999"> Out Of Stock</span-->
+                        <span class="aff_price" > ₹ {{l.price}}</span>
+                        <span>
+                            <strong>BUY NOW</strong>
+                        </span>
+                      </a>
+                    </li>
+                  </ul>
+                  <ul class="prod_shoplinks list-unstyled" v-if="isLoggedIn && email" >
+                    <li  v-for="(l,k) in selected.det.affliateDomains" v-if="l.price!==undefined && l.price!==999999999">
+                      <a :href="l.link + '&subid=' + $store.state.auth.user.email" target="_blank">
+                        <span class="aff_name">{{k.toUpperCase()}}</span>
+                        <!--span class="aff_price" v-if="l.price===undefined || l.price===999999999"> Out Of Stock</span-->
+                        <span class="aff_price" > ₹ {{l.price}}</span>
+                        <span>
+                            <strong>BUY NOW</strong>
+                        </span>
+                      </a>
+                    </li>
+                  </ul>
+
+                  <ul class="prod_shoplinks list-unstyled" v-if="isLoggedIn &&   !email" >
+                    <li  v-for="(l,k) in selected.det.affliateDomains" v-if="l.price!==undefined && l.price!==999999999">
+                      <a @click="dialog=true;$store.state.particularProduct.selectedLink =l.link ">
+                        <span class="aff_name">{{k.toUpperCase()}}</span>
+                        <!--span class="aff_price" v-if="l.price===undefined || l.price===999999999"> Out Of Stock</span-->
+                        <span class="aff_price" > ₹ {{l.price}}</span>
+                        <span>
+                            <strong>BUY NOW</strong>
+                        </span>
+                      </a>
+                    </li>
+                  </ul>
+                  <el-dialog
+                    :visible.sync="dialog"
+                  >
+                    <span>
+                         <div class="splash-banner"  v-if="selectedLink !== ''">
+                         <a :href="selectedLink" target="_blank" @click="$store.state.particularProduct.selectedLink=''; dialog=false">
+                           <span class="splash-banner-title lightbox-custom-closer" >Account Not Verified!!! Click to continue and you will losse the cashback</span>
+                         </a>
+                        </div>
+                    </span>
+                  </el-dialog>
                   <!---*********************** Show when Price is available for affliate!!! To Do once price is uploaded*******---->
-                  <li class="prod_shoplinks list-unstyled"  v-if="!isLoggedIn">
+                  <!--li class="prod_shoplinks list-unstyled"  v-if="!isLoggedIn">
                     <a  @click="$store.state.auth.showLoginPopup=true"
                         v-for="(l,k) in selected.det.affliateDomains"
                     >
@@ -101,7 +161,7 @@
                   </li>
                   <li class="prod_shoplinks list-unstyled"  v-if="isLoggedIn &&   !email">
                     <a v-for="(j,k) in selected.det.affliateDomains"
-                      @click="alertEmailNotVerified()"
+                       @click="alertEmailNotVerified()"
                     >
                       <span >{{k}}</span>
                       <span  style="float: right" >
@@ -109,19 +169,27 @@
                       </span>
                       <br>
                     </a>
-                  </li>
+                  </li-->
                 </div>
               </div>
             </div>
             <div class="col-md-7 col-xs-12">
               <div class="prod_gallery">
                 <div class="gall_main" v-if="selected.det !== undefined">
-                  <a :href="selected.det.pTypeImgUrl">
-                    <img class="main_image" :src="selected.det.pTypeImgUrl" alt="gallery">
-                    <span class="zoom"><img src="/static/images/zoom-in.svg" alt="zomm"></span>
+                  <a >
+                    <img  :src="selected.det.pTypeImgUrl" >
                   </a>
+                  <el-button @click="dialog2=true" icon="el-icon-search"></el-button>
                 </div>
+                <el-dialog
+                  :visible.sync="dialog2"
+                >
+                    <span>
+                        <img class="main_image" :src="selected.det.pTypeImgUrl" alt="gallery">
+                    </span>
+                </el-dialog>
                 <div class="gall_thumbs">
+
                   <!--ul>
                     <li class="active">
                       <a :href="selected.det.pTypeImgUrl">
@@ -249,7 +317,9 @@
   export default{
     data(){
       return{
-        email:false
+        email:false,
+        dialog:false,
+        dialog2:false
       }
     },
     components:{
@@ -263,9 +333,18 @@
         'prodArr',
         'selected',
         'pTypeLoader',
-        'isLoggedIn'
+        'isLoggedIn',
+        'selectedLink'
 
       ])
+    },
+    watch:{
+     dialog:function () {
+       let vm = this
+       if(!this.dialog){
+         this.$store.state.particularProduct.selectedLink=''
+       }
+     }
     },
     methods:{
       ...mapMutations([
@@ -276,6 +355,9 @@
         alert('Email not Verified')
       }
     },
+    beforeDestroy(){
+      this.$store.state.particularProduct.selectedLink=''
+    },
     created(){
       let vm = this
       window.thisOfVueComp = this
@@ -285,18 +367,60 @@
       })
       for(let i in Object.values(vm.$store.state.auth.user.providerData)){
         console.log(vm.$store.state.auth.user)
-      if(Object.values(vm.$store.state.auth.user.providerData)[i].providerId === 'password'){
-       if(vm.$store.state.auth.user.emailVerified){
+        if(Object.values(vm.$store.state.auth.user.providerData)[i].providerId === 'password'){
+          if(vm.$store.state.auth.user.emailVerified){
             vm.email= true
+          }
+        }else{
+          vm.email=true
         }
-      }else{
-        vm.email=true
-      }
       }
     },
   }
 </script>
 <style>
+  .splash-banner {
+    background: #1b70d3;
+    position: absolute;
+    bottom: 20px;
+    left: -15px;
+    width: 95%;
+    text-align: center;
+    z-index: 12000;
+  }
+
+  .splash-banner-title {
+    color: #fff;
+    font-weight: 700;
+    padding: 12px;
+    font-size: 12px;
+    font-style: italic;
+    display: block;
+  }
+
+  .splash-banner:before {
+    content: '';
+    display: block;
+    position: absolute;
+    bottom: -15px;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 0 15px 15px 0;
+    border-color: transparent #074778 transparent transparent;
+  }
+  .splash-banner:after {
+    content: '';
+    display: block;
+    position: absolute;
+    right: -20px;
+    top: 0;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 43px 20px 0 0;
+    border-color: #1b71d3 transparent transparent transparent;
+  }
   .ml_40{
     margin-left: 30px;
   }
@@ -314,4 +438,24 @@
   .ml_24{
     margin-left: 24px !important;
   }
+  .mt_30{
+    margin-top: 5vh;
+  }
+.aff_name {
+  position: inherit !important;
+  margin-left: -80px !important;
+}
+.aff_price{
+  position: relative !important;
+  margin-left: 20px !important;
+  margin-right: 10px !important;
+}
+  .prod_shoplinks li a span strong {
+    margin-top: 14px !important;
+    font-size: 14px;
+    font-weight: bold;
+    color: #000000;
+    display: block;
+  }
 </style>
+

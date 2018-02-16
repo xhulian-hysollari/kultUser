@@ -4,7 +4,7 @@
 
     <el-dialog
       :visible.sync="$store.state.auth.showRegisterPopup"
-      width="60%"
+      width="70%"
     >
       <div>
         <div>
@@ -21,28 +21,28 @@
             </ul>
             <h4>Want to speed things up?</h4>
             <div class="right_modalform">
-              <div class="cont_out">
-                <div class="cont_inn">
-                  <div id="right_tab1" class="right_tabs active">
+              <div class="">
+                <div class="signup_form">
+                  <div id="right_tab1"class="signup_form" >
                     <input type="text" placeholder="Enter email address" v-model="$store.state.auth.email" class="form-control">
                   </div>
-                  <div id="right_tab2" class="right_tabs active">
+                  <div id="right_tab2" class="signup_form">
                     <input type="text" placeholder="Enter Name" v-model="$store.state.auth.name" class="form-control">
                   </div>
-                  <div id="right_tab3" class="right_tabs active">
+                  <div id="right_tab3" class="signup_form">
                     <input type="text" placeholder="Enter password"  v-model="$store.state.auth.password" class="form-control">
                   </div>
 
-                  <div id="right_tab5" class="right_tabs active">
+                  <div id="right_tab5" class="signup_form">
                     <input v-model="$store.state.auth.dob" class="form-control textbox-n" placeholder="Enter Date Of Birth"  type="text" onfocus="(this.type='date')"  onblur="(this.type='text')" id="date">
                   </div>
-                  <div id="right_tab4"class="right_tabs active text-center" >
+                  <div id="right_tab4" class="signup_form">
                     <button   class="login_btn mt_30 "
                       v-if="btnLoader"
                     >
                       <i class='fa fa-spinner fa-spin ' ></i>
                     </button>
-                    <button   class="login_btn mt_30 "
+                    <button   class="login_btn mt_20 "
                               v-else
                                @click="emailPasswordSignup({
                                 email: $store.state.auth.email,
@@ -156,7 +156,12 @@
   }
 </script>
 <style>
+  .signup_form{
+    margin-top: 20px;
+  }
+  .mt_20{
 
+  }
   .el-dialog__body {
     padding: 0px 0px !important;
     /* color: #606266; */

@@ -1,5 +1,6 @@
 <template>
   <div>
+    {{routeDet}}
     <loader v-if="productsLoader"></loader>
     <div v-if="!productsLoader">
 
@@ -308,6 +309,8 @@
      //filter=Object.keys(this.$store.state.filter.filter)
    },
     created(){
+     console.log('------------------------------------')
+     console.log(this.routeDet)
       window.thisOfVueComp = this
       //
       this.productsOrFilterProducts_initCompCreatedFunc({
@@ -317,7 +320,7 @@
         routeQuery: this.routeDet.routeQuery // (2)
         //
       })
-      setTimeout(()=>{this.$forceUpdate()},3000)
+
     }
   }
 </script>
