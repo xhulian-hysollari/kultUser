@@ -11,7 +11,7 @@
             <div class="account_pic">
               <div class="acount_name">{{$store.state.auth.user.displayName[0].toUpperCase()}}</div>
               <div class="full_name">{{$store.state.auth.user.displayName}}</div>
-              <!--a href="#" target="_blank" class="social_link">@karish2308</a-->
+              <!--a  target="_blank" class="social_link">@karish2308</a-->
             </div>
             <div class="acc_menu">
               <ul>

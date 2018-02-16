@@ -10,14 +10,14 @@
         <div>
         <div class="modal-content comm_modal">
           <div class="reg_pop"><img src="/static/images/arrow-down.svg" alt="arrow-down"> Register in a few easy steps</div>
-          <button type="button" class="modal_close" @click="$store.state.auth.showRegisterPopup" aria-label="Close"><img src="/static/images/close.svg" alt="close"></button>
+          <button type="button" class="modal_close" @click="$store.state.auth.showRegisterPopup=false" aria-label="Close"><img src="/static/images/close.svg" alt="close"></button>
           <div class="modal_left">
             <h2>Join Kult.</h2>
             <ul class="list-unstyled reg_steps">
-              <li class="active"><a href="#">Let’s start with your email</a></li>
-              <li class="active"><a href="#">What name do you go by</a></li>
-              <li class="active"><a href="#">OK, let’s get you protected</a></li>
-              <li class="active"><a href="#" >You’re done!</a></li>
+              <li class="active"><a >Let’s start with your email</a></li>
+              <li class="active"><a >What name do you go by</a></li>
+              <li class="active"><a >OK, let’s get you protected</a></li>
+              <li class="active"><a  >You’re done!</a></li>
             </ul>
             <h4>Want to speed things up?</h4>
             <div class="right_modalform">
@@ -60,7 +60,7 @@
               </div>
             </div>
             <div class="connect_social">
-              <a class="fb" href="#"
+              <a class="fb"
                  @click="fbP({
                       todo: 'login'
                     })"
@@ -68,7 +68,7 @@
                 <i class="fa fa-facebook"></i>
                 LOGIN
               </a>
-              <a class="twitter" href="#"
+              <a class="twitter"
                  @click="twitterP({
                       todo: 'login'
                     })"

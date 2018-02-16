@@ -32,7 +32,7 @@
                  <span> Login </span>
                 </button>
               </div>
-              <p class="forgot_pass" @click="$store.state.auth.showForgot=true,$store.state.auth.showRefCode=false" v-if="!showForgot && ! showRefCode"><a href="#">Forgot password?</a></p>
+              <p class="forgot_pass" @click="$store.state.auth.showForgot=true,$store.state.auth.showRefCode=false" v-if="!showForgot && ! showRefCode"><a >Forgot password?</a></p>
               <forgot v-if="showForgot && !showRefCode"></forgot>
               <phone-ref v-if="showRefCode"></phone-ref>
             </div>
@@ -49,12 +49,12 @@
               <div class="login_social" v-if="!showRefCode">
                 <p>Enter via</p>
                 <div class="connect_social text-center">
-                  <a class="fb" href="#"
+                  <a class="fb"
                      @click="fbP({
                       todo: 'login'
                     })">
                     <i class="fa fa-facebook"></i>LOGIN</a>
-                  <a class="twitter" href="#"
+                  <a class="twitter"
                      @click="twitterP({
                     todo:'login'
                   })"

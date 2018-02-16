@@ -27,10 +27,6 @@
             <div class="row">
               <div class="col-xs-12 col-md-4">
                 <h4>Wishlist</h4>
-                <div class="order_commit">
-                  <p>Total Cashback Amount</p>
-                  <p class="sm"><span>₹ 0</span> Confirmed &nbsp; <span>₹ 0</span> Unconfirmed</p>
-                </div>
               </div>
               <div class="text-right entries col-xs-12 col-md-8 wishlist-control">
                 <el-select v-model="selected" placeholder="Sort By">
@@ -40,7 +36,7 @@
                     :value="item">
                   </el-option>
                 </el-select>
-                <span href="#" onclick="window.print();" class="print-wishlist">Print</span>
+                <span  onclick="window.print();" class="print-wishlist">Print</span>
                 <div class="view-switcher">
                   <div class="grid-view">
                     <span class="grid-box"></span>
@@ -70,11 +66,11 @@
                 <el-col :xs="12" :sm="12" :md="8" :lg="8" v-for="(pDet,index) in wishlistArr"  >
                   <div >
                     <div class="grid-content pa-2" >
-                      <a class="prod_image" href="#">
+                      <a class="prod_image" >
                         <img :src="pDet.pBasicDetail.pPicUrl" style="height:286px "  alt="product">
                       </a>
                       <div class="prod_cont">
-                        <h4><a href="#">{{pDet.pBasicDetail.pBrand}}</a></h4>
+                        <h4><a >{{pDet.pBasicDetail.pBrand}}</a></h4>
                         <span v-for="(i,k) in pDet.pBasicDetail.pName" v-if="k < 30">{{i}}</span><span v-if="pDet.pBasicDetail.pName.length > 30">...</span>
                       </div>
                       <div class="prod_misc">
@@ -93,7 +89,6 @@
                       <a  class="prod_compare" v-if="isLoggedIn"><span @click="$router.push({path:`/particularProduct/${pDet.key}`,query:{prodDet:JSON.stringify(pDet)}})">Compare price</span>
                         <img src="/static/images/wishlist-hover.svg" alt="wishlist-hover" @click="removeWishlist({pId:pDet.key,pDet});delete wishlistObj[pDet.key]; removeFromWishArr(index);$forceUpdate">
                       </a>
-                      <a href="#" class="go_store">Go to store</a>
                     </div>
                   </div>
                 </el-col>
@@ -101,11 +96,11 @@
               <!--div-- class="wishlist-products">
                 <div class="prod_repeater">
                   <div class="prod_repeat prod_repeat1" v-for="(pDet, pId) in wishlistObj" >
-                    <a class="prod_image" href="#">
+                    <a class="prod_image" >
                       <img :src="pDet.pBasicDetail.pPicUrl" alt="product">
                     </a>
                     <div class="prod_cont">
-                      <h4><a href="#">{{pDet.pBasicDetail.pBrand}}</a></h4>
+                      <h4><a >{{pDet.pBasicDetail.pBrand}}</a></h4>
                       <p>{{pDet.pBasicDetail.pName}}</p>
                     </div>
                     <div class="prod_misc">
@@ -119,7 +114,7 @@
                     <a  class="prod_compare" v-if="!isLoggedIn"><span @click="$router.push({path:`/particularProduct/${pId}`,query:{prodDet:JSON.stringify(pDet)}})">Compare price</span>
                       <img src="/static/images/wishlist-add.svg" alt="wishlist-add" @click="$store.state.auth.showLoginPopup = true">
                     </a>
-                    <a href="#" class="go_store">Go to store</a>
+                    <a  class="go_store">Go to store</a>
                   </div>
                 </div>
               </div-->

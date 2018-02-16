@@ -40,7 +40,7 @@
               </li>
             </ul>
             <div class="left_ad hidden-xs">
-              <a href="#">
+              <a >
                 <img src="static/images/item-81@2x.jpg" alt="item">
                 <span>100% PURE ORGANIC</span>
               </a>
@@ -81,7 +81,7 @@
                           <iframe class="embed-responsive-item" width="560" height="315" :src="selectedLink" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
                         </div>
                       </div>
-                      <div class="modal_video_right hidden-xs hidden-sm  scroll_card" >
+                      <div class="modal_video_right hidden-xs hidden-sm  scroll_card padding_class" >
                         <div v-for="(p,k) in products" class="modal_video_right hidden-xs hidden-sm" >
 
                           <div class="prod_repeat">
@@ -91,7 +91,7 @@
                                 <img :src="p.pBasicDetail.pPicUrl" alt="product" >
                               </a>
                               <div class="prod_cont">
-                                <h4><a href="#">{{p.pBasicDetail.pBrand}}</a></h4>
+                                <h4><a >{{p.pBasicDetail.pBrand}}</a></h4>
                                 <p>{{p.pBasicDetail.pName}}</p>
                               </div>
                               <rating :num="Math.round(p.pBasicDetail.pRating)"></rating>
@@ -106,7 +106,6 @@
                               <a  class="prod_compare" v-if="!isLoggedIn"  ><span data-dismiss="modal" @click="$router.push({path:`/particularProduct/${k}`,query:{prodDet:JSON.stringify(p)}})">Compare price</span>
                                 <img src="/static/images/wishlist-add.svg" alt="wishlist-add" @click="$store.state.auth.showLoginPopup = true">
                               </a>
-                              <a href="#" class="go_store">Go to store</a>
                             </div>
                           </div>
                         </div>
@@ -218,7 +217,10 @@
     list-style: none;
   }
 
-
+padding_class{
+  padding-left: 15px !important;
+  padding-right: 5px !important;
+}
 ul, ol {
 margin-top: 0;
  margin-bottom: 10px !important;

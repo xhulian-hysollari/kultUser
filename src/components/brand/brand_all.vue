@@ -14,7 +14,7 @@
           <div class="brands_list">
             <ul>
               <li v-for="(brandDet ,brand) in allBrands"  v-if="brand[0] === i" @click="goTo('/brandProduct/' + brand)">
-                <a href="#">{{brand}}</a>
+                <a >{{brand}}</a>
               </li>
             </ul>
           </div>
@@ -30,7 +30,7 @@
             <div class="brands_list">
               <ul>
                 <li v-for="(brandDet ,brand) in allBrands"  v-if="brand[0] === i">
-                  <a href="#">{{brand}}</a>
+                  <a >{{brand}}</a>
                 </li>
               </ul>
             </div>

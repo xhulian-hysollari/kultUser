@@ -4,7 +4,7 @@
     <div class="breads">
       <div class="container">
         <ul class="list-unstyled list-inline">
-          <li><a href="#">Shop</a></li>
+          <li><a >Shop</a></li>
           <li><span>></span></li>
           <li  v-for="(shopOptionDet, shopOption) in shopOptions"
                @click="goTo('/globalBestSeller/shopOption/' + shopOption)"> {{shopOption}}
