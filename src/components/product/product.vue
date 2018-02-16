@@ -309,6 +309,8 @@
      //filter=Object.keys(this.$store.state.filter.filter)
    },
     created(){
+     console.log('------------------------------------')
+     console.log(this.routeDet)
       window.thisOfVueComp = this
       //
       //

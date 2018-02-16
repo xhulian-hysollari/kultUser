@@ -81,12 +81,12 @@
                           <iframe class="embed-responsive-item" width="560" height="315" :src="selectedLink" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
                         </div>
                       </div>
-                      <div class="modal_video_right hidden-xs hidden-sm  scroll_card padding_class" >
-                        <div v-for="(p,k) in products" class="modal_video_right hidden-xs hidden-sm" >
+                      <div class="modal_video_right hidden-xs hidden-sm  scroll_card " v-show="Object.keys(products).length != 0">
+                        <div v-for="(p,k) in products" class="modal_video_right hidden-xs hidden-sm padding_class" >
 
-                          <div class="prod_repeat">
+                          <div class="prod_repeat padding_class">
                             <loader v-if="productsLoader" ></loader>
-                            <div >
+                            <div class="padding_class">
                               <a class="prod_image" >
                                 <img :src="p.pBasicDetail.pPicUrl" alt="product" >
                               </a>
@@ -225,4 +225,10 @@ ul, ol {
 margin-top: 0;
  margin-bottom: 10px !important;
 }
+  .modal_video_right {
+    width: 264px;
+    /* float: right; */
+     padding: 0px !important;
+    background: #fff;
+  }
 </style>

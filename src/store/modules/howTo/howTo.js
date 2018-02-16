@@ -21,6 +21,7 @@ const getters = {
 const mutations = {
   //
   getHowToCat(state2){
+    let temp = {}
     //
     state.howToCatLoader = true
     //
@@ -39,30 +40,41 @@ const mutations = {
           //console.log(queryHowToCatDoc.id) // cat
           //console.log(queryHowToCatDoc.data()) // empty
           //
-          state.howToCat[queryHowToCatDoc.id] = {}
+          if(queryHowToCatDoc.id==='KULT TV'){
+            state.howToCat[queryHowToCatDoc.id] = {}
+          }else{
+            temp[queryHowToCatDoc.id]={}
+          }
+
           //
         })
 
-        //if any vid category is not selected => it's in query (route), in that case sel 1st one by default
-        if( Object.keys(router.currentRoute.query).length == 0 ){
-          //console.log("1")
-          //
-          mutations.getHowToCatVid(state, {
-            howToCat: Object.keys(state.howToCat)[0]
-          })
-        }else { //if there is already some cat selected, on refresh load that only
-          //console.log("2")
-          //
-          mutations.getHowToCatVid(state, {
-            howToCat: router.currentRoute.query.selVidCat
-          })
-        }
 
-        //
-        state.howToCatLoader = false
-        //
-        window.thisOfVueComp.$forceUpdate()
       }
+    }).then(function () {
+      for(let i in temp){
+        state.howToCat[i]={}
+      }
+    }).then(function () {
+      //if any vid category is not selected => it's in query (route), in that case sel 1st one by default
+      if( Object.keys(router.currentRoute.query).length == 0 ){
+        //console.log("1")
+        //
+        mutations.getHowToCatVid(state, {
+          howToCat: Object.keys(state.howToCat)[0]
+        })
+      }else { //if there is already some cat selected, on refresh load that only
+        //console.log("2")
+        //
+        mutations.getHowToCatVid(state, {
+          howToCat: router.currentRoute.query.selVidCat
+        })
+      }
+
+      //
+      state.howToCatLoader = false
+      //
+      window.thisOfVueComp.$forceUpdate()
     })
   },
   //
@@ -70,9 +82,7 @@ const mutations = {
   getHowToCatVid(state2, payload){
     //console.log(payload.howToCat)
     //
-    setTimeout(()=>{
-      state.howToVidLoader = false
-    })
+    state.howToVidLoader = true
     //
     gen.state.firestore
       .collection('howToCat').doc(payload.howToCat)

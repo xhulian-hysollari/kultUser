@@ -5,7 +5,10 @@ const state = {
   pTypes: {},
   pTypeLoader : false,
   prodArr:[],
-  selected:{}
+  selected:{},
+  selectedLink:'',
+  emailVerified:false
+
 }
 
 const getters = {
@@ -14,6 +17,7 @@ const getters = {
   pTypeLoader: state => state.pTypeLoader,
   prodArr: state => state.prodArr,
   selected: state => state.selected,
+  selectedLink:state=>state.selectedLink
 }
 
 const mutations = {

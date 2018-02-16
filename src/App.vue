@@ -13,7 +13,7 @@
                   <img src="/static/images/price.svg" alt="price">
                   Get 5% Cashback on all your purchases.
                   <img src="/static/images/arrow.svg" alt="price">
-                  <a href="#">Learn more</a>
+                  <a >Learn more</a>
                 </p>
               </div>
             </div>
@@ -25,22 +25,21 @@
                 <div class="col-xs-6 text-right head_drop">
                   <div class="dropdown">
                     <p class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      <a href="#">
+                      <a >
                         <img src="/static/images/user-profile.svg" alt="user-profile">
                         <span v-if="!isLoggedIn">Login/Register</span>
-                        <span @click="logout" v-if="isLoggedIn">Logout</span>
+                        <span  v-if="isLoggedIn">{{user.displayName.toUpperCase()}}</span>
                         <img  class="drop_arrow" src="/static/images/down.svg" alt="down">
                       </a>
                     </p>
                     <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu2" v-if="isLoggedIn">
                       <li><span>Your Account</span></li>
-                      <li><a >{{user.displayName}}</a></li>
-                      <li><a >{{user.email}}</a></li>
+                      <li><a @click="logout">Logout</a></li>
                       <li @click="goTo('/editProfile')"><a >Edit Profile</a></li>
                     </ul>
                     <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu2" v-if="!isLoggedIn">
                       <li><span>Your Account</span></li>
-                      <li @click="$store.state.auth.showLoginPopup=true"><a >Login</a></li>
+                      <li @click="$store.state.auth.showLoginPopup=true; $store.state.particularProduct.selectedLink =''"><a >Login</a></li>
                       <li @click="$store.state.auth.showRegisterPopup=true"><a  >Create an Account</a></li>
                     </ul>
                   </div>
@@ -64,11 +63,16 @@
                       </a>
                       <a  v-if="!isLoggedIn"  @click="$store.state.auth.showLoginPopup = true"  >
                         <img src="/static/images/wishlist.svg" alt="wishlist">
-                        <span class="hidden-xs"  v-if="isLoggedIn">Wishlist </span>
+                        <span class="hidden-xs"  >Wishlist </span>
                       </a>
                     </li>
                     <li class="sec">
-                      <a  @click="goTo('/credit')">
+                      <a  @click="goTo('/credit')" v-if="isLoggedIn" >
+                        <span class="rupee" ><img src="/static/images/rupee.svg" alt="rupee" ></span>
+                        <img src="/static/images/wallet.svg" alt="wallet">
+                        <span class="hidden-xs">Kult Wallet</span>
+                      </a>
+                      <a  @click="$store.state.auth.showLoginPopup=true" v-else >
                         <span class="rupee" ><img src="/static/images/rupee.svg" alt="rupee" ></span>
                         <img src="/static/images/wallet.svg" alt="wallet">
                         <span class="hidden-xs">Kult Wallet</span>
@@ -118,18 +122,15 @@
                     </div>
                   </el-card-->
                 </li>
-                <li class="has_submenu shop"><a href="#">BRANDS</a>
+                <li class="has_submenu shop"><a >BRANDS</a>
                   <el-card class="opts">
                     <div @click="goTo(`/brandAll`)">
                       <b>Brands A to Z</b>
                     </div>
                     <div class="opts" v-for="(shop,i) in Object.keys(brandCat)">
                       <b>{{shop.toUpperCase()}}</b>
-                      <div v-for="j in Object.keys(brandCat[shop])" @click="goTo(`/brandProduct/${j}`)">
+                      <div v-for="j in Object.keys(brandCat[shop])" @click="$router.push('/brandProduct/'+j)">
                         <div>{{j.toUpperCase()}}</div>
-                      </div>
-                      <div class="cat" >
-                        {{brandCat[i]}}
                       </div>
                     </div>
                   </el-card>
@@ -144,7 +145,7 @@
 
                 <li><a @click="goTo('/kultPick')">KILT PICKS</a></li>
                 <li><a @click="goTo('/globalBestseller')">GLOBAL BESTSELLERS</a></li>
-                <li class="has_submenu shop"><a href="#">BEAUTY GUIDE</a>
+                <li class="has_submenu shop"><a >BEAUTY GUIDE</a>
                   <el-card class="opts">
                     <div class="opts" v-for="guide in beautyGuideArr">
                       {{guide.toUpperCase()}}
@@ -246,10 +247,10 @@
                 </v-expansion-panel>
                 <v-expansion-panel >
                   <v-expansion-panel-content v-if="!isLoggedIn">
-                    <div slot="header"  class="white ml_5">LOGIN/REGISTER</div>
+                    <div slot="header"  class="white ml_5" >LOGIN/REGISTER</div>
                     <v-card flat class="white ml_20" >
                       <v-card-text >
-                       <li  @click="hamburger_cross() ; $store.state.auth.showLoginPopup=true "> LOGIN</li>
+                       <li  @click="hamburger_cross() ; $store.state.auth.showLoginPopup=true;$store.state.particularProduct.selectedLink =''" > LOGIN</li>
                       </v-card-text>
                       <v-card-text >
                         <li @click="hamburger_cross() ; $store.state.auth.showRegisterPopup=true  "> CREATE AN ACCOUNT</li>
@@ -468,7 +469,8 @@
         'showAuthPopup',
         'wishlistObj',
         'wishlistCnt',
-        'searchList'
+        'searchList',
+        'selectedLink'
       ])
     },
     components:{

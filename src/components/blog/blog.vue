@@ -43,10 +43,12 @@
                   <div class="blog_cont">
                     <h3>{{k}}</h3>
                     <span class="blog_date">{{dates(blog.date)}}</span>
-                    <span v-for="(b,j) in blog.blogContent" v-show="j <= 30">
+                    <span v-html="blogCont(blog.blogContent)"></span>
+                    <span>...</span>
+                    <!--span v-for="(b,j) in blog.blogContent" v-show="j <= 30">
                     <span >{{b}}</span>
                   </span>
-                    <span v-if="blog.blogContent.length > 31">...</span>
+                    <span v-if="blog.blogContent.length > 31">...</span-->
                     <a @click="$router.push({path:'/article', query:{name:k,selArticle:articleBlog(blog),sideBlogs:articleBlog(blogs)}})" class="blog_read">Read more</a>
 
                   </div>
@@ -66,7 +68,7 @@
               </div>
             </div>
             <div class="col-sm-5 col-xs-12 hidden-xs sidebar" >
-              <div class="side_box">
+              <div class="side_box" v-if="Object.keys(blogsAtHome).length !== 1">
                 <loader v-if=" blogsAtHomeLoader"></loader>
                 <div v-if="!blogsAtHomeLoader">
                           <div class="blog_repeat">
@@ -103,7 +105,7 @@
                           <div class="blog_sidecat" v-for="(b,cat) in blogs" @click="$router.push({path:'/article', query:{name,selArticle:articleBlog(blog),sideBlogs:articleBlog(blogs)}})">
                             <h4>{{cat}}</h4>
                             <div class="cat_side" v-for="(blog,name) in b">
-                              <a  class="cat_img" ><img :src="blog.blogImgUrl" alt="image"></a>
+                              <a  class="cat_img" ><img :src="blog.blogImgUrl" alt="image" class="img_size"></a>
                               <div class="cat_cont">
                                 <h5><a >{{name}}</a></h5>
                                 <ul class="comm_pagemenus "><span v-for="i in blog.blogTag "><li><a  class="cat_link" >{{i}}</a></li></span></ul>
@@ -197,6 +199,12 @@
         console.log(selBlog)
         return selBlog
       },
+      blogCont(content){
+        let str = content.substring(0,60)
+        str.split('h2')
+        console.log(str)
+        return str
+      }
     },
     //
     computed:{
@@ -213,3 +221,11 @@
     }
   }
 </script>
+<style>
+  .img_size{
+
+    height: 109.531px;
+    width: 91.266px;
+
+  }
+</style>
