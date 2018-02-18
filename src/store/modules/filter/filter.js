@@ -21,6 +21,7 @@ const getters = {
 const mutations ={
   //
   getFilters(state2, payload){
+    state.filter = {}
     let temp = []
     //console.log(payload)
     //
