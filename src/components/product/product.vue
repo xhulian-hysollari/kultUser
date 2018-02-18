@@ -361,7 +361,7 @@
       })
 
       this.$store.commit('getLoadMoreCnt',vm.routeDet.routePath)
-      alert(vm.routeDet.routePath)
+
       //setTimeout(()=>{this.$forceUpdate()},3000)
     }
   }

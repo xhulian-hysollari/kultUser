@@ -130,7 +130,7 @@ const mutations = {
   },
   getEmailVerStatus(){
     if(auth.state.isLoggedIn) {
-      alert(auth.state.user.emailVerified)
+
       if(auth.state.user.emailVerified)
         state.isEmailVerified = true
       else
@@ -154,8 +154,7 @@ const mutations = {
     })
   },
  /* search(){
-   // alert('hi')
-   // alert(document.getElementById('search').value)
+
     axios.get('https://us-central1-kult-2.cloudfunctions.net/searchProduct', {
       params: {
         qStr:state.searchInput

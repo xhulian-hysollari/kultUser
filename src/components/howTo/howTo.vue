@@ -77,7 +77,7 @@
           <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content comm_modal">
               <el-card v-if="vidLoader" style="height:315px">
-                <span>loading</span>
+               <h2>Loading...</h2>
               </el-card>
               <button type="button" class="modal_close" data-dismiss="modal" aria-label="Close"><img src="/static/images/close.svg" alt="close"></button>
               <div class="modal_video" v-show="Object.keys(products).length != 0" >

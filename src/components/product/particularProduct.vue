@@ -88,7 +88,7 @@
                   </div-->
                   <ul class="prod_shoplinks list-unstyled" v-if="!isLoggedIn " >
                     <li  v-for="(l,k) in selected.det.affliateDomains">
-                      <a @click="$store.state.auth.showLoginPopup=true; $store.state.particularProduct.selectedLink =l.link"target="_blank" v-if="parseInt(l.price) < 10001 " class="box">
+                      <a @click="$store.state.auth.showLoginPopup=true; $store.state.particularProduct.selectedLink =l.link"target="_blank" v-if="parseInt(l.price) < 10001" class="box">
                         <span class="aff_name">{{k.toUpperCase()}}</span>
                         <!--span class="aff_price" v-if="l.price===undefined || l.price===999999999"> Out Of Stock</span-->
                         <div class="show_price" >
@@ -155,7 +155,7 @@
                       <a @click="dialog=true;$store.state.particularProduct.selectedLink =l.link " v-if="parseInt(l.price) < 10001 " class="box">
                         <span class="aff_name">{{k.toUpperCase()}}</span>
                         <!--span class="aff_price" v-if="l.price===undefined || l.price===999999999"> Out Of Stock</span-->
-                        <div class="show_price" >
+                        <div class="show_price" v-if="k !== 'amazon'">
                           <span class="aff_price" > ₹ {{l.price}}</span>
                           <span>
                             <strong>BUY NOW</strong>
@@ -388,6 +388,7 @@
         email:false,
         dialog:false,
         dialog2:false,
+        amazonPrice:'',
         //
         amazonPriceLoaded: false //amazon price
       }
@@ -432,9 +433,7 @@
         'addWishlist',
         'removeWishlist'
       ]),
-      alertEmailNotVerified(){
-        alert('Email not Verified')
-      },
+
       fetchAmazonPrice(){
         //
         //*turn loader on*
@@ -448,30 +447,33 @@
         //
         this.$store.dispatch('axiosReq', {
           params: {
-            pId: '', //fill**
-            pType: '' //fill**
+            pId: this.$route.params.pid,
+            pType: this.$store.state.particularProduct.selected.key
           },
           funcName: 'getAmazonPriceFromDb'
         }).then((result_1)=>{
           if(result_1 == '-1' || result_1 == '999999999'){ //not in db / or out of stock etc ...
             this.$store.dispatch('axiosReq', {
               params: {
-                url: '' //amazon lik url , fill**
+                url: this.$store.state.particularProduct.selected.det.affliateDomains.amazon.link //amazon lik url , fill**
               },
               funcName: 'getAmazonPriceFromAPI'
             }).then((result_2)=>{
               //
               if(result_2 == '-1'){
+                this.amazonPrice = 'NoPrice'
                 //failed to fetch price, show accordingly(message) on dom
               }else if(result_2 == '999999999'){
+                this.amazonPrice='Out Of Stock'
                 //show out of stock on dom
               }else{
                 console.log(result_2)  // show result on dom //this is price of amazon link
+                this.amazonPrice=result_2
                 //
                 this.$store.dispatch('axiosReq', {
                   payload: {
-                    pId: '' ,// fill**,
-                    pType: '', // fill**
+                    pId: this.$route.params.pid,// fill**,
+                    pType: this.$store.state.particularProduct.selected.key, // fill**
                     price: result_2
                   },
                   funcName: 'saveAmazonPriceToDb'
@@ -483,6 +485,7 @@
             })
           } else {
             console.log(result) // show result on dom //this is price of amazon link
+            this.amazonPrice=result
             //*turn loader off*
           }
         })
