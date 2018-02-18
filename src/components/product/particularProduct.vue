@@ -380,13 +380,16 @@
   import {mapGetters} from 'vuex'
   import loader from '@/components/gen/loader'
   import {mapMutations} from 'vuex'
+  import axios from 'axios'
   //
   export default{
     data(){
       return{
         email:false,
         dialog:false,
-        dialog2:false
+        dialog2:false,
+        //
+        amazonPriceLoaded: false //amazon price
       }
     },
     components:{
@@ -416,6 +419,12 @@
         this.$store.commit('getTypeNLinkOfThisProduct', {
           pId: this.$route.params.pId
         })
+        //
+        console.log("[selected]", this.$store.state.particularProduct.selected)
+        //
+        if(!this.amazonPriceLoaded)
+          this.fetchAmazonPrice()
+        //
       }
     },
     methods:{
@@ -425,6 +434,63 @@
       ]),
       alertEmailNotVerified(){
         alert('Email not Verified')
+      },
+      fetchAmazonPrice(){
+        //
+        //*turn loader on*
+        //
+        console.log("fetchAmazonPrice")
+        //
+        console.log("[selected] => ", this.$store.state.particularProduct.selected)
+        //
+        this.amazonPriceLoaded = true
+        //
+        //
+        this.$store.dispatch('axiosReq', {
+          params: {
+            pId: '', //fill**
+            pType: '' //fill**
+          },
+          funcName: 'getAmazonPriceFromDb'
+        }).then((result_1)=>{
+          if(result_1 == '-1' || result_1 == '999999999'){ //not in db / or out of stock etc ...
+            this.$store.dispatch('axiosReq', {
+              params: {
+                url: '' //amazon lik url , fill**
+              },
+              funcName: 'getAmazonPriceFromAPI'
+            }).then((result_2)=>{
+              //
+              if(result_2 == '-1'){
+                //failed to fetch price, show accordingly(message) on dom
+              }else if(result_2 == '999999999'){
+                //show out of stock on dom
+              }else{
+                console.log(result_2)  // show result on dom //this is price of amazon link
+                //
+                this.$store.dispatch('axiosReq', {
+                  payload: {
+                    pId: '' ,// fill**,
+                    pType: '', // fill**
+                    price: result_2
+                  },
+                  funcName: 'saveAmazonPriceToDb'
+                })
+                //
+              }
+              //*turn loader off*
+              //
+            })
+          } else {
+            console.log(result) // show result on dom //this is price of amazon link
+            //*turn loader off*
+          }
+        })
+        //
+        //
+        setTimeout(()=>{
+          this.amazonPriceLoaded = false
+        },2000)
       }
     },
     beforeDestroy(){
@@ -447,6 +513,11 @@
           vm.email=true
         }
       }
+      //
+      this.$store.state.gen.f = true
+      //
+      if(!this.amazonPriceLoaded)
+        this.fetchAmazonPrice()
     },
   }
 </script>

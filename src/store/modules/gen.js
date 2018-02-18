@@ -246,13 +246,32 @@ const actions = {
         res(uploadTask.snapshot.downloadURL)
       })
     })
-  }
+  },
+  //
+  axiosReq(state2, payload){
+    console.log(payload)
+    //
+    return new Promise((res)=>{
+      //
+      axios.get('https://us-central1-kult-2.cloudfunctions.net/' + payload.funcName, {
+        params: payload.params
+      }).then(function (response) {
+        console.log(response);
+        //
+        res(response.data)
+        //
+      }).catch(function (error) {
+        console.log(error);
+      });
+      //
+    })
+ }
 }
 
 export default {
-  state,
-  getters,
-  mutations,
-  actions
+ state,
+ getters,
+ mutations,
+ actions
 }
 
