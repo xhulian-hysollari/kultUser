@@ -20,6 +20,7 @@
               </div>
             </div>
             <div class="container top_misc hidden-xs">
+              <br>
               <div class="row">
                 <div class="col-xs-4">
                   <p><img src="/static/images/pin-locate.svg" alt="pin-locate"><span>Mumbai, India</span></p>
@@ -235,7 +236,7 @@
               LOGOUT
             </button>
           </div-->
-          <br>
+
           <div class="min_height">
             <router-view></router-view>
           </div>

@@ -45,7 +45,7 @@
           </div>
           <div class="tv_right">
             <div class="row" >
-              <div class="col-md-6 col-xs-12 comm_imp col-lg-6" v-for="(vidDet, vidName) in howToVid">
+              <div class="col-md-6 col-xs-12 comm_imp col-lg-6" v-for="(vidDet, vidName) in howToVid" style="height: 285px;">
                 <div class="image_box hidden-xs" data-toggle="modal" data-target="#videoModal" @click="getCatVidProduct({vidCat: $route.query.selVidCat,vidName }); selectedLink=vidDet.videoLink;vidLoader=true" >
                   <img :src="vidDet.videoImgUrl" alt="item"  ><!--thumbnail image-->
                 </div>
