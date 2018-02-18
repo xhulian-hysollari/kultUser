@@ -3,21 +3,21 @@
     <div class="col-sm-8 col-xs-12 pull-left">
     <nav class="menu col-sm-8 col-xs-12 ">
               <div class="search_form">
-                <form>
+                <form><!--@blur="closeDropdown4()"-->
                 <div>
-                  <input type="text" v-model="input" @keyup="showDropdown4(),search()" placeholder="What are you looking for?" class="form-control">
+                  <input type="text" v-model="input" @keyup="showDropdown4(),search()" placeholder="What are you looking for?" class="form-control" @blur="closeDropdown4()" >
                   <button ><img src="/static/images/search.svg" alt="search"></button>
                   <img class="search_close" src="/static/images/64-px-close.svg" alt="search">
                 </div>
                   <div class="mega-menu4 fadeIn animated " style="position: absolute; z-index: 9999; width: 100%;" >
                     <div class="mm-3column drop-down ">
                             <span class="left-images" style="color: #888888" >
-                                <div v-for="(search,key) in searchList" class="text item" @click="getSearchDet({key,search}); input = ''; $store.state.gen.searchList={}; closeDropdown4()">
-                                  <img :src="search.pBasicDetail.pPicUrl" style="width:50px;height: 50px;">
-                                 <span v-for="(i,j) in search.pBasicDetail.pName" v-show="j < 26">
-                                   <span>{{i}}</span>
-                                 </span>
-                                 <span v-if="search.pBasicDetail.pName.length > 25">...</span>
+                                <div v-for="(search,key) in searchList" class="text item paddin_g" @click="getSearchDet({key,search}); input = ''; $store.state.gen.searchList={}; closeDropdown4()">
+                                  <img :src="search.pBasicDetail.pPicUrl" style="width:50px;height: 50px;" class="mm-5column">
+                                     <span v-for="(i,j) in search.pBasicDetail.pName" v-show="j < 26">
+                                        <span>{{i}}</span>
+                                      </span>
+                                    <span v-if="search.pBasicDetail.pName.length > 25">...</span>
                                 </div>
                             </span>
                  </div>
@@ -233,7 +233,10 @@
     height: 100%;
   }
   .mm-3column {
-
+    max-width: 100%;
+  }
+  .mm-5column {
+    max-width: 50%;
   }
   .responsive-img {
     display: block;
@@ -332,5 +335,8 @@
   .fadeIn {
     -webkit-animation-name: fadeIn;
     animation-name: fadeIn;
+  }
+  .paddin_g{
+
   }
 </style>

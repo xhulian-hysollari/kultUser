@@ -125,7 +125,7 @@ const mutations = {
         //
         setTimeout(()=>{
           state.howToVidLoader = false
-        })
+        },3000)
         window.thisOfVueComp.$forceUpdate()
       })
   },
