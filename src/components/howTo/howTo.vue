@@ -46,7 +46,7 @@
           <div class="tv_right">
             <div class="row" >
               <div class="col-md-6 col-xs-12 comm_imp col-lg-6" v-for="(vidDet, vidName) in howToVid">
-                <div class="image_box hidden-xs" data-toggle="modal" data-target="#videoModal" @click="getCatVidProduct({vidCat: $route.query.selVidCat,vidName }); selectedLink=vidDet.videoLink" >
+                <div class="image_box hidden-xs" data-toggle="modal" data-target="#videoModal" @click="getCatVidProduct({vidCat: $route.query.selVidCat,vidName }); selectedLink=vidDet.videoLink;vidLoader=true" >
                   <img :src="vidDet.videoImgUrl" alt="item"  ><!--thumbnail image-->
                 </div>
                 <div class="image_box visible-xs"   @click="dialog = true ; selectedLink=vidDet.videoLink" >
@@ -55,7 +55,7 @@
                   </div>
                   <img :src="vidDet.videoImgUrl" alt="item"  ><!--thumbnail image-->
                 </div>
-                <div class="title_part hidden-xs" data-toggle="modal" data-target="#videoModal" @click="getCatVidProduct({vidCat: $route.query.selVidCat,vidName });selectedLink=vidDet.videoLink" >
+                <div class="title_part hidden-xs" data-toggle="modal" data-target="#videoModal" @click="getCatVidProduct({vidCat: $route.query.selVidCat,vidName });selectedLink=vidDet.videoLink;vidLoader=true" >
                   <h5>Watch Videos and Get Inspired</h5><!--Video Tag-->
                   <a class="shop_btn">Shop Now</a> | <a class="shop_btn">Learn More</a>
                   <a class="go_btn">
@@ -69,62 +69,66 @@
                     <img src="/static/images/player.svg" alt="player">
                   </a>
                 </div>
-                <div class="modal fade" id="videoModal" tabindex="-1" role="dialog" aria-labelledby="videoModal" >
-                  <div class="modal-dialog modal-lg" role="document">
-                    <div class="modal-content comm_modal">
-                      <button type="button" class="modal_close" data-dismiss="modal" aria-label="Close"><img src="/static/images/close.svg" alt="close"></button>
-                      <div class="modal_video" v-show="Object.keys(products).length != 0"  v-if="!productsLoader">
-                        <div class="embed-responsive embed-responsive-16by9">
-                          <iframe class="embed-responsive-item" width="560" height="315" :src="selectedLink" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-                        </div>
-                      </div>
-                      <div class="modal_video_big" v-show="Object.keys(products).length === 0"  v-if="!productsLoader">
-                        <div class="embed-responsive embed-responsive-16by9">
-                          <iframe class="embed-responsive-item" width="560" height="315" :src="selectedLink" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-                        </div>
-                      </div>
-                      <div class="modal_video_right hidden-xs hidden-sm  scroll_card " v-show="Object.keys(products).length != 0" >
-                        <div v-for="(p,k) in products" class="modal_video_right hidden-xs hidden-sm padding_class" >
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal fade" id="videoModal" tabindex="-1" role="dialog" aria-labelledby="videoModal" >
+          <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content comm_modal">
+              <el-card v-if="vidLoader" style="height:315px">
+                <span>loading</span>
+              </el-card>
+              <button type="button" class="modal_close" data-dismiss="modal" aria-label="Close"><img src="/static/images/close.svg" alt="close"></button>
+              <div class="modal_video" v-show="Object.keys(products).length != 0" >
 
-                          <div class="prod_repeat padding_class">
-                            <loader v-if="productsLoader" ></loader>
-                            <div class="padding_class">
-                              <a class="prod_image" >
-                                <img :src="p.pBasicDetail.pPicUrl" alt="product" >
-                              </a>
-                              <div class="prod_cont">
-                                <h4><a >{{p.pBasicDetail.pBrand}}</a></h4>
-                                <p>{{p.pBasicDetail.pName}}</p>
-                              </div>
-                              <div class="prod_misc">
-                                <rating :num="Math.round(p.pBasicDetail.pRating)" class="float" ></rating>
-                                <div class="half text-right" style="float:right" >
+                <div class="embed-responsive embed-responsive-16by9" v-show="!vidLoader">
+                  <iframe class="embed-responsive-item" width="560" height="315"  @load="loaded" :src="selectedLink" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                </div>
+              </div>
+              <div class="modal_video_big" v-show="Object.keys(products).length === 0"  >
+                <div class="embed-responsive embed-responsive-16by9" v-show="!vidLoader">
+                  <iframe class="embed-responsive-item" width="560" height="315" @load="loaded" :src="selectedLink" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                </div>
+              </div>
+              <div class="modal_video_right hidden-xs hidden-sm  scroll_card " v-show="Object.keys(products).length != 0" v-if="!vidLoader">
+                <div v-for="(p,k) in products" class="modal_video_right hidden-xs hidden-sm padding_class" >
+
+                  <div class="prod_repeat padding_class">
+                    <loader v-if="productsLoader" ></loader>
+                    <div class="padding_class">
+                      <a class="prod_image" >
+                        <img :src="p.pBasicDetail.pPicUrl" alt="product" >
+                      </a>
+                      <div class="prod_cont">
+                        <h4><a >{{p.pBasicDetail.pBrand}}</a></h4>
+                        <p>{{p.pBasicDetail.pName}}</p>
+                      </div>
+                      <div class="prod_misc">
+                        <rating :num="Math.round(p.pBasicDetail.pRating)" class="float" ></rating>
+                        <div class="half text-right" style="float:right" >
                               <span v-if="parseInt(p.priceStartsFrom) == 999999999" style="float:right" class="half text-right">
                                 Out Of Stock
                               </span>
-                                  <div v-else-if="parseInt(p.priceStartsFrom) <= 10000 ">
-                                    From <img src="/static/images/rupee-2.svg" alt="currency" >
-                                    {{p.priceStartsFrom}}
-                                  </div>
-                                  <div v-else></div>
-                                </div>
-                              </div>
-                              <a  class="prod_compare" v-if="isLoggedIn" ><span  data-dismiss="modal" @click="$router.push({path:`/particularProduct/${k}`,query:{prodDet:JSON.stringify(p)}})">Compare price</span>
-                                <img src="/static/images/wishlist-add.svg" alt="wishlist-add" v-if="Object.keys(wishlistObj).indexOf(k) === -1" @click="addWishlist(k),$forceUpdate();wishlistObj[k] = p">
-                                <img src="/static/images/wishlist-hover.svg" alt="wishlist-hover" v-if="Object.keys(wishlistObj).indexOf(k) !== -1" @click="removeWishlist(k),$forceUpdate(); delete wishlistObj[k];">
-                              </a>
-                              <a  class="prod_compare" v-if="!isLoggedIn"  ><span data-dismiss="modal" @click="$router.push({path:`/particularProduct/${k}`,query:{prodDet:JSON.stringify(p)}})">Compare price</span>
-                                <img src="/static/images/wishlist-add.svg" alt="wishlist-add" @click="$store.state.auth.showLoginPopup = true">
-                              </a>
-                            </div>
+                          <div v-else-if="parseInt(p.priceStartsFrom) <= 10000 ">
+                            From <img src="/static/images/rupee-2.svg" alt="currency" >
+                            {{p.priceStartsFrom}}
                           </div>
+                          <div v-else></div>
                         </div>
                       </div>
-                      <div class="clearfix"></div>
+                      <a  class="prod_compare" v-if="isLoggedIn" ><span  data-dismiss="modal" @click="$router.push({path:`/particularProduct/${k}`,query:{prodDet:JSON.stringify(p)}})">Compare price</span>
+                        <img src="/static/images/wishlist-add.svg" alt="wishlist-add" v-if="Object.keys(wishlistObj).indexOf(k) === -1" @click="addWishlist(k),$forceUpdate();wishlistObj[k] = p">
+                        <img src="/static/images/wishlist-hover.svg" alt="wishlist-hover" v-if="Object.keys(wishlistObj).indexOf(k) !== -1" @click="removeWishlist(k),$forceUpdate(); delete wishlistObj[k];">
+                      </a>
+                      <a  class="prod_compare" v-if="!isLoggedIn"  ><span data-dismiss="modal" @click="$router.push({path:`/particularProduct/${k}`,query:{prodDet:JSON.stringify(p)}})">Compare price</span>
+                        <img src="/static/images/wishlist-add.svg" alt="wishlist-add" @click="$store.state.auth.showLoginPopup = true">
+                      </a>
                     </div>
                   </div>
                 </div>
               </div>
+              <div class="clearfix"></div>
             </div>
           </div>
         </div>
@@ -184,7 +188,8 @@
       return{
         vid_width:0,
         dialog:false,
-        selectedLink:''
+        selectedLink:'',
+        vidLoader:false
       }
     },
     components:{
@@ -216,6 +221,13 @@
         'addWishlist',
         'removeWishlist'
       ]),
+      loaded(){
+        setTimeout(()=>{
+          this.vidLoader = false
+        },5000)
+
+        console.log('Vid Loaded')
+      }
     }
   }
 </script>

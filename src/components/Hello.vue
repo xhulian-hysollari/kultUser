@@ -39,14 +39,14 @@
       <div class="top_tags">
         <h3>Trending Searches</h3>
         <ul>
-          <li><a >Body Moisturizer</a></li>
-          <li><a >Men’s Perfume</a></li>
-          <li><a >Makeup Remover</a></li>
-          <li><a >Glossy Lipstick</a></li>
-          <li><a >Hair Dryers</a></li>
-          <li><a >Eye Brushes</a></li>
-          <li><a >Lip Sunscreen</a></li>
-          <li><a >Dry Shampoo</a></li>
+          <li @click="$router.push('/productCategory/BATH AND BODY/BODY MOISTURIZERS')"><a >Body Moisturizer</a></li>
+          <li @click="$router.push('/productSubCategory/MEN/FRAGRANCE/PERFUMES')"><a >Men’s Perfume</a></li>
+          <li @click="$router.push('/productSubCategory/MAKEUP/ACCESSORIES/MAKE UP REMOVER')"><a >Makeup Remover</a></li>
+          <li @click="$router.push('/productSubCategory/MAKEUP/LIPS/LIPGLOSS')"><a >Glossy Lipstick</a></li>
+          <li @click="$router.push('/productSubCategory/HAIR/HAIR TOOLS/HAIR DRYERS')"><a >Hair Dryers</a></li>
+          <li @click="$router.push('/productSubCategory/MAKEUP/EYES/EYESHADOW')"><a >Eye Shadows</a></li>
+          <li @click="$router.push('/productSubCategory/MAKEUP/LIPS/LIP TREATMENT')"><a >Lip Sunscreen</a></li>
+          <li @click="$router.push('/productSubCategory/HAIR/SHAMPOO & CONDITIONER/DRY SHAMPOO')"><a >Dry Shampoo</a></li>
         </ul>
         <div class="clearfix"></div>
       </div>
@@ -118,6 +118,52 @@
         </div>
       </div>
     </div>
+    <!--div---- class="home_cats">
+      <div class="container-fluid text-center">
+        <div class="comm_title">
+          <h3>Most Selling</h3>
+          <a >Browser all <img src="/static/images/right-arrow-1.svg" alt="arrow"></a>
+        </div>
+        <ul class="maincats_list">
+          <li @click="$router.push(`brandProduct/L 'OREAL`)">
+            <a >
+              <img src="/static/images/items-5@2x.jpg" alt="item">
+              <span class="cat_name"><span>L'OREAL CREAM</span></span>
+            </a>
+          </li>
+          <li>
+            <a >
+              <img src="/static/images/item-6@2x.jpg" alt="item">
+              <span class="cat_name"><span>VOLO HAIR DRYER</span></span>
+            </a>
+          </li>
+          <li>
+            <a >
+              <img src="/static/images/item-7@2x.jpg" alt="item">
+              <span class="cat_name"><span>GOOP CLEANSER</span></span>
+            </a>
+          </li>
+          <li>
+            <a >
+              <img src="/static/images/item-8@2x.jpg" alt="item">
+              <span class="cat_name"><span>POWDER SET</span></span>
+            </a>
+          </li>
+          <li>
+            <a >
+              <img src="/static/images/item-9@2x.jpg" alt="item">
+              <span class="cat_name"><span>FENTY BEAUTY</span></span>
+            </a>
+          </li>
+          <li>
+            <a >
+              <img src="/static/images/item-10@2x.jpg" alt="item">
+              <span class="cat_name"><span>DIOR LIPSTICK</span></span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div---->
     <div class="news_subscribe">
       <div class="container text-center">
         <div class="subscribe_box">
@@ -147,6 +193,131 @@
         </div>
       </div>
     </div>
+    <div class="comm_product_list">
+      <div class="container text-center">
+        <div class="comm_title">
+          <h3>Just Arrived</h3>
+          <a >Browser all <img src="/static/images/right-arrow-1.svg" alt="arrow"></a>
+        </div>
+        <div >
+          <div >
+            <el-row :gutter="15" >
+              <el-col :xs="12" :sm="12" :md="6" :lg="6" v-for="(pDet, pId) in homeJustArrived"
+              >
+                <div>
+                  <div class="grid-content pa-2" >
+                    <a class="prod_image" >
+                      <img :src="pDet.pBasicDetail.pPicUrl"  style="height:286px " alt="product">
+                    </a>
+                    <div class="prod_cont">
+                      <h4><a >{{pDet.pBasicDetail.pBrand}}</a></h4>
+                      <span v-for="(i,k) in pDet.pBasicDetail.pName" v-if="k < 20">{{i}}</span><span v-if="pDet.pBasicDetail.pName.length > 20">...</span>
+                    </div>
+                    <div class="prod_misc">
+                      <div class="float" ><rating :num="Math.round(pDet.pBasicDetail.pRating)" ></rating></div>
+                      <div class="half text-right" >
+                      <span v-if="parseInt(pDet.priceStartsFrom) == 999999999" style="float: right" class="half text-right">
+                        Out Of Stock
+                      </span>
+                        <div v-else-if="parseInt(pDet.priceStartsFrom) <= 10000 ">
+                          From <img src="/static/images/rupee-2.svg" alt="currency" >
+                          {{pDet.priceStartsFrom}}
+                        </div>
+                        <div v-else></div>
+                      </div>
+                    </div>
+                    <a  class="prod_compare" v-if="isLoggedIn"><span @click="$router.push({path:`/particularProduct/${pId}`,query:{prodDet:JSON.stringify(pDet)}})" class="float">Compare price</span>
+                      <img src="/static/images/wishlist-add.svg" alt="wishlist-add" v-if="Object.keys(wishlistObj).indexOf(pId) === -1" @click="addWishlist({pId,pDet}); wishlistObj[pId] = pDet; $forceUpdate()">
+                      <img src="/static/images/wishlist-hover.svg" alt="wishlist-hover" v-if="Object.keys(wishlistObj).indexOf(pId) !== -1" @click="removeWishlist({pId,pDet}); delete wishlistObj[pId]; $forceUpdate()">
+                    </a>
+                    <a  class="prod_compare"  v-if="!isLoggedIn"><span @click="$router.push({path:`/particularProduct/${pId}`,query:{prodDet:JSON.stringify(pDet)}})" class="float">Compare price</span>
+                      <img src="/static/images/wishlist-add.svg" alt="wishlist-add" @click="$store.state.auth.showLoginPopup = true">
+                    </a>
+                  </div>
+                </div>
+              </el-col>
+            </el-row>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="home_impcats">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6 col-xs-12 comm_imp" @click="$route.push('/howTo?selVidCat=MAKEUP')">
+            <div class="image_box">
+              <div class="cont_part">
+                <h4>
+                  WATCH VIDEO AND
+                  GET INSPIRED.
+                </h4>
+                <p>
+                  Explore Advice, Different Looks,
+                  How-to’s
+                </p>
+              </div>
+              <img src="/static/images/item-11@2x.jpg" alt="item">
+            </div>
+            <div class="title_part">
+              <h5>Running Late Routine</h5>
+              <a class="title_link">5 Minutes Makeup Look.</a>
+              <a class="go_btn" ><img src="/static/images/player.svg" alt="player"></a>
+            </div>
+          </div>
+          <div class="col-md-6 col-xs-12 comm_imp">
+            <div class="image_box">
+              <div class="cont_part">
+                <h4>
+                  BUYING GUIDES
+                </h4>
+                <p>
+                  Buying guide is your know -
+                  All personal beauty advisor.
+                </p>
+              </div>
+              <img src="/static/images/item-12@2x.jpg" alt="item">
+            </div>
+            <div class="title_part">
+              <h5>See Beauty Guides</h5>
+              <a  class="title_link">Learn More</a>
+              <a class="go_btn" ><img src="/static/images/player.svg" alt="player"></a>
+            </div>
+          </div>
+          <div class="col-md-6 col-xs-12 comm_imp"  @click="$router.push('/howTo?selVidCat=NAILS')">
+            <div class="image_box">
+              <div class="cont_part">
+                <h4>
+                  RED LIPS <br>
+                  NAIL ART
+                </h4>
+              </div>
+              <img src="/static/images/item-13@2x.jpg" alt="item">
+            </div>
+            <div class="title_part">
+              <h5>Watch Video and Get Inspired</h5>
+              <a  class="title_link">Shop Product</a>
+              <a class="go_btn" ><img src="/static/images/player.svg" alt="player"></a>
+            </div>
+          </div>
+          <div class="col-md-6 col-xs-12 comm_imp" @click="$router.push('/howTo?selVidCat=MAKEUP')">
+            <div class="image_box">
+              <div class="cont_part">
+                <h4>
+                  TIPS TO CONTOUR
+                  YOUR NOSE
+                </h4>
+              </div>
+              <img src="/static/images/item-14@2x.jpg" alt="item">
+            </div>
+            <div class="title_part">
+              <h5>Watch Video and Get Inspired</h5>
+              <a  class="title_link">Shop Product</a>
+              <a class="go_btn" ><img src="/static/images/player.svg" alt="player"></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="customer_review">
       <div class="container text-center">
         <div class="review_box">
@@ -160,7 +331,7 @@
             I’m not a huge make-up wearer so this is great for me. I will definitely recommend Kult  to my friends.  Thank you!
           </p>
           <div class="tweet_box">
-            <a class="twitter_link" href="#"><img src="/static/images/logo-twitter.svg" alt="twitter"></a>
+            <a class="twitter_link" ><img src="/static/images/logo-twitter.svg" alt="twitter"></a>
             <img src="/static/images/helen-p@2x.jpg" alt="helen">
             <p>
               <strong>Helen Parker</strong>
@@ -228,7 +399,8 @@
       ...mapGetters([
         'isLoggedIn',
         'wishlistObj',
-        'homeGlobalProd'
+        'homeGlobalProd',
+        'homeJustArrived'
 
       ])
     }

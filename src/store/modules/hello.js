@@ -1,17 +1,25 @@
 import axios from 'axios'
 const state = {
-  homeGlobalProd:{}
+  homeGlobalProd:{},
+  homeJustArrived:{}
 }
 
 const getters = {
-  homeGlobalProd:state=>state.homeGlobalProd
+  homeGlobalProd:state=>state.homeGlobalProd,
+  homeJustArrived:state=>state.homeJustArrived
 }
 
 const mutations = {
   getGlobalBestSellersOnHomePage(){
-      let arr=["603","116","950","2270","1048","1155","1313","366","1113","1425","747","440"]
+      let arr=["603","2270","1155","1113"]
     actions.getProdFromArr(state,arr).then(function (res) {
             state.homeGlobalProd=res
+    })
+  },
+  getJustArrivedOnHomePage(){
+    let arr=["544","910","541","803"]
+    actions.getProdFromArr(state,arr).then(function (res) {
+      state.homeJustArrived=res
     })
   }
 }

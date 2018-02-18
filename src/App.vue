@@ -21,10 +21,11 @@
             </div>
             <div class="container top_misc hidden-xs">
               <div class="row">
-                <div class="col-xs-6">
+                <div class="col-xs-4">
                   <p><img src="/static/images/pin-locate.svg" alt="pin-locate"><span>Mumbai, India</span></p>
                 </div>
-                <div class="col-xs-6 text-right head_drop">
+                <a @click="goTo('/')"  class="logo hidden-xs col-xs-4" style="text-align: center"><img src="/static/images/logo.svg" alt="logo"></a>
+                <div class="col-xs-4 text-right head_drop">
                   <div class="dropdown">
                     <p class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                       <a >
@@ -427,6 +428,7 @@
     created(){
       window.thisOfVueComp_2 = this
       this.$store.commit('getGlobalBestSellersOnHomePage')
+      this.$store.commit('getJustArrivedOnHomePage')
     },
     updated(){
       this.$store.commit('getLoginStatus')
