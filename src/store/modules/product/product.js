@@ -8,13 +8,15 @@ const state = {
   //
   lastQueried_product : {},
   //
-  totalProds:0
+  totalProds:0,
+  loadMoreLoader:false
 }
 
 const getters = {
   products: state => state.products,
   productsLoader: state => state.productsLoader,
-  totalProds:state=>state.totalProds
+  totalProds:state=>state.totalProds,
+  loadMoreLoader:state =>state.loadMoreLoader
 
 }
 
@@ -75,6 +77,7 @@ const mutations = {
   },
   //
   loadMoreProducts(state2, payload){
+    state.loadMoreLoader=true
     //console.log(payload)
     //
     //state.productsLoader = true
@@ -127,8 +130,6 @@ const mutations = {
         }
       })
 
-    }).then(function(){
-      mutations.getLoadMoreCnt(state,payload.routePath)
     })
   },
   //
@@ -172,6 +173,7 @@ const mutations = {
       //console.log('cCategoryProduct => ' + state.cProduct + ' | ' + 'queryproducts.size => ' + payload.cProductSize)
       if(state.cProduct == payload.cProductSize){
         //
+        state.loadMoreLoader=false
         state.productsLoader = false
         //
         //console.log("***** PRODUCT QUERIED *****")

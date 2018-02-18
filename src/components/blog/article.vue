@@ -1,76 +1,80 @@
 <template>
   <div>
-    <div class="banner_strip"></div>
-    <div class="comm_pagebreads">
-      <div class="container">
-        <div class="max_width">
-          <div class="row">
-            <div class="col-sm-5 col-xs-12 comm_page_title">
-              <span>Welcome</span>
-              <h2>Kult Blog</h2>
-            </div>
-            <div class="col-sm-7 col-xs-12 text-right cust_left">
+    <loader v-if="articleLoader"></loader>
+    <div v-else>
+      <div class="banner_strip"></div>
+      <div class="comm_pagebreads">
+        <div class="container">
+          <div class="max_width">
+            <div class="row">
+              <div class="col-sm-5 col-xs-12 comm_page_title">
+                <span>Welcome</span>
+                <h2>Kult Blog</h2>
+              </div>
+              <div class="col-sm-7 col-xs-12 text-right cust_left">
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-    <div class="blog_inn">
-      <div class="container">
-        <div class="max_width">
-          <div class="row">
-            <div class="col-xs-12">
-              <div class="blog_in_title">
-                <span class="blog_inndate">{{dates(blogDet.date)}}</span>
-                <h2>{{blogName}}</h2>
-              </div>
-            </div>
-            <div class="clearfix"></div>
-            <div class="col-sm-7 col-xs-12 blog_left">
-              <div class="blog_inncont">
-                <div class="blog_image">
-                  <img :src="blogDet.blogImgUrl" alt="blog">
-                  <span style="margin-left: 40px"><span  class="blog_tag" v-for="i in blogDet.blogTag ">#{{i}}</span></span>
+      <div class="blog_inn">
+        <div class="container">
+          <div class="max_width">
+            <div class="row">
+              <div class="col-xs-12">
+                <div class="blog_in_title">
+                  <span class="blog_inndate">{{dates(blogDet.date)}}</span>
+                  <h2>{{blogName}}</h2>
                 </div>
-                <ul class="list-unstyled list-inline blog_views">
-                  <li><img src="/static/images/view.svg" alt="view">{{articleViews}}</li>
-                  <btn-loader v-show="likeBtnLoader" ></btn-loader>
-                  <li  v-show="!likeBtnLoader" v-if="isLoggedIn"><img src="/static/images/heart-icon.svg" alt="view" v-if="!userLike" @click="blogLike({blogCat:blogDet.blogCat,blogName:$route.query.name,userUid:user.uid})">
-                    <span v-if="userLike" @click="blogLike({blogCat:blogDet.blogCat,blogName:$route.query.name,userUid:user.uid})"><i class="fa fa-heart"></i></span>
-                    {{articleLike}}</li>
-                  <li v-if="!isLoggedIn"><img src="/static/images/heart-icon.svg" alt="view"  data-toggle="modal" data-target="#loginModal">{{articleLike}}</li>
-                </ul>
-                <ul class="list-unstyled list-inline">
-                  <li><a href="https://www.instagram.com/kult.in/" target="_blank"><i class="fa fa-instagram icon_size" ></i></a></li>
-                  <li><a href="https://goo.gl/UHWH1o" target="_blank"><i class="fa fa-youtube-play"></i></a></li>
-                  <!--li><a  target="_blank"><i class="fa fa-facebook"></i></a></li>
-                  <li><a  target="_blank"><i class="fa fa-instagram"></i></a></li>
-                  <li><a  target="_blank"><i class="fa fa-pinterest"></i></a></li-->
-                </ul>
-                <p v-html="blogDet.blogContent">
-                </p>
               </div>
-            </div>
-            <div class="col-sm-5 col-xs-12 hidden-xs sidebar" >
-              <div class="side_box">
-                <div class="blog_sidecat" v-for="(b,cat) in sideBlogs"  @click="$router.push({path:'/article', query:{name,selArticle:articleBlog(blog),sideBlogs:articleBlog(sideBlogs)}})">
-                  <h4>{{cat}}</h4>
-                  <div class="cat_side" v-for="(blog,name) in b">
-                    <a  class="cat_img " ><img :src="blog.blogImgUrl"  alt="image" class="blog_img_side"></a>
-                    <div class="cat_cont">
-                      <h5><a >{{name}}</a></h5>
-                      <ul class="comm_pagemenus "><span v-for="i in blog.blogTag "><li><a  class="cat_link" >{{i}}</a></li></span></ul>
-                      <ul class="list-unstyled list-inline blog_views">
-                        <li><img src="/static/images/view.svg" alt="view">{{blog.views}}</li>
-                        <li><img src="/static/images/heart-icon.svg" alt="view">{{blog.likes}}</li>
-                      </ul>
+              <div class="clearfix"></div>
+              <div class="col-sm-7 col-xs-12 blog_left">
+                <div class="blog_inncont">
+                  <div class="blog_image" >
+                    <img :src="blogDet.blogImgUrl[0]" alt="blog">
+                    <span style="margin-left: 40px"><span  class="blog_tag" v-for="i in blogDet.blogTag ">#{{i}}</span></span>
+                  </div>
+                  <ul class="list-unstyled list-inline blog_views">
+                    <li><img src="/static/images/view.svg" alt="view">{{articleViews}}</li>
+                    <i class='fa fa-spinner fa-spin ' v-show="likeBtnLoader"></i>
+                    <li  v-show="!likeBtnLoader" v-if="isLoggedIn">
+                      <img src="/static/images/heart-icon.svg" alt="view" v-if="!userLike" @click="blogLike({blogCat:blogDet.blogCat,blogName:$route.query.name,userUid:user.uid})">
+                      <span v-if="userLike" @click="blogLike({blogCat:blogDet.blogCat,blogName:$route.query.name,userUid:user.uid})"><i class="fa fa-heart"></i></span>
+                      {{articleLike}}</li>
+                    <li v-if="!isLoggedIn"><img src="/static/images/heart-icon.svg" alt="view"  data-toggle="modal" data-target="#loginModal">{{articleLike}}</li>
+                  </ul>
+                  <ul class="list-unstyled list-inline">
+                    <li><a href="https://www.instagram.com/kult.in/" target="_blank"><i class="fa fa-instagram icon_size" ></i></a></li>
+                    <li><a href="https://goo.gl/UHWH1o" target="_blank"><i class="fa fa-youtube-play icon_size"></i></a></li>
+                    <!--li><a  target="_blank"><i class="fa fa-facebook"></i></a></li>
+                    <li><a  target="_blank"><i class="fa fa-instagram"></i></a></li>
+                    <li><a  target="_blank"><i class="fa fa-pinterest"></i></a></li-->
+                  </ul>
+                  <p v-html="blogDet.blogContent">
+                  </p>
+                </div>
+              </div>
+              <div class="col-sm-5 col-xs-12 hidden-xs sidebar" >
+                <div class="side_box">
+                  <div class="blog_sidecat" v-for="(b,cat) in blogs">
+                    <h4>{{cat}}</h4>
+                    <div class="cat_side" v-for="(blog,name) in b"  @click="$router.push({path:'/article', query:{name,cat}})">
+                      <a  class="cat_img" ><img :src="blog.blogImgUrl" alt="image" class="img_size"></a>
+                      <div class="cat_cont">
+                        <h5><a >{{name}}</a></h5>
+                        <ul class="comm_pagemenus "><span v-for="i in blog.blogTag "><li><a  class="cat_link" >{{i}}</a></li></span></ul>
+                        <ul class="list-unstyled list-inline blog_views">
+                          <li><img src="/static/images/view.svg" alt="view">{{blog.views}}</li>
+                          <li><img src="/static/images/heart-icon.svg" alt="view">{{blog.likes}}</li>
+                        </ul>
+                      </div>
                     </div>
                   </div>
-                </div>
-                <div class="ads">
-                  <a >
-                    <img src="/static/images/ads@2x.jpg" alt="ads">
-                  </a>
+                  <div class="ads">
+                    <a >
+                      <img src="/static/images/ads@2x.jpg" alt="ads">
+                    </a>
+                  </div>
                 </div>
               </div>
             </div>
@@ -85,6 +89,7 @@
   </div>
 </template>
 <script>
+  import loader from '@/components/gen/loader'
   import btnLoader from '@/components/gen/btnLoader'
   import moment from 'moment'
   import {mapGetters} from 'vuex'
@@ -92,6 +97,7 @@
   import login from '@/components/auth/login'
   export default {
     components:{
+      loader,
       login,
       btnLoader
     },
@@ -112,30 +118,66 @@
     },
     watch:{
       $route:function () {
+        let vm = this
         this.$store.commit('articleContents')
+        this.$store.dispatch('getLikeStatus',{
+          blogCat: vm.$router.currentRoute.query.cat,
+          blogName:vm.$router.currentRoute.query.name,
+          uid:vm.$store.state.auth.user.uid
+        })
+        this.$store.commit('blogView',{
+          blogCat: vm.$router.currentRoute.query.cat,
+          blogName:vm.$router.currentRoute.query.name,
+        })
       }
     },
     computed:{
       ...mapGetters([
-        'blogName',
         'blogDet',
-        'sideBlogs',
+        'blogName',
+        'blogs', // blogs & details (right side category wise(small))
+        'blogLoader', //loader for blog
+        //
+        'blogTags', // blog tags
+        'blogTagLoader', // blog tag loader,
+        //
+        'blogsAtHome',  //blog to show on home page(large left side blogs)
+        'blogsAtHomeLoader', //loader for blogs at home (left side)
         'articleLike',
         'articleViews',
         'isLoggedIn',
         'user',
         'userLike',
-        'likeBtnLoader'
+        'likeBtnLoader',
+        'articleLoader'
       ])
     },
     created(){
+      let vm = this
+      window.thisOfVueComp=this
       this.$store.commit('articleContents')
+      this.$store.dispatch('getLikeStatus',{
+        blogCat: vm.$router.currentRoute.query.cat,
+        blogName:vm.$router.currentRoute.query.name,
+        uid:vm.$store.state.auth.user.uid
+      })
+      this.$store.commit('blogView',{
+        blogCat: vm.$router.currentRoute.query.cat,
+        blogName:vm.$router.currentRoute.query.name,
+      })
     }
   }
 </script>
 <style>
-  .blog_img_side{
-    height: 109.531px !important;
-    width: 91.266px !important;
+  .img_size{
+
+    height: 109.531px;
+    width: 91.266px;
+
+  }
+  .icon_size{
+    font-size: 18px;
+
+    margin-right: 3px;
   }
 </style>

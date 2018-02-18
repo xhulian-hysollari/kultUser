@@ -10,10 +10,7 @@
           <div class="row">
             <div class="col-sm-5 col-xs-12 comm_page_title">
               <span>Welcome</span>
-              <h2>Kult Blog</h2>
-            </div>
-            <div class="col-sm-7 col-xs-12 text-right cust_left">
-
+              <h2>Kult TV</h2>
             </div>
           </div>
         </div>
@@ -41,14 +38,14 @@
             </ul>
             <div class="left_ad hidden-xs">
               <a >
-                <img src="static/images/item-81@2x.jpg" alt="item">
+                <img src="/static/images/item-81@2x.jpg" alt="item">
                 <span>100% PURE ORGANIC</span>
               </a>
             </div>
           </div>
           <div class="tv_right">
             <div class="row" >
-              <div class="col-md-6 col-xs-12 comm_imp" v-for="(vidDet, vidName) in howToVid">
+              <div class="col-md-6 col-xs-12 comm_imp col-lg-6" v-for="(vidDet, vidName) in howToVid">
                 <div class="image_box hidden-xs" data-toggle="modal" data-target="#videoModal" @click="getCatVidProduct({vidCat: $route.query.selVidCat,vidName }); selectedLink=vidDet.videoLink" >
                   <img :src="vidDet.videoImgUrl" alt="item"  ><!--thumbnail image-->
                 </div>
@@ -62,26 +59,31 @@
                   <h5>Watch Videos and Get Inspired</h5><!--Video Tag-->
                   <a class="shop_btn">Shop Now</a> | <a class="shop_btn">Learn More</a>
                   <a class="go_btn">
-                    <img src="static/images/player.svg" alt="player">
+                    <img src="/static/images/player.svg" alt="player">
                   </a>
                 </div>
                 <div class="title_part visible-xs" @click="dialog = true ; selectedLink=vidDet.videoLink"  >
                   <h5>Watch Videos and Get Inspired</h5><!--Video Tag-->
                   <a class="shop_btn">Learn More</a>
                   <a class="go_btn">
-                    <img src="static/images/player.svg" alt="player">
+                    <img src="/static/images/player.svg" alt="player">
                   </a>
                 </div>
                 <div class="modal fade" id="videoModal" tabindex="-1" role="dialog" aria-labelledby="videoModal" >
                   <div class="modal-dialog modal-lg" role="document">
                     <div class="modal-content comm_modal">
                       <button type="button" class="modal_close" data-dismiss="modal" aria-label="Close"><img src="/static/images/close.svg" alt="close"></button>
-                      <div class="modal_video">
+                      <div class="modal_video" v-show="Object.keys(products).length != 0"  v-if="!productsLoader">
                         <div class="embed-responsive embed-responsive-16by9">
                           <iframe class="embed-responsive-item" width="560" height="315" :src="selectedLink" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
                         </div>
                       </div>
-                      <div class="modal_video_right hidden-xs hidden-sm  scroll_card " v-show="Object.keys(products).length != 0">
+                      <div class="modal_video_big" v-show="Object.keys(products).length === 0"  v-if="!productsLoader">
+                        <div class="embed-responsive embed-responsive-16by9">
+                          <iframe class="embed-responsive-item" width="560" height="315" :src="selectedLink" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                        </div>
+                      </div>
+                      <div class="modal_video_right hidden-xs hidden-sm  scroll_card " v-show="Object.keys(products).length != 0" >
                         <div v-for="(p,k) in products" class="modal_video_right hidden-xs hidden-sm padding_class" >
 
                           <div class="prod_repeat padding_class">
@@ -94,10 +96,18 @@
                                 <h4><a >{{p.pBasicDetail.pBrand}}</a></h4>
                                 <p>{{p.pBasicDetail.pName}}</p>
                               </div>
-                              <rating :num="Math.round(p.pBasicDetail.pRating)"></rating>
                               <div class="prod_misc">
-
-                                <div class="half text-right">From <img src="/static/images/rupee-2.svg" alt="currency">{{p.priceStartsFrom}}</div>
+                                <rating :num="Math.round(p.pBasicDetail.pRating)" class="float" ></rating>
+                                <div class="half text-right" style="float:right" >
+                              <span v-if="parseInt(p.priceStartsFrom) == 999999999" style="float:right" class="half text-right">
+                                Out Of Stock
+                              </span>
+                                  <div v-else-if="parseInt(p.priceStartsFrom) <= 10000 ">
+                                    From <img src="/static/images/rupee-2.svg" alt="currency" >
+                                    {{p.priceStartsFrom}}
+                                  </div>
+                                  <div v-else></div>
+                                </div>
                               </div>
                               <a  class="prod_compare" v-if="isLoggedIn" ><span  data-dismiss="modal" @click="$router.push({path:`/particularProduct/${k}`,query:{prodDet:JSON.stringify(p)}})">Compare price</span>
                                 <img src="/static/images/wishlist-add.svg" alt="wishlist-add" v-if="Object.keys(wishlistObj).indexOf(k) === -1" @click="addWishlist(k),$forceUpdate();wishlistObj[k] = p">
@@ -145,7 +155,7 @@
     <br>
     VIDEOS =>
     <!-- videos in vid cat -->
-    {{Object.keys(howToVid).length}}
+   <!-- {{Object.keys(howToVid).length}}
     <div v-for="(vidDet, vidName) in howToVid" @click="getCatVidProduct({ //click to open video in popup, i.e when product will get load
       vidCat: $route.query.selVidCat,
       vidName
@@ -156,7 +166,7 @@
 
     <br>
     PRODUCTS =>
-  < {{products}}>
+  < {{products}}-->
 
   </div>
 </template>
@@ -166,16 +176,19 @@
   import {mapMutations} from 'vuex'
   import rating from '@/components/rating.vue'
   import loader from '@/components/gen/loader'
+  import ElCard from "../../../node_modules/element-ui/packages/card/src/main.vue";
   //
   export default {
     //
     data(){
       return{
+        vid_width:0,
         dialog:false,
         selectedLink:''
       }
     },
     components:{
+      ElCard,
       rating,
       loader
     },
@@ -206,7 +219,7 @@
     }
   }
 </script>
-<style>
+<style scoped>
   .scroll_card{
     max-height: 500px;
     overflow: scroll
@@ -216,9 +229,11 @@
      margin: 0px 0 !important;
     list-style: none;
   }
-
-padding_class{
-  padding-left: 15px !important;
+.modal_video_big{
+  width:100%;
+}
+.padding_class{
+  padding-left: 5px !important;
   padding-right: 5px !important;
 }
 ul, ol {
@@ -230,5 +245,14 @@ margin-top: 0;
     /* float: right; */
      padding: 0px !important;
     background: #fff;
+  }
+  .float{
+    float: left;
+  }
+  .prod_repeat .half {
+    width: 50%;
+    float: left;
+    letter-spacing: -0.2px;
+    color: #000000;
   }
 </style>

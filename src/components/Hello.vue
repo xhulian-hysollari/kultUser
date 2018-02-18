@@ -51,11 +51,287 @@
         <div class="clearfix"></div>
       </div>
     </div>
+    <div class="comm_product_list">
+      <div class="container text-center">
+        <div class="comm_title" @click="goTo('/globalBestseller')">
+          <h3>Global Best Sellers</h3>
+          <a >Browser all <img src="/static/images/right-arrow-1.svg" alt="arrow" ></a>
+        </div>
+        <div >
+          <div >
+            <el-row :gutter="15" >
+              <el-col :xs="12" :sm="12" :md="6" :lg="6" v-for="(pDet, pId) in homeGlobalProd"
+              >
+                <div>
+                  <div class="grid-content pa-2" >
+                    <a class="prod_image" >
+                      <img :src="pDet.pBasicDetail.pPicUrl"  style="height:286px " alt="product">
+                    </a>
+                    <div class="prod_cont">
+                      <h4><a >{{pDet.pBasicDetail.pBrand}}</a></h4>
+                      <span v-for="(i,k) in pDet.pBasicDetail.pName" v-if="k < 20">{{i}}</span><span v-if="pDet.pBasicDetail.pName.length > 20">...</span>
+                    </div>
+                    <div class="prod_misc">
+                      <div class="float" ><rating :num="Math.round(pDet.pBasicDetail.pRating)" ></rating></div>
+                      <div class="half text-right" >
+                      <span v-if="parseInt(pDet.priceStartsFrom) == 999999999" style="float: right" class="half text-right">
+                        Out Of Stock
+                      </span>
+                        <div v-else-if="parseInt(pDet.priceStartsFrom) <= 10000 ">
+                          From <img src="/static/images/rupee-2.svg" alt="currency" >
+                          {{pDet.priceStartsFrom}}
+                        </div>
+                        <div v-else></div>
+                      </div>
+                    </div>
+                    <a  class="prod_compare" v-if="isLoggedIn"><span @click="$router.push({path:`/particularProduct/${pId}`,query:{prodDet:JSON.stringify(pDet)}})" class="float">Compare price</span>
+                      <img src="/static/images/wishlist-add.svg" alt="wishlist-add" v-if="Object.keys(wishlistObj).indexOf(pId) === -1" @click="addWishlist({pId,pDet}); wishlistObj[pId] = pDet; $forceUpdate()">
+                      <img src="/static/images/wishlist-hover.svg" alt="wishlist-hover" v-if="Object.keys(wishlistObj).indexOf(pId) !== -1" @click="removeWishlist({pId,pDet}); delete wishlistObj[pId]; $forceUpdate()">
+                    </a>
+                    <a  class="prod_compare"  v-if="!isLoggedIn"><span @click="$router.push({path:`/particularProduct/${pId}`,query:{prodDet:JSON.stringify(pDet)}})" class="float">Compare price</span>
+                      <img src="/static/images/wishlist-add.svg" alt="wishlist-add" @click="$store.state.auth.showLoginPopup = true">
+                    </a>
+                  </div>
+                </div>
+              </el-col>
+            </el-row>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="home_intro">
+      <div class="text-right">
+        <img class="main_img" src="/static/images/hero-woman@2x.jpg" alt="hero">
+      </div>
+      <div class="intro_cont">
+        <div class="container">
+          <div class="intro_texts">
+            <img src="/static/images/cosmetics-tools@2x.jpg" alt="cosmetics-tools">
+            <h2>A New Way For Beauty</h2>
+            <p>
+              Makeup is no different than clothes and accessories -
+              it's embellishments for your face. And it also gives you
+              creative freedom.
+            </p>
+            <a >COMPARE PRICES</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="news_subscribe">
+      <div class="container text-center">
+        <div class="subscribe_box">
+          <div class="subscribe_cont">
+            <img src="/static/images/gifts.svg" alt="gifts">
+            <h2>Subscribe to Our Newsletter</h2>
+            <p>Get Sale Alerts and Free Expert Insider’s Guide to Best Beauty Buys</p>
+          </div>
+          <div class="subscribe_form">
+            <div class="row">
+              <div class="col-xs-4 text-left">
+                <label class="check_item">Latest products</label>
+              </div>
+              <div class="col-xs-4 text-center">
+                <label class="check_item">Weekly news</label>
+              </div>
+              <div class="col-xs-4 text-right">
+                <label class="check_item">Monthly digest</label>
+              </div>
+            </div>
+            <div class="fields">
+              <input type="text" placeholder="E-mail address"  v-model="$store.state.gen.newsLetterEmail" class="form-control">
+              <button @click="newsletter_saveEmail"><img src="/static/images/send-now.svg" alt="send-now"></button>
+            </div>
+            <p class="sm">Every month our subscribers get awesome updates</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="customer_review">
+      <div class="container text-center">
+        <div class="review_box">
+          <h3>Customer Reviews</h3>
+          <ul class="list-unstyled list-inline">
+            <li><img src="/static/images/rating-stars.svg" alt="rating"></li>
+            <li><strong>Best Price Ever</strong></li>
+          </ul>
+          <p>
+            I love the way the way they lay out the price comparison and very quick to make decision and order right away.
+            I’m not a huge make-up wearer so this is great for me. I will definitely recommend Kult  to my friends.  Thank you!
+          </p>
+          <div class="tweet_box">
+            <a class="twitter_link" href="#"><img src="/static/images/logo-twitter.svg" alt="twitter"></a>
+            <img src="/static/images/helen-p@2x.jpg" alt="helen">
+            <p>
+              <strong>Helen Parker</strong>
+              Mumbai, India.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="insta_sec">
+      <div class="container text-center">
+        <h3>Shop Our Instagram</h3>
+        <a class="insta_outlink"  target="_blank"><img src="/static/images/instagram.svg" alt="instagram"> @kult.in</a>
+        <div>
+          <div class="col-lg-2 visible-lg"  v-for="i in slider" >
+            <div class="hovereffect">
+              <img class="img-responsive" :src="i"  alt="">
+              <div class="overlay">
+                <a class="info" >OPEN</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="client_logo">
+          <img class="hidden-xs" src="/static/images/brands.svg" alt="brands">
+          <img class="visible-xs" src="/static/images/brands-mobile.svg" alt="brands">
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
+  import rating from '@/components/rating'
+  import {mapGetters} from 'vuex'
+  import {mapMutations} from 'vuex'
   export default {
+    data(){
+      return{
+        slider:[
+          "/static/images/1@2x.jpg",
+          "/static/images/4@2x.jpg",
+          "/static/images/3@2x.jpg",
+          "/static/images/4@2x.jpg",
+          "/static/images/5@2x.jpg",
+          "/static/images/3@2x.jpg"
+        ]
+      }
+    },
+    methods: {
+      ...mapMutations([
+        'goTo',
+        'newsletter_saveEmail',
+        'addWishlist',
+        'removeWishlist'
+      ]),
+    },
+    created(){
 
+    },
+    components:{
+      rating
+    },
+    computed:{
+      ...mapGetters([
+        'isLoggedIn',
+        'wishlistObj',
+        'homeGlobalProd'
+
+      ])
+    }
   }
 </script>
+<style scoped>
+  .prod_compare {
+    padding-bottom: 24px;
+    /* padding-right: 15px; */
+  }
+  .insta_sec {
+    padding: 40px 0;
+    max-height: 700px !important;
+  }
+
+  .hovereffect {
+    width:100%;
+    height:100%;
+    float:left;
+    overflow:hidden;
+    position:relative;
+    text-align:center;
+    cursor:default;
+  }
+
+  .hovereffect .overlay {
+    width:100%;
+    height:100%;
+    position:absolute;
+    overflow:hidden;
+    top:0;
+    left:0;
+    opacity:0;
+    background-color:rgba(0,0,0,0.5);
+    -webkit-transition:all .4s ease-in-out;
+    transition:all .4s ease-in-out
+  }
+
+  .hovereffect img {
+    display:block;
+    position:relative;
+    -webkit-transition:all .4s linear;
+    transition:all .4s linear;
+  }
+
+  .hovereffect h2 {
+    text-transform:uppercase;
+    color:#fff;
+    text-align:center;
+    position:relative;
+    font-size:17px;
+    background:rgba(0,0,0,0.6);
+    -webkit-transform:translatey(-100px);
+    -ms-transform:translatey(-100px);
+    transform:translatey(-100px);
+    -webkit-transition:all .2s ease-in-out;
+    transition:all .2s ease-in-out;
+    padding:10px;
+  }
+
+  .hovereffect a.info {
+    text-decoration:none;
+    display:inline-block;
+    text-transform:uppercase;
+    color:#fff;
+    border:1px solid #fff;
+    background-color:transparent;
+    opacity:0;
+    filter:alpha(opacity=0);
+    -webkit-transition:all .2s ease-in-out;
+    transition:all .2s ease-in-out;
+    margin:50px 0 0;
+    padding:7px 14px;
+  }
+
+  .hovereffect a.info:hover {
+    box-shadow:0 0 5px #fff;
+  }
+
+  .hovereffect:hover img {
+    -ms-transform:scale(1.2);
+    -webkit-transform:scale(1.2);
+    transform:scale(1.2);
+  }
+
+  .hovereffect:hover .overlay {
+    opacity:1;
+    filter:alpha(opacity=100);
+  }
+
+  .hovereffect:hover h2,.hovereffect:hover a.info {
+    opacity:1;
+    filter:alpha(opacity=100);
+    -ms-transform:translatey(0);
+    -webkit-transform:translatey(0);
+    transform:translatey(0);
+  }
+
+  .hovereffect:hover a.info {
+    -webkit-transition-delay:.2s;
+    transition-delay:.2s;
+  }
+  .float{
+    float: left;
+  }
+</style>

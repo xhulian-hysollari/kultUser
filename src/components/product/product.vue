@@ -25,7 +25,32 @@
           <div class="container">
             <div class="row">
               <div >
+
                 <div class="side_filterbox">
+                  <div class="tv_left"  v-if="$route.path.indexOf('global') != -1 || $route.path.indexOf('/kultPick') != -1">
+               <div class="howto">Shop</div>
+               <ul v-for="(shopOptionDet, shopOption) in shopOptions" >
+                 <li  class="active" v-if="$route.params.shopOption===shopOption" >
+                   <a>
+                     <span >{{shopOption}}</span>
+                   </a>
+                 </li>
+                 <li v-else>
+                   <a   @click="goTo('/globalBestSeller/shopOption/' + shopOption);
+                   $route.params.shopOption=shopOption"
+                        v-if="$route.path.indexOf('global') != -1"
+                   >
+                     <span >{{shopOption}}</span>
+                   </a>
+                   <a   @click="goTo('/kultPick/shopOption/' + shopOption);
+                   $route.params.shopOption=shopOption"
+                        v-if="$route.path.indexOf('/kultPick') != -1"
+                   >
+                     <span >{{shopOption}}</span>
+                   </a>
+                 </li>
+               </ul>
+             </div>
                   <div class="filter_title">
                     <span class="hide_toggler">{{toggler}}</span>
                     <a>ACTIVE FILTER <span>{{cnt}}</span></a>
@@ -140,7 +165,8 @@
                 </div>
                 <div class="cat_prodarea">
                   <el-row :gutter="15" >
-                    <el-col :xs="12" :sm="12" :md="8" :lg="8" v-for="(pDet, pId) in products" >
+                    <el-col :xs="12" :sm="12" :md="8" :lg="8" v-for="(pDet, pId) in products"
+                           >
                       <div>
                         <div class="grid-content pa-2" >
                           <a class="prod_image" >
@@ -148,20 +174,20 @@
                           </a>
                           <div class="prod_cont">
                             <h4><a >{{pDet.pBasicDetail.pBrand}}</a></h4>
-                            <span v-for="(i,k) in pDet.pBasicDetail.pName" v-if="k < 30">{{i}}</span><span v-if="pDet.pBasicDetail.pName.length > 30">...</span>
+                            <span v-for="(i,k) in pDet.pBasicDetail.pName" v-if="k < 20">{{i}}</span><span v-if="pDet.pBasicDetail.pName.length > 20">...</span>
                           </div>
                           <div class="prod_misc">
                             <div class="float" ><rating :num="Math.round(pDet.pBasicDetail.pRating)" ></rating></div>
-                            <div class="half text-right" v-if="pDet.priceStartsFrom !== undefined" >
-                              <div v-if="pDet.priceStartsFrom !== 999999999 || pDet.priceStartsFrom !== NAN">
+                            <div class="half text-right" >
+                              <span v-if="parseInt(pDet.priceStartsFrom) == 999999999" style="float: right" class="half text-right">
+                                Out Of Stock
+                              </span>
+                              <div v-else-if="parseInt(pDet.priceStartsFrom) <= 10000 ">
                                 From <img src="/static/images/rupee-2.svg" alt="currency" >
                                 {{pDet.priceStartsFrom}}
                               </div>
-                              <span  style="float: right" class="half text-right" v-else>
-                                Out Of Stock
-                              </span>
+                              <div v-else></div>
                             </div>
-                            <div style="float: right" class="half text-right" v-else>Out Of Stock</div>
                           </div>
                           <a  class="prod_compare" v-if="isLoggedIn"><span @click="$router.push({path:`/particularProduct/${pId}`,query:{prodDet:JSON.stringify(pDet)}})">Compare price</span>
                             <img src="/static/images/wishlist-add.svg" alt="wishlist-add" v-if="Object.keys(wishlistObj).indexOf(pId) === -1" @click="addWishlist({pId,pDet}); wishlistObj[pId] = pDet; $forceUpdate()">
@@ -173,15 +199,15 @@
                         </div>
                       </div>
                     </el-col>
-                    <!--button class="login_btn load_more_btn" type="info"
-                    v-show="productsLoader">
+                    {{productsLoader}}
+                    <button class="login_btn load_more_btn"
+                    v-if="loadMoreLoader">
                       <i class='fa fa-spinner fa-spin ' ></i>
-                    </button-->
-                    <button class="login_btn load_more_btn" type="info" @click="loadMoreProducts({
+                    </button>
+                    <button class="login_btn load_more_btn" @click="loadMoreProducts({
                       routePath: routeDet.routePath
-                    })" v-if="Object.keys(products).length !== totalProds"
-                    v-show="!productsLoader">
-                      Load More
+                    })" v-if="Object.keys(products).length !== totalProds && !loadMoreLoader && Object.keys(products).length !== 0">
+                      Load {{totalProds - Object.keys(products).length}} More Products
                     </button>
                   </el-row>
                 </div>
@@ -227,6 +253,7 @@
     data(){
       return{
         cnt:0,
+        sel:'',
         filterBoxes:[],
         toggler:false,
         priceArr:[
@@ -290,12 +317,22 @@
         'productsLoader', // till products are loaded this is true
         'wishlistObj',
         'isLoggedIn',
-        'totalProds'
+        'totalProds',
+        'shopOptions',
+        'loadMoreLoader'
 
       ])
     },
+    watch:{
+      $route:function () {
+        let vm = this
+        this.$store.commit('getLoadMoreCnt',vm.routeDet.routePath)
+      }
+    },
     //
    updated(){
+      let vm = this
+     this.$store.commit('getLoadMoreCnt',vm.routeDet.routePath)
       //console.log(this.$store.state.product.products)
       if(this.$router.currentRoute.fullPath.indexOf('selFilters') !== -1){
         if(this.$router.currentRoute.fullPath.indexOf('selFilters=%7B%7D') === -1)
@@ -309,6 +346,7 @@
      //filter=Object.keys(this.$store.state.filter.filter)
    },
     created(){
+     let vm = this
      console.log('------------------------------------')
      console.log(this.routeDet)
       window.thisOfVueComp = this
@@ -321,6 +359,9 @@
         routeQuery: this.routeDet.routeQuery // (2)
         //
       })
+
+      this.$store.commit('getLoadMoreCnt',vm.routeDet.routePath)
+      alert(vm.routeDet.routePath)
       //setTimeout(()=>{this.$forceUpdate()},3000)
     }
   }
@@ -367,5 +408,19 @@
   }
   .min_height_prod{
     min-height: 900px;
+  }
+  .tv_left ul {
+    padding: 0;
+    margin: 0px 0 !important;
+    list-style: none;
+  }
+
+  padding_class{
+    padding-left: 15px !important;
+    padding-right: 5px !important;
+  }
+  ul, ol {
+    margin-top: 0;
+    margin-bottom: 10px !important;
   }
 </style>

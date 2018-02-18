@@ -3,6 +3,7 @@ import auth from '../auth'
 import article from './article'
 const actions = {
   getLikes(state,payload){
+    console.log(payload)
     return new Promise(function (resolve) {
       axios.get('https://us-central1-kult-2.cloudfunctions.net/getBlogLike', {
         params: {

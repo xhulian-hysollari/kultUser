@@ -160,7 +160,12 @@ const withdrawReq = resolve => {
     resolve(require('@/components/cashback/withdrawReq'));
   });
 };
-
+//beautyGuide
+const bGuide = resolve => {
+  require.ensure(['@/components/beautyGuide/bGuide'],()=>{
+    resolve(require('@/components/beautyGuide/bGuide'));
+  });
+};
 
 Vue.use(Router)
 
@@ -206,6 +211,8 @@ export default new Router({
     { path: '/amazonCashbackReq' , name: 'Amazon Cashback Request', component: amazonCashbackReq},
     { path: '/credit' , name: 'Credit', component: credit},
     { path: '/myOrder', name : 'My Order', component: myOrder},
-    { path: '/withdrawReq' , name : 'Withdraw Request', component: withdrawReq}
+    { path: '/withdrawReq' , name : 'Withdraw Request', component: withdrawReq},
+    //bGuide
+    { path: '/bGuide/:selGuide', name: 'Beauty Guide', component: bGuide},
   ]
 })

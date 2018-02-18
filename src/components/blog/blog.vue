@@ -49,7 +49,7 @@
                     <span >{{b}}</span>
                   </span>
                     <span v-if="blog.blogContent.length > 31">...</span-->
-                    <a @click="$router.push({path:'/article', query:{name:k,selArticle:articleBlog(blog),sideBlogs:articleBlog(blogs)}})" class="blog_read">Read more</a>
+                    <a @click="$router.push({path:'/article', query:{name:k, cat:blog.blogCat}})" class="blog_read">Read more</a>
 
                   </div>
                 </div>
@@ -68,9 +68,9 @@
               </div>
             </div>
             <div class="col-sm-5 col-xs-12 hidden-xs sidebar" >
-              <div class="side_box" v-if="Object.keys(blogsAtHome).length !== 1">
+              <div class="side_box" >
                 <loader v-if=" blogsAtHomeLoader"></loader>
-                <div v-if="!blogsAtHomeLoader">
+                <div v-if="!blogsAtHomeLoader" v-show="Object.keys(blogsAtHome).length !== 1">
                           <div class="blog_repeat">
                             <div class="blog_image">
                               <a  ><img :src="Object.values(blogsAtHome)[(Object.values(blogsAtHome).length) -1].blogImgUrl" alt="blog" ></a>
@@ -79,11 +79,8 @@
                             <div class="blog_cont">
                               <h3>{{Object.keys(blogsAtHome)[(Object.values(blogsAtHome).length) -1]}}</h3>
                               <span class="blog_date">{{dates(Object.values(blogsAtHome)[(Object.values(blogsAtHome).length) -1].date)}}</span>
-                              <span v-for="(b,j) in Object.values(blogsAtHome)[(Object.values(blogsAtHome).length) -1].blogContent" v-show="j <= 30">
-                                  <span >{{b}}</span>
-                              </span>
-                              <span v-if="Object.values(blogsAtHome)[(Object.values(blogsAtHome).length) -1].blogContent.length > 31">...</span>
-                              <a  class="blog_read" @click="$router.push({path:'/article', query:{name:Object.keys(blogsAtHome)[(Object.values(blogsAtHome).length) -1],selArticle:articleBlog(Object.values(blogsAtHome)[(Object.values(blogsAtHome).length) -1]),sideBlogs:articleBlog(blogs)}})">Read more</a>
+                              <span v-html="blogCont(Object.values(blogsAtHome)[(Object.values(blogsAtHome).length) -1].blogContent)"></span>...
+                              <a  class="blog_read" @click="$router.push({path:'/article', query:{name:Object.keys(blogsAtHome)[(Object.values(blogsAtHome).length) -1]}})">Read more</a>
                             </div>
                           </div>
                         </div>
@@ -101,10 +98,11 @@
                             </div>
                           </div>
                         </div>
-                        <div class="side_box">
-                          <div class="blog_sidecat" v-for="(b,cat) in blogs" @click="$router.push({path:'/article', query:{name,selArticle:articleBlog(blog),sideBlogs:articleBlog(blogs)}})">
+                      <loader v-if="blogLoader"></loader>
+                        <div class="side_box" v-else>
+                          <div class="blog_sidecat" v-for="(b,cat) in blogs">
                             <h4>{{cat}}</h4>
-                            <div class="cat_side" v-for="(blog,name) in b">
+                            <div class="cat_side" v-for="(blog,name) in b"  @click="$router.push({path:'/article', query:{name,cat}})">
                               <a  class="cat_img" ><img :src="blog.blogImgUrl" alt="image" class="img_size"></a>
                               <div class="cat_cont">
                                 <h5><a >{{name}}</a></h5>

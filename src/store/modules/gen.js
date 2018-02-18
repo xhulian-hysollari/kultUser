@@ -26,14 +26,17 @@ const state = {
   searchInput:'',
 
   //
-  pObj: {}
+  pObj: {},
+  isEmailVerified:false
+
 }
 
 const getters = {
   dbRefLoader: state => state.dbRefLoader,
   btnLoader: state => state.btnLoader,
   showNewsletterInput:state=>state.showNewsletterInput,
-  searchList:state=>state.searchList
+  searchList:state=>state.searchList,
+  isEmailVerified:state=>state.isEmailVerified
 }
 
 const mutations = {
@@ -111,9 +114,10 @@ const mutations = {
     //
     header_shopOption.mutations.getShopOptions(state) // get shop dropdown content
     header_brand.mutations.getBrandCat(state) // brand dropdown content
-
+      //}
+    },
     //
-  },
+ // },
   //
   profile_checkIfLoggedIn(state2){
     //
@@ -122,6 +126,17 @@ const mutations = {
       router.push({
         path: '/'
       })
+    }
+  },
+  getEmailVerStatus(){
+    if(auth.state.isLoggedIn) {
+      alert(auth.state.user.emailVerified)
+      if(auth.state.user.emailVerified)
+        state.isEmailVerified = true
+      else
+        state.isEmailVerified = false
+    }else{
+      state.isEmailVerified=false
     }
   },
   //get details of selected search

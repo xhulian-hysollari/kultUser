@@ -4,7 +4,9 @@
     <loader v-if="dbRefLoader"></loader>
     <div v-else >
       <loader v-if="authLoader"></loader>
+
       <div v-else>
+          <i class="el-icon-warning btn_nav" v-if="!isEmailVerified && isLoggedIn" @click="$store.state.auth.resendEmail=true"></i>
         <div class="wrapper" >
           <header>
             <div class="top_strip">
@@ -80,7 +82,10 @@
                     </li>
                   </ul>
                 </div>
-                <div class="col-sm-8 col-xs-12 pull-left">
+                <search></search>
+                <!--a @click="goTo('/')"  class="logo hidden-xs"><img src="/static/images/logo.svg" alt="logo"></a>
+
+                <!--div-- class="col-sm-8 col-xs-12 pull-left">
                   <div class="search_form">
                     <a @click="goTo('/')"  class="logo hidden-xs"><img src="/static/images/logo.svg" alt="logo"></a>
                     <div>
@@ -89,9 +94,9 @@
                       <img class="search_close" src="/static/images/64-px-close.svg" alt="search">
                     </div>
                     <el-card class="box-card" v-show=" searchList !== {} && input !== ''">
-                      <div v-for="(search,key) in searchList" class="text item" @click="getSearchDet({key,search})">
+                      <div v-for="(search,key) in searchList" class="text item" @click="getSearchDet({key,search}); input = ''">
                         <!--{{search}}-->
-                        <img :src="search.pBasicDetail.pPicUrl" style="width:20px;height: 20px;">
+                        <!--img :src="search.pBasicDetail.pPicUrl" style="width:50px;height: 50px;">
                         <span v-for="(i,j) in search.pBasicDetail.pName" v-show="j < 26">
                           <span>{{i}}</span>
                         </span>
@@ -99,64 +104,10 @@
                       </div>
                     </el-card>
                   </div>
-                </div>
+                </div-->
               </div>
             </div>
-            <div class="container hidden-xs">
-              <ul class="main_menu">
-                <li class="has_submenu " @mouseover="showdiv=true"><a  >SHOP</a>
-
-
-                  <!--el-card class="opts">
-                    <div class="opts" v-for="(shop,i) in Object.keys(shopOptions)">
-                      {{shop.toUpperCase()}}
-                      <span class="sub_opt" v-for="j in Object.keys(shopOptions[shop])">
-                  <b>{{j.toUpperCase()}}</b>
-                  <div v-for="k in Object.keys(shopOptions[shop][j])">
-                    {{k.toUpperCase()}}
-                  </div>
-                </span>
-                      <div class="cat" >
-                        {{shopOptions[i]}}
-                      </div>
-                    </div>
-                  </el-card-->
-                </li>
-                <li class="has_submenu shop"><a >BRANDS</a>
-                  <el-card class="opts">
-                    <div @click="goTo(`/brandAll`)">
-                      <b>Brands A to Z</b>
-                    </div>
-                    <div class="opts" v-for="(shop,i) in Object.keys(brandCat)">
-                      <b>{{shop.toUpperCase()}}</b>
-                      <div v-for="j in Object.keys(brandCat[shop])" @click="$router.push('/brandProduct/'+j)">
-                        <div>{{j.toUpperCase()}}</div>
-                      </div>
-                    </div>
-                  </el-card>
-                  <!--div class="opts" v-for="(shop,i) in Object.keys(brandCat)">
-                    {{shop}}
-                    {{brandCat[shop]}}
-                    <div class="cat" >
-                      {{brandCat[i]}}
-                    </div>
-                  </div-->
-                </li>
-
-                <li><a @click="goTo('/kultPick')">KILT PICKS</a></li>
-                <li><a @click="goTo('/globalBestseller')">GLOBAL BESTSELLERS</a></li>
-                <li class="has_submenu shop"><a >BEAUTY GUIDE</a>
-                  <el-card class="opts">
-                    <div class="opts" v-for="guide in beautyGuideArr">
-                      {{guide.toUpperCase()}}
-                    </div>
-                  </el-card>
-                </li>
-                <li><a @click="goTo('/blog')">EDITOR’S BLOG</a></li>
-                <li ><a @click="goTo('/howTo')">KULT TV</a></li>
-              </ul>
-
-            </div>
+            <dropdown></dropdown>
             <div  @mouseleave="showdiv=false" v-if="showdiv" style="min-height: 1000px">
               <div  v-for="(shop,i) in Object.keys(shopOptions)" class="shop_pa">
                 <el-card class="shop_pa">
@@ -190,7 +141,7 @@
                               <v-card-text  class="white" >
                                 <v-expansion-panel expand  v-for="j in Object.keys(shopOptions[shop])">
                                   <v-expansion-panel-content >
-                                    <div slot="header" class="white" @click="goTo(`/productSubCategory/${shop}/${j}`)">{{j.toUpperCase()}}</div>
+                                    <div slot="header" class="white" @click="goTo(`/productCategory/${shop}/${j}`)">{{j.toUpperCase()}}</div>
                                     <v-card>
                                       <v-card-text  class="white" v-for="k in Object.keys(shopOptions[shop][j])">
                                         <div class="ml_20" v-if="k.toUpperCase() !== 'DUMMY'" @click="goTo(`/productSubCategory/${shop}/${j}/${k}`)">{{k.toUpperCase()}}</div>
@@ -347,10 +298,10 @@
                 </div>
                 <div class="col-sm-3 text-right cust_center pull-right col-xs-6">
                   <ul class="foot_social list-unstyled list-inline">
-                    <!--li><a href="#" target="_blank"><i class="fa fa-facebook"></i></a></li-->
+                    <!--li><a  target="_blank"><i class="fa fa-facebook"></i></a></li-->
                     <li><a href="https://www.instagram.com/kult.in/" target="_blank"><i class="fa fa-instagram"></i></a></li>
                     <li><a href="https://goo.gl/UHWH1o" target="_blank"><i class="fa fa-youtube-play"></i></a></li>
-                    <!--li><a href="#" target="_blank"><i class="fa fa-twitter"></i></a></li-->
+                    <!--li><a  target="_blank"><i class="fa fa-twitter"></i></a></li-->
                   </ul>
                 </div>
                 <div class="col-sm-6 text-center col-xs-12">
@@ -359,7 +310,7 @@
               </div>
             </div>
           </footer>
-
+          <email-ver></email-ver>
         </div>
       </div>
     </div>
@@ -378,13 +329,17 @@
   import login_form from '@/components/auth/login.vue'
   import signup_form from '@/components/auth/signup.vue'
   import btnLoader from '@/components/gen/btnLoader'
+  import dropdown from '@/components/gen/headerDropdown.vue'
   import axios from 'axios'
+  import emailVer from '@/components/auth/emailVer'
+  import search from '@/components/search/search'
   //
   //
   export default {
     data(){
       return{
         isClosed:false,
+        sel:'MEN',
         headerCatNames:[
           {name:'kult picks',funcPath:'/kultPick'},
           {name:'global bestsellers',funcPath:'/globalBestSeller'},
@@ -393,6 +348,7 @@
           {name:'kult Tv',funcPath:'/howTo'},
         ],
         input:'',
+        dialogVisible:false,
         showdiv:false,
         beautyGuideArr:[
           'Blush',
@@ -410,45 +366,28 @@
         ]
       }
     },
-    methods:{
+    methods: {
       ...mapMutations([
         'goTo',
         'logout',
         'newsletter_saveEmail',
         'search',
-        'getSearchDet'
+        'getSearchDet',
+
       ]),
-        hamburger_cross(){
-          let vm = this
-          var trigger = $('.hamburger')
-          if (vm.isClosed) {
-            trigger.removeClass('is-open');
-            trigger.addClass('is-closed');
-            vm.isClosed = false;
-          } else {
-            trigger.removeClass('is-closed');
-            trigger.addClass('is-open');
-            vm.isClosed = true;
-          }
-          $('.wrapper').toggleClass('toggled');
-        },
-      search(){
-          let vm = this
-          console.log()
-        // alert('hi')
-        // alert(document.getElementById('search').value)
-        axios.get('https://us-central1-kult-2.cloudfunctions.net/searchProduct', {
-          params: {
-            qStr:vm.input
-          }
-        }).then(function (response) {
-          console.log(response.data)
-          vm.$store.state.gen.searchList = response.data
-          console.log(vm.$store.state.gen.searchList)
-         // console.log(Object.keys(response.data).length)
-        }).catch(function (error) {
-          console.log(error)
-        })
+      hamburger_cross() {
+        let vm = this
+        var trigger = $('.hamburger')
+        if (vm.isClosed) {
+          trigger.removeClass('is-open');
+          trigger.addClass('is-closed');
+          vm.isClosed = false;
+        } else {
+          trigger.removeClass('is-closed');
+          trigger.addClass('is-open');
+          vm.isClosed = true;
+        }
+        $('.wrapper').toggleClass('toggled');
       },
     },
     computed:{
@@ -470,7 +409,8 @@
         'wishlistObj',
         'wishlistCnt',
         'searchList',
-        'selectedLink'
+        'selectedLink',
+        'isEmailVerified'
       ])
     },
     components:{
@@ -479,10 +419,14 @@
       loader,
       login_form,
       signup_form,
-      btnLoader
+      btnLoader,
+      dropdown,
+      emailVer,
+      search
     },
     created(){
       window.thisOfVueComp_2 = this
+      this.$store.commit('getGlobalBestSellersOnHomePage')
     },
     updated(){
       this.$store.commit('getLoginStatus')
@@ -560,13 +504,43 @@
 
   /* demo only* */
   .panel {
-    box-shadow: 0 0px 0px rgba(0,0,0,0) ! important ;
+   /* box-shadow: 0 0px 0px rgba(0,0,0,0) ! important ;*/
     height: 100%;
     width:  100%;
 
   }
-  .panel-default {
-    border-color: #fff ! important;
+
+
+  .pre-icon {
+    width: 32px !important;
+    height: 32px !important;
+    background-repeat: no-repeat !important;
+    background-position: center !important;
+    -webkit-animation: rotating 1s linear infinite !important;
+    -moz-animation: rotating 1s linear infinite !important;
+    -ms-animation: rotating 1s linear infinite !important;
+    -o-animation: rotating 1s linear infinite !important;
+    animation: rotating 1s linear infinite !important;
   }
+  .top_strip {
+    background-color: #f31d28;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1.33;
+    letter-spacing: 1.5px;
+    color: #ffeef2;
+    padding: 3px 0;
+    height: 20px !important;
+    z-index: 3 ;
+  }
+.btn_nav{
+  float: right;
+  font-size: 20px;
+  padding: 10px;
+}
+  .float-right{
+    float: right;
+  }
+
 </style>
 

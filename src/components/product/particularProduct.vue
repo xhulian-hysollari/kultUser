@@ -86,55 +86,123 @@
                   <!--div class="prod_pricerange">
                     From <strong>2,036</strong> to <strong>7,999</strong> Rupee
                   </div-->
-
                   <ul class="prod_shoplinks list-unstyled" v-if="!isLoggedIn " >
-                    <li  v-for="(l,k) in selected.det.affliateDomains" v-if="l.price!==undefined && l.price!==999999999">
-                      <a @click="$store.state.auth.showLoginPopup=true; $store.state.particularProduct.selectedLink =l.link" >
+                    <li  v-for="(l,k) in selected.det.affliateDomains">
+                      <a @click="$store.state.auth.showLoginPopup=true; $store.state.particularProduct.selectedLink =l.link"target="_blank" v-if="parseInt(l.price) < 10001 " class="box">
                         <span class="aff_name">{{k.toUpperCase()}}</span>
                         <!--span class="aff_price" v-if="l.price===undefined || l.price===999999999"> Out Of Stock</span-->
-                        <span class="aff_price" > ₹ {{l.price}}</span>
-                        <span>
+                        <div class="show_price" >
+                          <span class="aff_price" > ₹ {{l.price}}</span>
+                          <span>
                             <strong>BUY NOW</strong>
                         </span>
+                        </div>
+                      </a>
+                      <a v-else-if="parseInt(l.price)===999999999 " class="box">
+                        <span class="aff_name">{{k.toUpperCase()}}</span>
+                        <div  class="show_price" >
+                          <span class="aff_price" ></span>
+                          <span>
+                            <strong style="float: right">Out Of Stock</strong>
+                          </span>
+                        </div>
+                      </a>
+                      <a v-else @click="$store.state.auth.showLoginPopup=true; $store.state.particularProduct.selectedLink =l.link" class="box">
+                        <span class="aff_name">{{k.toUpperCase()}}</span>
+                        <div class="show_price" >
+                          <span class="aff_price" ></span>
+                          <span>
+                            <strong>BUY NOW</strong>
+                        </span>
+                        </div>
                       </a>
                     </li>
                   </ul>
                   <ul class="prod_shoplinks list-unstyled" v-if="isLoggedIn && email" >
-                    <li  v-for="(l,k) in selected.det.affliateDomains" v-if="l.price!==undefined && l.price!==999999999">
-                      <a :href="l.link + '&subid=' + $store.state.auth.user.email" target="_blank">
+                    <li  v-for="(l,k) in selected.det.affliateDomains" class="box">
+                      <a :href="l.link + '&subid=' + $store.state.auth.user.email" target="_blank" v-if="parseInt(l.price) < 10001 ">
                         <span class="aff_name">{{k.toUpperCase()}}</span>
                         <!--span class="aff_price" v-if="l.price===undefined || l.price===999999999"> Out Of Stock</span-->
-                        <span class="aff_price" > ₹ {{l.price}}</span>
+                        <div class="show_price" >
+                            <span class="aff_price" > ₹ {{l.price}}</span>
                         <span>
                             <strong>BUY NOW</strong>
                         </span>
+                        </div>
+                      </a>
+                      <a v-else-if="parseInt(l.price)===999999999 " class="box">
+                        <span class="aff_name">{{k.toUpperCase()}}</span>
+                        <div  class="show_price" >
+                          <span class="aff_price" ></span>
+                          <span>
+                            <strong style="float: right">Out Of Stock</strong>
+                          </span>
+                        </div>
+                      </a>
+                      <a v-else :href="l.link + '&subid=' + $store.state.auth.user.email" class="box">
+                        <span class="aff_name">{{k.toUpperCase()}}</span>
+                        <div class="show_price" >
+                          <span class="aff_price" ></span>
+                          <span>
+                            <strong>BUY NOW</strong>
+                        </span>
+                        </div>
                       </a>
                     </li>
                   </ul>
-
                   <ul class="prod_shoplinks list-unstyled" v-if="isLoggedIn &&   !email" >
-                    <li  v-for="(l,k) in selected.det.affliateDomains" v-if="l.price!==undefined && l.price!==999999999">
-                      <a @click="dialog=true;$store.state.particularProduct.selectedLink =l.link ">
+                    <li  v-for="(l,k) in selected.det.affliateDomains" >
+                      <a @click="dialog=true;$store.state.particularProduct.selectedLink =l.link " v-if="parseInt(l.price) < 10001 " class="box">
                         <span class="aff_name">{{k.toUpperCase()}}</span>
                         <!--span class="aff_price" v-if="l.price===undefined || l.price===999999999"> Out Of Stock</span-->
-                        <span class="aff_price" > ₹ {{l.price}}</span>
-                        <span>
+                        <div class="show_price" >
+                          <span class="aff_price" > ₹ {{l.price}}</span>
+                          <span>
                             <strong>BUY NOW</strong>
                         </span>
+                        </div>
+                      </a>
+                      <a v-else-if="parseInt(l.price)===999999999 " class="box">
+                        <span class="aff_name">{{k.toUpperCase()}}</span>
+                        <div  class="show_price" >
+                          <span class="aff_price" ></span>
+                          <span>
+                            <strong style="float: right">Out Of Stock</strong>
+                          </span>
+                        </div>
+                      </a>
+                      <a v-else @click="dialog=true;$store.state.particularProduct.selectedLink =l.link " class="box">
+                        <span class="aff_name">{{k.toUpperCase()}}</span>
+                        <div class="show_price" >
+                          <span class="aff_price" ></span>
+                          <span>
+                            <strong>BUY NOW</strong>
+                        </span>
+                        </div>
                       </a>
                     </li>
                   </ul>
                   <el-dialog
                     :visible.sync="dialog"
+                    width="40%"
+                   >
+                    <span slot="footer" class="dialog-footer">
+                       <h5>Account Not Verified!!! Click to continue and you will losse the cashback</h5>
+                       <p class="forgot_pass" @click="$store.state.particularProduct.selectedLink=''; dialog=false"><a :href="selectedLink" target="_blank">Continue Anyway</a></p>
+                    </span>
+                  </el-dialog>
+                  <!--el-dialog
+                    :visible.sync="dialog"
                   >
                     <span>
-                         <div class="splash-banner"  v-if="selectedLink !== ''">
+                         <div  v-if="selectedLink !== ''">
                          <a :href="selectedLink" target="_blank" @click="$store.state.particularProduct.selectedLink=''; dialog=false">
-                           <span class="splash-banner-title lightbox-custom-closer" >Account Not Verified!!! Click to continue and you will losse the cashback</span>
+                            <h5>>Account Not Verified!!! Click to continue and you will losse the cashback</h5>
+                             <el-button>Continue Anyway</el-button>
                          </a>
                         </div>
                     </span>
-                  </el-dialog>
+                  </el-dialog-->
                   <!---*********************** Show when Price is available for affliate!!! To Do once price is uploaded*******---->
                   <!--li class="prod_shoplinks list-unstyled"  v-if="!isLoggedIn">
                     <a  @click="$store.state.auth.showLoginPopup=true"
@@ -179,14 +247,13 @@
                   <a >
                     <img  :src="selected.det.pTypeImgUrl" >
                   </a>
-                  <el-button @click="dialog2=true" icon="el-icon-search"></el-button>
+                  <el-button @click="dialog2=true" icon="el-icon-zoom-in"></el-button>
                 </div>
                 <el-dialog
+                  width="80%"
                   :visible.sync="dialog2"
                 >
-                    <span>
-                        <img class="main_image" :src="selected.det.pTypeImgUrl" alt="gallery">
-                    </span>
+                        <img class="main_image" :src="selected.det.pTypeImgUrl" alt="gallery" >
                 </el-dialog>
                 <div class="gall_thumbs">
 
@@ -344,7 +411,12 @@
        if(!this.dialog){
          this.$store.state.particularProduct.selectedLink=''
        }
-     }
+     },
+      $route:function () {
+        this.$store.commit('getTypeNLinkOfThisProduct', {
+          pId: this.$route.params.pId
+        })
+      }
     },
     methods:{
       ...mapMutations([
@@ -446,6 +518,7 @@
   margin-left: -80px !important;
 }
 .aff_price{
+  margin-top: -1vh;
   position: relative !important;
   margin-left: 20px !important;
   margin-right: 10px !important;
@@ -456,6 +529,30 @@
     font-weight: bold;
     color: #000000;
     display: block;
+  }
+  .tv_left ul {
+    padding: 0;
+    margin: 0px 0 !important;
+    list-style: none;
+  }
+
+  ul, ol {
+    margin-top: 0;
+    margin-bottom: 10px !important;
+  }
+  .main_image{
+    width:100%;
+    min-height: 500px;
+    max-height: 600px;
+
+  }
+  .show_price{
+    padding: 0px;
+    /* margin: 0px; */
+    margin-top: -22px;
+  }
+  .box{
+    height: 60px;
   }
 </style>
 
