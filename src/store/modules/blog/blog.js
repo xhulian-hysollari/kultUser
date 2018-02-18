@@ -75,18 +75,20 @@ const mutations = {
               }
             })
             //
-            if(c == queryBlogCat.size){
+          }).then(function () {
+           // if(c === Object.keys(state.blogs).length){
               //
               for(let j in state.blogs){
                 let cnt = 0
                 for(let k in state.blogs[j] ){
                   cnt++
-                  blogFunc.actions.getLikes(state,{blogCat:j,blogName:k,blog:'blog',cnt,c}).then(function (likes) {
-                    mutations.blogView(state2, {blogCat:j,blogName:k,blog:'blog',cnt,c,likes})
+                 // console.log(cnt+'*************************'+Object.keys(state.blogs[j]).length)
+                  blogFunc.actions.getLikes(state,{blogCat:j,blogName:k,blog:'blog',cnt,c:Object.keys(state.blogs[j]).length}).then(function (likes) {
+                    mutations.blogView(state2, {blogCat:j,blogName:k,blog:'blog',cnt,c:Object.keys(state.blogs[j]).length,likes})
                   })
                 }
               }
-            }
+          //  }
           })
         })
       })
@@ -233,6 +235,7 @@ const mutations = {
   },
   //
   blogView(state2, payload){
+    console.log(payload)
     //
     axios.get('https://us-central1-kult-2.cloudfunctions.net/blogView', {
       params: {
@@ -240,14 +243,15 @@ const mutations = {
         blogName: payload.blogName
       }
     }).then(function (response) {
-       // console.log(response.data);
+        console.log(response.data);
         if(payload.blog==='blog'){
           let cat = payload.blogCat
           let name = payload.blogName
           state.blogs[cat][name].views = response.data
           state.blogs[cat][name].likes = payload.likes
+          console.log(payload.c+'======================'+payload.cnt)
           if(payload.cnt === payload.c){
-           // console.log("[BLOGS] => ", state.blogs)
+            console.log("[BLOGS] => ", state.blogs)
             window.thisOfVueComp.$forceUpdate()
             state.blogLoader = false
           }
@@ -269,7 +273,7 @@ const mutations = {
         userUid: payload.userUid
       }
     }).then(function (response) {
-      console.log(response) // return true or false
+    //  console.log(response) // return true or false
         if(response.data === 'added'){
           article.state.userLike=true
           blogFunc.actions.getLikes(state,{blogCat:payload.blogCat,blogName:payload.blogName}).then(function (num) {

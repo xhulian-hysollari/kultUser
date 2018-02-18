@@ -31,7 +31,8 @@ import amazonCashbackReq from './modules/cashback/amazonCashbackReq'
 import credit from './modules/cashback/credit'
 import myOrder from './modules/cashback/myOrder'
 import withdrawReq from './modules/cashback/withdrawReq'
-
+//homePage
+import hello from './modules/hello'
 Vue.use(Vuex)
 
 export const store = new Vuex.Store({
@@ -66,6 +67,8 @@ export const store = new Vuex.Store({
     amazonCashbackReq,
     credit,
     myOrder,
-    withdrawReq
+    withdrawReq,
+    //
+    hello
   }
 })

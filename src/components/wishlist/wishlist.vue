@@ -75,16 +75,17 @@
                       </div>
                       <div class="prod_misc">
                         <div class="float"><rating :num="Math.round(pDet.pBasicDetail.pRating)" ></rating></div>
-                        <div class="half text-right" v-if="pDet.priceStartsFrom !== undefined" >
-                          <div v-if="pDet.priceStartsFrom !== 999999999 || pDet.priceStartsFrom !== NAN">
+                        <div class="half text-right" >
+                              <span v-if="parseInt(pDet.priceStartsFrom) == 999999999" style="float: right" class="half text-right">
+                                Out Of Stock
+                              </span>
+                          <div v-else-if="parseInt(pDet.priceStartsFrom) <= 10000 ">
                             From <img src="/static/images/rupee-2.svg" alt="currency" >
                             {{pDet.priceStartsFrom}}
                           </div>
-                          <span  style="float: right" class="half text-right" v-else>
-                                Out Of Stock
-                              </span>
+                          <div v-else></div>
                         </div>
-                        <div style="float: right" class="half text-right" v-else>Out Of Stock</div>
+
                       </div>
                       <a  class="prod_compare" v-if="isLoggedIn"><span @click="$router.push({path:`/particularProduct/${pDet.key}`,query:{prodDet:JSON.stringify(pDet)}})">Compare price</span>
                         <img src="/static/images/wishlist-hover.svg" alt="wishlist-hover" @click="removeWishlist({pId:pDet.key,pDet});delete wishlistObj[pDet.key]; removeFromWishArr(index);$forceUpdate">

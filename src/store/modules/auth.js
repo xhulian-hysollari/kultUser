@@ -25,7 +25,8 @@ const state = {
   showRefCode:false,
   showLoginPopup:false,
   showRegisterPopup:false,
-  loginBtnLoader:false
+  loginBtnLoader:false,
+  resendEmail:false,
 }
 
 const getters = {
@@ -42,7 +43,8 @@ const getters = {
   showRefCode:state=>state.showRefCode,
   showLoginPopup:state=>state.showLoginPopup,
   showRegisterPopup:state=>state.showRegisterPopup,
-  loginBtnLoader:state=>state.loginBtnLoader
+  loginBtnLoader:state=>state.loginBtnLoader,
+  resendEmail:state=>state.resendEmail
 
 }
 

@@ -21,6 +21,7 @@ const getters = {
 const mutations ={
   //
   getFilters(state2, payload){
+    let temp = []
     //console.log(payload)
     //
     state.filterLoader = true
@@ -76,22 +77,39 @@ const mutations ={
                 //console.log(queryfilterParaDoc.data())
                 //
                 //
-                state.filter[queryfilterDoc.id][queryfilterParaDoc.id] = {
-                  //
+                if(queryfilterDoc.id !=='priceRange'){
+                  state.filter[queryfilterDoc.id][queryfilterParaDoc.id] = {
+                    //
+                  }
+                }else{
+                  if(queryfilterParaDoc.id==='500-999' || queryfilterParaDoc.id==='0-499'){
+                    state.filter[queryfilterDoc.id][queryfilterParaDoc.id] = {
+                      //
+                    }
+                  }else{
+                    temp.push(queryfilterParaDoc.id)
+                  }
                 }
-
-                //
                 //
                 if(queryfilter.size == cQueryfilter && queryfilterPara.size == cQueryfilterPara){
+                  let cnt=0
+                  for(let i in temp){
+                    cnt++
+                    state.filter['priceRange'][temp[i]]={}
+                    if(cnt === temp.length){
+                      console.log("[Filter Queried Final] => ", state.filter)
+                    }
+                  }
+                  console.log(temp)
+                  state.filterLoader = false
+                  //
+
+                  //
+                  gen.state.thisOfVueComp.$forceUpdate()
                   //
                   //console.log("queryfilter.size => " + queryfilter.size + " | " + "cqueryfilter => " + cQueryfilter)
                   //console.log("queryfilterPara.size =>" + queryfilterPara.size + " | " + "cqueryfilterPara => " + cQueryfilterPara)
                   //
-                  state.filterLoader = false
-                  //
-                  console.log("[Filter Queried Final] => ", state.filter)
-                  //
-                  gen.state.thisOfVueComp.$forceUpdate()
                 }
               }
 
