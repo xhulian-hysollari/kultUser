@@ -26,7 +26,7 @@
            </div>
  </nav>
  </div>
- <a @click="goTo('/')"  class="logo hidden-xs float_right" ><img src="/static/images/logo.svg" alt="logo"></a>
+ <!--a-- @click="goTo('/')"  class="logo hidden-xs float_right" ><img src="/static/images/logo.svg" alt="logo"></a-->
 <!--a-- @click="goTo('/')"  class="logo hidden-xs float-right"><img src="/static/images/logo.svg" alt="logo"></a-->
 
     <!--div class="col-sm-8 col-xs-12 pull-left">
