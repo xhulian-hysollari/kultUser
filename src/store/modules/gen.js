@@ -29,7 +29,9 @@ const state = {
   //
   pObj: {},
   isEmailVerified:false,
-  alertMsg:''
+  alertMsg:'',
+  //
+  screenW : ''
 
 }
 
@@ -39,7 +41,9 @@ const getters = {
   showNewsletterInput:state=>state.showNewsletterInput,
   searchList:state=>state.searchList,
   isEmailVerified:state=>state.isEmailVerified,
-  alertMag:state=>state.alertMsg
+  alertMag:state=>state.alertMsg,
+  //
+  screenW  : state => state.screenW
 }
 
 const mutations = {

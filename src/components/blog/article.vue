@@ -85,7 +85,7 @@
     <login></login>
   <!--div style="background-color:yellow ">{{this.$store.state.article.blogName}}</div>
     {{$store.state.article.blogDet}}-->
-  {{$store.state.article.sideBlogs}}
+  <!--{{$store.state.article.sideBlogs}}-->
   </div>
 </template>
 <script>
