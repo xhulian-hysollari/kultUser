@@ -96,7 +96,9 @@
         $('.mega-menu4').addClass('display-on');
       },
       closeDropdown4(){
-        $('.mega-menu4').removeClass('display-on');
+        setTimeout(()=>{
+          $('.mega-menu4').removeClass('display-on');
+        },3000)
       },
     },
     created(){
