@@ -2,6 +2,7 @@ import firebase from 'firebase'
 import editProfile from './profile/editProfile'
 import gen from './gen'
 import wishlist from './wishlist/wishlist'
+import axios from 'axios'
 
 const state = {
   //email-pass
@@ -27,6 +28,7 @@ const state = {
   showRegisterPopup:false,
   loginBtnLoader:false,
   resendEmail:false,
+  isRefGiven:false
 }
 
 const getters = {
@@ -44,14 +46,15 @@ const getters = {
   showLoginPopup:state=>state.showLoginPopup,
   showRegisterPopup:state=>state.showRegisterPopup,
   loginBtnLoader:state=>state.loginBtnLoader,
-  resendEmail:state=>state.resendEmail
+  resendEmail:state=>state.resendEmail,
+  isRefGiven:state=>state.isRefGiven
 
 }
 
 const mutations = {
   afterLogin_userDetail(state2, payload){ //phone and refCode
     //
-    if(payload.refCode !== '' || payload.phone !== undefined){
+    if(payload.refCode !== '' || payload.phone !== undefined ){
       gen.state.btnLoader = true
       //
       gen.state.firestore
@@ -71,6 +74,7 @@ const mutations = {
     }
 
   },
+
   //
   //LOGIN STATUS
   getLoginStatus(state2){
@@ -82,7 +86,9 @@ const mutations = {
         state.user = user
 
         //
-        state.showRefCode=true
+        //if(!state.isRefGiven){
+         // state.showRefCode=true
+        //}
        // console.log("user => ", user)
         if(!wishlist.state.wishlistBool){
           wishlist.mutations.getWishlist(state)
@@ -241,7 +247,16 @@ const mutations = {
       .then(()=>{
         //
         //
-        state.loginBtnLoader=false
+        actions.checkIfPhSaved().then(function (res) {
+          if(res==='t'){
+            state.showRefCode=true
+            state.loginBtnLoader=false
+            state.showLoginPopup=false
+          }else{
+            state.loginBtnLoader=false
+            state.showLoginPopup=false
+          }
+        })
       }).catch(function(error) {
       // Handle Errors here.
       var errorCode = error.code;
@@ -291,7 +306,21 @@ const mutations = {
 }
 
 const actions = {
-
+  checkIfPhSaved(){
+    return new Promise(function (resolve) {
+      axios.get('https://us-central1-kult-2.cloudfunctions.net/isPhoneNumberSaved', {
+        params: {
+          uid:state.user.uid
+        }
+      }).then(function (response) {
+        state.isRefGiven = response.data
+        resolve('done')
+      }).catch(function (err) {
+        console.log(err)
+        resolve('done')
+      })
+    })
+  },
 }
 
 export default {

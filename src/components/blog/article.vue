@@ -32,7 +32,7 @@
                 <div class="blog_inncont">
                   <div class="blog_image" >
                     <img :src="blogDet.blogImgUrl[0]" alt="blog">
-                    <span style="margin-left: 40px"><span  class="blog_tag" v-for="i in blogDet.blogTag ">#{{i}}</span></span>
+                    <span ><span  class="blog_tag" v-for="i in blogDet.blogTag ">#{{i}}</span></span>
                   </div>
                   <ul class="list-unstyled list-inline blog_views">
                     <li><img src="/static/images/view.svg" alt="view">{{articleViews}}</li>
@@ -179,5 +179,18 @@
     font-size: 18px;
 
     margin-right: 3px;
+  }
+  .blog_tag {
+     position: relative !important;
+    left: 0;
+    bottom: 0;
+    line-height: 20px;
+    background: #000;
+    padding: 10px;
+    margin-top: -3px;
+    /* padding: 6px 11px; */
+    color: #fff;
+    letter-spacing: 1px;
+    z-index: 3;
   }
 </style>
