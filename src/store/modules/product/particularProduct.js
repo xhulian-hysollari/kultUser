@@ -165,10 +165,12 @@ const mutations = {
             console.log("2 => ", result_2)
             if(result_2 == '-1'){
               state.amazonLinkPrice = 'Failed to fetch Price !'
+              state.amazonLoader = false
               window.thisOfVueComp.$forceUpdate()
               //failed to fetch price, show accordingly(message) on dom
             }else if(result_2 == '999999999'){
               state.amazonLinkPrice = 'Out Of Stock'
+              state.amazonLoader = false
               window.thisOfVueComp.$forceUpdate()
               //show out of stock on dom
             }else{
@@ -184,6 +186,7 @@ const mutations = {
                 funcName: 'saveAmazonPriceToDb'
               })
               //
+              state.amazonLoader = false
             }
             //*turn loader off*
             state.amazonLoader = false
