@@ -1,7 +1,7 @@
 <template>
   <div>
-    <div class="col-sm-8 col-xs-12 pull-left">
-    <nav class="menu col-sm-8 col-xs-12 ">
+    <div class="">
+    <nav class="">
               <div class="search_form">
                 <form><!--@blur="closeDropdown4()"-->
                 <div>
@@ -98,7 +98,7 @@
       closeDropdown4(){
         setTimeout(()=>{
           $('.mega-menu4').removeClass('display-on');
-        },2000)
+        },2500)
       },
     },
     created(){
