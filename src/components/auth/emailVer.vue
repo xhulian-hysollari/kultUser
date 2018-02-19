@@ -13,7 +13,6 @@
     </p>
   </span>
     </el-dialog>
-    resend verification link=>
     <!--button
       @click="sendVerLink"
     >

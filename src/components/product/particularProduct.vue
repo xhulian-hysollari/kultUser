@@ -610,10 +610,10 @@
     list-style: none;
   }
 
-  ul, ol {
+  /*ul, ol {
     margin-top: 0;
     margin-bottom: 10px !important;
-  }
+  }*/ /* it brings nav bar up */
   .main_image{
     width:100%;
     min-height: 500px;

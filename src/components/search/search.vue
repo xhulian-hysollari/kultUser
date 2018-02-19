@@ -11,15 +11,24 @@
                 </div>
                   <div class="mega-menu4 fadeIn animated " style="position: absolute; z-index: 9999; width: 100%;" >
                     <div class="mm-3column drop-down ">
-                            <span class="left-images" style="color: #888888" >
-                                <div v-for="(search,key) in searchList" class="text item paddin_g" @click="getSearchDet({key,search}); input = ''; $store.state.gen.searchList={}; closeDropdown4()">
-                                  <img :src="search.pBasicDetail.pPicUrl" style="width:50px;height: 50px;" class="mm-5column">
-                                     <span v-for="(i,j) in search.pBasicDetail.pName" v-show="j < 26">
-                                        <span>{{i}}</span>
-                                      </span>
-                                    <span v-if="search.pBasicDetail.pName.length > 25">...</span>
-                                </div>
-                            </span>
+                      <span class="left-images" style="color: #888888" >
+                          <div v-for="(search,key) in searchList" class="text item paddin_g" @click="getSearchDet({key,search}); input = ''; $store.state.gen.searchList={}; closeDropdown4()">
+                            <div class="row">
+                              <div class="col-xs-4">
+                               <img :src="search.pBasicDetail.pPicUrl" style="width:50px;height: 50px;" class="mm-5column">
+                              </div>
+                              <div class="col-xs-8">
+                                <h3>{{search.pBasicDetail.pBrand}}</h3>
+                                 <p>{{search.pBasicDetail.pName}}</p>
+                              </div>
+                            </div>
+
+                               <!--span v-for="(i,j) in search.pBasicDetail.pName" v-show="j < 26">
+                                  <span>{{i}}</span>
+                                </span-->
+                              <!--span v-if="search.pBasicDetail.pName.length > 25">...</span-->
+                          </div>
+                      </span>
                  </div>
                </div>
              </form>
