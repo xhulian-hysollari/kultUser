@@ -3,9 +3,9 @@
 
 
 
-<div class="idden-xs">
+<div >
   <el-dialog
-    width="614px"
+    width="40%"
     :visible.sync="$store.state.auth.showLoginPopup"
   >
     <div class="for_mobile">
@@ -80,7 +80,7 @@
     </div>
   </el-dialog>
 </div>
-<div class="visible-xs">
+<!--div class="visible-xs">
       <el-dialog
         width="60%"
         :visible.sync="$store.state.auth.showLoginPopup"
@@ -156,7 +156,7 @@
           </div>
         </div>
       </el-dialog>
-    </div>
+    </div-->
 
 
 

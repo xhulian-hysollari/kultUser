@@ -98,7 +98,7 @@
       closeDropdown4(){
         setTimeout(()=>{
           $('.mega-menu4').removeClass('display-on');
-        },3000)
+        },2000)
       },
     },
     created(){

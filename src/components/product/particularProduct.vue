@@ -1,6 +1,8 @@
 <template>
   <div>
 
+    <!--{{selected}}-->
+    {{ amazonLinkPrice}}
     <loader v-if="pTypeLoader "></loader>
     <div v-if="!pTypeLoader ">
       <div class="banner_strip"></div>
@@ -381,6 +383,8 @@
       </div>
     </div>
 
+   <span style="visibility: hidden;"> {{updateSelVar}}</span>
+
 
 
     <!-- sometimes there isn't price for a domain, in this case hide the links too -->
@@ -404,7 +408,9 @@
         dialog2:false,
         amazonPrice:'',
         //
-        amazonPriceLoaded: false //amazon price
+        amazonPriceLoaded: false ,//amazon price,
+        selVar : {},
+        amazonLinkPrice: ''  ///////////show this var at amzon price
       }
     },
     components:{
@@ -422,8 +428,12 @@
         'selectedLink',
         'amazonLoader',
         //
-        'amazonLinkPrice' //show this ******
-      ])
+        //'amazonLinkPrice' //show this ******
+      ]),
+      updateSelVar(){
+        this.selVar = this.$store.state.particularProduct.selected
+        return this.selVar
+      }
     },
     watch:{
      dialog:function () {
@@ -442,6 +452,94 @@
         //if(!this.amazonPriceLoaded)
           //this.fetchAmazonPrice()
         //
+      },
+      selVar : ()=>{
+       let vm = this
+        //setTimeout(()=>{
+
+
+          console.log("[@@@] => "  ,  window.thisOfVueComp.$store.state.particularProduct.selected )
+          //
+          let x =  window.thisOfVueComp.$store.state.particularProduct.selected
+          console.log("[###]",x)
+          let y
+
+          if( Object.keys(x.det.affliateDomains).indexOf('amazon') != -1 ){ //amazon is there
+            let url = x.det.affliateDomains.amazon.link
+            let pId = window.thisOfVueComp.$route.params.pId
+            let pType = x.key
+            //
+            //
+            console.log("[pid] => ", pId)
+            console.log("[pType] => ", pType)
+            console.log("[url] => ", url)
+            //
+            //
+            window.thisOfVueComp.$store.dispatch('axiosReq', {
+              params: {
+                pId, //fill **
+                pType //fill**
+              },
+              funcName: 'getAmazonPriceFromDb'
+            }).then((result_1)=>{
+              console.log("1 => ", result_1)
+              if(result_1 == '-1' || result_1 == '999999999'){ //not in db / or out of stock etc ...
+                window.thisOfVueComp.$store.dispatch('axiosReq', {
+                  params: {
+                    url //amazon lik url , fill**
+                  },
+                  funcName: 'getAmazonPriceFromAPI'
+                }).then((result_2)=>{
+                  //
+                  console.log("2 => ", result_2)
+                  if(result_2 == '-1'){
+                    y = 'Failed to fetch Price !'
+                    //state.amazonLoader = false
+                    window.thisOfVueComp.$forceUpdate()
+                    //failed to fetch price, show accordingly(message) on dom
+                  }else if(result_2 == '999999999'){
+                    state.amazonLinkPrice = 'Out Of Stock'
+                    //state.amazonLoader = false
+                    window.thisOfVueComp.$forceUpdate()
+                    //show out of stock on dom
+                  }else{
+                    console.log("[save] => ",result_2)  // show result on dom //this is price of amazon link
+                    y = result_2
+                    //
+                    window.thisOfVueComp.$store.dispatch('axiosReq', {
+                      params: {
+                        pId, // fill**,
+                        pType, // fill**
+                        price: result_2
+                      },
+                      funcName: 'saveAmazonPriceToDb'
+                    })
+                    //
+                  }
+                  //*turn loader off*
+                  //state.amazonLoader = false
+                  window.thisOfVueComp.$forceUpdate()
+                  //
+                })
+              } else {
+                console.log(result_1) // show result on dom //this is price of amazon link
+                y = result_1
+                //*turn loader off*
+                //state.amazonLoader = false
+                window.thisOfVueComp.$forceUpdate()
+              }
+            })
+            //
+            //
+          }else{
+            //do nothing
+            //state.amazonLoader = false  //stop loader
+          }
+          //
+          //
+          window.thisOfVueComp.amazonLinkPrice = y
+          window.thisOfVueComp.$forceUpdate()
+        //},6000)
       }
     },
     methods:{
@@ -461,14 +559,16 @@
       this.$store.commit('getTypeNLinkOfThisProduct', {
         pId: this.$route.params.pId
       })
-      for(let i in Object.values(vm.$store.state.auth.user.providerData)){
-        console.log(vm.$store.state.auth.user)
-        if(Object.values(vm.$store.state.auth.user.providerData)[i].providerId === 'password'){
-          if(vm.$store.state.auth.user.emailVerified){
-            vm.email= true
+      if(vm.$store.state.auth.isLoggedIn){
+        for(let i in Object.values(vm.$store.state.auth.user.providerData)){
+          console.log(vm.$store.state.auth.user)
+          if(Object.values(vm.$store.state.auth.user.providerData)[i].providerId === 'password'){
+            if(vm.$store.state.auth.user.emailVerified){
+              vm.email= true
+            }
+          }else{
+            vm.email=true
           }
-        }else{
-          vm.email=true
         }
       }
       //
