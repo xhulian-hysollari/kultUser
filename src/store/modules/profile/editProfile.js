@@ -31,10 +31,10 @@ const mutations = {
   //
   linkAcc(state2, payload){
     //
-    console.log(payload)
+    //console.log(payload)
     //
     firebase.auth().currentUser.linkWithPopup(payload.provider).then(function(result) {
-      //console.log("// Accounts successfully linked.")
+      ////console.log("// Accounts successfully linked.")
       var credential = result.credential;
       var user = result.user;
       //
@@ -42,7 +42,7 @@ const mutations = {
      // alert("Accounts successfully linked.")
       // ...
     }).catch(function(error) {
-      console.log(error)
+      //console.log(error)
       //
       Notification.error("Error: " + error.message)
      // alert("Error: " + error.message)
@@ -63,13 +63,13 @@ const mutations = {
 
       if(queryUserDet.exists){
         //
-        console.log(queryUserDet.data()) // .dob
+        //console.log(queryUserDet.data()) // .dob
         state.uDob = queryUserDet.data().dob //dob
         state.uPhone = queryUserDet.data().phone //phone
         state.uRefcode=queryUserDet.data().refCode
       }
       //
-      console.log(state.uEmail + " | " + state.uName + " | " +  state.uDob)
+      //console.log(state.uEmail + " | " + state.uName + " | " +  state.uDob)
       state.uDetLoader = false
       //
       window.thisOfVueComp.$forceUpdate()
@@ -78,7 +78,7 @@ const mutations = {
   //
   reAuth(state2, payload){
     //
-    console.log(payload)
+    //console.log(payload)
     //
     let credential = firebase.auth.EmailAuthProvider.credential(
       firebase.auth().currentUser.email,
@@ -87,13 +87,13 @@ const mutations = {
     //
     firebase.auth().currentUser.reauthenticateWithCredential(credential).then(function() {
       //
-      console.log("// User re-authenticated.")
+      //console.log("// User re-authenticated.")
       //
       state.showReAuth = false
       //
     }).catch(function(error) {
       // An error happened.
-      console.log(error)
+      //console.log(error)
       //
       Notification.error("Error: " + error.message)
     });
@@ -103,15 +103,15 @@ const mutations = {
     //
     gen.state.btnLoader = true
     //
-    console.log(payload)
+    //console.log(payload)
     //
     firebase.auth().currentUser.updateEmail(payload.email).then(function() {
-      console.log('//Email Update successful.')
+      //console.log('//Email Update successful.')
       //display Name update
       firebase.auth().currentUser.updateProfile({
         displayName: payload.name
       }).then(()=>{
-        console.log("//name updated")
+        //console.log("//name updated")
         //
         let tmpObj = {}
         //if(payload.phone){
@@ -130,7 +130,7 @@ const mutations = {
           .collection("user").doc(auth.state.user.uid)
           .set(tmpObj, {merge: true}).then(()=>{
           //
-          console.log("//dob updated")
+          //console.log("//dob updated")
           //
           gen.state.btnLoader = false
           Notification.success("Profile Updated")
@@ -144,7 +144,7 @@ const mutations = {
       //
     }).catch(function(error) {
       // An error happened.
-      console.log(error)
+      //console.log(error)
       //
       if(error.code == 'auth/requires-recent-login'){
         state.showReAuth = true //popup to login in first

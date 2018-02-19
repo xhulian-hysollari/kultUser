@@ -43,19 +43,19 @@ new Vue({
     this.$store.state.auth.firebaseApp = firebase.initializeApp(config)
     const messaging = firebase.messaging()
     messaging.requestPermission().then(function () {
-      console.log('have permission')
+      //console.log('have permission')
       return messaging.getToken()
     }).then(function (token) {
-      console.log(token)
+      //console.log(token)
       axios.get('https://us-central1-kult-2.cloudfunctions.net/newsletter_saveDeviceToken', {
         params: {
           token
         }
       }).then(function (response) {
-        console.log(response)
+        //console.log(response)
         messaging.onMessage(function(payload) {
-          console.log("Message received. ", payload);
-//agr koi not send krta h toh yha console.log hoga
+          //console.log("Message received. ", payload);
+//agr koi not send krta h toh yha //console.log hoga
         })
       })
 //axios request to token link
@@ -63,7 +63,7 @@ new Vue({
       //link para is -> token
 
     }).catch(function (e) {
-      console.log(e)
+      //console.log(e)
     })
     this.$store.commit('defineDbDef')
   }

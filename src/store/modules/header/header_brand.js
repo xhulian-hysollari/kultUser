@@ -13,7 +13,7 @@ const getters = {
 const mutations = {
   getBrandCat(state2){
     //
-    //console.log("calling get brand cat ")
+    //////console.log("calling get brand cat ")
     //
     state.brandCatLoader = true
     //
@@ -22,7 +22,7 @@ const mutations = {
       .get().then((queryBrandCat)=>{
       //
       if(queryBrandCat.size == 0){
-        //console.log("calling get brand cat, query brand cat is size 0 ")
+        //////console.log("calling get brand cat, query brand cat is size 0 ")
         //stop loader
         state.brandCatLoader = false
       }
@@ -34,8 +34,8 @@ const mutations = {
         //
         if(queryBrandCatDoc.exists){
 
-          //console.log(queryBrandCatDoc.id) //only this is req
-          //console.log(queryBrandCatDoc.data())
+          //////console.log(queryBrandCatDoc.id) //only this is req
+          //////console.log(queryBrandCatDoc.data())
           //
           state.brandCat[queryBrandCatDoc.id] = {
            //
@@ -48,12 +48,12 @@ const mutations = {
 
             cQueryBrandCat++
 
-            //console.log("0 => " + cQueryBrandCat + " | " + queryBrandCat.size)
+            //////console.log("0 => " + cQueryBrandCat + " | " + queryBrandCat.size)
             if(queryBrand.size == 0 && cQueryBrandCat == queryBrandCat.size){
               //stop loader
               state.brandCatLoader = false
               //
-              console.log("Brand Category [Final]", state.brandCat)
+              ////console.log("Brand Category [Final]", state.brandCat)
             }
 
             let cQueryBrand = 0
@@ -63,8 +63,8 @@ const mutations = {
                 //
                 cQueryBrand++
                 //
-                //console.log(queryBrandDoc.id)
-                //console.log(queryBrandDoc.data())
+                //////console.log(queryBrandDoc.id)
+                //////console.log(queryBrandDoc.data())
 
                 //
                 state.brandCat[queryBrandCatDoc.id][queryBrandDoc.id] = {
@@ -73,13 +73,13 @@ const mutations = {
                 //
                 //
                 //
-                //console.log("1 => " + cQueryBrandCat + ' | ' + queryBrandCat.size)
-                //console.log("2 => " + cQueryBrand + " | " + queryBrand.size )
+                //////console.log("1 => " + cQueryBrandCat + ' | ' + queryBrandCat.size)
+                //////console.log("2 => " + cQueryBrand + " | " + queryBrand.size )
                 if(cQueryBrandCat == queryBrandCat.size && queryBrand.size == cQueryBrand){
                   state.brandCatLoader = false
                   //
-                  //console.log("****BRAND CATEGORY QUERIED****")
-                  console.log("Brand Category [Final]", state.brandCat)
+                  //////console.log("****BRAND CATEGORY QUERIED****")
+                  ////console.log("Brand Category [Final]", state.brandCat)
                   window.thisOfVueComp_2.$forceUpdate()
                 }
               }

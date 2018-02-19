@@ -27,13 +27,13 @@ const mutations = {
       }
       //
     }).then(function (response) {
-      console.log(response);
+      //console.log(response);
       //
       state.myOrders = response.data
       state.myOrderLoader = false
       //
     }).catch(function (error) {
-      console.log(error);
+      //console.log(error);
     })
   }
 }

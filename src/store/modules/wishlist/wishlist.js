@@ -21,10 +21,10 @@ const mutations = {
           pid:payload.pId
         }
       }).then(function (response) {
-        console.log(response.data)
+        ////console.log(response.data)
         state.wishlistCnt++
       }).catch(function (error) {
-      //  console.log(error)
+      //  //console.log(error)
       })
     }
   },
@@ -39,7 +39,7 @@ const mutations = {
        // alert(response.data)
         state.wishlistCnt--
       }).catch(function (error) {
-        console.log(error)
+        //console.log(error)
       })
     }
   },
@@ -51,20 +51,20 @@ const mutations = {
             uid:auth.state.user.uid
           }
         }).then(function (response) {
-          // console.log(response.data)
+          // //console.log(response.data)
           if(response.data!=='noProductAdded'){
             state.wishlistObj={}
               state.wishlistBool = true
               state.wishlistObj= response.data
               state.wishlistCnt=Object.keys(state.wishlistObj).length
 
-            //   console.log(state.wishlistObj)
+            //   //console.log(state.wishlistObj)
           }else{
             state.wishlistBool = true
             state.wishlistObj={}
           }
         }).catch(function (error) {
-          // console.log(error)
+          // //console.log(error)
         })
      // }
     }

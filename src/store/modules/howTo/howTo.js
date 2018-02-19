@@ -30,15 +30,15 @@ const mutations = {
       .get().then((queryHowToCat)=>{
 
       if(queryHowToCat.size == 0){
-        //console.log("//if there is no cat to show, hence no vid to show, turn loader cat off")
+        ////console.log("//if there is no cat to show, hence no vid to show, turn loader cat off")
         state.howToCatLoader = false
       }else{
         //
         queryHowToCat.forEach((queryHowToCatDoc)=>{
 
           //
-          //console.log(queryHowToCatDoc.id) // cat
-          //console.log(queryHowToCatDoc.data()) // empty
+          ////console.log(queryHowToCatDoc.id) // cat
+          ////console.log(queryHowToCatDoc.data()) // empty
           //
           if(queryHowToCatDoc.id==='KULT TV'){
             state.howToCat[queryHowToCatDoc.id] = {}
@@ -58,13 +58,13 @@ const mutations = {
     }).then(function () {
       //if any vid category is not selected => it's in query (route), in that case sel 1st one by default
       if( Object.keys(router.currentRoute.query).length == 0 ){
-        //console.log("1")
+        ////console.log("1")
         //
         mutations.getHowToCatVid(state, {
           howToCat: Object.keys(state.howToCat)[0]
         })
       }else { //if there is already some cat selected, on refresh load that only
-        //console.log("2")
+        ////console.log("2")
         //
         mutations.getHowToCatVid(state, {
           howToCat: router.currentRoute.query.selVidCat
@@ -80,7 +80,7 @@ const mutations = {
   //
   //
   getHowToCatVid(state2, payload){
-    //console.log(payload.howToCat)
+    ////console.log(payload.howToCat)
     //
     state.howToVidLoader = true
     //
@@ -100,8 +100,8 @@ const mutations = {
         queryHowToCatVid.forEach((queryHowToCatVidDoc)=>{
 
           //
-          //console.log(queryHowToCatVidDoc.id) // vid name
-          //console.log(queryHowToCatVidDoc.data()) // link
+          ////console.log(queryHowToCatVidDoc.id) // vid name
+          ////console.log(queryHowToCatVidDoc.data()) // link
           //
           state.howToVid[queryHowToCatVidDoc.id] = { // Id by video name
             videoLink: queryHowToCatVidDoc.data().howToCatVidLink,
@@ -118,7 +118,7 @@ const mutations = {
         })
 
         //
-        console.log("[QUERIED VIDEOS OF CAT]", state.howToVid)
+        //console.log("[QUERIED VIDEOS OF CAT]", state.howToVid)
         //
         router.push({ path:'/howTo' , query: { selVidCat: payload.howToCat  } }) //use here(current route), only when sure
         //this cant be called outside component
@@ -132,7 +132,7 @@ const mutations = {
   //
   //
   getCatVidProduct(state2, payload){
-    //console.log(payload)
+    ////console.log(payload)
     state.productsLoader = true
     //
     gen.state.firestore
@@ -152,8 +152,8 @@ const mutations = {
         //
         queryVidProduct.forEach((queryVidProductDoc)=>{
           //
-          //console.log(queryVidProductDoc.id) // product id // got product id
-          //console.log(queryVidProductDoc.data()) //empty
+          ////console.log(queryVidProductDoc.id) // product id // got product id
+          ////console.log(queryVidProductDoc.data()) //empty
           //
           product.state.cProduct = 0
           // now => get product detail

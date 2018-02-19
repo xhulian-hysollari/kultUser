@@ -23,7 +23,7 @@ const mutations ={
   getFilters(state2, payload){
     state.filter = {}
     let temp = []
-    //console.log(payload)
+    ////console.log(payload)
     //
     state.filterLoader = true
     //
@@ -44,8 +44,8 @@ const mutations ={
         if(queryfilterDoc.exists){
           //
           //
-          //console.log(queryfilterDoc.id) // we need this => age, brand etc
-          //console.log(queryfilterDoc.data())
+          ////console.log(queryfilterDoc.id) // we need this => age, brand etc
+          ////console.log(queryfilterDoc.data())
           //
           state.filter[queryfilterDoc.id] = {
             //
@@ -74,8 +74,8 @@ const mutations ={
                 //
                 cQueryfilterPara++
                 //
-                //console.log(queryfilterParaDoc.id) // we need this => 20s, 30s etc
-                //console.log(queryfilterParaDoc.data())
+                ////console.log(queryfilterParaDoc.id) // we need this => 20s, 30s etc
+                ////console.log(queryfilterParaDoc.data())
                 //
                 //
                 if(queryfilterDoc.id !=='priceRange'){
@@ -98,18 +98,18 @@ const mutations ={
                     cnt++
                     state.filter['priceRange'][temp[i]]={}
                     if(cnt === temp.length){
-                      console.log("[Filter Queried Final] => ", state.filter)
+                      //console.log("[Filter Queried Final] => ", state.filter)
                     }
                   }
-                  console.log(temp)
+                  //console.log(temp)
                   state.filterLoader = false
                   //
 
                   //
                   gen.state.thisOfVueComp.$forceUpdate()
                   //
-                  //console.log("queryfilter.size => " + queryfilter.size + " | " + "cqueryfilter => " + cQueryfilter)
-                  //console.log("queryfilterPara.size =>" + queryfilterPara.size + " | " + "cqueryfilterPara => " + cQueryfilterPara)
+                  ////console.log("queryfilter.size => " + queryfilter.size + " | " + "cqueryfilter => " + cQueryfilter)
+                  ////console.log("queryfilterPara.size =>" + queryfilterPara.size + " | " + "cqueryfilterPara => " + cQueryfilterPara)
                   //
                 }
               }
@@ -125,9 +125,9 @@ const mutations ={
   //
   send_SelFilter_toCloud_toGetProducts_accordingToFilter_2(state, payload){
     //
-    //console.log("[AXIOS FILTER CATEGORY]",payload)
-    //console.log(payload.sel_setOfFilters)
-    //console.log(payload.routePath)
+    ////console.log("[AXIOS FILTER CATEGORY]",payload)
+    ////console.log(payload.sel_setOfFilters)
+    ////console.log(payload.routePath)
     //
     state.filterLoader = true //also turn on filter loader :P
     product.state.productsLoader = true // will load product, on basis of changed filter
@@ -142,20 +142,20 @@ const mutations ={
         routePath: payload.routePath
       }
     }).then(function (response) {
-      //console.log(response);
-      //console.log(response.data)
+      ////console.log(response);
+      ////console.log(response.data)
       //
       product.state.products = {}
       //
       product.state.products = response.data // update products according to filter.
-      console.log("[FILTER APPLIED] [UPDATE PRODUCTS]", product.state.products)
+      //console.log("[FILTER APPLIED] [UPDATE PRODUCTS]", product.state.products)
       //
       state.filterLoader = false //filter loader stops
       product.state.productsLoader = false
       //
       //
     }).catch(function (error) {
-      console.log(error);
+      //console.log(error);
       //alert(error.data)
       //
       state.filterLoader = false // :P

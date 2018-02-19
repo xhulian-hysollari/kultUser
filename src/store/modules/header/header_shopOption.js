@@ -16,12 +16,12 @@ const mutations = {
     //
     state.shopOptionLoader = true
     //
-    //console.log("firestore [shopOptions] => ", gen.state.firestore)
+    ////console.log("firestore [shopOptions] => ", gen.state.firestore)
 
     gen.state.firestore
       .collection("shopOption")
       .get().then((queryShopOptions)=>{
-      //console.log("shopOption => ",queryShopOptions)
+      ////console.log("shopOption => ",queryShopOptions)
       //
       if(queryShopOptions.size == 0){
         //turn loader false if required
@@ -35,8 +35,8 @@ const mutations = {
         if(queryShopOptionDoc.exists){
           cShopOption++
           //
-          //console.log("shopOption Id =>", queryShopOptionDoc.id) // we need only id here i.e => makeup, men etc
-          //console.log("shopOption Data =>",queryShopOptionDoc.data())
+          ////console.log("shopOption Id =>", queryShopOptionDoc.id) // we need only id here i.e => makeup, men etc
+          ////console.log("shopOption Data =>",queryShopOptionDoc.data())
           //
           //
           state.shopOptions[queryShopOptionDoc.id] = {}
@@ -56,8 +56,8 @@ const mutations = {
   },
   //
   getCategories(state2, payload){
-    //console.log("getCategories =>", payload)
-    //console.log("Get Categories of shop Option => " ,payload.shopOption)
+    ////console.log("getCategories =>", payload)
+    ////console.log("Get Categories of shop Option => " ,payload.shopOption)
     //
     gen.state.firestore
       .collection("shopOption").doc(payload.shopOption)
@@ -75,8 +75,8 @@ const mutations = {
         if(queryCategoryDoc.exists){
           cCategory ++
           //
-          //console.log("categories id =>", queryCategoryDoc.id) //we need only this i.e => face etc
-          //console.log("categories data =>",queryCategoryDoc.data())
+          ////console.log("categories id =>", queryCategoryDoc.id) //we need only this i.e => face etc
+          ////console.log("categories data =>",queryCategoryDoc.data())
           //
           state.shopOptions[payload.shopOption][queryCategoryDoc.id] = {}
           //
@@ -98,8 +98,8 @@ const mutations = {
   },
   //
   getSubCategories(state2, payload){
-    //console.log("getSubCategories =>", payload)
-    //console.log("Get Sub-Categories of Categories => " + payload.category + " of Shop Option => " +  payload.shopOption)
+    ////console.log("getSubCategories =>", payload)
+    ////console.log("Get Sub-Categories of Categories => " + payload.category + " of Shop Option => " +  payload.shopOption)
     //
     gen.state.firestore
       .collection("shopOption").doc(payload.shopOption)
@@ -118,8 +118,8 @@ const mutations = {
         if(querySubCategoryDoc.exists){
           cSubCategory ++
           //
-          //console.log("sub-category id =>",querySubCategoryDoc.id) //we need only this i.e => foundation etc
-          //console.log("sub-category data =>",querySubCategoryDoc.data())
+          ////console.log("sub-category id =>",querySubCategoryDoc.id) //we need only this i.e => foundation etc
+          ////console.log("sub-category data =>",querySubCategoryDoc.data())
           //
           state.shopOptions[payload.shopOption][payload.category][querySubCategoryDoc.id] = {}
           //
@@ -128,13 +128,13 @@ const mutations = {
             payload.cCategorySize == payload.cCategory &&
             querySubCategories.size == cSubCategory
           ){
-            console.log("ShopOptions [Final] ==>", state.shopOptions)
+            //console.log("ShopOptions [Final] ==>", state.shopOptions)
             window.thisOfVueComp_2.$forceUpdate()
             if( Object.keys(window).indexOf('thisOfVueComp_3') != -1 ){
               window.thisOfVueComp_3.$forceUpdate()
             }
             //
-            //console.log("*******SHOP OPTION QUERY COMPLETE !*******")
+            ////console.log("*******SHOP OPTION QUERY COMPLETE !*******")
             //
             state.shopOptionLoader = false
           }

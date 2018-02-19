@@ -97,16 +97,16 @@
                   <div class="prod_repeat padding_class">
                     <loader v-if="productsLoader" ></loader>
                     <div class="padding_class" >
-                      <a class="prod_image" @click="$router.push({path:`/particularProduct/${k}`,query:{prodDet:JSON.stringify(p)}})">
+                      <a data-dismiss="modal" class="prod_image" @click="$router.push({path:`/particularProduct/${k}`,query:{prodDet:JSON.stringify(p)}})">
                         <img :src="p.pBasicDetail.pPicUrl" alt="product" >
                       </a>
-                      <div class="prod_cont" @click="$router.push({path:`/particularProduct/${k}`,query:{prodDet:JSON.stringify(p)}})">
+                      <div data-dismiss="modal" class="prod_cont" @click="$router.push({path:`/particularProduct/${k}`,query:{prodDet:JSON.stringify(p)}})">
                         <h4><a >{{p.pBasicDetail.pBrand}}</a></h4>
                         <p>{{p.pBasicDetail.pName}}</p>
                       </div>
-                      <div class="prod_misc" @click="$router.push({path:`/particularProduct/${k}`,query:{prodDet:JSON.stringify(p)}})">
+                      <div data-dismiss="modal" class="prod_misc" @click="$router.push({path:`/particularProduct/${k}`,query:{prodDet:JSON.stringify(p)}})">
                         <rating :num="Math.round(p.pBasicDetail.pRating)" class="float" ></rating>
-                        <div class="half text-right" style="float:right" @click="$router.push({path:`/particularProduct/${k}`,query:{prodDet:JSON.stringify(p)}})">
+                        <div  class="half text-right" style="float:right" @click="$router.push({path:`/particularProduct/${k}`,query:{prodDet:JSON.stringify(p)}})">
                               <span v-if="parseInt(p.priceStartsFrom) == 999999999" style="float:right" class="half text-right">
                                 Out Of Stock
                               </span>
@@ -195,11 +195,11 @@
     watch:{
       '$route':()=>{
         console.log('kult tv route watch')
-        //$("#videoModal").removeClass("in");
-        //$("#videoModal").remove();
+        //$(".modal").removeClass("in");
+        $(".modal-backdrop").remove();
         //$('body').removeClass('modal-open');
         //$('body').css('padding-right', '');
-        //$(".modal").hide();
+        $(".modal").hide();
         //window.thisOfVueComp7.dialog =  false
       }
     },
@@ -249,7 +249,8 @@
     },
     watch:{
       '$route':()=>{
-        console.log('kult tv route watch')
+       // $('#videoModal').modal('hide')
+       // console.log('kult tv route watch')
         //$(".modal").removeClass("in");
         //$(".modal-backdrop").remove();
         //$('body').removeClass('modal-open');

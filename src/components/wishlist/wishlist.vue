@@ -148,7 +148,10 @@
     },
     watch:{
       selected:function () {
-        this.sortWishList('date')
+        if(this.selected === 'price')
+        this.sortWishList('priceStartsFrom')
+        else
+          this.sortWishList('date')
       }
     },
     components: {
@@ -173,6 +176,7 @@
         let c = 0
         console.log(this.$store.state.wishlist.wishlistBool)
         if(this.$store.state.wishlist.wishlistBool !== false){
+          this.wishlistArr=[]
           for(let i in this.$store.state.wishlist.wishlistObj){
             c++
             //alert(i)
