@@ -1,6 +1,7 @@
 import firebase from 'firebase'
 import gen from '../gen'
 import auth from '../auth'
+import {Notification} from 'element-ui'
 
 const state = {
   uEmail : '', // u=> user
@@ -37,12 +38,14 @@ const mutations = {
       var credential = result.credential;
       var user = result.user;
       //
-      alert("Accounts successfully linked.")
+      Notification.success("Accounts successfully linked.")
+     // alert("Accounts successfully linked.")
       // ...
     }).catch(function(error) {
       console.log(error)
       //
-      alert("Error: " + error.message)
+      Notification.error("Error: " + error.message)
+     // alert("Error: " + error.message)
       // ...
     });
   },
@@ -92,7 +95,7 @@ const mutations = {
       // An error happened.
       console.log(error)
       //
-      alert(error.message)
+      Notification.error("Error: " + error.message)
     });
   },
   //
@@ -130,12 +133,13 @@ const mutations = {
           console.log("//dob updated")
           //
           gen.state.btnLoader = false
-          alert('Profile Updated !')
+          Notification.success("Profile Updated")
         })
         //
       }).catch((error)=>{
         gen.state.btnLoader = false
-        alert('Error: Name not updated' + error.message)
+        Notification.error('Error: Name not updated' + error.message)
+       // alert('Error: Name not updated' + error.message)
       })
       //
     }).catch(function(error) {

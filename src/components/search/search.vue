@@ -9,7 +9,7 @@
                   <button ><img src="/static/images/search.svg" alt="search"></button>
                   <img class="search_close" src="/static/images/64-px-close.svg" alt="search">
                 </div>
-                  <div class="mega-menu4 fadeIn animated " style="position: absolute; z-index: 9999; width: 100%;" >
+                  <div class="mega-menu4 fadeIn animated " style="position: absolute; z-index: 9999; width: 100%;"  @mouseover="showDropdown4" @mouseleave="closeDropdown4">
                     <div class="mm-3column drop-down ">
                       <span class="left-images" style="color: #888888" >
                           <div v-for="(search,key) in searchList" class="text item paddin_g" @click="getSearchDet({key,search}); input = ''; $store.state.gen.searchList={}; closeDropdown4()">
