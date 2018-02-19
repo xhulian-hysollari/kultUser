@@ -4,7 +4,7 @@
 
     <el-dialog
       :visible.sync="$store.state.auth.showRegisterPopup"
-      width="70%"
+      width="60%"
     >
       <div>
         <div>

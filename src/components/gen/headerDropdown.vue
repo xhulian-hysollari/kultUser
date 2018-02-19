@@ -35,18 +35,18 @@
         <ul>
           <li class="drop-down" @mouseover="showDropdown()" @mouseleave="closeDropdown()">
             <a >SHOP</a>
-
-            <div class="mega-menu fadeIn animated" style="z-index: 999;text-align: left" >
+            <div class="mega-menu fadeIn animated" style="z-index: 999;text-align: left;margin-top: -1px" >
               <div class="mm-3column">
 								<span class="left-images" style="color: #888888" >
-								    <div v-for="(shop,i) in Object.keys(shopOptions)" @mouseover="sel = shop" class="shop_opt">
+								    <div v-for="(shop,i) in shopArr" @mouseover="sel = shop" class="shop_opt">
                       {{shop.toUpperCase()}}
                     </div>
 				        </span>
               </div>
               <div class="categories-list " style="line-height: 20px">
                 <div class="row make-columns">
-                  <div class="col-xs-3 col-md-6 " v-for="j in Object.keys(shopOptions[sel])" v-if="sel !== ''">
+                  {{sel}}
+                  <div class="col-xs-3 col-md-6 " v-for="j in Object.keys(shopOptions[sel])" v-if="sel !== '' ">
                     <div   >
                       <div class="col-xs-3 col-md-6 " style="background-color: transparent!important;">
                         <div >
@@ -67,9 +67,9 @@
           </li>
           <li class="drop-down"  @mouseover="showDropdown2()" @mouseleave="closeDropdown2()">
             <a >BRANDS</a>
-            <div class="mega-menu2 fadeIn animated" style="z-index: 999;" >
+            <div class="mega-menu2 fadeIn animated" style="z-index: 999;margin-top: -1px" >
               <div >
-								<span class="left-images" style="color: #888888" >
+								<span class="left-images" style="color: #888888; text-align: left" >
                   <h6 @click="goTo(`/brandAll`)" style="color: #080808;    margin-top: 7px;"> A TO Z BRANDS</h6>
 								    <div v-for="(shop,i) in Object.keys(brandCat)" style="color: #080808;    margin-top: 7px;">
                       <h6>{{shop.toUpperCase()}}</h6>
@@ -85,9 +85,9 @@
           <li @click="goTo('/globalBestseller')"><a >GLOBAL BESTSELLERS</a></li>
           <li class="drop-down" @mouseover="showDropdown3()" @mouseleave="closeDropdown3()">
             <a >BEAUTY GUIDE</a>
-            <div class="mega-menu3 fadeIn animated" style="z-index: 999;" >
+            <div class="mega-menu3 fadeIn animated" style="z-index: 999;margin-top: -1px" >
               <div >
-								<span class="left-images" style="color: #888888" >
+								<span class="left-images" style="color: #888888; text-align: left" >
 								    <div  v-for="(guide,i) in beautyGuideArr" @click="goTo('/bGuide/'+ beautyGuideArr[i])">
                      {{beautyGuideArr[i].toUpperCase()}}
                     </div>
@@ -100,6 +100,7 @@
 
         </ul>
       </nav>
+
       <!--ul class="main_menu">
         <li class="has_submenu " @mouseover="showdiv=true"><a  >SHOP</a>
 
@@ -166,6 +167,15 @@
     },
     data(){
       return {
+        shopArr:[
+          'MAKEUP',
+          'SKINCARE',
+          'FRAGRANCE',
+          'HAIR',
+          'BATH AND BODY',
+          'TOOLS AND BRUSHES',
+          'MEN'
+        ],
         sel: 'MEN',
         beautyGuideArr:[
           'Blush',

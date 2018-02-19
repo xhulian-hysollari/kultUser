@@ -204,11 +204,29 @@
                     v-if="loadMoreLoader">
                       <i class='fa fa-spinner fa-spin ' ></i>
                     </button>
-                    <button class="login_btn load_more_btn" @click="loadMoreProducts({
+                    <div  v-if="Object.keys($route.query).length===0">
+                      <button class="login_btn load_more_btn" @click="loadMoreProducts({
                       routePath: routeDet.routePath
-                    })" v-if="Object.keys(products).length !== totalProds && !loadMoreLoader && Object.keys(products).length !== 0">
-                      Load {{totalProds - Object.keys(products).length}} More Products
-                    </button>
+                    })" v-if="Object.keys(products).length !== totalProds && !loadMoreLoader && Object.keys(products).length !== 0"
+                      >
+                        Load {{totalProds - Object.keys(products).length}} More Products
+                      </button>
+                    </div>
+                    <div v-else>
+                      <div v-if="Object.keys($route.query.selFilters).length===0">
+                        <div>
+                          <button class="login_btn load_more_btn" @click="loadMoreProducts({
+                      routePath: routeDet.routePath
+                    })" v-if="Object.keys(products).length !== totalProds && !loadMoreLoader && Object.keys(products).length !== 0"
+                          >
+                            Load {{totalProds - Object.keys(products).length}} More Products
+                          </button>
+                        </div>
+                      </div>
+                      <div v-else>
+                      </div>
+                    </div>
+                    <div v-else></div>
                   </el-row>
                 </div>
                 <div class="clearfix"></div>
