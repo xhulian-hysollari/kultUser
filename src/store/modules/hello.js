@@ -26,12 +26,12 @@ const mutations = {
 const actions = {
   getProdFromArr(state,arr){
   return new Promise(function (resolve) {
-    console.log(arr)
+    //console.log(arr)
     axios.get('https://us-central1-kult-2.cloudfunctions.net/getProductDetailByPid?pIds='+ JSON.stringify(arr)).then(function (response) {
-      console.log(response.data)
+      //console.log(response.data)
       resolve(response.data)
     }).catch(function (err) {
-      console.log(err)
+      //console.log(err)
     })
     })
   }

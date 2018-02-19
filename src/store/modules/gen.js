@@ -77,17 +77,17 @@ const mutations = {
   //define refernces of the database
   defineDbDef(state2){
     //
-    //console.log("firebase", firebase)
+    ////console.log("firebase", firebase)
     //
     state.storage = firebase.storage() //got storage ref
-    //console.log("storgae => ", state.storage)
+    ////console.log("storgae => ", state.storage)
     //
     firebase.firestore().enablePersistence()
       .then(function() {
-        //console.log('// Initialize Cloud Firestore through firebase')
+        ////console.log('// Initialize Cloud Firestore through firebase')
         //
         state.firestore = firebase.firestore(); //got firestore ref
-        //console.log("firestore =>", state.firestore)
+        ////console.log("firestore =>", state.firestore)
         //
         mutations.getHeaderContent(state)
         //
@@ -95,19 +95,19 @@ const mutations = {
       })
       .catch(function(err) {
         if (err.code == 'failed-precondition') {
-          //console.log('// Multiple tabs open, persistence can only be enabled // in one tab at a a time.')
+          ////console.log('// Multiple tabs open, persistence can only be enabled // in one tab at a a time.')
           //
           state.firestore = firebase.firestore();  //got firestore ref
-          //console.log("firestore =>", state.firestore)
+          ////console.log("firestore =>", state.firestore)
           //
           mutations.getHeaderContent(state)
           // ...
           state.dbRefLoader = false
           //
         } else if (err.code == 'unimplemented') {
-          //console.log(' // The current browser does not support all of the // features required to enable persistence')
+          ////console.log(' // The current browser does not support all of the // features required to enable persistence')
           state.firestore = firebase.firestore();  //got firestore ref
-          //console.log("firestore =>", state.firestore)
+          ////console.log("firestore =>", state.firestore)
           // ...
           //
           mutations.getHeaderContent(state)
@@ -150,16 +150,16 @@ const mutations = {
   },
   //get details of selected search
   getSearchDet(state,payload){
-    console.log(payload.key)
+    //console.log(payload.key)
     axios.get('https://us-central1-kult-2.cloudfunctions.net/getParticularProductDetailByPid', {
       params: {
         pid:payload.key,
       }
     }).then(function (response) {
-      console.log(response.data)
+      //console.log(response.data)
       router.push({path:`/particularProduct/${payload.key}`,query:{prodDet:JSON.stringify(response.data)}})
     }).catch(function (error) {
-      console.log(error)
+      //console.log(error)
     })
   },
  /* search(){
@@ -169,12 +169,12 @@ const mutations = {
         qStr:state.searchInput
       }
     }).then(function (response) {
-      console.log(response.data)
+      //console.log(response.data)
       state.searchList={}
       state.searchList = response.data
-      console.log(Object.keys(response.data).length)
+      //console.log(Object.keys(response.data).length)
     }).catch(function (error) {
-      console.log(error)
+      //console.log(error)
     })
   },*/
   //
@@ -196,7 +196,7 @@ const mutations = {
       pUrl
     }
     //
-    console.log(state.pObj)
+    //console.log(state.pObj)
     //
     //window.tag.$forceUpdate() //no need not showing pic
   },
@@ -231,11 +231,11 @@ const actions = {
 
     let pKey =   payload.pUrl.slice(payload.pUrl.lastIndexOf('/')+1)
 
-    console.log("2 => ",state.storage)
+    //console.log("2 => ",state.storage)
     //
-    console.log(payload)
-    console.log(pKey)
-    console.log(payload.pBlob)
+    //console.log(payload)
+    //console.log(pKey)
+    //console.log(payload.pBlob)
     //
     return new Promise((res)=>{
       //
@@ -246,10 +246,10 @@ const actions = {
 
       }, function(error){
         //
-        console.log(error)
+        //console.log(error)
         //
       },function() {
-        console.log(uploadTask.snapshot.downloadURL)
+        //console.log(uploadTask.snapshot.downloadURL)
         //
         res(uploadTask.snapshot.downloadURL)
       })
@@ -257,19 +257,19 @@ const actions = {
   },
   //
   axiosReq(state2, payload){
-    console.log(payload)
+    //console.log(payload)
     //
     return new Promise((res)=>{
       //
       axios.get('https://us-central1-kult-2.cloudfunctions.net/' + payload.funcName, {
         params: payload.params
       }).then(function (response) {
-        console.log(response);
+        //console.log(response);
         //
         res(response.data)
         //
       }).catch(function (error) {
-        console.log(error);
+        //console.log(error);
       });
       //
     })

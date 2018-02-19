@@ -22,8 +22,8 @@ const mutations = {
   //
   sendAmazonCashbackReq(state2, payload){
     //
-    console.log(payload)
-    console.log(gen.state.pObj)
+    //console.log(payload)
+    //console.log(gen.state.pObj)
     //
     gen.actions.isEmpty(state, payload.orderNo).then((res_1)=>{
       if(!res_1){
@@ -32,9 +32,9 @@ const mutations = {
             gen.actions.isEmpty(state, payload.orderDesc).then((res_3)=>{
               if(!res_3){
                 //
-                console.log(payload.orderNo)
-                console.log(payload.orderPrice)
-                console.log(payload.orderDesc)
+                //console.log(payload.orderNo)
+                //console.log(payload.orderPrice)
+                //console.log(payload.orderDesc)
                 //
                 if( Object.keys(gen.state.pObj).length != 0 ){
                   //
@@ -60,7 +60,7 @@ const mutations = {
                       }
                       //
                     }).then(function (response) {
-                      console.log(response);
+                      //console.log(response);
                       //
                       //
                       gen.state.btnLoader = false
@@ -76,7 +76,7 @@ const mutations = {
                       mutations.getAmazonCashbackRec()
                       //
                     }).catch(function (error) {
-                      console.log(error);
+                      //console.log(error);
                     })
                     //
                   })
@@ -104,7 +104,7 @@ const mutations = {
       }
       //
     }).then(function (response) {
-      console.log(response.data);
+      //console.log(response.data);
       //
       if(response.data != 'noRecord'){
         state.amazonCashbackRec = response.data
@@ -113,7 +113,7 @@ const mutations = {
       state.amazonCashbackRecLoader = false
       //
     }).catch(function (error) {
-      console.log(error);
+      //console.log(error);
     })
     //
   }

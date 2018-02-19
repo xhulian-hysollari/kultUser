@@ -23,12 +23,12 @@ const getters = {
 const mutations = {
   //
   getProducts(state2, payload){
-    //console.log(payload)
+    ////console.log(payload)
     //
-    console.log(payload)
+    //console.log(payload)
     state.productsLoader = true
     //
-    //console.log("[Firestore] in product_category =>", gen.state.firestore)
+    ////console.log("[Firestore] in product_category =>", gen.state.firestore)
     //
     gen.state.firestore //Query 1
     //.collection("shopOption").doc(payload.shopOption)
@@ -43,7 +43,7 @@ const mutations = {
       if(queryproducts.size == 0){
         //turn loader off
         state.productsLoader = false
-       // console.log(this.selected)
+       // //console.log(this.selected)
 
       }
 
@@ -54,8 +54,8 @@ const mutations = {
         if(queryproductsDoc.exists){
           //
           //
-          //console.log(queryproductsDoc.id) //need only this => product id
-          //console.log(queryproductsDoc.data())
+          ////console.log(queryproductsDoc.id) //need only this => product id
+          ////console.log(queryproductsDoc.data())
           //
           //get Product Details
           //
@@ -68,8 +68,8 @@ const mutations = {
 
           //
           state.lastQueried_product = queryproducts.docs[queryproducts.docs.length-1];
-          //console.log("last queried product was =====> ", state.lastQueried_product);
-          ////console.log(state.lastQueried_product.id)
+          ////console.log("last queried product was =====> ", state.lastQueried_product);
+          //////console.log(state.lastQueried_product.id)
         }
       })
 
@@ -78,13 +78,13 @@ const mutations = {
   //
   loadMoreProducts(state2, payload){
     state.loadMoreLoader=true
-    //console.log(payload)
+    ////console.log(payload)
     //
     //state.productsLoader = true
     //
-    //console.log("[Firestore] in product_category =>", gen.state.firestore)
+    ////console.log("[Firestore] in product_category =>", gen.state.firestore)
     //
-    //console.log("last queried product was [in Load More 1] =====> ", state.lastQueried_product);
+    ////console.log("last queried product was [in Load More 1] =====> ", state.lastQueried_product);
     //
     gen.state.firestore //Query 1
     //.collection("shopOption").doc(payload.shopOption)
@@ -110,8 +110,8 @@ const mutations = {
         if(queryproductsDoc.exists){
           //
           //
-          //console.log(queryproductsDoc.id) //need only this => product id
-          //console.log(queryproductsDoc.data())
+          ////console.log(queryproductsDoc.id) //need only this => product id
+          ////console.log(queryproductsDoc.data())
           //
           //get Product Details
           //
@@ -123,7 +123,7 @@ const mutations = {
 
           //
           state.lastQueried_product = queryproducts.docs[queryproducts.docs.length-1];
-          //console.log("last queried product was [in Load More 2] =====> ", state.lastQueried_product);
+          ////console.log("last queried product was [in Load More 2] =====> ", state.lastQueried_product);
 
           //
           //$store.loaded();  //infinite Loader
@@ -141,26 +141,26 @@ const mutations = {
     }).then(function (response) {
       state.totalProds=response.data
     }).catch(function (error) {
-      console.log(error)
+      //console.log(error)
     })
   },
   //
   getProductDetail(state2, payload){
 
     //
-    //console.log("Get Product Payload =>", payload)
+    ////console.log("Get Product Payload =>", payload)
     //
     gen.state.firestore //Query 2
       .collection("product").doc(payload.pId)
       .get().then((queryProductDetail)=>{
 
       state.cProduct++
-      //console.log("cCategoryProduct =>",state.cProduct)
+      ////console.log("cCategoryProduct =>",state.cProduct)
       //
       if(queryProductDetail.exists){
         //
-        //console.log(queryProductDetail.id) //product id
-        //console.log(queryProductDetail.data()) //product detail
+        ////console.log(queryProductDetail.id) //product id
+        ////console.log(queryProductDetail.data()) //product detail
 
         //
         state.products[queryProductDetail.id] = {
@@ -170,15 +170,15 @@ const mutations = {
         }
       }
 
-      //console.log('cCategoryProduct => ' + state.cProduct + ' | ' + 'queryproducts.size => ' + payload.cProductSize)
+      ////console.log('cCategoryProduct => ' + state.cProduct + ' | ' + 'queryproducts.size => ' + payload.cProductSize)
       if(state.cProduct == payload.cProductSize){
         //
         state.loadMoreLoader=false
         state.productsLoader = false
         //
-        //console.log("***** PRODUCT QUERIED *****")
+        ////console.log("***** PRODUCT QUERIED *****")
         //
-        console.log('[PRODUCT QUERIED FINAL]', state.products)
+        //console.log('[PRODUCT QUERIED FINAL]', state.products)
         window.thisOfVueComp.$forceUpdate()
       }
 

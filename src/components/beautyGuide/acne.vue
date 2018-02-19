@@ -269,7 +269,8 @@
           'Skincare',
           'Sunscreens',
           'Antiaging'
-        ]
+        ],
+
       }
     },
     components:{
@@ -277,7 +278,8 @@
     },
     computed:{
       ...mapGetters([
-        'isLoggedIn'
+        'isLoggedIn',
+        'wishlistObj'
       ])
     },
     methods:{

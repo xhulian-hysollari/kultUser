@@ -20,7 +20,7 @@ const mutations = {
   //
   changePassword(state2, payload){
     //
-    console.log(payload) //old, new password
+    //console.log(payload) //old, new password
     //
     let credential = firebase.auth.EmailAuthProvider.credential(
       firebase.auth().currentUser.email,
@@ -29,11 +29,11 @@ const mutations = {
     //
     //reauth user
     firebase.auth().currentUser.reauthenticateWithCredential(credential).then(function() {
-      console.log("// User re-authenticated.")
+      //console.log("// User re-authenticated.")
       //
       //change password
       firebase.auth().currentUser.updatePassword(payload.newPassword).then(function() {
-        console.log("//password updated")
+        //console.log("//password updated")
         Notification.success("Password Updated !")
         //alert("Password Updated !")
         //
@@ -43,25 +43,25 @@ const mutations = {
         //
       }).catch(function(error) {
         // An error happened.
-        console.log(error)
+        //console.log(error)
         Notification.error(error.message)
       });
       //
     }).catch(function(error) {
       // An error happened.
-      console.log(error)
+      //console.log(error)
       Notification.error(error.message)
     });
   },
   //
   setPassword(state2, payload){
-    console.log(payload)
+    //console.log(payload)
     //
-    console.log(firebase.auth().currentUser.providerData)
+    //console.log(firebase.auth().currentUser.providerData)
     //
     let f = false //flag for checking, if password is provider
     for(let i in firebase.auth().currentUser.providerData){
-      console.log("//provider => ", firebase.auth().currentUser.providerData[i].providerId)
+      //console.log("//provider => ", firebase.auth().currentUser.providerData[i].providerId)
       //
       if(firebase.auth().currentUser.providerData[i].providerId == 'password'){
         f = true
@@ -76,7 +76,7 @@ const mutations = {
       //
       //set password
       firebase.auth().currentUser.updatePassword(payload.password).then(function() {
-        console.log("//password set")
+        //console.log("//password set")
        Notification.success("Password Set")
         //
         //clear fields
@@ -85,7 +85,7 @@ const mutations = {
       }).catch(function(error) {
         // An error happened.
         //
-        console.log(error)
+        //console.log(error)
         //
         if(error.code == 'auth/requires-recent-login'){
           state.showReAuth_2 = true

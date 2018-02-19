@@ -213,7 +213,8 @@
           'Acne',
           'Skincare',
           'Sunscreens',
-          'Antiaging'
+          'Antiaging',
+
         ]
       }
     },
@@ -222,7 +223,8 @@
     },
     computed:{
       ...mapGetters([
-        'isLoggedIn'
+        'isLoggedIn',
+        'wishlistObj'
       ])
     },
     methods:{

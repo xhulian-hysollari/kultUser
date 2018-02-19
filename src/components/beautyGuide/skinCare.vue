@@ -513,7 +513,8 @@
     },
     computed:{
       ...mapGetters([
-        'isLoggedIn'
+        'isLoggedIn',
+        'wishlistObj'
       ])
     },
     methods:{

@@ -215,6 +215,7 @@
                           <img src="/static/images/wishlist-add.svg" alt="wishlist-add" @click="$store.state.auth.showLoginPopup = true">
                         </a>
                       </div>
+                    </div>
                     </el-col>
                     <button class="login_btn load_more_btn"
                     v-if="loadMoreLoader">

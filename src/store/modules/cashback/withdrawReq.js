@@ -27,7 +27,7 @@ const mutations = {
                   //
                   gen.state.btnLoader = true
                   //
-                  console.log(payload)
+                  ////console.log(payload)
                   //
                   axios.get('https://us-central1-kult-2.cloudfunctions.net/reqCashbackMoney', {
                     //
@@ -40,7 +40,7 @@ const mutations = {
                     }
                     //
                   }).then(function (response) {
-                    console.log(response);
+                    //console.log(response);
                     //
                     state.pay_accHolderName = ''
                     state.pay_accNo = ''
@@ -53,7 +53,7 @@ const mutations = {
                     //
                     //
                   }).catch(function (error) {
-                    console.log(error);
+                    //console.log(error);
                   })
                   //
                 }else{

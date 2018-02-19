@@ -21,11 +21,11 @@ const mutations = {
     //
     //reauth user
     firebase.auth().currentUser.reauthenticateWithCredential(credential).then(function() {
-      console.log("// User re-authenticated.")
+      //console.log("// User re-authenticated.")
       //
       //delete account
       firebase.auth().currentUser.delete().then(function() {
-        console.log("// User deleted.")
+        //console.log("// User deleted.")
       }).catch(function(error) {
         // An error happened.
         Notification.error("Error: " + error.message)
@@ -34,7 +34,7 @@ const mutations = {
       //
     }).catch(function(error) {
       // An error happened.
-      console.log(error)
+      //console.log(error)
       Notification.error("Error: " + error.message)
     });
   },

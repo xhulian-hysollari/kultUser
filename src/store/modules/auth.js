@@ -81,7 +81,7 @@ const mutations = {
   getLoginStatus(state2){
     firebase.auth().onAuthStateChanged(function(user) {
       if (user) {
-       // console.log("// User is signed in.", user.uid)
+       // //console.log("// User is signed in.", user.uid)
         //
         state.isLoggedIn = true
         state.user = user
@@ -90,14 +90,14 @@ const mutations = {
         //if(!state.isRefGiven){
          // state.showRefCode=true
         //}
-       // console.log("user => ", user)
+       // //console.log("user => ", user)
         if(!wishlist.state.wishlistBool){
           wishlist.mutations.getWishlist(state)
         }
         //
         //
       } else {
-        console.log("// No user is signed in.")
+        //console.log("// No user is signed in.")
         //
         state.isLoggedIn = false
         state.user = {}
@@ -110,7 +110,7 @@ const mutations = {
   //
   //GOOGLE - LOGIN
   googleP(state2, payload){ // p => provider
-    //console.log(payload)
+    ////console.log(payload)
     //
     let provider = new firebase.auth.GoogleAuthProvider();
     //
@@ -122,7 +122,7 @@ const mutations = {
   //
   //FB - LOGIN
   fbP(state2, payload){
-    //console.log(payload)
+    ////console.log(payload)
     //
     let provider = new firebase.auth.FacebookAuthProvider();
     //
@@ -134,7 +134,7 @@ const mutations = {
   //
   //TWITTER - Login
   twitterP(state2, payload){
-    console.log(payload)
+    //console.log(payload)
     //
     let provider = new firebase.auth.TwitterAuthProvider();
     //
@@ -160,7 +160,7 @@ const mutations = {
   //
   //
   pLogin(state2, payload){
-    //console.log("[provider] => ", payload)
+    ////console.log("[provider] => ", payload)
     //
     firebase.auth().signInWithPopup(payload.provider).then(function(result) {
       // This gives you a Facebook Access Token. You can use it to access the Facebook API.
@@ -178,7 +178,7 @@ const mutations = {
       // The firebase.auth.AuthCredential type that was used.
       var credential = error.credential;
       // ...
-      //console.log(error)
+      ////console.log(error)
       //
       //
       if(error.code == 'auth/account-exists-with-different-credential'){ //detailed error
@@ -193,7 +193,7 @@ const mutations = {
   //email & password => signup
   emailPasswordSignup(state2, payload){
     gen.state.btnLoader=true
-    console.log(payload)
+    //console.log(payload)
     //
     firebase.auth().createUserWithEmailAndPassword(payload.email,payload.password)
       .then(()=>{
@@ -201,7 +201,7 @@ const mutations = {
         firebase.auth().currentUser.updateProfile({
           displayName: payload.name
         }).then(function() {
-          console.log("// Display Name Updated successful.")
+          //console.log("// Display Name Updated successful.")
           //
           setTimeout(()=>{
             gen.state.firestore
@@ -211,7 +211,7 @@ const mutations = {
              //   phone : payload.phone
               }).then(()=>{
               state.showRegisterPopup= false
-              console.log("dob updated!")
+              //console.log("dob updated!")
               gen.state.btnLoader=false
              // state.showAuthPopup=false
             })
@@ -223,8 +223,8 @@ const mutations = {
           window.thisOfVueComp_2.$forceUpdate() //to update display name
           //
         }).catch(function(error) {
-          console.log("// An error happened, update display name")
-          console.log(error)
+          //console.log("// An error happened, update display name")
+          //console.log(error)
           //
           Notification.error("Error: " + error.message)
         });
@@ -243,7 +243,7 @@ const mutations = {
   emailPasswordLogin(state2, payload){
     state.loginBtnLoader=true
     let c = 0
-    console.log(payload)
+    //console.log(payload)
     //
     firebase.auth().signInWithEmailAndPassword(payload.email, payload.password)
       .then(()=>{
@@ -291,13 +291,13 @@ const mutations = {
      // alert('A link to verify your account is sent to the registered email address, Please verify you account by clicking on the link !')
     }).catch(function(error) {
       // An error happened.
-      console.log(error)
+      //console.log(error)
     });
   },
   //
   forgotPassword(state2, payload){
     //
-    console.log(payload)
+    //console.log(payload)
     //
     firebase.auth().sendPasswordResetEmail(payload.email).then(function() {
       // Email sent.
@@ -322,7 +322,7 @@ const actions = {
         state.isRefGiven = response.data
         resolve('done')
       }).catch(function (err) {
-        console.log(err)
+        //console.log(err)
         resolve('done')
       })
     })

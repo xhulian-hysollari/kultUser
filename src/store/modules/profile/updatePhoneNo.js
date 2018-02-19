@@ -18,12 +18,12 @@ const mutations = {
   //update phone no.
   getOtp(state2, payload){
     //
-    console.log(payload)
+    //console.log(payload)
   },
   //
   updatePhoneNo(state2, payload){
     //
-    console.log(payload)
+    //console.log(payload)
   }
 }
 
