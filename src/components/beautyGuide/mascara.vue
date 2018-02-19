@@ -14,7 +14,7 @@
                     <a >{{i}}</a>
                   </div>
                 </div>
-                <div  v-else  @click=" $router.push('/bGuide/'+ i)">
+                <div  v-else   @click=" $router.push('/bGuide/'+ i)">
                   <div class="filter_title ">
                     <a >{{i}}</a>
                   </div>
@@ -23,7 +23,7 @@
             </div>
             <div class="cat_prodarea buy_guide">
               <div class="comm_title text-center">
-                <h3>Best Sellers</h3>
+                <h3>Mascara</h3>
               </div>
               <el-row :gutter="15" >
                 <el-col :xs="12" :sm="12" :md="8" :lg="8" v-for="(pDet, pId) in bGuideBlushBestSeller"
@@ -66,9 +66,9 @@
                 <!-- {{$route.query}}
                 {{Object.keys(JSON.parse($route.query.selFilters)).length}} -->
                 <!-- load more -->
-           <!-- no filter sel -->
+                <!-- no filter sel -->
 
-                  <!-- show load more -->
+                <!-- show load more -->
 
                 <!-- load more ends -->
 
@@ -78,7 +78,7 @@
             </div>
             <div class="cat_prodarea buy_guide">
               <div class="comm_title text-center">
-                <h3>Pink</h3>
+                <h3>Volumizing</h3>
               </div>
               <el-row :gutter="15" >
                 <el-col :xs="12" :sm="12" :md="8" :lg="8" v-for="(pDet, pId) in bGuideBlushPink"
@@ -133,7 +133,7 @@
             </div>
             <div class="cat_prodarea buy_guide">
               <div class="comm_title text-center">
-                <h3>Carols</h3>
+                <h3>Defining + Lengthing</h3>
               </div>
               <el-row :gutter="15" >
                 <el-col :xs="12" :sm="12" :md="8" :lg="8" v-for="(pDet, pId) in bGuideBlushCarols"
@@ -188,7 +188,7 @@
             </div>
             <div class="cat_prodarea buy_guide">
               <div class="comm_title text-center">
-                <h3>Nudes</h3>
+                <h3>Curling</h3>
               </div>
               <el-row :gutter="15" >
                 <el-col :xs="12" :sm="12" :md="8" :lg="8" v-for="(pDet, pId) in bGuideBlushNudes"
@@ -272,6 +272,7 @@
         ]
       }
     },
+
     components:{
       rating
     },
@@ -289,19 +290,19 @@
     },
     created(){
       let vm = this
-      this.$store.dispatch('getProdFromArr',["218","222","240","242"]).then(function (response) {
+      this.$store.dispatch('getProdFromArr',["262","263","279"]).then(function (response) {
         vm.bGuideBlushBestSeller=response
         console.log(response)
       })
-      this.$store.dispatch('getProdFromArr',["256","218","220","221","225","226"]).then(function (response) {
+      this.$store.dispatch('getProdFromArr',["264","269","262","284","266"]).then(function (response) {
         vm.bGuideBlushPink=response
         console.log(response)
       })
-      this.$store.dispatch('getProdFromArr',["224","231","444","619","247","239"]).then(function (response) {
+      this.$store.dispatch('getProdFromArr',["271","277","280","281","286"]).then(function (response) {
         vm.bGuideBlushCarols=response
         console.log(response)
       })
-      this.$store.dispatch('getProdFromArr',["223","237","234","254","230"]).then(function (response) {
+      this.$store.dispatch('getProdFromArr',["285","279","234"]).then(function (response) {
         vm.bGuideBlushNudes=response
         console.log(response)
       })

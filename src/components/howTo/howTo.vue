@@ -192,6 +192,17 @@
         vidLoader:false
       }
     },
+    watch:{
+      '$route':()=>{
+        console.log('kult tv route watch')
+        //$("#videoModal").removeClass("in");
+        //$("#videoModal").remove();
+        //$('body').removeClass('modal-open');
+        //$('body').css('padding-right', '');
+        //$(".modal").hide();
+        //window.thisOfVueComp7.dialog =  false
+      }
+    },
     components:{
       ElCard,
       rating,
@@ -215,6 +226,9 @@
         'isLoggedIn',
         'wishlistObj'
       ])
+    },
+    beforeDestroy(){
+      $("#videoModal").hide()
     },
     methods:{
       ...mapMutations([

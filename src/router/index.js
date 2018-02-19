@@ -166,7 +166,46 @@ const bGuide = resolve => {
     resolve(require('@/components/beautyGuide/bGuide'));
   });
 };
-
+const countring = resolve => {
+  require.ensure(['@/components/beautyGuide/contouring'],()=>{
+    resolve(require('@/components/beautyGuide/contouring'));
+  });
+};
+const highlight = resolve => {
+  require.ensure(['@/components/beautyGuide/highlight'],()=>{
+    resolve(require('@/components/beautyGuide/highlight'));
+  });
+};
+const mascara = resolve => {
+  require.ensure(['@/components/beautyGuide/mascara'],()=>{
+    resolve(require('@/components/beautyGuide/mascara'));
+  });
+};
+const naturalLips = resolve => {
+  require.ensure(['@/components/beautyGuide/naturalLips'],()=>{
+    resolve(require('@/components/beautyGuide/naturalLips'));
+  });
+};
+const acne = resolve => {
+  require.ensure(['@/components/beautyGuide/acne'],()=>{
+    resolve(require('@/components/beautyGuide/acne'));
+  });
+};
+const masks = resolve => {
+  require.ensure(['@/components/beautyGuide/masks'],()=>{
+    resolve(require('@/components/beautyGuide/masks'));
+  });
+};
+const sunscreen = resolve => {
+  require.ensure(['@/components/beautyGuide/sunscreen'],()=>{
+    resolve(require('@/components/beautyGuide/sunscreen'));
+  });
+};
+const skincare = resolve => {
+  require.ensure(['@/components/beautyGuide/skincare'],()=>{
+    resolve(require('@/components/beautyGuide/skincare'));
+  });
+};
 Vue.use(Router)
 
 export default new Router({
@@ -213,6 +252,14 @@ export default new Router({
     { path: '/myOrder', name : 'My Order', component: myOrder},
     { path: '/withdrawReq' , name : 'Withdraw Request', component: withdrawReq},
     //bGuide
-    { path: '/bGuide/:selGuide', name: 'Beauty Guide', component: bGuide},
+    { path: '/bGuide/Blush', name: 'Beauty Guide', component: bGuide},
+    { path: '/bGuide/Contouring', name: 'Beauty Countouring', component: countring},
+    { path: '/bGuide/Highlighting', name: 'Highlight', component: highlight},
+    { path: '/bGuide/Mascaras', name: 'Mascara', component: mascara},
+    { path: '/bGuide/Neutral Lips', name: 'Natural Lips', component: naturalLips},
+    { path: '/bGuide/Acne', name: 'Acne', component: acne},
+    { path: '/bGuide/Antiaging', name: 'Masks', component: masks},
+    { path: '/bGuide/Sunscreens', name: 'Masks', component: sunscreen},
+    { path: '/bGuide/Skincare', name: 'skincare', component: skincare},
   ]
 })
