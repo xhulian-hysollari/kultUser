@@ -195,7 +195,7 @@
     </div>
     <div class="comm_product_list">
       <div class="container text-center">
-        <div class="comm_title">
+        <div class="comm_title" @click="$router.push('/kultPick')">
           <h3>Just Arrived</h3>
           <a >Browser all <img src="/static/images/right-arrow-1.svg" alt="arrow"></a>
         </div>
@@ -206,14 +206,14 @@
               >
                 <div>
                   <div class="grid-content pa-2" >
-                    <a class="prod_image" >
+                    <a class="prod_image"  @click="$router.push({path:`/particularProduct/${pId}`,query:{prodDet:JSON.stringify(pDet)}})">
                       <img :src="pDet.pBasicDetail.pPicUrl"  style="height:286px " alt="product">
                     </a>
-                    <div class="prod_cont">
+                    <div class="prod_cont" @click="$router.push({path:`/particularProduct/${pId}`,query:{prodDet:JSON.stringify(pDet)}})">
                       <h4><a >{{pDet.pBasicDetail.pBrand}}</a></h4>
                       <span v-for="(i,k) in pDet.pBasicDetail.pName" v-if="k < 20">{{i}}</span><span v-if="pDet.pBasicDetail.pName.length > 20">...</span>
                     </div>
-                    <div class="prod_misc">
+                    <div class="prod_misc" @click="$router.push({path:`/particularProduct/${pId}`,query:{prodDet:JSON.stringify(pDet)}})">
                       <div class="float" ><rating :num="Math.round(pDet.pBasicDetail.pRating)" ></rating></div>
                       <div class="half text-right" >
                       <span v-if="parseInt(pDet.priceStartsFrom) == 999999999" style="float: right" class="half text-right">
@@ -244,7 +244,7 @@
     <div class="home_impcats">
       <div class="container">
         <div class="row">
-          <div class="col-md-6 col-xs-12 comm_imp" @click="$route.push('/howTo?selVidCat=MAKEUP')">
+          <div class="col-md-6 col-xs-12 comm_imp" @click="$router.push('/howTo?selVidCat=MAKEUP')">
             <div class="image_box">
               <div class="cont_part">
                 <h4>
@@ -264,7 +264,7 @@
               <a class="go_btn" ><img src="/static/images/player.svg" alt="player"></a>
             </div>
           </div>
-          <div class="col-md-6 col-xs-12 comm_imp">
+          <div class="col-md-6 col-xs-12 comm_imp" @click="$router.push('/bGuide/Blush')">
             <div class="image_box">
               <div class="cont_part">
                 <h4>
