@@ -1,4 +1,5 @@
 import firebase from 'firebase'
+import {Notification} from 'element-ui'
 
 const state = {
   newPassword: '',
@@ -33,7 +34,8 @@ const mutations = {
       //change password
       firebase.auth().currentUser.updatePassword(payload.newPassword).then(function() {
         console.log("//password updated")
-        alert("Password Updated !")
+        Notification.success("Password Updated !")
+        //alert("Password Updated !")
         //
         //clear fields
         state.oldPassword = ''
@@ -42,13 +44,13 @@ const mutations = {
       }).catch(function(error) {
         // An error happened.
         console.log(error)
-        alert(error.message)
+        Notification.error(error.message)
       });
       //
     }).catch(function(error) {
       // An error happened.
       console.log(error)
-      alert(error.message)
+      Notification.error(error.message)
     });
   },
   //
@@ -68,13 +70,14 @@ const mutations = {
     }
     //
     if(f){
-      alert('This Account have already a password, You can change the password by entering old & new password below !')
+      Notification.warning('This Account have already a password, You can change the password by entering old & new password below !')
+   //   alert('This Account have already a password, You can change the password by entering old & new password below !')
     }else{
       //
       //set password
       firebase.auth().currentUser.updatePassword(payload.password).then(function() {
         console.log("//password set")
-        alert("Password Set !")
+       Notification.success("Password Set")
         //
         //clear fields
         state.firstTimePassword = ''

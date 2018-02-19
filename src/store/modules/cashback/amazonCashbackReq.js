@@ -1,6 +1,8 @@
 import gen from '../gen'
 import auth from '../auth'
 import axios from 'axios'
+import {Notification}  from 'element-ui'
+
 
 const state = {
   amazonCashbackReq_orderNo: '',
@@ -68,7 +70,8 @@ const mutations = {
                       state.amazonCashbackReq_orderPrice = ''
                       state.amazonCashbackReq_orderDesc = ''
                       //
-                      alert('Request Sent !')
+                      Notification.info('Request Sent')
+                     // alert('Request Sent !')
                       //
                       mutations.getAmazonCashbackRec()
                       //
@@ -79,7 +82,7 @@ const mutations = {
                   })
                   //
                 }else{
-                  alert('upload image !')
+                  Notification.info('Upload Image')
                 }
                 //
               }

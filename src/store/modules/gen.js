@@ -7,6 +7,7 @@ import router from '../../router'
 import header_shopOption from './header/header_shopOption'
 import header_brand from './header/header_brand'
 //
+import { Notification } from 'element-ui';
 import auth from './auth'
 
 
@@ -27,7 +28,8 @@ const state = {
 
   //
   pObj: {},
-  isEmailVerified:false
+  isEmailVerified:false,
+  alertMsg:''
 
 }
 
@@ -36,7 +38,8 @@ const getters = {
   btnLoader: state => state.btnLoader,
   showNewsletterInput:state=>state.showNewsletterInput,
   searchList:state=>state.searchList,
-  isEmailVerified:state=>state.isEmailVerified
+  isEmailVerified:state=>state.isEmailVerified,
+  alertMag:state=>state.alertMsg
 }
 
 const mutations = {
@@ -49,14 +52,16 @@ const mutations = {
            email:state.newsLetterEmail,
          }
        }).then(function (response) {
-         alert("You Subscribed to Newsletter")
+         Notification.info('You Subscribed to Newsletter')
+         //state.alertMsg= "You Subscribed to Newsletter"
+         //mutations.open()
          state.showNewsletterInput=true
        }).catch(function (error) {
-         alert(error.data)
+        // alert(error.data)
          state.showNewsletterInput=true
        })
      }else{
-       alert('Not a valid Email')
+       Notification.error("Not valid cresentials")
      }
     })
   },
@@ -210,7 +215,7 @@ const actions = {
       if(!re.test(payload)){
         res(true)
         //
-        alert('Empty Field !')
+       Notification.error('Empty Field')
         state.showSnackBar = true
       }else{
         res(false)

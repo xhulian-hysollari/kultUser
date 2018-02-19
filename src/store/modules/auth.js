@@ -3,6 +3,7 @@ import editProfile from './profile/editProfile'
 import gen from './gen'
 import wishlist from './wishlist/wishlist'
 import axios from 'axios'
+import {Notification} from 'element-ui'
 
 const state = {
   //email-pass
@@ -67,10 +68,10 @@ const mutations = {
         gen.state.btnLoader = false
         state.showRefCode=false
         state.showLoginPopup=false
-        alert('Details Saved !')
+        Notification.success('Details Saved !')
       })
     }else{
-      alert('Nothing To Save')
+      Notification.error('Nothing To Save')
     }
 
   },
@@ -181,10 +182,10 @@ const mutations = {
       //
       //
       if(error.code == 'auth/account-exists-with-different-credential'){ //detailed error
-        alert('Error: This email address is already linked with google account, ' +
+        Notification.error('Error: This email address is already linked with google account, ' +
           'please login with google and link other auth providers to login with them !')
       }else{
-        alert(error.message)
+       Notification.error(error.message)
       }
     });
   },
@@ -225,7 +226,7 @@ const mutations = {
           console.log("// An error happened, update display name")
           console.log(error)
           //
-          alert(error.message)
+          Notification.error("Error: " + error.message)
         });
         //
       }).catch(function(error) {
@@ -233,7 +234,8 @@ const mutations = {
       var errorCode = error.code;
       var errorMessage = error.message;
       // ...
-      alert("Error: " + error.message)
+      Notification.error("Error: " + error.message)
+
     });
   },
   //
@@ -264,7 +266,8 @@ const mutations = {
       //
       // ...
       state.loginBtnLoader=false
-      alert("Error: " + error.message)
+      No
+      Notification.error("Error: " + error.message)
     })
   },
   //
@@ -284,7 +287,8 @@ const mutations = {
     //
     firebase.auth().currentUser.sendEmailVerification().then(function() {
       // Email sent.
-      alert('A link to verify your account is sent to the registered email address, Please verify you account by clicking on the link !')
+      Notification.info('A link to verify your account is sent to the registered email address, Please verify you account by clicking on the link !')
+     // alert('A link to verify your account is sent to the registered email address, Please verify you account by clicking on the link !')
     }).catch(function(error) {
       // An error happened.
       console.log(error)
@@ -297,10 +301,12 @@ const mutations = {
     //
     firebase.auth().sendPasswordResetEmail(payload.email).then(function() {
       // Email sent.
-      alert('Email to reset password has been sent !')
+      Notification.success('Email to reset password has been sent !')
+     // alert('Email to reset password has been sent !')
     }).catch(function(error) {
       // An error happened.
-      alert(error.message)
+      Notification.error(error.message)
+     // alert(error.message)
     });
   }
 }

@@ -35,7 +35,7 @@
         <ul>
           <li class="drop-down" @mouseover="showDropdown()" @mouseleave="closeDropdown()">
             <a >SHOP</a>
-            <div class="mega-menu fadeIn animated" style="z-index: 999;text-align: left;margin-top: -1px" >
+            <div class="mega-menu fadeIn animated" style="z-index: 999;text-align: left;margin-top: -1px; " >
               <div class="mm-3column">
 								<span class="left-images" style="color: #888888" >
 								    <div v-for="(shop,i) in shopArr" @mouseover="sel = shop" class="shop_opt">
@@ -67,9 +67,9 @@
           </li>
           <li class="drop-down"  @mouseover="showDropdown2()" @mouseleave="closeDropdown2()">
             <a >BRANDS</a>
-            <div class="mega-menu2 fadeIn animated" style="z-index: 999;margin-top: -1px" >
+            <div class="mega-menu2 fadeIn animated" style="z-index: 999;margin-top: -1px;width: 10%;" >
               <div >
-								<span class="left-images" style="color: #888888; text-align: left" >
+								<span class="left-images" style="color: #888888; text-align: left; line-height: 20px" >
                   <h6 @click="goTo(`/brandAll`)" style="color: #080808;    margin-top: 7px;"> A TO Z BRANDS</h6>
 								    <div v-for="(shop,i) in Object.keys(brandCat)" style="color: #080808;    margin-top: 7px;">
                       <h6>{{shop.toUpperCase()}}</h6>
@@ -83,11 +83,11 @@
           </li>
           <li @click="goTo('/kultPick')"><a >KULT PICKS</a></li>
           <li @click="goTo('/globalBestseller')"><a >GLOBAL BESTSELLERS</a></li>
-          <li class="drop-down" @mouseover="showDropdown3()" @mouseleave="closeDropdown3()">
+          <li class="drop-down" @mouseover="showDropdown3()" @mouseleave="closeDropdown3();" >
             <a >BEAUTY GUIDE</a>
-            <div class="mega-menu3 fadeIn animated" style="z-index: 999;margin-top: -1px" >
+            <div class="mega-menu3 fadeIn animated" style="z-index: 999;margin-top: -1px; width: 10%" >
               <div >
-								<span class="left-images" style="color: #888888; text-align: left" >
+								<span class="left-images" style="color: #888888; text-align: left;  line-height: 20px" >
 								    <div  v-for="(guide,i) in beautyGuideArr" @click="goTo('/bGuide/'+ beautyGuideArr[i])">
                      {{beautyGuideArr[i].toUpperCase()}}
                     </div>
@@ -176,7 +176,7 @@
           'TOOLS AND BRUSHES',
           'MEN'
         ],
-        sel: 'MEN',
+        sel: 'MAKEUP',
         beautyGuideArr:[
           'Blush',
           'Contouring',
@@ -343,13 +343,12 @@
   .xs-menu  a{
     text-decoration:none;
   }
-
   .mega-menu {
+    left:10%;
     background: none repeat scroll 0 0 #ffffff;
-    left: 0;
     margin-top: 3px;
     position: absolute;
-    width: 100%;
+    width: 80%;
     padding:15px;
     display:none;
 
@@ -400,7 +399,7 @@
     height: 100%;
   }
   .mm-3column {
-    width: 17%;
+    width: 10%;
   }
   .responsive-img {
     display: block;

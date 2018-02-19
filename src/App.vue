@@ -4,8 +4,8 @@
     <loader v-if="dbRefLoader"></loader>
     <div v-else >
       <loader v-if="authLoader"></loader>
-
       <div v-else>
+        <alert></alert>
           <i class="el-icon-warning btn_nav" v-if="!isEmailVerified && isLoggedIn" @click="$store.state.auth.resendEmail=true"></i>
         <div class="wrapper" >
           <header>
@@ -41,8 +41,8 @@
                     </p>
                     <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu2" v-if="isLoggedIn">
                       <li><span>Your Account</span></li>
-                      <li><a @click="logout">Logout</a></li>
                       <li @click="goTo('/editProfile')"><a >Edit Profile</a></li>
+                      <li><a @click="logout">Logout</a></li>
                     </ul>
                     <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu2" v-if="!isLoggedIn">
                       <li><span>Your Account</span></li>
@@ -286,7 +286,11 @@
                 <div class="col-sm-5 col-xs-12">
                   <div >
                     <h4><em>Gain expert advice for looking red-carpet ready  24/7.</em></h4>
-                    <div v-if="!showNewsletterInput"><btn-loader></btn-loader></div>
+                    <div v-if="!showNewsletterInput">
+                      <el-input placeholder="Enter your email to subscribe"  disabled v-model="$store.state.gen.newsLetterEmail" class="input-with-select ">
+                        <el-button slot="append" icon="fa fa-spinner fa-spin ></i>"></el-button>
+                      </el-input>
+                    </div>
                     <div v-if="showNewsletterInput">
                       <el-input placeholder="Enter your email to subscribe" v-model="$store.state.gen.newsLetterEmail" class="input-with-select ">
                         <el-button slot="append" icon="fa fa-arrow-right" @click="newsletter_saveEmail"></el-button>
@@ -343,6 +347,7 @@
   import axios from 'axios'
   import emailVer from '@/components/auth/emailVer'
   import search from '@/components/search/search'
+  import alert from '@/components/gen/alert'
   //
   //
   export default {
@@ -432,7 +437,8 @@
       btnLoader,
       dropdown,
       emailVer,
-      search
+      search,
+      alert
     },
     created(){
       window.thisOfVueComp_2 = this

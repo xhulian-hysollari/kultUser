@@ -1,6 +1,7 @@
 <template>
   <div>
-    <div class="container">
+    <loader v-if="allBrandLoader"></loader>
+    <div class="container" v-else>
       <div class="banner_strip"></div>
       <div class="brands_title">
         <h2>Brand List</h2>
@@ -52,6 +53,7 @@
 <script>
   import {mapGetters} from 'vuex'
   import {mapMutations} from 'vuex'
+  import loader from '@/components/gen/loader'
   //
   export default {
     data(){
@@ -78,6 +80,9 @@
       ...mapMutations([
         'goTo'
       ])
+    },
+    components:{
+      loader
     }
   }
 </script>

@@ -169,14 +169,14 @@
                            >
                       <div>
                         <div class="grid-content pa-2" >
-                          <a class="prod_image" >
+                          <a class="prod_image"   @click="$router.push({path:`/particularProduct/${pId}`,query:{prodDet:JSON.stringify(pDet)}})">
                             <img :src="pDet.pBasicDetail.pPicUrl"  style="height:286px " alt="product">
                           </a>
-                          <div class="prod_cont">
+                          <div class="prod_cont"  @click="$router.push({path:`/particularProduct/${pId}`,query:{prodDet:JSON.stringify(pDet)}})">
                             <h4><a >{{pDet.pBasicDetail.pBrand}}</a></h4>
                             <span v-for="(i,k) in pDet.pBasicDetail.pName" v-if="k < 20">{{i}}</span><span v-if="pDet.pBasicDetail.pName.length > 20">...</span>
                           </div>
-                          <div class="prod_misc">
+                          <div class="prod_misc"  @click="$router.push({path:`/particularProduct/${pId}`,query:{prodDet:JSON.stringify(pDet)}})">
                             <div class="float" ><rating :num="Math.round(pDet.pBasicDetail.pRating)" ></rating></div>
                             <div class="half text-right" >
                               <span v-if="parseInt(pDet.priceStartsFrom) == 999999999" style="float: right" class="half text-right">
@@ -286,7 +286,7 @@
     data(){
       return{
         cnt:0,
-        sel:'',
+        sel:'MAKEUP',
         filterBoxes:[],
         toggler:false,
         priceArr:[

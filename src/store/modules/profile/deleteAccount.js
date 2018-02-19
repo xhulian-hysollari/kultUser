@@ -1,4 +1,5 @@
 import firebase from 'firebase'
+import {Notification} from 'element-ui'
 //
 //
 const state = {
@@ -27,13 +28,14 @@ const mutations = {
         console.log("// User deleted.")
       }).catch(function(error) {
         // An error happened.
-        alert("Error: " + error.message)
+        Notification.error("Error: " + error.message)
+       // alert("Error: " + error.message)
       });
       //
     }).catch(function(error) {
       // An error happened.
       console.log(error)
-      alert(error.message)
+      Notification.error("Error: " + error.message)
     });
   },
   //
