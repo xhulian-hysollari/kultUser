@@ -94,17 +94,18 @@
                         </span>
                         </div>
                         <div class="show_price" v-else >
-                          <span class="aff_price" > ₹ {{parseInt(amazonLinkPrice)}}</span>
+                          <span class="aff_price" v-if="!isNaN(amazonLinkPrice)"> ₹ {{parseInt(amazonLinkPrice)}}</span>
                           <span>
                             <strong>BUY NOW</strong>
                         </span>
                         </div>
                       </a>
-                      <a v-else-if="parseInt(l.price)===999999999 || parseInt(amazonLinkPrice)===999999999" class="box">
-                        <span class="aff_name">{{k.toUpperCase()}}</span>
+                      <a v-else-if="(parseInt(l.price) || parseInt(amazonLinkPrice)) == ('999999999' ||  999999999)" class="box">
+
+                        <span class="aff_name" >{{k.toUpperCase()}}</span>
                         <div  class="show_price" >
                           <span class="aff_price" ></span>
-                          <span>
+                          <span >
                             <strong style="float: right">Out Of Stock</strong>
                           </span>
                         </div>
@@ -132,13 +133,13 @@
                         </span>
                         </div>
                         <div class="show_price" v-else >
-                          <span class="aff_price" > ₹ {{parseInt(amazonLinkPrice)}}</span>
+                          <span class="aff_price"  v-if="!isNaN(amazonLinkPrice)"> ₹ {{parseInt(amazonLinkPrice)}}</span>
                           <span>
                             <strong>BUY NOW</strong>
                         </span>
                         </div>
                       </a>
-                      <a v-else-if="parseInt(l.price)===999999999 || parseInt(amazonLinkPrice)===999999999" class="box">
+                      <a v-else-if="(parseInt(l.price) || parseInt(amazonLinkPrice)) == ('999999999' ||  999999999)" class="box">
                         <span class="aff_name">{{k.toUpperCase()}}</span>
                         <div  class="show_price" >
                           <span class="aff_price" ></span>
@@ -170,13 +171,13 @@
                         </span>
                         </div>
                         <div class="show_price" v-else >
-                          <span class="aff_price" > ₹ {{parseInt(amazonLinkPrice)}}</span>
+                          <span class="aff_price"  v-if="!isNaN(amazonLinkPrice)"> ₹ {{parseInt(amazonLinkPrice)}}</span>
                           <span>
                             <strong>BUY NOW</strong>
                         </span>
                         </div>
                       </a>
-                      <a v-else-if="parseInt(l.price)===999999999 || parseInt(amazonLinkPrice)===999999999" class="box">
+                      <a v-else-if="(parseInt(l.price) || parseInt(amazonLinkPrice)) == ('999999999' ||  999999999)" class="box">
                         <span class="aff_name">{{k.toUpperCase()}}</span>
                         <div  class="show_price" >
                           <span class="aff_price" ></span>

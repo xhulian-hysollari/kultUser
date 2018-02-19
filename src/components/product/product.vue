@@ -51,6 +51,63 @@
                  </li>
                </ul>
              </div>
+
+
+
+
+
+
+                  <!--li class="drop-down"  @mouseover="showDropdown2()" @mouseleave="closeDropdown2()">
+                    <a >BRANDS</a>
+                    <div class="mega-menu2 fadeIn animated" style="z-index: 999;margin-top: -1px;width: 10%;" >
+                      <div >
+								<span class="left-images" style="color: #888888; text-align: left; line-height: 20px" >
+                  <h6 @click="goTo(`/brandAll`)" style="color: #080808;    margin-top: 7px;"> A TO Z BRANDS</h6>
+								    <div v-for="(shop,i) in Object.keys(brandCat)" style="color: #080808;    margin-top: 7px;">
+                      <h6>{{shop.toUpperCase()}}</h6>
+                      <div v-for="j in Object.keys(brandCat[shop])"  style="color: #888888" @click="$router.push('/brandProduct/'+j)" >
+                        {{j.toUpperCase()}}
+                      </div>
+                    </div>
+				        </span>
+                      </div>
+                    </div>
+                  </li>
+
+
+
+
+                  <div class="tv_left"  v-if="$route.path.indexOf('brand') != -1" >
+                    <ul v-for="(shop,i) in Object.keys(brandCat)">
+                      <div class="howTo">
+                        {{shopOption}}
+                      </div>
+                      <div v-for="j in Object.keys(brandCat[shop])" >
+                        <li  class="active" v-if="$route.params.shopOption===shopOption" >
+                          <a>
+                            <span >{{shop.toUpperCase()}}</span>
+                          </a>
+                        </li>
+                      </div>
+                      <li v-else>
+                        <a   @click="goTo('/globalBestSeller/shopOption/' + shopOption);
+                   $route.params.shopOption=shopOption"
+                             v-if="$route.path.indexOf('global') != -1"
+                        >
+                          <span ></span>
+                        </a>
+                        <a   @click="goTo('/kultPick/shopOption/' + shopOption);
+                   $route.params.shopOption=shopOption"
+                             v-if="$route.path.indexOf('/kultPick') != -1"
+                        >
+                          <span >{{shopOption}}</span>
+                        </a>
+                      </li>
+                    </ul>
+                  </div-->
+
+
+
                   <div class="filter_title">
                     <span class="hide_toggler">{{toggler}}</span>
                     <a>ACTIVE FILTER <span>{{cnt}}</span></a>
@@ -199,7 +256,6 @@
                         </div>
                       </div>
                     </el-col>
-                    {{productsLoader}}
                     <button class="login_btn load_more_btn"
                     v-if="loadMoreLoader">
                       <i class='fa fa-spinner fa-spin ' ></i>

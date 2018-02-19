@@ -58,8 +58,8 @@
                       </div>
                     </div>
                   </div>
-                  <h6 style="color: #080808">KULT PICKS</h6>
-                  <h6 style="color: #080808" >GLOBAL BEST SELLERS</h6>
+                  <h6 style="color: #080808" @click="$router.push(`/globalBestSeller/shopOption/${sel}`)">KULT PICKS</h6>
+                  <h6 style="color: #080808" @click="$router.push(`/kultPick/shopOption/${sel}`)">GLOBAL BEST SELLERS</h6>
                 </div>
               </div>
             </div>
@@ -180,14 +180,11 @@
         beautyGuideArr:[
           'Blush',
           'Contouring',
-          'Foundation Shade Matrix',
           'Highlighting',
           'Mascaras',
           'Neutral Lips',
           'Acne',
-          'Cleansers',
-          'Masks',
-          'Skincare By Age',
+          'Skincare',
           'Sunscreens',
           'Antiaging'
         ]

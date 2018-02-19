@@ -205,6 +205,14 @@
                       </v-card-text>
                     </v-card>
                   </v-expansion-panel-content>
+                  <v-expansion-panel-content v-else>
+                    <div slot="header"  class="white ml_5" >{{name.name.toUpperCase()}}</div>
+                    <v-card flat v-if="name.name==='beauty guide'" class="white ml_20" >
+                      <v-card-text v-for="(guide,i) in beautyGuideArr" @click="goTo('/bGuide/'+ beautyGuideArr[i])">
+                        {{guide.toUpperCase()}}
+                      </v-card-text>
+                    </v-card>
+                  </v-expansion-panel-content>
                 </v-expansion-panel>
                 <v-expansion-panel >
                   <v-expansion-panel-content v-if="!isLoggedIn">
@@ -368,14 +376,11 @@
         beautyGuideArr:[
           'Blush',
           'Contouring',
-          'Foundation Shade Matrix',
           'Highlighting',
           'Mascaras',
           'Neutral Lips',
           'Acne',
-          'Cleansers',
-          'Masks',
-          'Skincare By Age',
+          'Skincare',
           'Sunscreens',
           'Antiaging'
         ]
