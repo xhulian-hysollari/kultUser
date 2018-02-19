@@ -345,16 +345,30 @@
       <div class="container text-center">
         <h3>Shop Our Instagram</h3>
         <a class="insta_outlink"  target="_blank"><img src="/static/images/instagram.svg" alt="instagram"> @kult.in</a>
+        <p style="visibility: hidden">dskfn</p>
         <div>
-          <div class="col-lg-2 visible-lg"  v-for="i in slider" >
+          <div class="col-lg-1 visible-lg"></div>
+          <div class="col-lg-2 visible-lg"  v-for="i in slider">
             <div class="hovereffect">
-              <img class="img-responsive" :src="i"  alt="">
-              <div class="overlay">
-                <a class="info" >OPEN</a>
+              <img class="img-responsive" :src="i.img"  alt="">
+              <div class="overlay" >
+                <a class="info" target="_blank" :href="i.url">OPEN</a>
               </div>
             </div>
           </div>
+          <div class="col-lg-1 visible-lg"></div>
         </div>
+
+        <div>
+          <div class="col-xs-1 visible-xs"></div>
+          <div class="col-xs-2 visible-xs"  v-for="i in slider">
+            <div class="hovereffect">
+              <img target="_blank" @click="openInNewTab(i.url)" class="img-responsive" :src="i.img"  alt="">
+            </div>
+          </div>
+          <div class="col-xs-1 visible-xs"></div>
+        </div>
+
         <div class="client_logo">
           <img class="hidden-xs" src="/static/images/brands.svg" alt="brands">
           <img class="visible-xs" src="/static/images/brands-mobile.svg" alt="brands">
@@ -372,12 +386,16 @@
     data(){
       return{
         slider:[
-          "/static/images/1@2x.jpg",
-          "/static/images/4@2x.jpg",
-          "/static/images/3@2x.jpg",
-          "/static/images/4@2x.jpg",
-          "/static/images/5@2x.jpg",
-          "/static/images/3@2x.jpg"
+          {img: "https://scontent-sea1-1.cdninstagram.com/t51.2885-15/s320x320/sh0.08/e35/23970197_148114855948390_3288466028287229952_n.jpg",
+            url: 'https://www.instagram.com/p/BcCc95wlGew/'},
+          {img: "https://scontent-sea1-1.cdninstagram.com/t51.2885-15/s320x320/sh0.08/e35/24174861_1440082859374873_8749213935208497152_n.jpg",
+            url: 'https://www.instagram.com/p/BcBuS-fFbp0/'},
+          {img:  "https://scontent-sea1-1.cdninstagram.com/t51.2885-15/s320x320/sh0.08/e35/24126740_168923103843096_6886462610066112512_n.jpg",
+            url: 'https://www.instagram.com/p/Bb9uN_cFIy0/'},
+          {img:"https://scontent-sea1-1.cdninstagram.com/t51.2885-15/e35/s320x320/23966995_195058901040355_3087356804582080512_n.jpg",
+            url: 'https://www.instagram.com/p/Bb7BffqFf6M/'},
+          {img: "https://scontent-sea1-1.cdninstagram.com/t51.2885-15/s320x320/sh0.08/e35/23967206_154084275216421_5255013097927606272_n.jpg",
+            url: 'https://www.instagram.com/p/Bb6TMQxlYua/'},
         ]
       }
     },
@@ -388,6 +406,12 @@
         'addWishlist',
         'removeWishlist'
       ]),
+      openInNewTab(url){
+        window.open(
+          url,
+          '_blank' // <- This is what makes it open in a new window.
+        );
+      }
     },
     created(){
 

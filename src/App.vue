@@ -1,5 +1,5 @@
 <template>
-  <div >
+  <div style="cursor:url(https://png.icons8.com/android/28/c0392b/fantasy.png), auto;">
 
     <loader v-if="dbRefLoader"></loader>
     <div v-else >
@@ -25,7 +25,10 @@
                 <div class="col-xs-4">
                   <p><img src="/static/images/pin-locate.svg" alt="pin-locate"><span>Mumbai, India</span></p>
                 </div>
-                <a @click="goTo('/')"  class="logo hidden-xs col-xs-4" style="text-align: center"><img src="/static/images/logo.svg" alt="logo"></a>
+
+                <div class="hidden-xs col-xs-4">
+                </div>
+
                 <div class="col-xs-4 text-right head_drop">
                   <div class="dropdown">
                     <p class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -84,7 +87,12 @@
                     </li>
                   </ul>
                 </div>
-                <search></search>
+
+                  <a @click="goTo('/')"  class="logo hidden-xs col-sm-1"
+                     style="">
+                    <img src="/static/images/logo.svg" alt="logo">
+                  </a>
+                  <search class="col-sm-7 " style="margin-top: -5px;"></search>
                 <!--a @click="goTo('/')"  class="logo hidden-xs"><img src="/static/images/logo.svg" alt="logo"></a>
 
                 <!--div-- class="col-sm-8 col-xs-12 pull-left">
@@ -543,6 +551,14 @@
 }
   .float-right{
     float: right;
+  }
+
+  /*** nav ***/
+  .menu > ul li a[data-v-efba1426], .xs-menu li a[data-v-efba1426] {
+    text-decoration: none;
+    color: #fff;
+    display: block;
+    padding: 0px 2vh ! important;
   }
 
 </style>

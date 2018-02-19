@@ -204,29 +204,45 @@
                     v-if="loadMoreLoader">
                       <i class='fa fa-spinner fa-spin ' ></i>
                     </button>
-                    <div  v-if="Object.keys($route.query).length===0">
+
+
+                    <!-- {{$route.query}}
+                    {{Object.keys(JSON.parse($route.query.selFilters)).length}} -->
+                    <!-- load more -->
+                    <div v-if="Object.keys($route.query).length == 0 "> <!-- no filter sel -->
+
+                      <!-- show load more -->
+
                       <button class="login_btn load_more_btn" @click="loadMoreProducts({
                       routePath: routeDet.routePath
-                    })" v-if="Object.keys(products).length !== totalProds && !loadMoreLoader && Object.keys(products).length !== 0"
-                      >
+                    })" v-if="Object.keys(products).length !== totalProds && !loadMoreLoader && Object.keys(products).length !== 0">
                         Load {{totalProds - Object.keys(products).length}} More Products
                       </button>
+
                     </div>
                     <div v-else>
-                      <div v-if="Object.keys($route.query.selFilters).length===0">
-                        <div>
-                          <button class="login_btn load_more_btn" @click="loadMoreProducts({
+
+                      <div v-if=" Object.keys(JSON.parse($route.query.selFilters)).length == 0 "> <!-- no fil sel -->
+
+                        <!-- show load more -->
+
+                        <button class="login_btn load_more_btn" @click="loadMoreProducts({
                       routePath: routeDet.routePath
-                    })" v-if="Object.keys(products).length !== totalProds && !loadMoreLoader && Object.keys(products).length !== 0"
-                          >
-                            Load {{totalProds - Object.keys(products).length}} More Products
-                          </button>
-                        </div>
+                    })" v-if="Object.keys(products).length !== totalProds && !loadMoreLoader && Object.keys(products).length !== 0">
+                          Load {{totalProds - Object.keys(products).length}} More Products
+                        </button>
+
                       </div>
-                      <div v-else>
+                      <div v-else> <!-- some fil sel -->
+
+                        <!-- donot show load more -->
+
                       </div>
+
                     </div>
-                    <div v-else></div>
+                    <!-- load more ends -->
+
+
                   </el-row>
                 </div>
                 <div class="clearfix"></div>
@@ -235,7 +251,6 @@
           </div>
         </div>
     </div>
-
 
   <!-- PRODUCTS=>
     <!-- if a product doesnot have priceStartsFrom or have value such as NaN or 999999999, the product is out of stock -->
@@ -384,7 +399,7 @@
     }
   }
 </script>
-<style>
+<style scoped>
   .hide_toggler{
     visibility: hidden;
   }
