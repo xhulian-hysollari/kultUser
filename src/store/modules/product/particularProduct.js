@@ -103,11 +103,11 @@ const mutations = {
               state.pTypeLoader = false //stop loader
             })
             //
-            mutations.fetchAmazonPrice(state,{
+            /*mutations.fetchAmazonPrice(state,{
               selected: state.selected,
               prodArr: state.prodArr,
               pid: payload.pId
-            })
+            })*/
           }
           //
         })
@@ -186,7 +186,6 @@ const mutations = {
                 funcName: 'saveAmazonPriceToDb'
               })
               //
-              state.amazonLoader = false
             }
             //*turn loader off*
             state.amazonLoader = false
