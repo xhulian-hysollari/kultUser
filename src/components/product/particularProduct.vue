@@ -1,12 +1,8 @@
 <template>
   <div>
 
-
-
-
-
-    <loader v-if="pTypeLoader"></loader>
-    <div v-if="!pTypeLoader">
+    <loader v-if="pTypeLoader "></loader>
+    <div v-if="!pTypeLoader ">
       <div class="banner_strip"></div>
       <div class="go_back">
         <div class="container">
@@ -88,7 +84,7 @@
                   </div-->
                   <ul class="prod_shoplinks list-unstyled" v-if="!isLoggedIn " >
                     <li  v-for="(l,k) in selected.det.affliateDomains">
-                      <a @click="$store.state.auth.showLoginPopup=true; $store.state.particularProduct.selectedLink =l.link"target="_blank" v-if="parseInt(l.price) < 10001 || parseInt(amazonPrice) <10001" class="box">
+                      <a @click="$store.state.auth.showLoginPopup=true; $store.state.particularProduct.selectedLink =l.link"target="_blank" v-if="parseInt(l.price) < 10001 || parseInt(amazonLinkPrice) <10001" class="box">
                         <span class="aff_name">{{k.toUpperCase()}}</span>
                         <!--span class="aff_price" v-if="l.price===undefined || l.price===999999999"> Out Of Stock</span-->
                         <div class="show_price" v-if="k !== 'amazon'">
@@ -98,13 +94,13 @@
                         </span>
                         </div>
                         <div class="show_price" v-else >
-                          <span class="aff_price" > ₹ {{parseInt(amazonPrice)}}</span>
+                          <span class="aff_price" > ₹ {{parseInt(amazonLinkPrice)}}</span>
                           <span>
                             <strong>BUY NOW</strong>
                         </span>
                         </div>
                       </a>
-                      <a v-else-if="parseInt(l.price)===999999999 || parseInt(amazonPrice)===999999999" class="box">
+                      <a v-else-if="parseInt(l.price)===999999999 || parseInt(amazonLinkPrice)===999999999" class="box">
                         <span class="aff_name">{{k.toUpperCase()}}</span>
                         <div  class="show_price" >
                           <span class="aff_price" ></span>
@@ -126,7 +122,7 @@
                   </ul>
                   <ul class="prod_shoplinks list-unstyled" v-if="isLoggedIn && email" >
                     <li  v-for="(l,k) in selected.det.affliateDomains" class="box">
-                      <a :href="l.link + '&subid=' + $store.state.auth.user.email" target="_blank" v-if="parseInt(l.price) < 10001 || parseInt(amazonPrice) <10001">
+                      <a :href="l.link + '&subid=' + $store.state.auth.user.email" target="_blank" v-if="parseInt(l.price) < 10001 || parseInt(amazonLinkPrice) <10001">
                         <span class="aff_name">{{k.toUpperCase()}}</span>
                         <!--span class="aff_price" v-if="l.price===undefined || l.price===999999999"> Out Of Stock</span-->
                         <div class="show_price" v-if="k !== 'amazon'">
@@ -136,13 +132,13 @@
                         </span>
                         </div>
                         <div class="show_price" v-else >
-                          <span class="aff_price" > ₹ {{parseInt(amazonPrice)}}</span>
+                          <span class="aff_price" > ₹ {{parseInt(amazonLinkPrice)}}</span>
                           <span>
                             <strong>BUY NOW</strong>
                         </span>
                         </div>
                       </a>
-                      <a v-else-if="parseInt(l.price)===999999999 || parseInt(amazonPrice)===999999999" class="box">
+                      <a v-else-if="parseInt(l.price)===999999999 || parseInt(amazonLinkPrice)===999999999" class="box">
                         <span class="aff_name">{{k.toUpperCase()}}</span>
                         <div  class="show_price" >
                           <span class="aff_price" ></span>
@@ -164,7 +160,7 @@
                   </ul>
                   <ul class="prod_shoplinks list-unstyled" v-if="isLoggedIn &&   !email" >
                     <li  v-for="(l,k) in selected.det.affliateDomains" >
-                      <a @click="dialog=true;$store.state.particularProduct.selectedLink =l.link " v-if="parseInt(l.price) < 10001 || parseInt(amazonPrice) <10001" class="box">
+                      <a @click="dialog=true;$store.state.particularProduct.selectedLink =l.link " v-if="parseInt(l.price) < 10001 || parseInt(amazonLinkPrice) <10001" class="box">
                         <span class="aff_name">{{k.toUpperCase()}}</span>
                         <!--span class="aff_price" v-if="l.price===undefined || l.price===999999999"> Out Of Stock</span-->
                         <div class="show_price" v-if="k !== 'amazon'">
@@ -174,13 +170,13 @@
                         </span>
                         </div>
                         <div class="show_price" v-else >
-                          <span class="aff_price" > ₹ {{parseInt(amazonPrice)}}</span>
+                          <span class="aff_price" > ₹ {{parseInt(amazonLinkPrice)}}</span>
                           <span>
                             <strong>BUY NOW</strong>
                         </span>
                         </div>
                       </a>
-                      <a v-else-if="parseInt(l.price)===999999999 || parseInt(amazonPrice)===999999999" class="box">
+                      <a v-else-if="parseInt(l.price)===999999999 || parseInt(amazonLinkPrice)===999999999" class="box">
                         <span class="aff_name">{{k.toUpperCase()}}</span>
                         <div  class="show_price" >
                           <span class="aff_price" ></span>
