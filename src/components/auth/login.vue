@@ -3,9 +3,10 @@
 
 
 
-<div >
+<div>
+  <!-- {{screenW}} -->
   <el-dialog
-    width="40%"
+    :width="screenW"
     :visible.sync="$store.state.auth.showLoginPopup"
   >
     <div class="for_mobile">
@@ -233,7 +234,8 @@
         'showLoginPopup',
         'loginBtnLoader',
         'selectedLink',
-        'isRefGiven'
+        'isRefGiven',
+        'screenW'
       ])
     },
     methods:{

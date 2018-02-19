@@ -1,5 +1,5 @@
 <template>
-  <div style="cursor:url(https://png.icons8.com/android/28/c0392b/fantasy.png), auto;">
+  <div style="cursor:url(https://png.icons8.com/android/28/f31d28/fantasy.png), auto;">
 
     <loader v-if="dbRefLoader"></loader>
     <div v-else >
@@ -117,6 +117,7 @@
                 </div-->
               </div>
             </div>
+            <br>
             <dropdown></dropdown>
             <div  @mouseleave="showdiv=false" v-if="showdiv" style="min-height: 1000px">
               <div  v-for="(shop,i) in Object.keys(shopOptions)" class="shop_pa">
@@ -444,6 +445,13 @@
       window.thisOfVueComp_2 = this
       this.$store.commit('getGlobalBestSellersOnHomePage')
       this.$store.commit('getJustArrivedOnHomePage')
+      //
+      console.log(window.innerWidth)
+      if(window.innerWidth <= 768){
+        this.$store.state.gen.screenW = '80%'
+      }else{
+        this.$store.state.gen.screenW = '40%'
+      }
     },
     updated(){
       this.$store.commit('getLoginStatus')

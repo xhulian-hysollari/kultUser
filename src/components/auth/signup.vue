@@ -4,7 +4,7 @@
 
     <el-dialog
       :visible.sync="$store.state.auth.showRegisterPopup"
-      width="40%"
+      :width="screenW"
     >
       <div>
         <div>
@@ -143,7 +143,8 @@
     computed:{
       ...mapGetters([
         'closeAuthDialog',
-        'btnLoader'
+        'btnLoader',
+        'screenW'
       ])
     },
     methods:{

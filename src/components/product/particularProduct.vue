@@ -2,9 +2,9 @@
   <div>
 
     <!--{{selected}}-->
-    {{ amazonLinkPrice}}
     <loader v-if="pTypeLoader "></loader>
     <div v-if="!pTypeLoader ">
+      <!--{{ amazonLinkPrice}}-->
       <div class="banner_strip"></div>
       <div class="go_back">
         <div class="container">
@@ -454,15 +454,15 @@
         //
       },
       selVar : ()=>{
+
        let vm = this
         //setTimeout(()=>{
-
 
           console.log("[@@@] => "  ,  window.thisOfVueComp.$store.state.particularProduct.selected )
           //
           let x =  window.thisOfVueComp.$store.state.particularProduct.selected
           console.log("[###]",x)
-          let y
+          let y = ''
 
           if( Object.keys(x.det.affliateDomains).indexOf('amazon') != -1 ){ //amazon is there
             let url = x.det.affliateDomains.amazon.link
@@ -494,17 +494,24 @@
                   console.log("2 => ", result_2)
                   if(result_2 == '-1'){
                     y = 'Failed to fetch Price !'
+                    window.thisOfVueComp.amazonLinkPrice = y
+                    console.log("[%] => ", window.thisOfVueComp.amazonLinkPrice )
                     //state.amazonLoader = false
                     window.thisOfVueComp.$forceUpdate()
                     //failed to fetch price, show accordingly(message) on dom
                   }else if(result_2 == '999999999'){
-                    state.amazonLinkPrice = 'Out Of Stock'
+                    y = 'Out Of Stock'
+                    window.thisOfVueComp.amazonLinkPrice = y
+                    console.log("[%%] => ", window.thisOfVueComp.amazonLinkPrice )
                     //state.amazonLoader = false
                     window.thisOfVueComp.$forceUpdate()
                     //show out of stock on dom
                   }else{
                     console.log("[save] => ",result_2)  // show result on dom //this is price of amazon link
                     y = result_2
+                    window.thisOfVueComp.amazonLinkPrice = y
+                    console.log("[%] => ", window.thisOfVueComp.amazonLinkPrice )
+                    window.thisOfVueComp.$forceUpdate()
                     //
                     window.thisOfVueComp.$store.dispatch('axiosReq', {
                       params: {
@@ -518,12 +525,14 @@
                   }
                   //*turn loader off*
                   //state.amazonLoader = false
-                  window.thisOfVueComp.$forceUpdate()
+                  //window.thisOfVueComp.$forceUpdate()
                   //
                 })
               } else {
                 console.log(result_1) // show result on dom //this is price of amazon link
                 y = result_1
+                window.thisOfVueComp.amazonLinkPrice = y
+                console.log("[%] => ", window.thisOfVueComp.amazonLinkPrice )
                 //*turn loader off*
                 //state.amazonLoader = false
                 window.thisOfVueComp.$forceUpdate()
@@ -537,8 +546,10 @@
           }
           //
           //
-          window.thisOfVueComp.amazonLinkPrice = y
+        /*
           window.thisOfVueComp.$forceUpdate()
+        console.log(y)
+          console.log(window.thisOfVueComp.amazonLinkPrice) */
         //},6000)
       }
     },
