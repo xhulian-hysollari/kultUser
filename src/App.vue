@@ -1,5 +1,5 @@
 <template>
-  <div style="cursor:url(https://png.icons8.com/android/28/c0392b/fantasy.png), auto;">
+  <div style="cursor:url(https://png.icons8.com/android/28/f31d28/fantasy.png), auto;">
 
     <loader v-if="dbRefLoader"></loader>
     <div v-else >
@@ -19,6 +19,7 @@
                 </p>
               </div>
             </div>
+
             <div class="container top_misc hidden-xs">
               <br>
               <div class="row">
@@ -62,6 +63,7 @@
                     <span class="hamb-bottom"></span>
                   </button>
                   <a class="logo visible-xs" @click="goTo('/')"><img src="/static/images/logo.svg" alt="logo"></a>
+
                   <ul class="top_quick_links">
                     <li>
                       <a  v-if="isLoggedIn" @click="goTo('/wishlist')">
@@ -92,7 +94,7 @@
                      style="">
                     <img src="/static/images/logo.svg" alt="logo">
                   </a>
-                  <search class="col-sm-7 " style="margin-top: -5px;"></search>
+                  <search class="col-sm-7 col-xs-12 " style="margin-top: -5px;"></search>
                 <!--a @click="goTo('/')"  class="logo hidden-xs"><img src="/static/images/logo.svg" alt="logo"></a>
 
                 <!--div-- class="col-sm-8 col-xs-12 pull-left">
@@ -117,6 +119,7 @@
                 </div-->
               </div>
             </div>
+            <br>
             <dropdown></dropdown>
             <div  @mouseleave="showdiv=false" v-if="showdiv" style="min-height: 1000px">
               <div  v-for="(shop,i) in Object.keys(shopOptions)" class="shop_pa">
@@ -239,7 +242,6 @@
                 </v-expansion-panel>
               </ul>
             </nav>
-
           </header>
           <login_form></login_form>
           <signup_form></signup_form>
@@ -449,6 +451,13 @@
       window.thisOfVueComp_2 = this
       this.$store.commit('getGlobalBestSellersOnHomePage')
       this.$store.commit('getJustArrivedOnHomePage')
+      //
+      console.log(window.innerWidth)
+      if(window.innerWidth <= 768){
+        this.$store.state.gen.screenW = '80%'
+      }else{
+        this.$store.state.gen.screenW = '40%'
+      }
     },
     updated(){
       this.$store.commit('getLoginStatus')

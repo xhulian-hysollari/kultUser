@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div >
     <loader v-if="shopOptionLoader || brandCatLoader"></loader>
     <div class="container hidden-xs" v-else>
       <div class="xs-menu-cont">
@@ -31,11 +31,11 @@
           </ul>
         </nav>
       </div>
-      <nav class="menu">
-        <ul>
-          <li class="drop-down" @mouseover="showDropdown()" @mouseleave="closeDropdown()">
+      <nav class="menu" >
+        <ul >
+          <li class="drop-down" @mouseover="showDropdown()" @mouseleave="closeDropdown()" >
             <a >SHOP</a>
-            <div class="mega-menu fadeIn animated" style="z-index: 999;text-align: left;margin-top: -1px; " >
+            <div class="mega-menu fadeIn animated" style="z-index: 999;text-align: left;margin-top: -1px;box-shadow: 1px 1px 3px #aaaaaa " >
               <div class="mm-3column">
 								<span class="left-images" style="color: #888888" >
 								    <div v-for="(shop,i) in shopArr" @mouseover="sel = shop" class="shop_opt">
@@ -67,7 +67,7 @@
           </li>
           <li class="drop-down"  @mouseover="showDropdown2()" @mouseleave="closeDropdown2()">
             <a >BRANDS</a>
-            <div class="mega-menu2 fadeIn animated" style="z-index: 999;margin-top: -1px;width: 10%;" >
+            <div class="mega-menu2 fadeIn animated" style="z-index: 999;margin-top: -1px;width: 10%;box-shadow: 1px 1px 3px #aaaaaa" >
               <div >
 								<span class="left-images" style="color: #888888; text-align: left; line-height: 20px" >
                   <h6 @click="goTo(`/brandAll`)" style="color: #080808;    margin-top: 7px;"> A TO Z BRANDS</h6>
@@ -85,7 +85,7 @@
           <li @click="goTo('/globalBestseller')"><a >GLOBAL BESTSELLERS</a></li>
           <li class="drop-down" @mouseover="showDropdown3()" @mouseleave="closeDropdown3();" >
             <a >BEAUTY GUIDE</a>
-            <div class="mega-menu3 fadeIn animated" style="z-index: 999;margin-top: -1px; width: 10%" >
+            <div class="mega-menu3 fadeIn animated" style="z-index: 999;margin-top: -1px; width: 10%;box-shadow: 1px 1px 3px #aaaaaa" >
               <div >
 								<span class="left-images" style="color: #888888; text-align: left;  line-height: 20px" >
 								    <div  v-for="(guide,i) in beautyGuideArr" @click="goTo('/bGuide/'+ beautyGuideArr[i])">

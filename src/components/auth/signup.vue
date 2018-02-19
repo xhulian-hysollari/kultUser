@@ -4,11 +4,11 @@
 
     <el-dialog
       :visible.sync="$store.state.auth.showRegisterPopup"
-      width="60%"
+      :width="screenW"
     >
       <div>
         <div>
-        <div class="modal-content comm_modal">
+        <div class="modal-content comm_modal" >
           <div class="reg_pop"><img src="/static/images/arrow-down.svg" alt="arrow-down"> Register in a few easy steps</div>
           <button type="button" class="modal_close" @click="$store.state.auth.showRegisterPopup=false" aria-label="Close"><img src="/static/images/close.svg" alt="close"></button>
           <div class="modal_left">
@@ -143,7 +143,8 @@
     computed:{
       ...mapGetters([
         'closeAuthDialog',
-        'btnLoader'
+        'btnLoader',
+        'screenW'
       ])
     },
     methods:{

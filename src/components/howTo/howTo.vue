@@ -210,6 +210,7 @@
     },
     created(){
       window.thisOfVueComp = this
+      window.thisOfVueComp7 = this
       //
       this.$store.commit('getHowToCat')
     },
@@ -241,6 +242,20 @@
         },5000)
 
         console.log('Vid Loaded')
+      }
+    },
+    beforeDestroy(){
+      //this.dialog = false
+    },
+    watch:{
+      '$route':()=>{
+        console.log('kult tv route watch')
+        //$(".modal").removeClass("in");
+        //$(".modal-backdrop").remove();
+        //$('body').removeClass('modal-open');
+        //$('body').css('padding-right', '');
+        //$(".modal").hide();
+        //window.thisOfVueComp7.dialog =  false
       }
     }
   }

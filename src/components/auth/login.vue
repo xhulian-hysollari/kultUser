@@ -3,9 +3,10 @@
 
 
 
-<div class="idden-xs">
+<div>
+  <!-- {{screenW}} -->
   <el-dialog
-    width="614px"
+    :width="screenW"
     :visible.sync="$store.state.auth.showLoginPopup"
   >
     <div class="for_mobile">
@@ -80,7 +81,7 @@
     </div>
   </el-dialog>
 </div>
-<div class="visible-xs">
+<!--div class="visible-xs">
       <el-dialog
         width="60%"
         :visible.sync="$store.state.auth.showLoginPopup"
@@ -156,7 +157,7 @@
           </div>
         </div>
       </el-dialog>
-    </div>
+    </div-->
 
 
 
@@ -233,7 +234,8 @@
         'showLoginPopup',
         'loginBtnLoader',
         'selectedLink',
-        'isRefGiven'
+        'isRefGiven',
+        'screenW'
       ])
     },
     methods:{
