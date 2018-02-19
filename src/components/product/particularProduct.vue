@@ -88,17 +88,23 @@
                   </div-->
                   <ul class="prod_shoplinks list-unstyled" v-if="!isLoggedIn " >
                     <li  v-for="(l,k) in selected.det.affliateDomains">
-                      <a @click="$store.state.auth.showLoginPopup=true; $store.state.particularProduct.selectedLink =l.link"target="_blank" v-if="parseInt(l.price) < 10001" class="box">
+                      <a @click="$store.state.auth.showLoginPopup=true; $store.state.particularProduct.selectedLink =l.link"target="_blank" v-if="parseInt(l.price) < 10001 || parseInt(amazonPrice) <10001" class="box">
                         <span class="aff_name">{{k.toUpperCase()}}</span>
                         <!--span class="aff_price" v-if="l.price===undefined || l.price===999999999"> Out Of Stock</span-->
-                        <div class="show_price" >
+                        <div class="show_price" v-if="k !== 'amazon'">
                           <span class="aff_price" > ₹ {{l.price}}</span>
                           <span>
                             <strong>BUY NOW</strong>
                         </span>
                         </div>
+                        <div class="show_price" v-else >
+                          <span class="aff_price" > ₹ {{parseInt(amazonPrice)}}</span>
+                          <span>
+                            <strong>BUY NOW</strong>
+                        </span>
+                        </div>
                       </a>
-                      <a v-else-if="parseInt(l.price)===999999999 " class="box">
+                      <a v-else-if="parseInt(l.price)===999999999 || parseInt(amazonPrice)===999999999" class="box">
                         <span class="aff_name">{{k.toUpperCase()}}</span>
                         <div  class="show_price" >
                           <span class="aff_price" ></span>
@@ -120,17 +126,23 @@
                   </ul>
                   <ul class="prod_shoplinks list-unstyled" v-if="isLoggedIn && email" >
                     <li  v-for="(l,k) in selected.det.affliateDomains" class="box">
-                      <a :href="l.link + '&subid=' + $store.state.auth.user.email" target="_blank" v-if="parseInt(l.price) < 10001 ">
+                      <a :href="l.link + '&subid=' + $store.state.auth.user.email" target="_blank" v-if="parseInt(l.price) < 10001 || parseInt(amazonPrice) <10001">
                         <span class="aff_name">{{k.toUpperCase()}}</span>
                         <!--span class="aff_price" v-if="l.price===undefined || l.price===999999999"> Out Of Stock</span-->
-                        <div class="show_price" >
-                            <span class="aff_price" > ₹ {{l.price}}</span>
-                        <span>
+                        <div class="show_price" v-if="k !== 'amazon'">
+                          <span class="aff_price" > ₹ {{l.price}}</span>
+                          <span>
+                            <strong>BUY NOW</strong>
+                        </span>
+                        </div>
+                        <div class="show_price" v-else >
+                          <span class="aff_price" > ₹ {{parseInt(amazonPrice)}}</span>
+                          <span>
                             <strong>BUY NOW</strong>
                         </span>
                         </div>
                       </a>
-                      <a v-else-if="parseInt(l.price)===999999999 " class="box">
+                      <a v-else-if="parseInt(l.price)===999999999 || parseInt(amazonPrice)===999999999" class="box">
                         <span class="aff_name">{{k.toUpperCase()}}</span>
                         <div  class="show_price" >
                           <span class="aff_price" ></span>
@@ -152,7 +164,7 @@
                   </ul>
                   <ul class="prod_shoplinks list-unstyled" v-if="isLoggedIn &&   !email" >
                     <li  v-for="(l,k) in selected.det.affliateDomains" >
-                      <a @click="dialog=true;$store.state.particularProduct.selectedLink =l.link " v-if="parseInt(l.price) < 10001 " class="box">
+                      <a @click="dialog=true;$store.state.particularProduct.selectedLink =l.link " v-if="parseInt(l.price) < 10001 || parseInt(amazonPrice) <10001" class="box">
                         <span class="aff_name">{{k.toUpperCase()}}</span>
                         <!--span class="aff_price" v-if="l.price===undefined || l.price===999999999"> Out Of Stock</span-->
                         <div class="show_price" v-if="k !== 'amazon'">
@@ -161,8 +173,14 @@
                             <strong>BUY NOW</strong>
                         </span>
                         </div>
+                        <div class="show_price" v-else >
+                          <span class="aff_price" > ₹ {{parseInt(amazonPrice)}}</span>
+                          <span>
+                            <strong>BUY NOW</strong>
+                        </span>
+                        </div>
                       </a>
-                      <a v-else-if="parseInt(l.price)===999999999 " class="box">
+                      <a v-else-if="parseInt(l.price)===999999999 || parseInt(amazonPrice)===999999999" class="box">
                         <span class="aff_name">{{k.toUpperCase()}}</span>
                         <div  class="show_price" >
                           <span class="aff_price" ></span>
@@ -405,7 +423,8 @@
         'selected',
         'pTypeLoader',
         'isLoggedIn',
-        'selectedLink'
+        'selectedLink',
+        'amazonLoader'
 
       ])
     },
@@ -435,65 +454,111 @@
       ]),
 
       fetchAmazonPrice(){
+        let vm = this
+        let temp = {}
+        this.$store.state.particularProduct.amazonLoader=true
+
+        setTimeout(()=>{
+          vm.$store.state.particularProduct.amazonLoader=false
+        },2000)
+        //condition 1
+        //if one object in pTypes
+        //url = Object.keys(ptypes)[0].affliateDomains.amazon.link
+        //pid= this.$route.params.pId
+        //pType=  Object.keys(ptypes)[0]
+        //condition 2 // selected
+        //url = selected.det.affliateDomains.amazon.link
+        //pid=this.$route.params.pId
+        //pType=selected.key
+
+
+
+
+
+
+      //  console.log(vm.$store.state.particularProduct.pTypes)
+        //if( == 1){
+        //  console.log(vm.$store.state.particularProduct.pTypes)
+        //}
+
+       // console.log(vm.$store.state.particularProduct.selected)//selected is empty
         //
         //*turn loader on*
         //
-        console.log("fetchAmazonPrice")
+
+       /* console.log("fetchAmazonPrice")
         //
         console.log("[selected] => ", this.$store.state.particularProduct.selected)
         //
         this.amazonPriceLoaded = true
         //
         //
-        this.$store.dispatch('axiosReq', {
-          params: {
-            pId: this.$route.params.pid,
-            pType: this.$store.state.particularProduct.selected.key
-          },
-          funcName: 'getAmazonPriceFromDb'
-        }).then((result_1)=>{
-          if(result_1 == '-1' || result_1 == '999999999'){ //not in db / or out of stock etc ...
-            this.$store.dispatch('axiosReq', {
-              params: {
-                url: this.$store.state.particularProduct.selected.det.affliateDomains.amazon.link //amazon lik url , fill**
-              },
-              funcName: 'getAmazonPriceFromAPI'
-            }).then((result_2)=>{
-              //
-              if(result_2 == '-1'){
-                this.amazonPrice = 'NoPrice'
-                //failed to fetch price, show accordingly(message) on dom
-              }else if(result_2 == '999999999'){
-                this.amazonPrice='Out Of Stock'
-                //show out of stock on dom
-              }else{
-                console.log(result_2)  // show result on dom //this is price of amazon link
-                this.amazonPrice=result_2
-                //
-                this.$store.dispatch('axiosReq', {
-                  payload: {
-                    pId: this.$route.params.pid,// fill**,
-                    pType: this.$store.state.particularProduct.selected.key, // fill**
-                    price: result_2
-                  },
-                  funcName: 'saveAmazonPriceToDb'
-                })
-                //
-              }
-              //*turn loader off*
-              //
-            })
-          } else {
-            console.log(result) // show result on dom //this is price of amazon link
-            this.amazonPrice=result
-            //*turn loader off*
+       // console.log(Object.keys(vm.$store.state.particularProduct.pTypes))
+        if(Object.keys(vm.$store.state.particularProduct.pTypes).length === 1){
+          for(let i in vm.$store.state.particularProduct.pTypes){
+            // console.log(vm.$store.state.particularProduct.pTypes[i])
+              temp = i
+            //  console.log(temp.key)
           }
-        })
+        }else{
+         // console.log('=================================')
+          temp = vm.$store.state.particularProduct.selected
+        }
+        setTimeout(()=>{
+         // console.log(this.$route.params.pId)
+          //console.log(temp)
+          this.$store.dispatch('axiosReq', {
+            params: {
+              pId: vm.$route.params.pId.toString(),
+              pType: temp.key
+            },
+            funcName: 'getAmazonPriceFromDb'
+          }).then((result_1)=>{
+            if(result_1 == '-1' || result_1 == '999999999'){ //not in db / or out of stock etc ...
+              this.$store.dispatch('axiosReq', {
+                params: {
+                  url: temp.det.affliateDomains.amazon.link //amazon lik url , fill**
+                },
+                funcName: 'getAmazonPriceFromAPI'
+              }).then((result_2)=>{
+                //
+                if(result_2 == '-1'){
+                  this.amazonPrice = 'NoPrice'
+                  //failed to fetch price, show accordingly(message) on dom
+                }else if(result_2 == '999999999'){
+                  this.amazonPrice='Out Of Stock'
+                  //show out of stock on dom
+                }else{
+                  console.log(result_2)  // show result on dom //this is price of amazon link
+                  this.amazonPrice=result_2
+                  //
+                  this.$store.dispatch('axiosReq', {
+                    payload: {
+                      pId: this.$route.params.pid,// fill**,
+                      pType: this.$store.state.particularProduct.selected.key, // fill**
+                      price: result_2
+                    },
+                    funcName: 'saveAmazonPriceToDb'
+                  })
+                  //
+                }
+                //*turn loader off*
+                //
+
+              })
+            } else {
+              console.log(result) // show result on dom //this is price of amazon link
+              this.amazonPrice=result
+              //*turn loader off*
+            }
+          })
+        },3000)
+
         //
         //
         setTimeout(()=>{
           this.amazonPriceLoaded = false
-        },2000)
+        },2000)*/
       }
     },
     beforeDestroy(){

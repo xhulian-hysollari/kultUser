@@ -5,14 +5,14 @@
 
 <div class="for_mobile">
   <el-dialog
-    width="614px"
+    width="60%"
     :visible.sync="$store.state.auth.showLoginPopup"
   >
     <div class="for_mobile">
       <div >
         <div v-if="showRefCode" class="modal-content comm_modal" >
           <h2 >Enter Your Phone Number</h2>
-          <phone-ref v-if="showRefCode"></phone-ref>
+          <phone-ref v-if="showRefCode " v-show="!isRefGiven"></phone-ref>
         </div>
         <div class="modal-content comm_modal " v-else>
           <button type="button" class="modal_close" @click="$store.state.auth.showLoginPopup=false" aria-label="Close"><img src="/static/images/close.svg" alt="close"></button>
@@ -136,6 +136,7 @@
 </template>
 
 <script>
+  import axios from 'axios'
   import phoneRef from './phoneRef.vue'
   import forgot from './forgotPassword.vue'
   import {mapMutations} from 'vuex'
@@ -155,7 +156,8 @@
         'showRefCode',
         'showLoginPopup',
         'loginBtnLoader',
-        'selectedLink'
+        'selectedLink',
+        'isRefGiven'
       ])
     },
     methods:{
@@ -173,7 +175,10 @@
           this.$store.state.auth.showLoginPopup =false
         },200)
 
-      }
+      },
+    },
+    created(){
+
     }
   }
 </script>

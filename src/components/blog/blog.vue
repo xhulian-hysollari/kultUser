@@ -69,21 +69,6 @@
             </div>
             <div class="col-sm-5 col-xs-12 hidden-xs sidebar" >
               <div class="side_box" >
-                <loader v-if=" blogsAtHomeLoader"></loader>
-                <div v-if="!blogsAtHomeLoader" v-show="Object.keys(blogsAtHome).length !== 1">
-                          <div class="blog_repeat">
-                            <div class="blog_image">
-                              <a  ><img :src="Object.values(blogsAtHome)[(Object.values(blogsAtHome).length) -1].blogImgUrl" alt="blog" ></a>
-                              <a  class="blog_tag" v-for="tag in Object.values(blogsAtHome)[(Object.values(blogsAtHome).length) -1].blogTag">#{{tag}}</a>
-                            </div>
-                            <div class="blog_cont">
-                              <h3>{{Object.keys(blogsAtHome)[(Object.values(blogsAtHome).length) -1]}}</h3>
-                              <span class="blog_date">{{dates(Object.values(blogsAtHome)[(Object.values(blogsAtHome).length) -1].date)}}</span>
-                              <span v-html="blogCont(Object.values(blogsAtHome)[(Object.values(blogsAtHome).length) -1].blogContent)"></span>...
-                              <a  class="blog_read" @click="$router.push({path:'/article', query:{name:Object.keys(blogsAtHome)[(Object.values(blogsAtHome).length) -1]}})">Read more</a>
-                            </div>
-                          </div>
-                        </div>
                         <div class="side_box" >
                           <div class="blog_repeat" >
                             <div class="blog_contact">
