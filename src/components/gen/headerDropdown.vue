@@ -58,7 +58,7 @@
                       </div>
                     </div>
                   </div>
-                  <h6 style="color: #080808">KULT PICKS</h6>
+                  <h6 style="color: #080808" >KULT PICKS</h6>
                   <h6 style="color: #080808" >GLOBAL BEST SELLERS</h6>
                 </div>
               </div>

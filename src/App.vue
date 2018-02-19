@@ -19,6 +19,7 @@
                 </p>
               </div>
             </div>
+
             <div class="container top_misc hidden-xs">
               <br>
               <div class="row">
@@ -62,6 +63,7 @@
                     <span class="hamb-bottom"></span>
                   </button>
                   <a class="logo visible-xs" @click="goTo('/')"><img src="/static/images/logo.svg" alt="logo"></a>
+
                   <ul class="top_quick_links">
                     <li>
                       <a  v-if="isLoggedIn" @click="goTo('/wishlist')">
@@ -92,7 +94,7 @@
                      style="">
                     <img src="/static/images/logo.svg" alt="logo">
                   </a>
-                  <search class="col-sm-7 " style="margin-top: -5px;"></search>
+                  <search class="col-sm-7 col-xs-12 " style="margin-top: -5px;"></search>
                 <!--a @click="goTo('/')"  class="logo hidden-xs"><img src="/static/images/logo.svg" alt="logo"></a>
 
                 <!--div-- class="col-sm-8 col-xs-12 pull-left">
@@ -232,7 +234,6 @@
                 </v-expansion-panel>
               </ul>
             </nav>
-
           </header>
           <login_form></login_form>
           <signup_form></signup_form>
