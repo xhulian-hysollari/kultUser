@@ -9,7 +9,8 @@ const state = {
   selectedLink:'',
   emailVerified:false,
   amazonLoader:false,
-
+  //
+  amazonLinkPrice: ''
 }
 
 const getters = {
@@ -19,7 +20,9 @@ const getters = {
   prodArr: state => state.prodArr,
   selected: state => state.selected,
   selectedLink:state=>state.selectedLink,
-  amazonLoader:state=>state.amazonLoader
+  amazonLoader:state=>state.amazonLoader,
+  //
+  amazonLinkPrice: state => state.amazonLinkPrice
 }
 
 const mutations = {
@@ -95,15 +98,113 @@ const mutations = {
             window.thisOfVueComp.$forceUpdate()
             actions.getProd().then(function (snap) {
               state.selected = state.prodArr[0]
-              console.log(state.selected)
+              console.log("[selected] => ", state.selected)
             }).then(function () {
               state.pTypeLoader = false //stop loader
+            })
+            //
+            mutations.fetchAmazonPrice(state,{
+              selected: state.selected,
+              prodArr: state.prodArr,
+              pid: payload.pId
             })
           }
           //
         })
       })
     })
+  },
+  //
+  fetchAmazonPrice(state2, payload){
+    let vm = this
+    //
+    console.log("[fetchAmazonPrice]", payload)
+    //
+    state.amazonLoader = true
+    //
+    console.log("[prodArrLen] => ", state.prodArr.length)
+    //
+    let x
+    //
+    if(state.prodArr.length == 1){  //condition 1 => if one pTYpe => use prodArr
+      x = payload.prodArr[0]
+    } else {  //condition 2 => if more than 1 pType => use selected
+      x = payload.selected
+    }
+    //
+    console.log("[x] => ", x)
+    //
+
+    if( Object.keys(x.det.affliateDomains).indexOf('amazon') != -1 ){ //amazon is their
+      let url = x.det.affliateDomains.amazon.link
+      let pId = payload.pid
+      let pType = x.key
+      //
+      //
+      console.log("[pid] => ", pId)
+      console.log("[pType] => ", pType)
+      console.log("[url] => ", url)
+      //
+      //
+      gen.actions.axiosReq(state, {
+        params: {
+          pId, //fill **
+          pType //fill**
+        },
+        funcName: 'getAmazonPriceFromDb'
+      }).then((result_1)=>{
+        console.log("1 => ", result_1)
+        if(result_1 == '-1' || result_1 == '999999999'){ //not in db / or out of stock etc ...
+          gen.actions.axiosReq(state, {
+            params: {
+              url //amazon lik url , fill**
+            },
+            funcName: 'getAmazonPriceFromAPI'
+          }).then((result_2)=>{
+            //
+            console.log("2 => ", result_2)
+            if(result_2 == '-1'){
+              state.amazonLinkPrice = 'Failed to fetch Price !'
+              window.thisOfVueComp.$forceUpdate()
+              //failed to fetch price, show accordingly(message) on dom
+            }else if(result_2 == '999999999'){
+              state.amazonLinkPrice = 'Out Of Stock'
+              window.thisOfVueComp.$forceUpdate()
+              //show out of stock on dom
+            }else{
+              console.log("[save] => ",result_2)  // show result on dom //this is price of amazon link
+              state.amazonLinkPrice = result_2
+              //
+              gen.actions.axiosReq(state, {
+                params: {
+                  pId, // fill**,
+                  pType, // fill**
+                  price: result_2
+                },
+                funcName: 'saveAmazonPriceToDb'
+              })
+              //
+            }
+            //*turn loader off*
+            state.amazonLoader = false
+            window.thisOfVueComp.$forceUpdate()
+            //
+          })
+        } else {
+          console.log(result_1) // show result on dom //this is price of amazon link
+          state.amazonLinkPrice = result_1
+          //*turn loader off*
+          state.amazonLoader = false
+          window.thisOfVueComp.$forceUpdate()
+        }
+      })
+      //
+      //
+    }else{
+      //do nothing
+      state.amazonLoader = false  //stop loader
+    }
+    //
   }
 }
 

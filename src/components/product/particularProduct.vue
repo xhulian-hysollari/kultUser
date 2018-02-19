@@ -424,8 +424,9 @@
         'pTypeLoader',
         'isLoggedIn',
         'selectedLink',
-        'amazonLoader'
-
+        'amazonLoader',
+        //
+        'amazonLinkPrice' //show this ******
       ])
     },
     watch:{
@@ -442,8 +443,8 @@
         //
         console.log("[selected]", this.$store.state.particularProduct.selected)
         //
-        if(!this.amazonPriceLoaded)
-          this.fetchAmazonPrice()
+        //if(!this.amazonPriceLoaded)
+          //this.fetchAmazonPrice()
         //
       }
     },
@@ -451,116 +452,9 @@
       ...mapMutations([
         'addWishlist',
         'removeWishlist'
-      ]),
-
-      fetchAmazonPrice(){
-        let vm = this
-        let temp = {}
-        this.$store.state.particularProduct.amazonLoader=true
-
-        setTimeout(()=>{
-          vm.$store.state.particularProduct.amazonLoader=false
-        },2000)
-        //condition 1
-        //if one object in pTypes
-        //url = Object.keys(ptypes)[0].affliateDomains.amazon.link
-        //pid= this.$route.params.pId
-        //pType=  Object.keys(ptypes)[0]
-        //condition 2 // selected
-        //url = selected.det.affliateDomains.amazon.link
-        //pid=this.$route.params.pId
-        //pType=selected.key
-
-
-
-
-
-
-      //  console.log(vm.$store.state.particularProduct.pTypes)
-        //if( == 1){
-        //  console.log(vm.$store.state.particularProduct.pTypes)
-        //}
-
-       // console.log(vm.$store.state.particularProduct.selected)//selected is empty
-        //
-        //*turn loader on*
-        //
-
-       /* console.log("fetchAmazonPrice")
-        //
-        console.log("[selected] => ", this.$store.state.particularProduct.selected)
-        //
-        this.amazonPriceLoaded = true
-        //
-        //
-       // console.log(Object.keys(vm.$store.state.particularProduct.pTypes))
-        if(Object.keys(vm.$store.state.particularProduct.pTypes).length === 1){
-          for(let i in vm.$store.state.particularProduct.pTypes){
-            // console.log(vm.$store.state.particularProduct.pTypes[i])
-              temp = i
-            //  console.log(temp.key)
-          }
-        }else{
-         // console.log('=================================')
-          temp = vm.$store.state.particularProduct.selected
-        }
-        setTimeout(()=>{
-         // console.log(this.$route.params.pId)
-          //console.log(temp)
-          this.$store.dispatch('axiosReq', {
-            params: {
-              pId: vm.$route.params.pId.toString(),
-              pType: temp.key
-            },
-            funcName: 'getAmazonPriceFromDb'
-          }).then((result_1)=>{
-            if(result_1 == '-1' || result_1 == '999999999'){ //not in db / or out of stock etc ...
-              this.$store.dispatch('axiosReq', {
-                params: {
-                  url: temp.det.affliateDomains.amazon.link //amazon lik url , fill**
-                },
-                funcName: 'getAmazonPriceFromAPI'
-              }).then((result_2)=>{
-                //
-                if(result_2 == '-1'){
-                  this.amazonPrice = 'NoPrice'
-                  //failed to fetch price, show accordingly(message) on dom
-                }else if(result_2 == '999999999'){
-                  this.amazonPrice='Out Of Stock'
-                  //show out of stock on dom
-                }else{
-                  console.log(result_2)  // show result on dom //this is price of amazon link
-                  this.amazonPrice=result_2
-                  //
-                  this.$store.dispatch('axiosReq', {
-                    payload: {
-                      pId: this.$route.params.pid,// fill**,
-                      pType: this.$store.state.particularProduct.selected.key, // fill**
-                      price: result_2
-                    },
-                    funcName: 'saveAmazonPriceToDb'
-                  })
-                  //
-                }
-                //*turn loader off*
-                //
-
-              })
-            } else {
-              console.log(result) // show result on dom //this is price of amazon link
-              this.amazonPrice=result
-              //*turn loader off*
-            }
-          })
-        },3000)
-
-        //
-        //
-        setTimeout(()=>{
-          this.amazonPriceLoaded = false
-        },2000)*/
-      }
+      ])
     },
+    //
     beforeDestroy(){
       this.$store.state.particularProduct.selectedLink=''
     },
@@ -584,8 +478,8 @@
       //
       this.$store.state.gen.f = true
       //
-      if(!this.amazonPriceLoaded)
-        this.fetchAmazonPrice()
+      //if(!this.amazonPriceLoaded)
+        //this.fetchAmazonPrice()
     },
   }
 </script>
