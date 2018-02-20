@@ -27,6 +27,7 @@ import './js/jquery.min.js'
 //import './js/slick.min.js'
 //
 //
+import {Notification} from 'element-ui'
 
 Vue.config.productionTip = false
 Vue.use(Vuetify)
@@ -41,30 +42,36 @@ new Vue({
   components: { App },
   created(){
     this.$store.state.auth.firebaseApp = firebase.initializeApp(config)
-    const messaging = firebase.messaging()
-    messaging.requestPermission().then(function () {
-      //console.log('have permission')
-      return messaging.getToken()
-    }).then(function (token) {
-      //console.log(token)
-      axios.get('https://us-central1-kult-2.cloudfunctions.net/newsletter_saveDeviceToken', {
-        params: {
-          token
-        }
-      }).then(function (response) {
-        //console.log(response)
-        messaging.onMessage(function(payload) {
-          //console.log("Message received. ", payload);
-//agr koi not send krta h toh yha //console.log hoga
-        })
-      })
-//axios request to token link
-      //link is ->  jo b initial  link tha //function name is -> newsletter_saveDeviceToken
-      //link para is -> token
 
-    }).catch(function (e) {
-      //console.log(e)
-    })
+    var iOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+    if(!iOS){
+
+      var messaging = firebase.messaging()
+      messaging.requestPermission().then(function () {
+        //console.log('have permission')
+        return messaging.getToken()
+      }).then(function (token) {
+        //console.log(token)
+        axios.get('https://us-central1-kult-2.cloudfunctions.net/newsletter_saveDeviceToken', {
+          params: {
+            token
+          }
+        }).then(function (response) {
+          //console.log(response)
+          messaging.onMessage(function(payload) {
+            //console.log("Message received. ", payload);
+//agr koi not send krta h toh yha //console.log hoga
+          })
+        })
+//axios request to token link
+        //link is ->  jo b initial  link tha //function name is -> newsletter_saveDeviceToken
+        //link para is -> token
+
+      }).catch(function (e) {
+        //console.log(e)
+      })
+
+    }
     this.$store.commit('defineDbDef')
   }
 })
