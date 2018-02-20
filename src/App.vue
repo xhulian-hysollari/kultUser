@@ -452,12 +452,29 @@
       this.$store.commit('getGlobalBestSellersOnHomePage')
       this.$store.commit('getJustArrivedOnHomePage')
       //
-      console.log(window.innerWidth)
-      if(window.innerWidth <= 768){
+      //
+      let sH
+      //
+      var iOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+      console.log("iOS => ", iOS)
+      if(iOS) {
+        var iw = (iOS) ? screen.width : window.innerWidth, ih = (iOS) ? screen.height : window.innerHeight;
+        console.log("iW => ", iw)
+        sH = iw
+      }else{
+        console.log(window.innerWidth)
+        sH = window.innerWidth
+      }
+
+      if(sH <= 1024){
         this.$store.state.gen.screenW = '80%'
       }else{
         this.$store.state.gen.screenW = '40%'
       }
+
+
+      //this.$store.state.gen.screenW = '40%'
+
     },
     updated(){
       this.$store.commit('getLoginStatus')
