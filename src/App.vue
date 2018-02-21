@@ -455,6 +455,7 @@
       }
     },
     created(){
+      window.thisOfAppComp= this
       window.thisOfVueComp_2 = this
       this.$store.commit('getGlobalBestSellersOnHomePage')
       this.$store.commit('getJustArrivedOnHomePage')

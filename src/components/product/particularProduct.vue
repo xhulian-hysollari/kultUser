@@ -17,13 +17,13 @@
             <div class="col-md-5 col-xs-12">
               <div class="prod_left">
                 <div class="prod_leftmisc">
-                  <h2>{{JSON.parse($route.query.prodDet).pBasicDetail.pBrand}}</h2>
-                  <h3>{{JSON.parse($route.query.prodDet).pBasicDetail.pName}}</h3>
+                  <h2>{{pDets[$router.currentRoute.params.pId].pBasicDetail.pBrand}}</h2>
+                  <h3>{{pDets[$router.currentRoute.params.pId].pBasicDetail.pName}}</h3>
                   <div class="prod_wishadd">
                     <div class="prod_rate float">
 
                         <span v-for="icon in 5" >
-                          <span v-if="icon <= Math.round(JSON.parse($route.query.prodDet).pBasicDetail.pRating)"  >
+                          <span v-if="icon <= Math.round(pDets[$router.currentRoute.params.pId].pBasicDetail.pRating)"  >
                               <i class="material-icons p_star"  >star</i>
                           </span>
                            <span v-else>
@@ -33,10 +33,10 @@
                     </div>
                     <a v-if="isLoggedIn" class="ml_24" >
                       <img src="/static/images/wishlist-add.svg" alt="wishlist-add" v-if="Object.keys(wishlistObj).indexOf($router.currentRoute.params.pId) === -1"
-                           @click="addWishlist({pId:$router.currentRoute.params.pId,pDet:JSON.parse($route.query.prodDet)});
-                           wishlistObj[$router.currentRoute.params.pId] = JSON.parse($route.query.prodDet); $forceUpdate()">
+                           @click="addWishlist({pId:$router.currentRoute.params.pId,pDet:pDets[$router.currentRoute.params.pId]});
+                           wishlistObj[$router.currentRoute.params.pId] = pDets[$router.currentRoute.params.pId]; $forceUpdate()">
                       <img src="/static/images/wishlist-hover.svg" alt="wishlist-hover" v-if="Object.keys(wishlistObj).indexOf($router.currentRoute.params.pId) !== -1"
-                           @click="removeWishlist({pId:$router.currentRoute.params.pId,pDet:JSON.parse($route.query.prodDet)});
+                           @click="removeWishlist({pId:$router.currentRoute.params.pId,pDet:pDets[$router.currentRoute.params.pId]});
                            delete wishlistObj[$router.currentRoute.params.pId]; $forceUpdate()">
                     </a>
                     <a   v-if="!isLoggedIn"  class="ml_24">
@@ -99,8 +99,9 @@
                       $store.state.particularProduct.selectedLink = l.link"
                          target="_blank" v-if="k == 'amazon' && amazonLinkPrice != 'Out Of Stock' ">
                         <span class="aff_name">{{k.toUpperCase()}}</span>
-                        <span class="aff_price" v-if="amazonLinkPrice != 'Out Of Stock'">{{amazonLinkPrice}}</span>
-                         <span style="margin-top: 17px">BUY NOW</span>
+                        <span v-if="amazonPriceLoader">fetching price...</span>
+                        <span class="aff_price" v-if="amazonLinkPrice != 'Out Of Stock'" v-show="!amazonPriceLoader">{{amazonLinkPrice}}</span>
+                        <span style="margin-top: 17px" v-show="!amazonPriceLoader">BUY NOW</span>
                       </a>
                       <!--a @click="$store.state.auth.showLoginPopup=true; $store.state.particularProduct.selectedLink =l.link"target="_blank" v-if="parseInt(l.price) < 10001 || parseInt(amazonLinkPrice) <10001 &&  parseInt(amazonLinkPrice) != -1" class="box">
                         <span class="aff_name">{{k.toUpperCase()}}</span>
@@ -150,8 +151,9 @@
                       <a :href="l.link + '&subid=' + $store.state.auth.user.email" target="_blank"
                         v-if="k == 'amazon' && amazonLinkPrice != 'Out Of Stock' ">
                         <span class="aff_name">{{k.toUpperCase()}}</span>
-                        <span class="aff_price" v-if="amazonLinkPrice != 'Out Of Stock'">{{amazonLinkPrice}}</span>
-                        <span style="margin-top: 17px">BUY NOW</span>
+                        <span v-if="amazonPriceLoader">fetching price...</span>
+                        <span class="aff_price" v-if="amazonLinkPrice != 'Out Of Stock'" v-show="!amazonPriceLoader">{{amazonLinkPrice}}</span>
+                        <span style="margin-top: 17px" v-show="!amazonPriceLoader">BUY NOW</span>
                       </a>
                     </li>
                   </ul>
@@ -187,8 +189,9 @@
                       <a @click="dialog=true;$store.state.particularProduct.selectedLink =l.link "
                          v-if="k == 'amazon' && amazonLinkPrice != 'Out Of Stock' ">
                         <span class="aff_name">{{k.toUpperCase()}}</span>
-                        <span class="aff_price" v-if="amazonLinkPrice != 'Out Of Stock'">{{amazonLinkPrice}}</span>
-                        <span style="margin-top: 17px">BUY NOW</span>
+                        <span v-if="amazonPriceLoader">fetching price...</span>
+                        <span class="aff_price" v-if="amazonLinkPrice != 'Out Of Stock'" v-show="!amazonPriceLoader">{{amazonLinkPrice}}</span>
+                        <span style="margin-top: 17px" v-show="!amazonPriceLoader">BUY NOW</span>
                       </a>
                       <!--a @click="dialog=true;$store.state.particularProduct.selectedLink =l.link "  class="box" v-if="amazonLinkPrice != 'Out Of Stock' || l.price.indexOf('999999999') != -1">
                         <span v-if="k != 'amazon'">
@@ -309,7 +312,7 @@
               </div>
               <div class="prod_inncont">
                 <h3>Overview</h3>
-                <div v-html="JSON.parse($route.query.prodDet).pOtherDetail.pAbout"></div>
+                <div v-html="pDets[$router.currentRoute.params.pId].pOtherDetail.pAbout"></div>
                 <h3>Product Details</h3>
               </div>
               <ul class="prod_social">
@@ -321,6 +324,7 @@
               </ul>
             </div>
           </div>
+          {{amazonPriceLoader}}
           <div class="prod_rel_cats text-center">
             <div class="comm_title">
               <h3>Recommended</h3>
@@ -330,14 +334,14 @@
               >
                 <div>
                   <div class="grid-content pa-2" >
-                    <a class="prod_image"   @click="$router.push({path:`/particularProduct/${pId}`,query:{prodDet:JSON.stringify(pDet)}})">
+                    <a class="prod_image"   @click="$router.push({path:`/particularProduct/${pId}`})">
                       <img :src="pDet.pBasicDetail.pPicUrl"  style="height:286px " alt="product">
                     </a>
-                    <div class="prod_cont"  @click="$router.push({path:`/particularProduct/${pId}`,query:{prodDet:JSON.stringify(pDet)}})">
+                    <div class="prod_cont"  @click="$router.push({path:`/particularProduct/${pId}`})">
                       <h4><a >{{pDet.pBasicDetail.pBrand}}</a></h4>
                       <span v-for="(i,k) in pDet.pBasicDetail.pName" v-if="k < 20">{{i}}</span><span v-if="pDet.pBasicDetail.pName.length > 20">...</span>
                     </div>
-                    <div class="prod_misc"  @click="$router.push({path:`/particularProduct/${pId}`,query:{prodDet:JSON.stringify(pDet)}})">
+                    <div class="prod_misc"  @click="$router.push({path:`/particularProduct/${pId}`})">
                       <div class="float" ><rating :num="Math.round(pDet.pBasicDetail.pRating)" ></rating></div>
                       <div class="half text-right" >
                               <span v-if="parseInt(pDet.priceStartsFrom) == 999999999" style="float: right" class="half text-right">
@@ -350,11 +354,11 @@
                         <div v-else></div>
                       </div>
                     </div>
-                    <a  class="prod_compare" v-if="isLoggedIn"><span @click="$router.push({path:`/particularProduct/${pId}`,query:{prodDet:JSON.stringify(pDet)}})" >Compare price</span>
+                    <a  class="prod_compare" v-if="isLoggedIn"><span @click="$router.push({path:`/particularProduct/${pId}`})" >Compare price</span>
                       <img src="/static/images/wishlist-add.svg" alt="wishlist-add" v-if="Object.keys(wishlistObj).indexOf(pId) === -1" @click="addWishlist({pId,pDet}); wishlistObj[pId] = pDet; $forceUpdate()">
                       <img src="/static/images/wishlist-hover.svg" alt="wishlist-hover" v-if="Object.keys(wishlistObj).indexOf(pId) !== -1" @click="removeWishlist({pId,pDet}); delete wishlistObj[pId]; $forceUpdate()">
                     </a>
-                    <a  class="prod_compare" v-if="!isLoggedIn"><span @click="$router.push({path:`/particularProduct/${pId}`,query:{prodDet:JSON.stringify(pDet)}})" >Compare price</span>
+                    <a  class="prod_compare" v-if="!isLoggedIn"><span @click="$router.push({path:`/particularProduct/${pId}`})" >Compare price</span>
                       <img src="/static/images/wishlist-add.svg" alt="wishlist-add" @click="$store.state.auth.showLoginPopup = true">
                     </a>
                   </div>
@@ -449,6 +453,7 @@
   export default{
     data(){
       return{
+        pDets:{},
         email:false,
         dialog:false,
         dialog2:false,
@@ -457,7 +462,7 @@
         amazonPriceLoaded: false ,//amazon price,
         selVar : {},
         amazonLinkPrice: '' , ///////////show this var at amzon price
-        amazonPriceLoader:false
+        amazonPriceLoader:true
       }
     },
     components:{
@@ -493,9 +498,17 @@
        }
      },
       $route:function () {
+       let vm = this
         this.$store.commit('getRecProducts')
         this.$store.commit('getTypeNLinkOfThisProduct', {
-          pId: this.$route.params.pId
+          pId: this.$router.currentRoute.params.pId
+        })
+        let arr = []
+        arr[0]= this.$router.currentRoute.params.pId
+        this.$store.dispatch('getProdFromArr', arr).then(function (response) {
+          vm.pDets=response
+          //alert(this.$router.currentRoute.params.pId)
+          console.log(response)
         })
         //
         console.log("[selected]", this.$store.state.particularProduct.selected)
@@ -506,7 +519,7 @@
       },
       selVar : ()=>{
 
-       let vm = this
+       let vm = window.thisOfVueComp
         vm.amazonPriceLoader=true
         console.log( vm.amazonPriceLoader)
         //setTimeout(()=>{
@@ -517,6 +530,8 @@
           let y = ''
 
           if( Object.keys(x.det.affliateDomains).indexOf('amazon') != -1 ){ //amazon is there
+            vm.amazonPriceLoader=true
+            console.log('============1')
             let url = x.det.affliateDomains.amazon.link
             let pId = window.thisOfVueComp.$route.params.pId
             let pType = x.key
@@ -548,6 +563,7 @@
                     y = 'Failed to fetch Price !'
                     window.thisOfVueComp.amazonLinkPrice = y
                     console.log("[%] => ", window.thisOfVueComp.amazonLinkPrice )
+                    console.log('==============2')
                     vm.amazonPriceLoader=false
                     console.log( vm.amazonPriceLoader)
                     //state.amazonLoader = false
@@ -557,19 +573,27 @@
                     y = 'Out Of Stock'
                     window.thisOfVueComp.amazonLinkPrice = y
                     console.log("[%%] => ", window.thisOfVueComp.amazonLinkPrice )
-                    vm.amazonPriceLoader=false
+                    console.log('==============3')
                     console.log( vm.amazonPriceLoader)
-                    //state.amazonLoader = false
-                    window.thisOfVueComp.$forceUpdate()
+                    setTimeout(()=>{
+                      vm.amazonPriceLoader=false
+                      console.log(window.thisOfVueComp)
+                      vm.$forceUpdate()
+                      console.log( vm.amazonPriceLoader)
+                    },6000)
                     //show out of stock on dom
                   }else{
                     console.log("[save] => ",result_2)  // show result on dom //this is price of amazon link
                     y = result_2
                     window.thisOfVueComp.amazonLinkPrice = y
                     console.log("[%] => ", window.thisOfVueComp.amazonLinkPrice )
-                    vm.amazonPriceLoader=false
+                    console.log('==============4')
                     console.log( vm.amazonPriceLoader)
-                    window.thisOfVueComp.$forceUpdate()
+                    setTimeout(()=>{
+                      vm.amazonPriceLoader=false
+                      console.log(window.thisOfVueComp)
+                      vm.$forceUpdate()
+                    },6000)
                     //
                     window.thisOfVueComp.$store.dispatch('axiosReq', {
                       params: {
@@ -592,17 +616,22 @@
                 window.thisOfVueComp.amazonLinkPrice = y
                 console.log("[%] => ", window.thisOfVueComp.amazonLinkPrice )
                 //*turn loader off*
+                console.log('==============5')
                 vm.amazonPriceLoader=false
-                console.log( vm.amazonPriceLoader)
+                console.log( vm.amazonPriceLoader +'***********************')
                 //state.amazonLoader = false
-                window.thisOfVueComp.$forceUpdate()
+                setTimeout(()=>{
+                  window.thisOfVueComp.$forceUpdate()
+                },2000)
               }
             })
             //
             //
           }else{
+            console.log('==============6')
             vm.amazonPriceLoader=false
             console.log( vm.amazonPriceLoader)
+            window.thisOfVueComp.$forceUpdate()
             //do nothing
             //state.amazonLoader = false  //stop loader
           }
@@ -650,6 +679,13 @@
       this.$store.commit('getRecProducts')
       this.$store.commit('getTypeNLinkOfThisProduct', {
         pId: this.$route.params.pId
+      })
+      let arr = []
+      arr[0]= this.$router.currentRoute.params.pId
+      this.$store.dispatch('getProdFromArr', arr).then(function (response) {
+       vm.pDets=response
+        //alert(this.$router.currentRoute.params.pId)
+        console.log(response)
       })
       if(vm.$store.state.auth.isLoggedIn){
         for(let i in Object.values(vm.$store.state.auth.user.providerData)){

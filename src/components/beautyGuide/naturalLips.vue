@@ -31,14 +31,14 @@
                 >
                   <div>
                     <div class="grid-content pa-2" >
-                      <a class="prod_image"   @click="$router.push({path:`/particularProduct/${pId}`,query:{prodDet:JSON.stringify(pDet)}})">
+                      <a class="prod_image"   @click="$router.push({path:`/particularProduct/${pId}`})">
                         <img :src="pDet.pBasicDetail.pPicUrl"  style="height:286px " alt="product">
                       </a>
-                      <div class="prod_cont"  @click="$router.push({path:`/particularProduct/${pId}`,query:{prodDet:JSON.stringify(pDet)}})">
+                      <div class="prod_cont"  @click="$router.push({path:`/particularProduct/${pId}`})">
                         <h4><a >{{pDet.pBasicDetail.pBrand}}</a></h4>
                         <span v-for="(i,k) in pDet.pBasicDetail.pName" v-if="k < 20">{{i}}</span><span v-if="pDet.pBasicDetail.pName.length > 20">...</span>
                       </div>
-                      <div class="prod_misc"  @click="$router.push({path:`/particularProduct/${pId}`,query:{prodDet:JSON.stringify(pDet)}})">
+                      <div class="prod_misc"  @click="$router.push({path:`/particularProduct/${pId}`})">
                         <div class="float" ><rating :num="Math.round(pDet.pBasicDetail.pRating)" ></rating></div>
                         <div class="half text-right" >
                               <span v-if="parseInt(pDet.priceStartsFrom) == 999999999" style="float: right" class="half text-right">
@@ -51,11 +51,11 @@
                           <div v-else></div>
                         </div>
                       </div>
-                      <a  class="prod_compare" v-if="isLoggedIn"><span @click="$router.push({path:`/particularProduct/${pId}`,query:{prodDet:JSON.stringify(pDet)}})">Compare price</span>
+                      <a  class="prod_compare" v-if="isLoggedIn"><span @click="$router.push({path:`/particularProduct/${pId}`})">Compare price</span>
                         <img src="/static/images/wishlist-add.svg" alt="wishlist-add" v-if="Object.keys(wishlistObj).indexOf(pId) === -1" @click="addWishlist({pId,pDet}); wishlistObj[pId] = pDet; $forceUpdate()">
                         <img src="/static/images/wishlist-hover.svg" alt="wishlist-hover" v-if="Object.keys(wishlistObj).indexOf(pId) !== -1" @click="removeWishlist({pId,pDet}); delete wishlistObj[pId]; $forceUpdate()">
                       </a>
-                      <a  class="prod_compare" v-if="!isLoggedIn"><span @click="$router.push({path:`/particularProduct/${pId}`,query:{prodDet:JSON.stringify(pDet)}})">Compare price</span>
+                      <a  class="prod_compare" v-if="!isLoggedIn"><span @click="$router.push({path:`/particularProduct/${pId}`})">Compare price</span>
                         <img src="/static/images/wishlist-add.svg" alt="wishlist-add" @click="$store.state.auth.showLoginPopup = true">
                       </a>
                     </div>
@@ -86,14 +86,14 @@
                 >
                   <div>
                     <div class="grid-content pa-2" >
-                      <a class="prod_image"   @click="$router.push({path:`/particularProduct/${pId}`,query:{prodDet:JSON.stringify(pDet)}})">
+                      <a class="prod_image"   @click="$router.push({path:`/particularProduct/${pId}`})">
                         <img :src="pDet.pBasicDetail.pPicUrl"  style="height:286px " alt="product">
                       </a>
-                      <div class="prod_cont"  @click="$router.push({path:`/particularProduct/${pId}`,query:{prodDet:JSON.stringify(pDet)}})">
+                      <div class="prod_cont"  @click="$router.push({path:`/particularProduct/${pId}`})">
                         <h4><a >{{pDet.pBasicDetail.pBrand}}</a></h4>
                         <span v-for="(i,k) in pDet.pBasicDetail.pName" v-if="k < 20">{{i}}</span><span v-if="pDet.pBasicDetail.pName.length > 20">...</span>
                       </div>
-                      <div class="prod_misc"  @click="$router.push({path:`/particularProduct/${pId}`,query:{prodDet:JSON.stringify(pDet)}})">
+                      <div class="prod_misc"  @click="$router.push({path:`/particularProduct/${pId}`})">
                         <div class="float" ><rating :num="Math.round(pDet.pBasicDetail.pRating)" ></rating></div>
                         <div class="half text-right" >
                               <span v-if="parseInt(pDet.priceStartsFrom) == 999999999" style="float: right" class="half text-right">
@@ -106,11 +106,11 @@
                           <div v-else></div>
                         </div>
                       </div>
-                      <a  class="prod_compare" v-if="isLoggedIn"><span @click="$router.push({path:`/particularProduct/${pId}`,query:{prodDet:JSON.stringify(pDet)}})">Compare price</span>
+                      <a  class="prod_compare" v-if="isLoggedIn"><span @click="$router.push({path:`/particularProduct/${pId}`})">Compare price</span>
                         <img src="/static/images/wishlist-add.svg" alt="wishlist-add" v-if="Object.keys(wishlistObj).indexOf(pId) === -1" @click="addWishlist({pId,pDet}); wishlistObj[pId] = pDet; $forceUpdate()">
                         <img src="/static/images/wishlist-hover.svg" alt="wishlist-hover" v-if="Object.keys(wishlistObj).indexOf(pId) !== -1" @click="removeWishlist({pId,pDet}); delete wishlistObj[pId]; $forceUpdate()">
                       </a>
-                      <a  class="prod_compare" v-if="!isLoggedIn"><span @click="$router.push({path:`/particularProduct/${pId}`,query:{prodDet:JSON.stringify(pDet)}})">Compare price</span>
+                      <a  class="prod_compare" v-if="!isLoggedIn"><span @click="$router.push({path:`/particularProduct/${pId}`})">Compare price</span>
                         <img src="/static/images/wishlist-add.svg" alt="wishlist-add" @click="$store.state.auth.showLoginPopup = true">
                       </a>
                     </div>
@@ -141,14 +141,14 @@
                 >
                   <div>
                     <div class="grid-content pa-2" >
-                      <a class="prod_image"   @click="$router.push({path:`/particularProduct/${pId}`,query:{prodDet:JSON.stringify(pDet)}})">
+                      <a class="prod_image"   @click="$router.push({path:`/particularProduct/${pId}`})">
                         <img :src="pDet.pBasicDetail.pPicUrl"  style="height:286px " alt="product">
                       </a>
-                      <div class="prod_cont"  @click="$router.push({path:`/particularProduct/${pId}`,query:{prodDet:JSON.stringify(pDet)}})">
+                      <div class="prod_cont"  @click="$router.push({path:`/particularProduct/${pId}`})">
                         <h4><a >{{pDet.pBasicDetail.pBrand}}</a></h4>
                         <span v-for="(i,k) in pDet.pBasicDetail.pName" v-if="k < 20">{{i}}</span><span v-if="pDet.pBasicDetail.pName.length > 20">...</span>
                       </div>
-                      <div class="prod_misc"  @click="$router.push({path:`/particularProduct/${pId}`,query:{prodDet:JSON.stringify(pDet)}})">
+                      <div class="prod_misc"  @click="$router.push({path:`/particularProduct/${pId}`})">
                         <div class="float" ><rating :num="Math.round(pDet.pBasicDetail.pRating)" ></rating></div>
                         <div class="half text-right" >
                               <span v-if="parseInt(pDet.priceStartsFrom) == 999999999" style="float: right" class="half text-right">
@@ -161,11 +161,11 @@
                           <div v-else></div>
                         </div>
                       </div>
-                      <a  class="prod_compare" v-if="isLoggedIn"><span @click="$router.push({path:`/particularProduct/${pId}`,query:{prodDet:JSON.stringify(pDet)}})">Compare price</span>
+                      <a  class="prod_compare" v-if="isLoggedIn"><span @click="$router.push({path:`/particularProduct/${pId}`})">Compare price</span>
                         <img src="/static/images/wishlist-add.svg" alt="wishlist-add" v-if="Object.keys(wishlistObj).indexOf(pId) === -1" @click="addWishlist({pId,pDet}); wishlistObj[pId] = pDet; $forceUpdate()">
                         <img src="/static/images/wishlist-hover.svg" alt="wishlist-hover" v-if="Object.keys(wishlistObj).indexOf(pId) !== -1" @click="removeWishlist({pId,pDet}); delete wishlistObj[pId]; $forceUpdate()">
                       </a>
-                      <a  class="prod_compare" v-if="!isLoggedIn"><span @click="$router.push({path:`/particularProduct/${pId}`,query:{prodDet:JSON.stringify(pDet)}})">Compare price</span>
+                      <a  class="prod_compare" v-if="!isLoggedIn"><span @click="$router.push({path:`/particularProduct/${pId}`})">Compare price</span>
                         <img src="/static/images/wishlist-add.svg" alt="wishlist-add" @click="$store.state.auth.showLoginPopup = true">
                       </a>
                     </div>
@@ -196,14 +196,14 @@
                 >
                   <div>
                     <div class="grid-content pa-2" >
-                      <a class="prod_image"   @click="$router.push({path:`/particularProduct/${pId}`,query:{prodDet:JSON.stringify(pDet)}})">
+                      <a class="prod_image"   @click="$router.push({path:`/particularProduct/${pId}`})">
                         <img :src="pDet.pBasicDetail.pPicUrl"  style="height:286px " alt="product">
                       </a>
-                      <div class="prod_cont"  @click="$router.push({path:`/particularProduct/${pId}`,query:{prodDet:JSON.stringify(pDet)}})">
+                      <div class="prod_cont"  @click="$router.push({path:`/particularProduct/${pId}`})">
                         <h4><a >{{pDet.pBasicDetail.pBrand}}</a></h4>
                         <span v-for="(i,k) in pDet.pBasicDetail.pName" v-if="k < 20">{{i}}</span><span v-if="pDet.pBasicDetail.pName.length > 20">...</span>
                       </div>
-                      <div class="prod_misc"  @click="$router.push({path:`/particularProduct/${pId}`,query:{prodDet:JSON.stringify(pDet)}})">
+                      <div class="prod_misc"  @click="$router.push({path:`/particularProduct/${pId}`})">
                         <div class="float" ><rating :num="Math.round(pDet.pBasicDetail.pRating)" ></rating></div>
                         <div class="half text-right" >
                               <span v-if="parseInt(pDet.priceStartsFrom) == 999999999" style="float: right" class="half text-right">
@@ -216,11 +216,11 @@
                           <div v-else></div>
                         </div>
                       </div>
-                      <a  class="prod_compare" v-if="isLoggedIn"><span @click="$router.push({path:`/particularProduct/${pId}`,query:{prodDet:JSON.stringify(pDet)}})">Compare price</span>
+                      <a  class="prod_compare" v-if="isLoggedIn"><span @click="$router.push({path:`/particularProduct/${pId}`})">Compare price</span>
                         <img src="/static/images/wishlist-add.svg" alt="wishlist-add" v-if="Object.keys(wishlistObj).indexOf(pId) === -1" @click="addWishlist({pId,pDet}); wishlistObj[pId] = pDet; $forceUpdate()">
                         <img src="/static/images/wishlist-hover.svg" alt="wishlist-hover" v-if="Object.keys(wishlistObj).indexOf(pId) !== -1" @click="removeWishlist({pId,pDet}); delete wishlistObj[pId]; $forceUpdate()">
                       </a>
-                      <a  class="prod_compare" v-if="!isLoggedIn"><span @click="$router.push({path:`/particularProduct/${pId}`,query:{prodDet:JSON.stringify(pDet)}})">Compare price</span>
+                      <a  class="prod_compare" v-if="!isLoggedIn"><span @click="$router.push({path:`/particularProduct/${pId}`})">Compare price</span>
                         <img src="/static/images/wishlist-add.svg" alt="wishlist-add" @click="$store.state.auth.showLoginPopup = true">
                       </a>
                     </div>

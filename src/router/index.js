@@ -206,6 +206,11 @@ const skincare = resolve => {
     resolve(require('@/components/beautyGuide/skincare'));
   });
 };
+const searchProd = resolve => {
+  require.ensure(['@/components/search/searchProd'],()=>{
+    resolve(require('@/components/search/searchProd'));
+  });
+};
 Vue.use(Router)
 
 export default new Router({
@@ -261,5 +266,6 @@ export default new Router({
     { path: '/bGuide/Antiaging', name: 'Masks', component: masks},
     { path: '/bGuide/Sunscreens', name: 'Masks', component: sunscreen},
     { path: '/bGuide/Skincare', name: 'skincare', component: skincare},
+    { path: '/search', name: 'Search', component: searchProd},
   ]
 })
