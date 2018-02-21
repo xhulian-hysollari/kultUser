@@ -87,7 +87,7 @@
                   <ul class="prod_shoplinks list-unstyled" v-if="!isLoggedIn " >
                     <li v-for="(l,k) in selected.det.affliateDomains" >
                       <a @click="$store.state.auth.showLoginPopup=true;
-                      $store.state.particularProduct.selectedLink = l.link"
+                      $store.state.particularProduct.selectedLink = newLink(l.link)"
                          target="_blank"
                          v-if="k != 'amazon' && l.price.indexOf('999999999') == -1 "
                       >
