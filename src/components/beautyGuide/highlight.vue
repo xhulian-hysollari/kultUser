@@ -27,7 +27,7 @@
                 <h3> Global Bestsellers</h3>
               </div>
               <el-row :gutter="15" >
-                <el-col :xs="12" :sm="12" :md="8" :lg="8" v-for="(pDet, pId) in bGuideHighGBS"
+                <el-col :xs="12" :sm="12" :md="8" :lg="8"  v-if="parseInt(pDet.priceStartsFrom) != 999999999"  v-for="(pDet, pId) in bGuideHighGBS"
                 >
                   <div>
                     <div class="grid-content pa-2" >
@@ -85,7 +85,7 @@
                 <h4>Glow Low</h4>
               </div>
               <el-row :gutter="15" >
-                <el-col :xs="12" :sm="12" :md="8" :lg="8" v-for="(pDet, pId) in dewGlowLow"
+                <el-col :xs="12" :sm="12" :md="8" :lg="8"  v-if="parseInt(pDet.priceStartsFrom) != 999999999"  v-for="(pDet, pId) in dewGlowLow"
                 >
                   <div>
                     <div class="grid-content pa-2" >
@@ -137,7 +137,7 @@
                 <h4>Glow High</h4>
               </div>
               <el-row :gutter="15" >
-                <el-col :xs="12" :sm="12" :md="8" :lg="8" v-for="(pDet, pId) in dewGlowHigh"
+                <el-col :xs="12" :sm="12" :md="8" :lg="8"  v-if="parseInt(pDet.priceStartsFrom) != 999999999"  v-for="(pDet, pId) in dewGlowHigh"
                 >
                   <div>
                     <div class="grid-content pa-2" >
@@ -195,7 +195,7 @@
                 <h4>Glow Low</h4>
               </div>
               <el-row :gutter="15" >
-                <el-col :xs="12" :sm="12" :md="8" :lg="8" v-for="(pDet, pId) in shimGlowLow"
+                <el-col :xs="12" :sm="12" :md="8" :lg="8"  v-if="parseInt(pDet.priceStartsFrom) != 999999999"  v-for="(pDet, pId) in shimGlowLow"
                 >
                   <div>
                     <div class="grid-content pa-2" >
@@ -247,7 +247,7 @@
                 <h4>Glow High</h4>
               </div>
               <el-row :gutter="15" >
-                <el-col :xs="12" :sm="12" :md="8" :lg="8" v-for="(pDet, pId) in shimGlowHigh"
+                <el-col :xs="12" :sm="12" :md="8" :lg="8"  v-if="parseInt(pDet.priceStartsFrom) != 999999999"  v-for="(pDet, pId) in shimGlowHigh"
                 >
                   <div>
                     <div class="grid-content pa-2" >
@@ -305,7 +305,7 @@
                 <h4>Glow Low</h4>
               </div>
               <el-row :gutter="15" >
-                <el-col :xs="12" :sm="12" :md="8" :lg="8" v-for="(pDet, pId) in natGlowLow"
+                <el-col :xs="12" :sm="12" :md="8" :lg="8"  v-if="parseInt(pDet.priceStartsFrom) != 999999999"  v-for="(pDet, pId) in natGlowLow"
                 >
                   <div>
                     <div class="grid-content pa-2" >
@@ -357,7 +357,7 @@
                 <h4>Glow High</h4>
               </div>
               <el-row :gutter="15" >
-                <el-col :xs="12" :sm="12" :md="8" :lg="8" v-for="(pDet, pId) in natGlowHigh"
+                <el-col :xs="12" :sm="12" :md="8" :lg="8"  v-if="parseInt(pDet.priceStartsFrom) != 999999999"  v-for="(pDet, pId) in natGlowHigh"
                 >
                   <div>
                     <div class="grid-content pa-2" >

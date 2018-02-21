@@ -29,7 +29,7 @@
                     <h3> Treat </h3>
                   </div>
                   <el-row :gutter="15" >
-                    <el-col :xs="12" :sm="12" :md="8" :lg="8" v-for="(pDet, pId) in prod_20_treat"
+                    <el-col :xs="12" :sm="12" :md="8" :lg="8"  v-if="parseInt(pDet.priceStartsFrom) != 999999999"  v-for="(pDet, pId) in prod_20_treat"
                     >
                       <div>
                         <div class="grid-content pa-2" >
@@ -84,7 +84,8 @@
                     <h3> Moisturize</h3>
                   </div>
                   <el-row :gutter="15" >
-                    <el-col :xs="12" :sm="12" :md="8" :lg="8" v-for="(pDet, pId) in prod_20_moisturize"
+                    <el-col :xs="12" :sm="12" :md="8" :lg="8"  v-if="parseInt(pDet.priceStartsFrom) != 999999999"  v-for="(pDet, pId) in prod_20_moisturize"
+
                     >
                       <div>
                         <div class="grid-content pa-2" >
@@ -141,7 +142,7 @@
                     <h3> Treat </h3>
                   </div>
                   <el-row :gutter="15" >
-                    <el-col :xs="12" :sm="12" :md="8" :lg="8" v-for="(pDet, pId) in prod_30_treat"
+                    <el-col :xs="12" :sm="12" :md="8" :lg="8"  v-if="parseInt(pDet.priceStartsFrom) != 999999999"  v-for="(pDet, pId) in prod_30_treat"
                     >
                       <div>
                         <div class="grid-content pa-2" >
@@ -196,7 +197,7 @@
                     <h3> Moisturize</h3>
                   </div>
                   <el-row :gutter="15" >
-                    <el-col :xs="12" :sm="12" :md="8" :lg="8" v-for="(pDet, pId) in prod_30_moisturize"
+                    <el-col :xs="12" :sm="12" :md="8" :lg="8"  v-if="parseInt(pDet.priceStartsFrom) != 999999999"  v-for="(pDet, pId) in prod_30_moisturize"
                     >
                       <div>
                         <div class="grid-content pa-2" >
@@ -253,7 +254,7 @@
                     <h3> Treat </h3>
                   </div>
                   <el-row :gutter="15" >
-                    <el-col :xs="12" :sm="12" :md="8" :lg="8" v-for="(pDet, pId) in prod_40_treat"
+                    <el-col :xs="12" :sm="12" :md="8" :lg="8"  v-if="parseInt(pDet.priceStartsFrom) != 999999999"  v-for="(pDet, pId) in prod_40_treat"
                     >
                       <div>
                         <div class="grid-content pa-2" >
@@ -308,7 +309,7 @@
                     <h3> Moisturize</h3>
                   </div>
                   <el-row :gutter="15" >
-                    <el-col :xs="12" :sm="12" :md="8" :lg="8" v-for="(pDet, pId) in prod_40_moisturize"
+                    <el-col :xs="12" :sm="12" :md="8" :lg="8"  v-if="parseInt(pDet.priceStartsFrom) != 999999999"  v-for="(pDet, pId) in prod_40_moisturize"
                     >
                       <div>
                         <div class="grid-content pa-2" >
@@ -365,7 +366,7 @@
                     <h3> Treat </h3>
                   </div>
                   <el-row :gutter="15" >
-                    <el-col :xs="12" :sm="12" :md="8" :lg="8" v-for="(pDet, pId) in prod_50_treat"
+                    <el-col :xs="12" :sm="12" :md="8" :lg="8"  v-if="parseInt(pDet.priceStartsFrom) != 999999999"  v-for="(pDet, pId) in prod_50_treat"
                     >
                       <div>
                         <div class="grid-content pa-2" >
@@ -420,7 +421,7 @@
                     <h3> Moisturize</h3>
                   </div>
                   <el-row :gutter="15" >
-                    <el-col :xs="12" :sm="12" :md="8" :lg="8" v-for="(pDet, pId) in prod_50_moisturize"
+                    <el-col :xs="12" :sm="12" :md="8" :lg="8"  v-if="parseInt(pDet.priceStartsFrom) != 999999999"  v-for="(pDet, pId) in prod_50_moisturize"
                     >
                       <div>
                         <div class="grid-content pa-2" >

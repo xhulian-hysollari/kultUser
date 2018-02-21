@@ -3,7 +3,7 @@
     <div class="">
     <nav class="">
               <div class="search_form">
-                <form><!--@blur="closeDropdown4()"-->
+               <!--@blur="closeDropdown4()"-->
                 <div>
                   <input type="text"  v-model="input" @keydown.enter="sayHi" @keyup="showDropdown4(),search()" placeholder="What are you looking for?" class="form-control" @blur="closeDropdown4()" >
                   <button ><img src="/static/images/search.svg" alt="search"></button>
@@ -31,7 +31,7 @@
                       </span>
                  </div>
                </div>
-             </form>
+
            </div>
  </nav>
  </div>

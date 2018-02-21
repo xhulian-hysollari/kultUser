@@ -34,7 +34,7 @@ const actions = {
         params: {
           blogCat: payload.blogCat,
           blogName: payload.blogName,
-          userUid:payload.uid
+          userUid:auth.state.user.uid
         }
       }).then(function (response) {
         console.log(response)

@@ -50,6 +50,26 @@
 
                   </div>
                 </div>
+                <div class="blog_repeat visible-xs" v-for="(blog,k) in blogs" >
+                  <div v-for="(b,n) in blog" v-if="Object.keys(blogsAtHome).indexOf(n) == -1">
+                    <div class="blog_image">
+                      <a ><img :src="b.blogImgUrl" alt="blog"></a>
+                      <a  class="blog_tag" v-for="i in b.blogTag ">#{{i}}</a>
+                    </div>
+                    <div class="blog_cont">
+                      <h3>{{k}}</h3>
+                      <span class="blog_date">{{dates(b.date)}}</span>
+                      <span v-html="blogCont(b.blogContent)"></span>
+                      <span>...</span>
+                      <!--span v-for="(b,j) in blog.blogContent" v-show="j <= 30">
+                      <span >{{b}}</span>
+                    </span>
+                      <span v-if="blog.blogContent.length > 31">...</span-->
+                      <a @click="$router.push({path:'/article', query:{name:n, cat:b.blogCat}})" class="blog_read">Read more</a>
+
+                    </div>
+                  </div>
+                </div>
                 <div class="blog_repeat">
                   <div class="blog_contact">
                     <h4>Get in touch</h4>
