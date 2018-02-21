@@ -118,44 +118,44 @@
         </div>
       </div>
     </div>
-    <!--div---- class="home_cats">
+    <div class="home_cats">
       <div class="container-fluid text-center">
-        <div class="comm_title">
+        <div class="comm_title" @click="$router.push('/brandAll')">
           <h3>Most Selling</h3>
           <a >Browser all <img src="/static/images/right-arrow-1.svg" alt="arrow"></a>
         </div>
         <ul class="maincats_list">
-          <li @click="$router.push(`brandProduct/L 'OREAL`)">
+          <li @click="$router.push(`brandProduct/NEUTROGENA`)">
             <a >
               <img src="/static/images/items-5@2x.jpg" alt="item">
-              <span class="cat_name"><span>L'OREAL CREAM</span></span>
+              <span class="cat_name"><span>NEUTROGENA CREAM</span></span>
             </a>
           </li>
-          <li>
+          <li @click="$router.push(`brandProduct/PHILIPS`)">
             <a >
               <img src="/static/images/item-6@2x.jpg" alt="item">
-              <span class="cat_name"><span>VOLO HAIR DRYER</span></span>
+              <span class="cat_name"><span>PHILIPS HAIR DRYER</span></span>
             </a>
           </li>
-          <li>
+          <li @click="$router.push(`brandProduct/CERAVE`)">
             <a >
               <img src="/static/images/item-7@2x.jpg" alt="item">
-              <span class="cat_name"><span>GOOP CLEANSER</span></span>
+              <span class="cat_name"><span>CERAVE CLEANSER</span></span>
             </a>
           </li>
-          <li>
+          <li @click="$router.push(`brandProduct/SEPHORA COLLECTION`)">
             <a >
               <img src="/static/images/item-8@2x.jpg" alt="item">
               <span class="cat_name"><span>POWDER SET</span></span>
             </a>
           </li>
-          <li>
+          <li @click="$router.push(`brandProduct/MAC`)">
             <a >
               <img src="/static/images/item-9@2x.jpg" alt="item">
-              <span class="cat_name"><span>FENTY BEAUTY</span></span>
+              <span class="cat_name"><span>MAC BEAUTY</span></span>
             </a>
           </li>
-          <li>
+          <li @click="$router.push(`brandProduct/DIOR`)">
             <a >
               <img src="/static/images/item-10@2x.jpg" alt="item">
               <span class="cat_name"><span>DIOR LIPSTICK</span></span>
@@ -163,7 +163,7 @@
           </li>
         </ul>
       </div>
-    </div---->
+    </div>
     <div class="news_subscribe">
       <div class="container text-center">
         <div class="subscribe_box">

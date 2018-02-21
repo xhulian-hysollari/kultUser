@@ -447,6 +447,13 @@
       search,
       alert
     },
+    watch:{
+      $route:function () {
+        this.$store.state.auth.showLoginPopup=false
+        this.$store.state.auth.showRegisterPopup=false
+        this.$store.state.auth.showRefCode=false
+      }
+    },
     created(){
       window.thisOfVueComp_2 = this
       this.$store.commit('getGlobalBestSellersOnHomePage')

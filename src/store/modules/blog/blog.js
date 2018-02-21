@@ -2,6 +2,7 @@ import gen from '../gen'
 import axios from 'axios'
 import blogFunc from './blogFunctions'
 import article from './article'
+import auth from '../auth'
 const state = {
   blogs : {},
   blogLoader : false,
@@ -39,7 +40,7 @@ const mutations = {
         //
         if(queryBlogCat.size == 0){
           //
-          state.blogLoader = false
+         // state.blogLoader = false
         }
         //
         let c = 0
@@ -91,7 +92,11 @@ const mutations = {
           //  }
           })
         })
-      })
+      }).then(function () {
+      setTimeout(()=>{
+        state.blogLoader = false
+      },4000)
+    })
   },
   //
   getBlogTags(state2){
@@ -274,10 +279,12 @@ const mutations = {
       }
     }).then(function (response) {
     //  console.log(response) // return true or false
-        if(response.data === 'added'){
+        if(response.data === 'liked'){
           article.state.userLike=true
           blogFunc.actions.getLikes(state,{blogCat:payload.blogCat,blogName:payload.blogName}).then(function (num) {
             article.state.articleLike=num
+          }).then(function () {
+           blogfun. actions.getLikeStatus(auth.state,{blogCat: payload.blogCat,blogName: payload.blogName,userUid:auth.state.user.uid})
           }).then(function () {
             article.state.likeBtnLoader=false
           })
@@ -286,6 +293,8 @@ const mutations = {
           article.state.userLike=false
           blogFunc.actions.getLikes(state,{blogCat:payload.blogCat,blogName:payload.blogName}).then(function (num) {
             article.state.articleLike=num
+          }).then(function () {
+            blogFunc.actions.getLikeStatus(auth.state,{blogCat: payload.blogCat,blogName: payload.blogName,userUid:auth.state.user.uid})
           }).then(function () {
             article.state.likeBtnLoader=false
           })

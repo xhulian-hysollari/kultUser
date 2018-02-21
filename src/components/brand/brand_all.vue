@@ -64,6 +64,7 @@
       }
     },
     created(){
+      window.scroll(0,0)
       window.thisOfVueComp = this
       //
       this.$store.commit('getAllBrands', {

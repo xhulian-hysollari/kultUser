@@ -321,11 +321,48 @@
               </ul>
             </div>
           </div>
-          <!--div class="prod_rel_cats text-center">
+          <div class="prod_rel_cats text-center">
             <div class="comm_title">
               <h3>Recommended</h3>
             </div>
-            <div class="prod_repeater">
+            <el-row :gutter="10" >
+              <el-col :xs="12" :sm="12" :md="6" :lg="6" v-for="(pDet, pId) in recProducts"
+              >
+                <div>
+                  <div class="grid-content pa-2" >
+                    <a class="prod_image"   @click="$router.push({path:`/particularProduct/${pId}`,query:{prodDet:JSON.stringify(pDet)}})">
+                      <img :src="pDet.pBasicDetail.pPicUrl"  style="height:286px " alt="product">
+                    </a>
+                    <div class="prod_cont"  @click="$router.push({path:`/particularProduct/${pId}`,query:{prodDet:JSON.stringify(pDet)}})">
+                      <h4><a >{{pDet.pBasicDetail.pBrand}}</a></h4>
+                      <span v-for="(i,k) in pDet.pBasicDetail.pName" v-if="k < 20">{{i}}</span><span v-if="pDet.pBasicDetail.pName.length > 20">...</span>
+                    </div>
+                    <div class="prod_misc"  @click="$router.push({path:`/particularProduct/${pId}`,query:{prodDet:JSON.stringify(pDet)}})">
+                      <div class="float" ><rating :num="Math.round(pDet.pBasicDetail.pRating)" ></rating></div>
+                      <div class="half text-right" >
+                              <span v-if="parseInt(pDet.priceStartsFrom) == 999999999" style="float: right" class="half text-right">
+                                Out Of Stock
+                              </span>
+                        <div v-else-if="parseInt(pDet.priceStartsFrom) <= 10000 ">
+                          From <img src="/static/images/rupee-2.svg" alt="currency" >
+                          {{pDet.priceStartsFrom}}
+                        </div>
+                        <div v-else></div>
+                      </div>
+                    </div>
+                    <a  class="prod_compare" v-if="isLoggedIn"><span @click="$router.push({path:`/particularProduct/${pId}`,query:{prodDet:JSON.stringify(pDet)}})" >Compare price</span>
+                      <img src="/static/images/wishlist-add.svg" alt="wishlist-add" v-if="Object.keys(wishlistObj).indexOf(pId) === -1" @click="addWishlist({pId,pDet}); wishlistObj[pId] = pDet; $forceUpdate()">
+                      <img src="/static/images/wishlist-hover.svg" alt="wishlist-hover" v-if="Object.keys(wishlistObj).indexOf(pId) !== -1" @click="removeWishlist({pId,pDet}); delete wishlistObj[pId]; $forceUpdate()">
+                    </a>
+                    <a  class="prod_compare" v-if="!isLoggedIn"><span @click="$router.push({path:`/particularProduct/${pId}`,query:{prodDet:JSON.stringify(pDet)}})" >Compare price</span>
+                      <img src="/static/images/wishlist-add.svg" alt="wishlist-add" @click="$store.state.auth.showLoginPopup = true">
+                    </a>
+                  </div>
+                </div>
+              </el-col>
+              <!-- load more ends -->
+            </el-row>
+            <!--div class="prod_repeater">
               <div class="prod_repeat prod_repeat1">
                 <a class="prod_image" >
                   <img src="/static/images/item-1@2x.jpg" alt="product">
@@ -386,8 +423,8 @@
                 <a  class="prod_compare">Compare price <img src="/static/images/wishlist-add.svg" alt="wishlist-add"></a>
                 <a  class="go_store">Go to store</a>
               </div>
-            </div>
-          </div-->
+            </div-->
+          </div>
         </div>
       </div>
     </div>
@@ -429,6 +466,7 @@
     },
     computed:{
       ...mapGetters([
+        'recProducts',
         'wishlistObj',
         'pTypes',
         'prodArr',
@@ -455,6 +493,7 @@
        }
      },
       $route:function () {
+        this.$store.commit('getRecProducts')
         this.$store.commit('getTypeNLinkOfThisProduct', {
           pId: this.$route.params.pId
         })
@@ -581,6 +620,13 @@
         'addWishlist',
         'removeWishlist'
       ]),
+    /*  changeToDeepLink(){
+        axios.get('https://api.admitad.com/deeplink/{w_id}/advcampaign/{c_id}/', {
+        params: {
+
+        }
+      })
+      },*/
       emptyLink(){
        setTimeout(()=>{
         // alert(this.$store.state.particularProduct.selectedLink)
@@ -597,9 +643,11 @@
       this.$store.state.particularProduct.selectedLink=''
     },
     created(){
+      window.scroll(0,0)
       let vm = this
       window.thisOfVueComp = this
       //
+      this.$store.commit('getRecProducts')
       this.$store.commit('getTypeNLinkOfThisProduct', {
         pId: this.$route.params.pId
       })
@@ -742,5 +790,6 @@
      top: 0px;
     text-align: left;
   }
+
 </style>
 

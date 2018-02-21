@@ -14,13 +14,14 @@ const state = {
 }
 const mutations = {
   articleContents(){
+    state.articleLoader=true
     console.log(blog.state.blogs)
     if(Object.keys(blog.state.blogs).length!==0){
       state.blogName = router.currentRoute.query.name
       state.blogDet=blog.state.blogs[router.currentRoute.query.cat][router.currentRoute.query.name]
       console.log(state.blogDet)
     }else{
-      state.articleLoader=true
+     // state.articleLoader=true
       mutations.getArticle()
       blog.mutations.getBlogs(blog.state)
     }
@@ -50,7 +51,7 @@ const mutations = {
         },200)
       }else{
         console.log(blog.state.blogs)
-        state.articleLoader=false
+       // state.articleLoader=false
         state.blogName = router.currentRoute.query.name
         state.blogDet=blog.state.blogs[router.currentRoute.query.cat][router.currentRoute.query.name]
 
