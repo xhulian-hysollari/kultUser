@@ -202,6 +202,7 @@ const mutations = {
         firebase.auth().currentUser.updateProfile({
           displayName: payload.name
         }).then(function() {
+          console.log(state.user , '=====1')
           //console.log("// Display Name Updated successful.")
           //
           setTimeout(()=>{
@@ -211,8 +212,10 @@ const mutations = {
                 dob: payload.dob,
              //   phone : payload.phone
               }).then(()=>{
+              console.log(state.user, '=======2')
               state.showRefCode=true
-              window.thisOfVueComp_2.$forceUpdate()
+              console.log(window.thisOfAppComp)
+              window.thisOfAppComp.$forceUpdate()
               // state.showRegisterPopup= false
               //console.log("dob updated!")
               gen.state.btnLoader=false
