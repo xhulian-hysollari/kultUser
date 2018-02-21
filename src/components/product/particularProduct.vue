@@ -100,7 +100,7 @@
                          target="_blank" v-if="k == 'amazon' && amazonLinkPrice != 'Out Of Stock' ">
                         <span class="aff_name">{{k.toUpperCase()}}</span>
                         <span v-if="amazonPriceLoader">fetching price...</span>
-                        <span class="aff_price" v-if="amazonLinkPrice != 'Out Of Stock'" v-show="!amazonPriceLoader">{{amazonLinkPrice}}</span>
+                        <span class="aff_price" v-if="amazonLinkPrice != 'Out Of Stock'" v-show="!amazonPriceLoader">₹{{amazonLinkPrice}}</span>
                         <span style="margin-top: 17px" v-show="!amazonPriceLoader">BUY NOW</span>
                       </a>
                       <!--a @click="$store.state.auth.showLoginPopup=true; $store.state.particularProduct.selectedLink =l.link"target="_blank" v-if="parseInt(l.price) < 10001 || parseInt(amazonLinkPrice) <10001 &&  parseInt(amazonLinkPrice) != -1" class="box">
@@ -141,7 +141,7 @@
                   </ul>
                   <ul class="prod_shoplinks list-unstyled" v-if="isLoggedIn && email" >
                     <li  v-for="(l,k) in selected.det.affliateDomains" class="box">
-                      <a :href="l.link + '&subid=' + $store.state.auth.user.email" target="_blank"
+                      <a :href='newLink(l.link)' target="_blank"
                          v-if="k != 'amazon' && l.price.indexOf('999999999') == -1 "
                       >
                         <span class="aff_name">{{k.toUpperCase()}}</span>
@@ -152,7 +152,7 @@
                         v-if="k == 'amazon' && amazonLinkPrice != 'Out Of Stock' ">
                         <span class="aff_name">{{k.toUpperCase()}}</span>
                         <span v-if="amazonPriceLoader">fetching price...</span>
-                        <span class="aff_price" v-if="amazonLinkPrice != 'Out Of Stock'" v-show="!amazonPriceLoader">{{amazonLinkPrice}}</span>
+                        <span class="aff_price" v-if="amazonLinkPrice != 'Out Of Stock'" v-show="!amazonPriceLoader">₹{{amazonLinkPrice}}</span>
                         <span style="margin-top: 17px" v-show="!amazonPriceLoader">BUY NOW</span>
                       </a>
                     </li>
@@ -177,9 +177,10 @@
                       </a>
                     </li>
                   </ul-->
+                  <!--$store.state.particularProduct.selectedLink =l.link -->
                   <ul class="prod_shoplinks list-unstyled" v-if="isLoggedIn &&   !email" >
                     <li  v-for="(l,k) in selected.det.affliateDomains" >
-                      <a @click="dialog=true;$store.state.particularProduct.selectedLink =l.link "
+                      <a @click="dialog=true;changeToDeepLink(l.link); "
                          v-if="k != 'amazon' && l.price.indexOf('999999999') == -1 "
                       >
                         <span class="aff_name">{{k.toUpperCase()}}</span>
@@ -190,7 +191,7 @@
                          v-if="k == 'amazon' && amazonLinkPrice != 'Out Of Stock' ">
                         <span class="aff_name">{{k.toUpperCase()}}</span>
                         <span v-if="amazonPriceLoader">fetching price...</span>
-                        <span class="aff_price" v-if="amazonLinkPrice != 'Out Of Stock'" v-show="!amazonPriceLoader">{{amazonLinkPrice}}</span>
+                        <span class="aff_price" v-if="amazonLinkPrice != 'Out Of Stock'" v-show="!amazonPriceLoader">₹{{amazonLinkPrice}}</span>
                         <span style="margin-top: 17px" v-show="!amazonPriceLoader">BUY NOW</span>
                       </a>
                       <!--a @click="dialog=true;$store.state.particularProduct.selectedLink =l.link "  class="box" v-if="amazonLinkPrice != 'Out Of Stock' || l.price.indexOf('999999999') != -1">
@@ -324,13 +325,13 @@
               </ul>
             </div>
           </div>
-          {{amazonPriceLoader}}
           <div class="prod_rel_cats text-center">
             <div class="comm_title">
               <h3>Recommended</h3>
             </div>
             <el-row :gutter="10" >
               <el-col :xs="12" :sm="12" :md="6" :lg="6" v-for="(pDet, pId) in recProducts"
+                      v-if="parseInt(pDet.priceStartsFrom) != 999999999"
               >
                 <div>
                   <div class="grid-content pa-2" >
@@ -649,13 +650,23 @@
         'addWishlist',
         'removeWishlist'
       ]),
-    /*  changeToDeepLink(){
-        axios.get('https://api.admitad.com/deeplink/{w_id}/advcampaign/{c_id}/', {
-        params: {
-
+      newLink(link){
+        let subid= this.$store.state.auth.user.email
+        return 'https://ad.admitad.com/g/1ocifeg24mf70acd494689d7fe25ba/?subid='+subid+'&ulp='+link
+      },
+      changeToDeepLink(link){
+        let vm = this
+        let subid = ''
+        if(this.$store.state.auth.isLoggedIn && vm.email){
+          subid= this.$store.state.auth.user.email
+        }else{
+          subid='notLoggedIn@kult.com'
         }
-      })
-      },*/
+        console.log('============>'+link)
+        vm.$store.state.particularProduct.selectedLink ='https://ad.admitad.com/g/1ocifeg24mf70acd494689d7fe25ba/?subid='+subid+'&ulp='+link
+
+       // console.log('https://ad.admitad.com/g/1ocifeg24mf70acd494689d7fe25ba/?subid='+subid+'&ulp='+link)
+      },
       emptyLink(){
        setTimeout(()=>{
         // alert(this.$store.state.particularProduct.selectedLink)
@@ -811,9 +822,6 @@
     padding: 0px;
     /* margin: 0px; */
     margin-top: -22px;
-  }
-  .box{
-    height: 60px;
   }
   .rupee{
     right: 100% !important;

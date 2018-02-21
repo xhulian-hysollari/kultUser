@@ -11,6 +11,7 @@
     <div class="prod_rel_cats text-center" v-else>
       <el-row :gutter="15" >
         <el-col :xs="12" :sm="12" :md="6" :lg="6" v-for="(pDet, pId) in searchProds"
+                v-if="parseInt(pDet.priceStartsFrom) != 999999999"
                 style="height: 455px"
         >
           <div>

@@ -184,6 +184,7 @@
               <div class="cat_prodarea">
                 <el-row :gutter="15" >
                   <el-col :xs="12" :sm="12" :md="8" :lg="8" v-for="(pDet, pId) in products"
+                          v-if="parseInt(pDet.priceStartsFrom) != 999999999"
                   >
                     <div>
                       <div class="grid-content pa-2" >
@@ -200,7 +201,7 @@
                               <span v-if="parseInt(pDet.priceStartsFrom) == 999999999" style="float: right" class="half text-right">
                                 Out Of Stock
                               </span>
-                            <div v-else-if="parseInt(pDet.priceStartsFrom) <= 10000 ">
+                            <div v-else-if="pDet.priceStartsFrom <= 10000 ">
                               From <img src="/static/images/rupee-2.svg" alt="currency" >
                               {{pDet.priceStartsFrom}}
                             </div>
@@ -246,7 +247,7 @@
                       <button class="login_btn load_more_btn" @click="loadMoreProducts({
                       routePath: routeDet.routePath
                     })" v-if="Object.keys(products).length !== totalProds && !loadMoreLoader && Object.keys(products).length !== 0">
-                        Load {{totalProds - Object.keys(products).length}} More Products
+                        Load <!--{{totalProds - Object.keys(products).length}}--> More Products
                       </button>
 
                     </div>

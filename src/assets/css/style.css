@@ -387,7 +387,8 @@ body.searching::before {
   background-color: #f5e3e7;
   position: relative;
   margin-bottom: 60px;
-  background-image: url('../images/girl-model@2x.jpg'), url('../images/cosmetics@2x.jpg');
+   background-image: url('../images/girl-model@2x.jpg'), url('../images/cosmetics@2x.jpg');
+ /* background-image: url('../images/girl-model@2x.jpg'), url('../images/cosmetics@2x.jpg');*/
   background-position: left center, 99% center;
   -webkit-background-size: 640px, 440px;
   background-size: 640px, 440px;

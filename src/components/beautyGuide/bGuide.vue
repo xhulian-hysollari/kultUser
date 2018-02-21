@@ -27,7 +27,7 @@
                 <h3>Best Sellers</h3>
               </div>
               <el-row :gutter="15" >
-                <el-col :xs="12" :sm="12" :md="8" :lg="8" v-for="(pDet, pId) in bGuideBlushBestSeller"
+                <el-col :xs="12" :sm="12" :md="8" :lg="8"  v-if="parseInt(pDet.priceStartsFrom) != 999999999"  v-for="(pDet, pId) in bGuideBlushBestSeller"
                 >
                   <div>
                     <div class="grid-content pa-2" >
@@ -82,7 +82,7 @@
                 <h3>Pink</h3>
               </div>
               <el-row :gutter="15" >
-                <el-col :xs="12" :sm="12" :md="8" :lg="8" v-for="(pDet, pId) in bGuideBlushPink"
+                <el-col :xs="12" :sm="12" :md="8" :lg="8"  v-if="parseInt(pDet.priceStartsFrom) != 999999999"  v-for="(pDet, pId) in bGuideBlushPink"
                 >
                   <div>
                     <div class="grid-content pa-2" >
@@ -137,7 +137,7 @@
                 <h3>Carols</h3>
               </div>
               <el-row :gutter="15" >
-                <el-col :xs="12" :sm="12" :md="8" :lg="8" v-for="(pDet, pId) in bGuideBlushCarols"
+                <el-col :xs="12" :sm="12" :md="8" :lg="8"  v-if="parseInt(pDet.priceStartsFrom) != 999999999"  v-for="(pDet, pId) in bGuideBlushCarols"
                 >
                   <div>
                     <div class="grid-content pa-2" >
@@ -192,7 +192,7 @@
                 <h3>Nudes</h3>
               </div>
               <el-row :gutter="15" >
-                <el-col :xs="12" :sm="12" :md="8" :lg="8" v-for="(pDet, pId) in bGuideBlushNudes"
+                <el-col :xs="12" :sm="12" :md="8" :lg="8"  v-if="parseInt(pDet.priceStartsFrom) != 999999999"  v-for="(pDet, pId) in bGuideBlushNudes"
                 >
                   <div>
                     <div class="grid-content pa-2" >

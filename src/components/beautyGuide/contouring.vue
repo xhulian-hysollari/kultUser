@@ -27,7 +27,7 @@
                 <h3> Contouring Powder</h3>
               </div>
               <el-row :gutter="15" >
-                <el-col :xs="12" :sm="12" :md="8" :lg="8" v-for="(pDet, pId) in bGuideCountrPowder"
+                <el-col :xs="12" :sm="12" :md="8" :lg="8"  v-if="parseInt(pDet.priceStartsFrom) != 999999999"  v-for="(pDet, pId) in bGuideCountrPowder"
                 >
                   <div>
                     <div class="grid-content pa-2" >
@@ -82,7 +82,7 @@
                 <h3> Contouring Sticks</h3>
               </div>
               <el-row :gutter="15" >
-                <el-col :xs="12" :sm="12" :md="8" :lg="8" v-for="(pDet, pId) in bGuidesticks"
+                <el-col :xs="12" :sm="12" :md="8" :lg="8"  v-if="parseInt(pDet.priceStartsFrom) != 999999999"  v-for="(pDet, pId) in bGuidesticks"
                 >
                   <div>
                     <div class="grid-content pa-2" >

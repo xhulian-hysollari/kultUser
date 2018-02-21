@@ -1,12 +1,10 @@
 <template>
   <div>
 
-    <div class="home_hero">
-      <div class="container">
-        <div class="hero_content text-center">
-          <h2>We Believe In Beauty Without Boarders</h2>
-          <p>Which is why we scour the globe to bring you the best buys.</p>
-        </div>
+    <div class="home_hero2">
+      <div class="container2">
+        <img src="/static/images/homeBanners/Desktop/beautyfulricher-desktop.jpg" class=" hidden-xs " @click="$router.push('kultPick/shopOption/MAKEUP')">
+        <img src="/static/images/homeBanners/Mobile/beautyfulricher-mobile.jpg" class="visible-xs " @click="$router.push('kultPick/shopOption/MAKEUP')">
       </div>
     </div>
     <div class="intro_list">
@@ -100,20 +98,31 @@
       </div>
     </div>
     <div class="home_intro">
-      <div class="text-right">
-        <img class="main_img" src="/static/images/hero-woman@2x.jpg" alt="hero">
+      <div>
+        <img class="main_img hidden-xs"  src="/static/images/homeBanners/Desktop/kultpics_desktop_84k.jpg" alt="hero" @click="$router.push('/kultPick')">
+        <img class="main_img visible-xs"  src="/static/images/homeBanners/Mobile/kultpics_mobile_30k.jpg" alt="hero"  @click="$router.push('/kultPick')">
       </div>
-      <div class="intro_cont">
-        <div class="container">
-          <div class="intro_texts">
-            <img src="/static/images/cosmetics-tools@2x.jpg" alt="cosmetics-tools">
-            <h2>A New Way For Beauty</h2>
-            <p>
-              Makeup is no different than clothes and accessories -
-              it's embellishments for your face. And it also gives you
-              creative freedom.
-            </p>
-            <a >COMPARE PRICES</a>
+    </div>
+    <div class="visible-xs" @click="$router.push('/bGuide/SKINCARE')">
+      <div class="container" style="width: 100% !important;height: 100% !important;">
+        <div class="row">
+          <div class="col-sm-6 col-xs-12" style="padding:0px">
+            <img src="/static/images/homeBanners/Desktop/skincareallages-desktop.jpg" style="height: 400px" class="hidden-xs">
+            <img src="/static/images/homeBanners/Mobile/skincareallages-mobile.jpg" style="height: 400px" class="visible-xs">
+          </div>
+        </div>
+      </div>
+      <img src="/static/images/cashback-5@2x.jpg" style="height: 400px" @click="$router.push('/cashback')">
+    </div>
+    <div class=" hidden-xs">
+      <div class="container" style="width: 100% !important;height: 100% !important;">
+        <div class="row">
+          <div class="col-sm-6 col-xs-12" style="padding:0px">
+            <img src="/static/images/homeBanners/Desktop/skincareallages-desktop.jpg" style="height: 400px" class="hidden-xs" @click="$router.push('/bGuide/SKINCARE')">
+            <img src="/static/images/homeBanners/Mobile/skincareallages-mobile.jpg" style="height: 400px" class="visible-xs">
+          </div>
+          <div class="col-sm-6 col-xs-12" @click="$router.push('/cashback')">
+            <img src="/static/images/cashback-5@2x.jpg" style="height: 400px"  alt="item">
           </div>
         </div>
       </div>
@@ -125,40 +134,34 @@
           <a >Browser all <img src="/static/images/right-arrow-1.svg" alt="arrow"></a>
         </div>
         <ul class="maincats_list">
-          <li @click="$router.push(`brandProduct/NEUTROGENA`)">
+          <li @click="$router.push(`productSubCategory/MAKEUP/FACE/COLOR CORRECT`)">
             <a >
-              <img src="/static/images/items-5@2x.jpg" alt="item">
-              <span class="cat_name"><span>NEUTROGENA CREAM</span></span>
+              <img src="/static/images/catBanners/shop-cheeks.jpg" alt="item">
             </a>
           </li>
-          <li @click="$router.push(`brandProduct/PHILIPS`)">
+          <li @click="$router.push(`productCategory/MAKEUP/EYES`)">
             <a >
-              <img src="/static/images/item-6@2x.jpg" alt="item">
-              <span class="cat_name"><span>PHILIPS HAIR DRYER</span></span>
+              <img src="/static/images/catBanners/shop-eyes.jpg" alt="item">
             </a>
           </li>
-          <li @click="$router.push(`brandProduct/CERAVE`)">
+          <li @click="$router.push(`productCategory/MAKEUP/FACE`)">
             <a >
-              <img src="/static/images/item-7@2x.jpg" alt="item">
-              <span class="cat_name"><span>CERAVE CLEANSER</span></span>
+              <img src="/static/images/catBanners/shop-face.jpg" alt="item">
             </a>
           </li>
-          <li @click="$router.push(`brandProduct/SEPHORA COLLECTION`)">
+          <li @click="$router.push(`productCategory/MAKEUP/LIPS`)">
             <a >
-              <img src="/static/images/item-8@2x.jpg" alt="item">
-              <span class="cat_name"><span>POWDER SET</span></span>
+              <img src="/static/images/catBanners/shop-lips.jpg" alt="item">
             </a>
           </li>
-          <li @click="$router.push(`brandProduct/MAC`)">
+          <li @click="$router.push(`productCategory/MAKEUP/NAILS`)">
             <a >
-              <img src="/static/images/item-9@2x.jpg" alt="item">
-              <span class="cat_name"><span>MAC BEAUTY</span></span>
+              <img src="/static/images/catBanners/shop-nails.jpg" alt="item">
             </a>
           </li>
-          <li @click="$router.push(`brandProduct/DIOR`)">
+          <li @click="$router.push(`globalBestSeller/shopOption/SKINCARE`)">
             <a >
-              <img src="/static/images/item-10@2x.jpg" alt="item">
-              <span class="cat_name"><span>DIOR LIPSTICK</span></span>
+              <img src="/static/images/catBanners/shop-scincare.jpg" alt="item">
             </a>
           </li>
         </ul>
@@ -203,6 +206,7 @@
           <div >
             <el-row :gutter="15" >
               <el-col :xs="12" :sm="12" :md="6" :lg="6" v-for="(pDet, pId) in homeJustArrived"
+                      v-if="parseInt(pDet.priceStartsFrom) != 999999999"
               >
                 <div>
                   <div class="grid-content pa-2" >
@@ -242,77 +246,30 @@
       </div>
     </div>
     <div class="home_impcats">
-      <div class="container">
+      <div class="container" >
         <div class="row">
-          <div class="col-md-6 col-xs-12 comm_imp" @click="$router.push('/howTo?selVidCat=MAKEUP')">
-            <div class="image_box">
-              <div class="cont_part">
-                <h4>
-                  WATCH VIDEO AND
-                  GET INSPIRED.
-                </h4>
-                <p>
-                  Explore Advice, Different Looks,
-                  How-to’s
-                </p>
-              </div>
-              <img src="/static/images/item-11@2x.jpg" alt="item">
-            </div>
-            <div class="title_part">
-              <h5>Running Late Routine</h5>
-              <a class="title_link">5 Minutes Makeup Look.</a>
-              <a class="go_btn" ><img src="/static/images/player.svg" alt="player"></a>
+          <div class="col-md-6 col-xs-12 col-sm-6  comm_imp" @click="$router.push('/howTo?selVidCat=NAILS')">
+            <div class="image_box" style="height: 275px !important;">
+            <img class="hidden-xs hidden-sm" style="height: 275px !important;" src="/static/images/video%20banners/Desktop/01.jpg" alt="player">
+             <img class="visible-xs visible-sm" style="height: 275px !important;" src="/static/images/video%20banners/Mobile/01mobile.jpg" alt="player">
             </div>
           </div>
-          <div class="col-md-6 col-xs-12 comm_imp" @click="$router.push('/bGuide/Blush')">
-            <div class="image_box">
-              <div class="cont_part">
-                <h4>
-                  BUYING GUIDES
-                </h4>
-                <p>
-                  Buying guide is your know -
-                  All personal beauty advisor.
-                </p>
-              </div>
-              <img src="/static/images/item-12@2x.jpg" alt="item">
-            </div>
-            <div class="title_part">
-              <h5>See Beauty Guides</h5>
-              <a  class="title_link">Learn More</a>
-              <a class="go_btn" ><img src="/static/images/player.svg" alt="player"></a>
+          <div class="col-md-6 col-xs-12 col-sm-6  comm_imp" @click="$router.push('/howTo?selVidCat=MAKEUP')">
+            <div class="image_box" >
+             <img class="hidden-xs hidden-sm"  style="height: 275px !important; " src="/static/images/video%20banners/Desktop/02.jpg" alt="player">
+             <img class="visible-xs visible-sm" style="height: 275px !important; "src="/static/images/video%20banners/Mobile/02mobile.jpg" alt="player">
             </div>
           </div>
-          <div class="col-md-6 col-xs-12 comm_imp"  @click="$router.push('/howTo?selVidCat=NAILS')">
-            <div class="image_box">
-              <div class="cont_part">
-                <h4>
-                  RED LIPS <br>
-                  NAIL ART
-                </h4>
-              </div>
-              <img src="/static/images/item-13@2x.jpg" alt="item">
-            </div>
-            <div class="title_part">
-              <h5>Watch Video and Get Inspired</h5>
-              <a  class="title_link">Shop Product</a>
-              <a class="go_btn" ><img src="/static/images/player.svg" alt="player"></a>
+          <div class="col-md-6 col-xs-12 col-sm-6 comm_imp" @click="$router.push('/howTo?selVidCat=MAKEUP')">
+            <div class="image_box" style="height: 275px !important;">
+            <img class="hidden-xs hidden-sm"  style="height: 275px !important;" src="/static/images/video%20banners/Desktop/03.jpg" alt="player">
+              <img class="visible-xs visible-sm" style="height: 275px !important;" src="/static/images/video%20banners/Mobile/03mobile.jpg" alt="player">
             </div>
           </div>
-          <div class="col-md-6 col-xs-12 comm_imp" @click="$router.push('/howTo?selVidCat=MAKEUP')">
-            <div class="image_box">
-              <div class="cont_part">
-                <h4>
-                  TIPS TO CONTOUR
-                  YOUR NOSE
-                </h4>
-              </div>
-              <img src="/static/images/item-14@2x.jpg" alt="item">
-            </div>
-            <div class="title_part">
-              <h5>Watch Video and Get Inspired</h5>
-              <a  class="title_link">Shop Product</a>
-              <a class="go_btn" ><img src="/static/images/player.svg" alt="player"></a>
+          <div class="col-md-6 col-xs-12 col-sm-6 comm_imp" @click="$router.push('/howTo?selVidCat=HAIR')">
+            <div class="image_box" style="height: 275px !important;">
+              <img  class="hidden-xs hidden-sm" style="height: 275px !important;" src="/static/images/video%20banners/Desktop/04.jpg" alt="player">
+             <img class="visible-xs visible-sm" style="height: 275px !important;" src="/static/images/video%20banners/Mobile/04mobile.jpg" alt="player">
             </div>
           </div>
         </div>
@@ -514,7 +471,18 @@
     opacity:1;
     filter:alpha(opacity=100);
   }
-
+  .home_high::after {
+    position: absolute;
+    right: 0;
+    width: 50%;
+    height: 100%;
+    top: 0;
+    content: "";
+    background: url(/static/images/cashback-5@2x.jpg) center no-repeat;
+    background-color: #f6e3e7;
+    -webkit-background-size: contain;
+    background-size: contain;
+  }
   .hovereffect:hover h2,.hovereffect:hover a.info {
     opacity:1;
     filter:alpha(opacity=100);
@@ -529,5 +497,31 @@
   }
   .float{
     float: left;
+  }
+  .home_intro .main_img {
+    position: relative;
+    width: 100% !important;
+  }
+  .container2{
+    width: 100%;
+    padding: 0px;
+  /* height: 100%; */
+  }
+  .home_hero2 {
+    /* padding: 94px 0 84px; */
+    background-color: #f5e3e7;
+    position: relative;
+    margin-bottom: 60px;
+    /* background-image: url(../images/girl-model@2x.jpg), url(../images/cosmetics@2x.jpg); */
+    background-position: left center, 99% center;
+    -webkit-background-size: 640px, 440px;
+    background-size: 640px, 440px;
+    background-repeat: no-repeat;
+  }
+  .home_high {
+    background: #f2f4f7;
+     padding: 0px 0 0px !important;
+    position: relative;
+    height: 400px !important;
   }
 </style>

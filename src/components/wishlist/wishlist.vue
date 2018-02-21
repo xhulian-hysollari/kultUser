@@ -63,7 +63,10 @@
 
               </div>
               <el-row :gutter="15" >
-                <el-col :xs="12" :sm="12" :md="8" :lg="8" v-for="(pDet,index) in wishlistArr"  >
+                <el-col :xs="12" :sm="12" :md="8" :lg="8" v-for="(pDet,index) in wishlistArr"
+                        v-if="parseInt(pDet.priceStartsFrom) != 999999999"
+                >
+
                   <div >
                     <div class="grid-content pa-2" >
                       <a class="prod_image" @click="$router.push({path:`/particularProduct/${pDet.key}`})">
