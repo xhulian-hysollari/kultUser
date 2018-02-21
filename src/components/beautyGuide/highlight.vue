@@ -1,7 +1,8 @@
 <template>
   <div>
     <div class="banner_strip"></div>
-    <div class="main_catarea">
+    <loader v-if="loader"></loader>
+    <div class="main_catarea" v-else>
       <div class="container">
         <div class="row">
           <div class="col-xs-12">
@@ -417,9 +418,11 @@
   import rating from '@/components/rating'
   import {mapGetters} from 'vuex'
   import {mapMutations} from 'vuex'
+  import loader from '@/components/gen/loader'
   export default {
     data(){
       return{
+        loader:false,
         bGuideHighGBS:{},
         dewGlowLow:{},
         dewGlowHigh:{},
@@ -441,7 +444,8 @@
       }
     },
     components:{
-      rating
+      rating,
+      loader
     },
     computed:{
       ...mapGetters([
@@ -458,6 +462,7 @@
     },
     created(){
       let vm = this
+      vm.loader= true
       this.$store.dispatch('getProdFromArr',["163","164","168","123","174"]).then(function (response) {
         vm.bGuideHighGBS=response
         console.log(response)
@@ -485,6 +490,10 @@
       this.$store.dispatch('getProdFromArr',["168"]).then(function (response) {
         vm.natGlowHigh=response
         console.log(response)
+      }).then(function () {
+        setTimeout(()=>{
+          vm.loader=false
+        },500)
       })
     }
   }

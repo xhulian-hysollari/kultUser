@@ -69,6 +69,7 @@ const mutations = {
         state.showRefCode=false
         state.showLoginPopup=false
         Notification.success('Details Saved !')
+       // window.thisOfVueComp_2.$forceUpdate()
       })
     }else{
       Notification.error('Nothing To Save')
@@ -210,7 +211,9 @@ const mutations = {
                 dob: payload.dob,
              //   phone : payload.phone
               }).then(()=>{
-              state.showRegisterPopup= false
+              state.showRefCode=true
+              window.thisOfVueComp_2.$forceUpdate()
+              // state.showRegisterPopup= false
               //console.log("dob updated!")
               gen.state.btnLoader=false
              // state.showAuthPopup=false
@@ -226,6 +229,7 @@ const mutations = {
           //console.log("// An error happened, update display name")
           //console.log(error)
           //
+          gen.state.btnLoader=false
           Notification.error("Error: " + error.message)
         });
         //
@@ -234,6 +238,7 @@ const mutations = {
       var errorCode = error.code;
       var errorMessage = error.message;
       // ...
+      gen.state.btnLoader=false
       Notification.error("Error: " + error.message)
 
     });

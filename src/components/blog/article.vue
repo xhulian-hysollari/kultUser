@@ -40,8 +40,9 @@
                     <li  v-show="!likeBtnLoader" v-if="isLoggedIn">
                       <img src="/static/images/heart-icon.svg" alt="view" v-if="!userLike" @click="blogLike({blogCat:blogDet.blogCat,blogName:$route.query.name,userUid:user.uid})">
                       <span v-if="userLike" @click="blogLike({blogCat:blogDet.blogCat,blogName:$route.query.name,userUid:user.uid})"><i class="fa fa-heart"></i></span>
-                      {{articleLike}}</li>
-                    <li v-if="!isLoggedIn"><img src="/static/images/heart-icon.svg" alt="view"  data-toggle="modal" data-target="#loginModal">{{articleLike}}</li>
+                      {{articleLike}}
+                    </li>
+                    <li v-if="!isLoggedIn"><img src="/static/images/heart-icon.svg" alt="view"  @click="$store.state.auth.showLoginPopup=true">{{articleLike}}</li>
                   </ul>
                   <ul class="list-unstyled list-inline">
                     <li><a href="https://www.instagram.com/kult.in/" target="_blank"><i class="fa fa-instagram icon_size" ></i></a></li>

@@ -51,11 +51,16 @@
                       todo: 'login'
                     })">
                   <i class="fa fa-facebook"></i>LOGIN</a>
-                <a class="twitter"
+                <!--a class="twitter"
                    @click="twitterP({
                     todo:'login'
                   })"
-                ><i class="fa fa-twitter"></i>LOGIN</a>
+                ><i class="fa fa-twitter"></i>LOGIN</a-->
+                <a class="google"
+                   @click="googleP({
+                    todo:'login'
+                  })"
+                ><i class="fa fa-google"></i>LOGIN</a>
               </div>
             </div>
             <div class="reg_cont" v-if="!showRefCode">
@@ -73,7 +78,7 @@
           <div class="clearfix"></div>
         </div>
         <div class="splash-banner"  v-if="selectedLink !== ''">
-          <a :href="selectedLink" target="_blank" @click="emptySelLink()">
+          <a  @click="emptySelLink()">
             <span class="splash-banner-title lightbox-custom-closer" >CONTINUE WITHOUT LOG IN AND LOSE CASHBACK</span>
           </a>
         </div>
@@ -235,7 +240,7 @@
         'loginBtnLoader',
         'selectedLink',
         'isRefGiven',
-        'screenW'
+        'screenW',
       ])
     },
     methods:{
@@ -248,11 +253,11 @@
         'emailPasswordLogin'
       ]),
       emptySelLink(){
-        setTimeout(()=>{
-          this.$store.state.particularProduct.selectedLink =''
           this.$store.state.auth.showLoginPopup =false
-        },200)
-
+        setTimeout(()=>{
+          window.open(this.$store.state.particularProduct.selectedLink, '_blank');
+          this.$store.state.particularProduct.selectedLink =''
+        },100)
       },
     },
     created(){
@@ -261,6 +266,9 @@
   }
 </script>
 <style scoped>
+  .google{
+    background: #FA6803  ;
+  }
   .comm_modal::after {
     visibility: hidden !important;
     position: absolute;

@@ -36,18 +36,12 @@
                 </a>
               </li>
             </ul>
-            <div class="left_ad hidden-xs">
-              <a >
-                <img src="/static/images/item-81@2x.jpg" alt="item">
-                <span>100% PURE ORGANIC</span>
-              </a>
-            </div>
           </div>
           <div class="tv_right">
             <div class="row" >
               <div class="col-md-6 col-xs-12 comm_imp col-lg-6" v-for="(vidDet, vidName) in howToVid" style="height: 285px;">
                 <div class="image_box hidden-xs" data-toggle="modal" data-target="#videoModal" @click="getCatVidProduct({vidCat: $route.query.selVidCat,vidName }); selectedLink=vidDet.videoLink;vidLoader=true" >
-                  <img :src="vidDet.videoImgUrl" alt="item"  ><!--thumbnail image-->
+                  <img :src="vidDet.videoImgUrl" alt="item"  class="img_size" ><!--thumbnail image-->
                 </div>
                 <div class="image_box visible-xs"   @click="dialog = true ; selectedLink=vidDet.videoLink" >
                   <div class="cont_part">
@@ -296,5 +290,9 @@ margin-top: 0;
     float: left;
     letter-spacing: -0.2px;
     color: #000000;
+  }
+  .img_size{
+    width:90vh;
+    height: 200.625px;
   }
 </style>

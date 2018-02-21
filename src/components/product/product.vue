@@ -403,6 +403,7 @@
     },
     created() {
       let vm = this
+      window.scroll(0,0)
       console.log('------------------------------------')
       console.log(this.routeDet)
       window.thisOfVueComp = this
