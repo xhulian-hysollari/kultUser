@@ -1,8 +1,5 @@
 <template xmlns="http://www.w3.org/1999/html">
   <div>
-
-
-
     <div class="banner_strip"></div>
     <div class="comm_pagebreads">
       <div class="container">

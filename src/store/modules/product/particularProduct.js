@@ -1,5 +1,6 @@
 import gen from '../gen'
 import product from './product'
+import axios from 'axios'
 
 const state = {
   pTypes: {},
@@ -10,7 +11,8 @@ const state = {
   emailVerified:false,
   amazonLoader:false,
   //
-  amazonLinkPrice: ''
+  amazonLinkPrice: '',
+  recProducts:{}
 }
 
 const getters = {
@@ -22,7 +24,8 @@ const getters = {
   selectedLink:state=>state.selectedLink,
   amazonLoader:state=>state.amazonLoader,
   //
-  amazonLinkPrice: state => state.amazonLinkPrice
+  amazonLinkPrice: state => state.amazonLinkPrice,
+  recProducts:state=>state.recProducts
 }
 
 const mutations = {
@@ -100,7 +103,7 @@ const mutations = {
               state.selected = state.prodArr[0]
               console.log("[selected] => ", state.selected)
             }).then(function () {
-              state.pTypeLoader = false //stop loader
+              //state.pTypeLoader = false //stop loader
             })
             //
             /*mutations.fetchAmazonPrice(state,{
@@ -115,6 +118,16 @@ const mutations = {
     })
   },
   //
+  getRecProducts(){
+    axios.get('https://us-central1-kult-2.cloudfunctions.net/recommendedProducts').then(function (response) {
+      //console.log(response.data)
+      state.recProducts=response.data
+      state.pTypeLoader=false
+    }).catch(function (error) {
+     // console.log(error)
+      state.pTypeLoader=false
+    })
+  },
   fetchAmazonPrice(state2, payload){
     let vm = this
     //

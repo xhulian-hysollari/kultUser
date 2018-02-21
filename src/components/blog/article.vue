@@ -31,7 +31,7 @@
               <div class="col-sm-7 col-xs-12 blog_left">
                 <div class="blog_inncont">
                   <div class="blog_image" >
-                    <img :src="blogDet.blogImgUrl[0]" alt="blog">
+                    <img :src="blogDet.blogImgUrl" alt="blog">
                     <span ><span  class="blog_tag" v-for="i in blogDet.blogTag ">#{{i}}</span></span>
                   </div>
                   <ul class="list-unstyled list-inline blog_views">
@@ -121,14 +121,24 @@
       $route:function () {
         let vm = this
         this.$store.commit('articleContents')
-        this.$store.dispatch('getLikeStatus',{
-          blogCat: vm.$router.currentRoute.query.cat,
-          blogName:vm.$router.currentRoute.query.name,
-          uid:vm.$store.state.auth.user.uid
-        })
+        if(vm.$store.state.auth.user){
+          this.$store.dispatch('getLikeStatus',{
+            blogCat: vm.$router.currentRoute.query.cat,
+            blogName:vm.$router.currentRoute.query.name,
+            uid:vm.$store.state.auth.user.uid
+          }).then(function () {
+            vm.$forceUpdate()
+          })
+        }
         this.$store.commit('blogView',{
           blogCat: vm.$router.currentRoute.query.cat,
           blogName:vm.$router.currentRoute.query.name,
+        })
+        this.$store.dispatch('getLikes',{
+          blogCat: vm.$router.currentRoute.query.cat,
+          blogName:vm.$router.currentRoute.query.name,
+        }).then(function () {
+          vm.$forceUpdate()
         })
       }
     },
@@ -155,16 +165,30 @@
     },
     created(){
       let vm = this
+      window.scroll(0,0)
       window.thisOfVueComp=this
       this.$store.commit('articleContents')
-      this.$store.dispatch('getLikeStatus',{
-        blogCat: vm.$router.currentRoute.query.cat,
-        blogName:vm.$router.currentRoute.query.name,
-        uid:vm.$store.state.auth.user.uid
-      })
+      //alert(vm.$store.state.auth.user.uid)
+      setTimeout(()=>{
+        if(vm.$store.state.auth.user){
+          this.$store.dispatch('getLikeStatus',{
+            blogCat: vm.$router.currentRoute.query.cat,
+            blogName:vm.$router.currentRoute.query.name,
+            uid:vm.$store.state.auth.user.uid
+          }).then(function () {
+            vm.$forceUpdate()
+          })
+        }
+      },2000)
       this.$store.commit('blogView',{
         blogCat: vm.$router.currentRoute.query.cat,
         blogName:vm.$router.currentRoute.query.name,
+      })
+      this.$store.dispatch('getLikes',{
+        blogCat: vm.$router.currentRoute.query.cat,
+        blogName:vm.$router.currentRoute.query.name,
+      }).then(function () {
+        vm.$forceUpdate()
       })
     }
   }
