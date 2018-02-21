@@ -1,7 +1,8 @@
 <template>
   <div>
     <div class="banner_strip"></div>
-    <div class="main_catarea">
+    <loader v-if="loader"></loader>
+    <div class="main_catarea" v-else>
       <div class="container">
         <div class="row">
           <div class="col-xs-12">
@@ -252,9 +253,11 @@
   import rating from '@/components/rating'
   import {mapGetters} from 'vuex'
   import {mapMutations} from 'vuex'
+  import loader from '@/components/gen/loader'
   export default {
     data(){
       return{
+        loader:false,
         bGuideBlushBestSeller:{},
         bGuideBlushPink:{},
         bGuideBlushCarols:{},
@@ -274,7 +277,8 @@
       }
     },
     components:{
-      rating
+      rating,
+      loader
     },
     computed:{
       ...mapGetters([
@@ -291,6 +295,7 @@
     },
     created(){
       let vm = this
+      this.loader = true
       this.$store.dispatch('getProdFromArr',["961","968","970"]).then(function (response) {
         vm.bGuideBlushBestSeller=response
         console.log(response)
@@ -306,6 +311,10 @@
       this.$store.dispatch('getProdFromArr',["1037","1043"]).then(function (response) {
         vm.bGuideBlushNudes=response
         console.log(response)
+      }).then(function () {
+        setTimeout(()=>{
+          vm.loader=false
+        },500)
       })
     }
   }

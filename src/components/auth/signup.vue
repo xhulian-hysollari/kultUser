@@ -8,7 +8,11 @@
     >
       <div>
         <div>
-        <div class="modal-content comm_modal" >
+          <div v-if="showRefCode" class="modal-content comm_modal" >
+            <h2 >Enter Your Phone Number</h2>
+            <phone-ref v-if="showRefCode " ></phone-ref>
+          </div>
+        <div class="modal-content comm_modal" v-else>
           <div class="reg_pop"><img src="/static/images/arrow-down.svg" alt="arrow-down"> Register in a few easy steps</div>
           <button type="button" class="modal_close" @click="$store.state.auth.showRegisterPopup=false" aria-label="Close"><img src="/static/images/close.svg" alt="close"></button>
           <div class="modal_left">
@@ -51,7 +55,7 @@
                                 name: $store.state.auth.name,
                                 //
                                 dob: $store.state.auth.dob
-                              })"
+                              }) "
                     >
                       DONE!
                     </button>
@@ -68,12 +72,12 @@
                 <i class="fa fa-facebook"></i>
                 LOGIN
               </a>
-              <a class="twitter"
-                 @click="twitterP({
+              <a class="google"
+                 @click="googleP({
                       todo: 'login'
                     })"
               >
-                <i class="fa fa-twitter"></i>
+                <i class="fa fa-google"></i>
                 LOGIN
               </a>
             </div>
@@ -133,6 +137,7 @@
 <script>
   import {mapMutations} from 'vuex'
   import {mapGetters} from 'vuex'
+  import phoneRef from './phoneRef.vue'
   //
   export default {
     data(){
@@ -140,23 +145,94 @@
        modal:''
      }
     },
+    components:{
+      phoneRef
+    },
     computed:{
       ...mapGetters([
         'closeAuthDialog',
         'btnLoader',
-        'screenW'
+        'screenW',
+        'showRefCode',
       ])
     },
     methods:{
       ...mapMutations([
         'emailPasswordSignup',
         'fbP',
-        'twitterP'
+        'twitterP',
+        'googleP'
       ]),
     }
   }
 </script>
 <style>
+  .comm_modal::after {
+    visibility: hidden !important;
+    position: absolute;
+    left: 50%;
+    height: 100%;
+    top: 0;
+    content: "";
+    width: 7px;
+    margin-left: -4px;
+    background: #fff;
+  }
+  .comm_modal::before {
+    visibility: hidden !important;
+    position: absolute;
+    left: 50%;
+    height: 100%;
+    top: 0;
+    content: "";
+    width: 7px;
+    margin-left: -4px;
+    background: #fff;
+  }
+  .splash-banner {
+    background: #1b70d3;
+    position: absolute;
+    bottom: 20px;
+    left: -15px;
+    width: 95%;
+    text-align: center;
+    z-index: 12000;
+  }
+  .google{
+    background: #FA6803  ;
+  }
+  .splash-banner-title {
+    color: #fff;
+    font-weight: 700;
+    padding: 12px;
+    font-size: 12px;
+    font-style: italic;
+    display: block;
+  }
+
+  .splash-banner:before {
+    content: '';
+    display: block;
+    position: absolute;
+    bottom: -15px;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 0 15px 15px 0;
+    border-color: transparent #074778 transparent transparent;
+  }
+  .splash-banner:after {
+    content: '';
+    display: block;
+    position: absolute;
+    right: -20px;
+    top: 0;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 43px 20px 0 0;
+    border-color: #1b71d3 transparent transparent transparent;
+  }
   .signup_form{
     margin-top: 20px;
   }

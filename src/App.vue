@@ -36,7 +36,7 @@
                       <a >
                         <img src="/static/images/user-profile.svg" alt="user-profile">
                         <span v-if="!isLoggedIn">Login/Register</span>
-                        <span  v-if="isLoggedIn">{{user.displayName.toUpperCase()}}</span>
+                        <span  v-if="isLoggedIn">{{user.displayName}}</span>
                         <img  class="drop_arrow" src="/static/images/down.svg" alt="down">
                       </a>
                     </p>
@@ -149,15 +149,15 @@
                       <v-card-text  class="white" >
                         <v-expansion-panel expand v-for="(shop,i) in Object.keys(shopOptions)">
                           <v-expansion-panel-content >
-                            <div slot="header" class="white"  >{{shop.toUpperCase()}}</div>
+                            <div slot="header" class="white"  >{{shop}}</div>
                             <v-card flat>
                               <v-card-text  class="white" >
                                 <v-expansion-panel expand  v-for="j in Object.keys(shopOptions[shop])">
                                   <v-expansion-panel-content >
-                                    <div slot="header" class="white" @click="goTo(`/productCategory/${shop}/${j}`)">{{j.toUpperCase()}}</div>
+                                    <div slot="header" class="white" @click="goTo(`/productCategory/${shop}/${j}`)">{{j}}</div>
                                     <v-card>
                                       <v-card-text  class="white" v-for="k in Object.keys(shopOptions[shop][j])">
-                                        <div class="ml_20" v-if="k.toUpperCase() !== 'DUMMY'" @click="goTo(`/productSubCategory/${shop}/${j}/${k}`)">{{k.toUpperCase()}}</div>
+                                        <div class="ml_20" v-if="k != 'DUMMY'" @click="goTo(`/productSubCategory/${shop}/${j}/${k}`)">{{k}}</div>
                                       </v-card-text>
                                     </v-card>
                                   </v-expansion-panel-content>
@@ -183,12 +183,12 @@
                         </v-expansion-panel-->
                         <v-expansion-panel v-for="(shop,i) in Object.keys(brandCat)">
                           <v-expansion-panel-content >
-                            <div slot="header" class="white" >{{shop.toUpperCase()}}</div>
+                            <div slot="header" class="white" >{{shop}}</div>
                             <v-card flat>
                               <v-card-text  class="white" >
                                 <div  v-for="j in Object.keys(brandCat[shop])">
                                   <div >
-                                    <div  class="white ml_20"   @click="goTo(`/brandProduct/${j}`)">{{j.toUpperCase()}}</div>
+                                    <div  class="white ml_20"   @click="goTo(`/brandProduct/${j}`)">{{j}}</div>
                                   </div>
                                 </div>
                               </v-card-text>
@@ -201,18 +201,18 @@
                 </v-expansion-panel>
                 <v-expansion-panel  v-for="name in headerCatNames">
                   <v-expansion-panel-content v-if="name.name!=='beauty guide'">
-                    <div slot="header"  class="white ml_5"  @click="goTo(name.funcPath)">{{name.name.toUpperCase()}}</div>
+                    <div slot="header"  class="white ml_5"  @click="goTo(name.funcPath)">{{name.name}}</div>
                     <v-card flat v-if="name.name==='beauty guide'" class="white ml_20" >
                       <v-card-text v-for="guide in beautyGuideArr">
-                        {{guide.toUpperCase()}}
+                        {{guide}}
                       </v-card-text>
                     </v-card>
                   </v-expansion-panel-content>
                   <v-expansion-panel-content v-else>
-                    <div slot="header"  class="white ml_5" >{{name.name.toUpperCase()}}</div>
+                    <div slot="header"  class="white ml_5" >{{name.name}}</div>
                     <v-card flat v-if="name.name==='beauty guide'" class="white ml_20" >
                       <v-card-text v-for="(guide,i) in beautyGuideArr" @click="goTo('/bGuide/'+ beautyGuideArr[i])">
-                        {{guide.toUpperCase()}}
+                        {{guide}}
                       </v-card-text>
                     </v-card>
                   </v-expansion-panel-content>
@@ -366,25 +366,25 @@
         isClosed:false,
         sel:'MEN',
         headerCatNames:[
-          {name:'kult picks',funcPath:'/kultPick'},
-          {name:'global bestsellers',funcPath:'/globalBestSeller'},
-          {name:'beauty guide',funcPath:'/beautyGuide'},
-          {name:`editor's blog`,funcPath:'/blog'},
-          {name:'kult Tv',funcPath:'/howTo'},
+          {name:'KULT PICKS',funcPath:'/kultPick'},
+          {name:'GLOBAL BESTSELLERS',funcPath:'/globalBestSeller'},
+          {name:'BEAUTY GUIDE',funcPath:'/beautyGuide'},
+          {name:`EDITO'S BLOG`,funcPath:'/blog'},
+          {name:'KULT TV',funcPath:'/howTo'},
         ],
         input:'',
         dialogVisible:false,
         showdiv:false,
         beautyGuideArr:[
-          'Blush',
-          'Contouring',
-          'Highlighting',
-          'Mascaras',
-          'Neutral Lips',
-          'Acne',
-          'Skincare',
-          'Sunscreens',
-          'Antiaging'
+          'BLUSH',
+          'CONTOURING',
+          'HIGHLIGHTING',
+          'MASCARAS',
+          'NEUTRAL LIPS',
+          'ACNE',
+          'SKINCARE',
+          'SUNSCREENS',
+          'ANTIAGING'
         ]
       }
     },

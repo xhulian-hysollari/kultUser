@@ -31,7 +31,8 @@
     //
     methods:{
       ...mapMutations([
-        'sendVerLink'
+        'sendVerLink',
+        'selectedLink'
       ])
     },
     //

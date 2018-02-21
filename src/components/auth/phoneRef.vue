@@ -21,7 +21,7 @@
       >
         <span v-if="!btnLoader">SAVE</span>
       </button>
-      <p class="forgot_pass float_right" v-if="!btnLoader" @click="$store.state.auth.showLoginPopup=false" ><a >Skip</a></p>
+      <p class="forgot_pass float_right" v-if="!btnLoader" @click="$store.state.auth.showLoginPopup=false; $store.state.auth.showRegisterPopup=false" ><a >Skip</a></p>
     </div>
 
   </div>

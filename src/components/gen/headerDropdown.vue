@@ -39,7 +39,7 @@
               <div class="mm-3column">
 								<span class="left-images" style="color: #888888" >
 								    <div v-for="(shop,i) in shopArr" @mouseover="sel = shop" class="shop_opt">
-                      {{shop.toUpperCase()}}
+                      {{shop}}
                     </div>
 				        </span>
               </div>
@@ -51,7 +51,7 @@
                       <div class="col-xs-3 col-md-6 " style="background-color: transparent!important;">
                         <div >
                           <h6 style="color: #080808" @click="goTo(`/productCategory/${sel}/${j}`)">{{j}}</h6>
-                          <div v-for="k in Object.keys(shopOptions[sel][j])" v-if="k.toUpperCase() !== 'DUMMY'" style="color: #888888" @click="goTo(`/productSubCategory/${sel}/${j}/${k}`)">
+                          <div v-for="k in Object.keys(shopOptions[sel][j])" v-if="k!= 'DUMMY'" style="color: #888888" @click="goTo(`/productSubCategory/${sel}/${j}/${k}`)">
                             {{k}}
                           </div>
                         </div>
@@ -72,9 +72,9 @@
 								<span class="left-images" style="color: #888888; text-align: left; line-height: 20px" >
                   <h6 @click="goTo(`/brandAll`)" style="color: #080808;    margin-top: 7px;"> A TO Z BRANDS</h6>
 								    <div v-for="(shop,i) in Object.keys(brandCat)" style="color: #080808;    margin-top: 7px;">
-                      <h6>{{shop.toUpperCase()}}</h6>
+                      <h6>{{shop}}</h6>
                       <div v-for="j in Object.keys(brandCat[shop])"  style="color: #888888" @click="$router.push('/brandProduct/'+j)" >
-                        {{j.toUpperCase()}}
+                        {{j}}
                       </div>
                     </div>
 				        </span>
@@ -89,7 +89,7 @@
               <div >
 								<span class="left-images" style="color: #888888; text-align: left;  line-height: 20px" >
 								    <div  v-for="(guide,i) in beautyGuideArr" @click="goTo('/bGuide/'+ beautyGuideArr[i])">
-                     {{beautyGuideArr[i].toUpperCase()}}
+                     {{beautyGuideArr[i]}}
                     </div>
 				        </span>
               </div>
@@ -178,15 +178,15 @@
         ],
         sel: 'MAKEUP',
         beautyGuideArr:[
-          'Blush',
-          'Contouring',
-          'Highlighting',
-          'Mascaras',
-          'Neutral Lips',
-          'Acne',
-          'Skincare',
-          'Sunscreens',
-          'Antiaging'
+          'BLUSH',
+          'CONTOURING',
+          'HIGHLIGHTING',
+          'MASCARAS',
+          'NEUTRAL LIPS',
+          'ACNE',
+          'SKINCARE',
+          'SUNSCREENS',
+          'ANTIAGING'
         ]
       }
     },
