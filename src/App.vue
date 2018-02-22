@@ -1,5 +1,5 @@
 <template>
-  <div style="cursor:url(https://png.icons8.com/android/28/f31d28/fantasy.png), auto;">
+  <div style="cursor:default">
 
     <loader v-if="dbRefLoader"></loader>
     <div v-else >

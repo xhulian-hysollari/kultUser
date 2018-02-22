@@ -11,9 +11,9 @@
   >
     <div class="for_mobile">
       <div >
-        <div v-if="showRefCode" class="modal-content comm_modal" >
+        <div v-if="showRefCode"  v-show="isRefGiven=='f'" class="modal-content comm_modal" >
           <h2 >Enter Your Phone Number</h2>
-          <phone-ref v-if="showRefCode " v-show="!isRefGiven"></phone-ref>
+          <phone-ref v-if="showRefCode" v-show="isRefGiven=='f'"></phone-ref>
         </div>
         <div class="modal-content comm_modal " v-else>
           <button type="button" class="modal_close" @click="$store.state.auth.showLoginPopup=false" aria-label="Close"><img src="/static/images/close.svg" alt="close"></button>
