@@ -5,8 +5,8 @@
               <div class="search_form">
                <!--@blur="closeDropdown4()"-->
                 <div>
-                  <input type="text"  v-model="input" @keydown.enter="sayHi" @keyup="" placeholder="What are you looking for?" class="form-control" @blur="closeDropdown4()" >
-                  <button ><img src="/static/images/search.svg" alt="search"></button>
+                  <input type="text"  v-model="input" @keydown.enter="goToSearchPage" @keyup="" placeholder="What are you looking for?" class="form-control" @blur="closeDropdown4()" >
+                  <button @click="goToSearchPage"><img src="/static/images/search.svg" alt="search"></button>
                   <img class="search_close" src="/static/images/64-px-close.svg" alt="search">
                 </div>
                   <div class="mega-menu4 fadeIn animated " style="position: absolute; z-index: 9999; width: 100%;"  @mouseover="showDropdown4" @mouseleave="closeDropdown4">
@@ -73,13 +73,16 @@
         'getSearchDet',
 
       ]),
-      sayHi(){
+      goToSearchPage(){
         let vm = this
         $("#form-control").keypress(function(e) {
           search($("#form-control").get(0));
           e.preventDefault()
         });
-        vm.$router.push({path:'/search', query:{qStr:vm.input}})
+        if(vm.input != ''){
+          vm.$router.push({path:'/search', query:{qStr:vm.input}})
+        }
+
       },
       search(){
         let vm = this
