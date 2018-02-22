@@ -99,7 +99,7 @@
                       $store.state.particularProduct.selectedLink = l.link"
                          target="_blank" v-if="k == 'amazon' && amazonLinkPrice != 'Out Of Stock' ">
                         <span class="aff_name">{{k.toUpperCase()}}</span>
-                        <span v-if="amazonPriceLoader">fetching price...</span>
+                        <span style="margin-top: 22px;" v-if="amazonPriceLoader">Fetching Price...</span>
                         <span class="aff_price" v-if="amazonLinkPrice != 'Out Of Stock'" v-show="!amazonPriceLoader">₹{{amazonLinkPrice}}</span>
                         <span style="margin-top: 17px" v-show="!amazonPriceLoader">BUY NOW</span>
                       </a>
@@ -151,7 +151,7 @@
                       <a :href="l.link + '&subid=' + $store.state.auth.user.email" target="_blank"
                         v-if="k == 'amazon' && amazonLinkPrice != 'Out Of Stock' ">
                         <span class="aff_name">{{k.toUpperCase()}}</span>
-                        <span v-if="amazonPriceLoader">fetching price...</span>
+                        <span  style="margin-top: 22px;"v-if="amazonPriceLoader">Fetching Price...</span>
                         <span class="aff_price" v-if="amazonLinkPrice != 'Out Of Stock'" v-show="!amazonPriceLoader">₹{{amazonLinkPrice}}</span>
                         <span style="margin-top: 17px" v-show="!amazonPriceLoader">BUY NOW</span>
                       </a>
@@ -190,7 +190,7 @@
                       <a @click="dialog=true;$store.state.particularProduct.selectedLink =l.link "
                          v-if="k == 'amazon' && amazonLinkPrice != 'Out Of Stock' ">
                         <span class="aff_name">{{k.toUpperCase()}}</span>
-                        <span v-if="amazonPriceLoader">fetching price...</span>
+                        <span  style="margin-top: 22px;"v-if="amazonPriceLoader">Fetching Price...</span>
                         <span class="aff_price" v-if="amazonLinkPrice != 'Out Of Stock'" v-show="!amazonPriceLoader">₹{{amazonLinkPrice}}</span>
                         <span style="margin-top: 17px" v-show="!amazonPriceLoader">BUY NOW</span>
                       </a>
@@ -518,131 +518,135 @@
           //this.fetchAmazonPrice()
         //
       },
-      selVar : ()=>{
+      selVar : ()=> {
 
-       let vm = window.thisOfVueComp
-        vm.amazonPriceLoader=true
-        console.log( vm.amazonPriceLoader)
+        let vm = window.thisOfVueComp
+        vm.amazonPriceLoader = true
+        console.log(vm.amazonPriceLoader)
         //setTimeout(()=>{
-          console.log("[@@@] => "  ,  window.thisOfVueComp.$store.state.particularProduct.selected )
-          //
-          let x =  window.thisOfVueComp.$store.state.particularProduct.selected
-          console.log("[###]",x)
-          let y = ''
+        console.log("[@@@] => ", window.thisOfVueComp.$store.state.particularProduct.selected)
+        //
+        let x = window.thisOfVueComp.$store.state.particularProduct.selected
+        console.log("[###]", x)
+        let y = ''
 
-          if( Object.keys(x.det.affliateDomains).indexOf('amazon') != -1 ){ //amazon is there
-            vm.amazonPriceLoader=true
-            console.log('============1')
-            let url = x.det.affliateDomains.amazon.link
-            let pId = window.thisOfVueComp.$route.params.pId
-            let pType = x.key
-            //
-            //
-            console.log("[pid] => ", pId)
-            console.log("[pType] => ", pType)
-            console.log("[url] => ", url)
-            //
-            //
-            window.thisOfVueComp.$store.dispatch('axiosReq', {
-              params: {
-                pId, //fill **
-                pType //fill**
-              },
-              funcName: 'getAmazonPriceFromDb'
-            }).then((result_1)=>{
-              console.log("1 => ", result_1)
-              if(result_1 == '-1' || result_1 == '999999999'){ //not in db / or out of stock etc ...
-                window.thisOfVueComp.$store.dispatch('axiosReq', {
-                  params: {
-                    url //amazon lik url , fill**
-                  },
-                  funcName: 'getAmazonPriceFromAPI'
-                }).then((result_2)=>{
-                  //
-                  console.log("2 => ", result_2)
-                  if(result_2 == '-1'){
-                    y = 'Failed to fetch Price !'
-                    window.thisOfVueComp.amazonLinkPrice = y
-                    console.log("[%] => ", window.thisOfVueComp.amazonLinkPrice )
-                    console.log('==============2')
-                    vm.amazonPriceLoader=false
-                    console.log( vm.amazonPriceLoader)
-                    //state.amazonLoader = false
-                    window.thisOfVueComp.$forceUpdate()
-                    //failed to fetch price, show accordingly(message) on dom
-                  }else if(result_2 == '999999999'){
-                    y = 'Out Of Stock'
-                    window.thisOfVueComp.amazonLinkPrice = y
-                    console.log("[%%] => ", window.thisOfVueComp.amazonLinkPrice )
-                    console.log('==============3')
-                    console.log( vm.amazonPriceLoader)
-                    setTimeout(()=>{
-                      vm.amazonPriceLoader=false
-                      console.log(window.thisOfVueComp)
-                      vm.$forceUpdate()
-                      console.log( vm.amazonPriceLoader)
-                    },6000)
-                    //show out of stock on dom
-                  }else{
-                    console.log("[save] => ",result_2)  // show result on dom //this is price of amazon link
-                    y = result_2
-                    window.thisOfVueComp.amazonLinkPrice = y
-                    console.log("[%] => ", window.thisOfVueComp.amazonLinkPrice )
-                    console.log('==============4')
-                    console.log( vm.amazonPriceLoader)
-                    setTimeout(()=>{
-                      vm.amazonPriceLoader=false
-                      console.log(window.thisOfVueComp)
-                      vm.$forceUpdate()
-                    },6000)
-                    //
-                    window.thisOfVueComp.$store.dispatch('axiosReq', {
-                      params: {
-                        pId, // fill**,
-                        pType, // fill**
-                        price: result_2
-                      },
-                      funcName: 'saveAmazonPriceToDb'
-                    })
-                    //
-                  }
-                  //*turn loader off*
+        if (Object.keys(x).indexOf('det') != -1) {
+
+
+        if (Object.keys(x.det.affliateDomains).indexOf('amazon') != -1) { //amazon is there
+          vm.amazonPriceLoader = true
+          console.log('============1')
+          let url = x.det.affliateDomains.amazon.link
+          let pId = window.thisOfVueComp.$route.params.pId
+          let pType = x.key
+          //
+          //
+          console.log("[pid] => ", pId)
+          console.log("[pType] => ", pType)
+          console.log("[url] => ", url)
+          //
+          //
+          window.thisOfVueComp.$store.dispatch('axiosReq', {
+            params: {
+              pId, //fill **
+              pType //fill**
+            },
+            funcName: 'getAmazonPriceFromDb'
+          }).then((result_1) => {
+            console.log("1 => ", result_1)
+            if (result_1 == '-1' || result_1 == '999999999') { //not in db / or out of stock etc ...
+              window.thisOfVueComp.$store.dispatch('axiosReq', {
+                params: {
+                  url //amazon lik url , fill**
+                },
+                funcName: 'getAmazonPriceFromAPI'
+              }).then((result_2) => {
+                //
+                console.log("2 => ", result_2)
+                if (result_2 == '-1') {
+                  y = 'Failed to fetch Price !'
+                  window.thisOfVueComp.amazonLinkPrice = y
+                  console.log("[%] => ", window.thisOfVueComp.amazonLinkPrice)
+                  console.log('==============2')
+                  vm.amazonPriceLoader = false
+                  console.log(vm.amazonPriceLoader)
                   //state.amazonLoader = false
-                  //window.thisOfVueComp.$forceUpdate()
-                  //
-                })
-              } else {
-                console.log(result_1) // show result on dom //this is price of amazon link
-                y = result_1
-                window.thisOfVueComp.amazonLinkPrice = y
-                console.log("[%] => ", window.thisOfVueComp.amazonLinkPrice )
-                //*turn loader off*
-                console.log('==============5')
-                vm.amazonPriceLoader=false
-                console.log( vm.amazonPriceLoader +'***********************')
-                //state.amazonLoader = false
-                setTimeout(()=>{
                   window.thisOfVueComp.$forceUpdate()
-                },2000)
-              }
-            })
-            //
-            //
-          }else{
-            console.log('==============6')
-            vm.amazonPriceLoader=false
-            console.log( vm.amazonPriceLoader)
-            window.thisOfVueComp.$forceUpdate()
-            //do nothing
-            //state.amazonLoader = false  //stop loader
-          }
+                  //failed to fetch price, show accordingly(message) on dom
+                } else if (result_2 == '999999999') {
+                  y = 'Out Of Stock'
+                  window.thisOfVueComp.amazonLinkPrice = y
+                  console.log("[%%] => ", window.thisOfVueComp.amazonLinkPrice)
+                  console.log('==============3')
+                  console.log(vm.amazonPriceLoader)
+                  setTimeout(() => {
+                    vm.amazonPriceLoader = false
+                    console.log(window.thisOfVueComp)
+                    vm.$forceUpdate()
+                    console.log(vm.amazonPriceLoader)
+                  }, 6000)
+                  //show out of stock on dom
+                } else {
+                  console.log("[save] => ", result_2)  // show result on dom //this is price of amazon link
+                  y = result_2
+                  window.thisOfVueComp.amazonLinkPrice = y
+                  console.log("[%] => ", window.thisOfVueComp.amazonLinkPrice)
+                  console.log('==============4')
+                  console.log(vm.amazonPriceLoader)
+                  setTimeout(() => {
+                    vm.amazonPriceLoader = false
+                    console.log(window.thisOfVueComp)
+                    vm.$forceUpdate()
+                  }, 6000)
+                  //
+                  window.thisOfVueComp.$store.dispatch('axiosReq', {
+                    params: {
+                      pId, // fill**,
+                      pType, // fill**
+                      price: result_2
+                    },
+                    funcName: 'saveAmazonPriceToDb'
+                  })
+                  //
+                }
+                //*turn loader off*
+                //state.amazonLoader = false
+                //window.thisOfVueComp.$forceUpdate()
+                //
+              })
+            } else {
+              console.log(result_1) // show result on dom //this is price of amazon link
+              y = result_1
+              window.thisOfVueComp.amazonLinkPrice = y
+              console.log("[%] => ", window.thisOfVueComp.amazonLinkPrice)
+              //*turn loader off*
+              console.log('==============5')
+              vm.amazonPriceLoader = false
+              console.log(vm.amazonPriceLoader + '***********************')
+              //state.amazonLoader = false
+              setTimeout(() => {
+                window.thisOfVueComp.$forceUpdate()
+              }, 2000)
+            }
+          })
           //
           //
+        } else {
+          console.log('==============6')
+          vm.amazonPriceLoader = false
+          console.log(vm.amazonPriceLoader)
+          window.thisOfVueComp.$forceUpdate()
+          //do nothing
+          //state.amazonLoader = false  //stop loader
+        }
+        //
+        //
         /*
           window.thisOfVueComp.$forceUpdate()
         console.log(y)
           console.log(window.thisOfVueComp.amazonLinkPrice) */
         //},6000)
+      }
       }
     },
     methods:{
