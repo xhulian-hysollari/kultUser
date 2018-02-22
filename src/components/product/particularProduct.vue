@@ -39,39 +39,50 @@
                            @click="removeWishlist({pId:$router.currentRoute.params.pId,pDet:pDets[$router.currentRoute.params.pId]});
                            delete wishlistObj[$router.currentRoute.params.pId]; $forceUpdate()">
                     </a>
-                    <a   v-if="!isLoggedIn"  class="ml_24">
+                    <a v-if="!isLoggedIn" class="ml_24">
                       <img src="/static/images/wishlist-add.svg" alt="wishlist-add" @click="$store.state.auth.showLoginPopup = true">
                     </a>
                   </div>
                 </div>
-                <ul class="prod_type_list ">
-                  <div >
-                      <span v-for="i in prodArr" v-if="i.det.swatchImgUrl !== ''">
-                    <li v-if="selected.key!==i.key" @click="$store.state.particularProduct.selected = i">
-                      <img :src="i.det.swatchImgUrl" style="height: 50px;width: 50px">
-                    </li>
-                     <li v-if="selected.key===i.key" class="active">
-                      <img :src="i.det.swatchImgUrl" style="height: 50px;width: 50px">
-                    </li>
-                  </span>
-                  </div>
-                </ul>
-                <ul class="prod_type_list mt_30">
-                  <div>
-                      <span v-for="i in prodArr" >
-                    <li  v-if="selected.key!==i.key" @click="$store.state.particularProduct.selected = i">
-                      <a> {{i.key}}</a>
-                    </li>
-                    <li  v-if="selected.key===i.key" class="active"><a > {{i.key}}</a></li>
-                  </span>
-                  </div>
-                  <!--span-- v-for="i in prodArr"  v-if="i.det.swatchImgUrl === ''">
-                    <li  v-if="selected.key!==i.key" @click="$store.state.particularProduct.selected = i">
-                      <a> {{i.key}}</a>
-                    </li>
-                    <li  v-if="selected.key===i.key" class="active"><a > {{i.key}}</a></li>
-                  </span-->
-                </ul>
+
+                <div class="product-color-list dropdown">
+                    <div class="dropdown-toggle" data-toggle="dropdown">
+                        <template v-for="i in prodArr" v-if="selected.key===i.key">
+                            <i><img :src="i.det.swatchImgUrl"></i>
+                            <span>{{i.key}}</span>
+                            <em class="fa fa-angle-down"></em>
+                        </template>
+                    </div>
+                    <ul class="dropdown-menu">
+                        <template v-for="i in prodArr">
+                            <li v-if="selected.key === i.key" class="active"  @click="$store.state.particularProduct.selected = i">
+                                <i><img :src="i.det.swatchImgUrl"></i>
+                                <span>{{i.key}}</span>
+                            </li>
+                            <li v-else  @click="$store.state.particularProduct.selected = i">
+                                <i><img :src="i.det.swatchImgUrl"></i>
+                                <span>{{i.key}}</span>
+                            </li>
+                        </template>
+                    </ul>
+                </div>
+
+                <div class="product-color-swatch">
+                    <ul>
+                        <li v-for="i in prodArr" v-if="i.det.swatchImgUrl !== ''" @click="$store.state.particularProduct.selected = i">
+                            <template v-if="selected.key === i.key" class="active">
+                                <i>
+                                    <img :src="i.det.swatchImgUrl">
+                                    <em class="fa fa-check"></em>
+                                </i>
+                            </template>
+                            <template v-else>
+                                <i><img :src="i.det.swatchImgUrl"></i>
+                            </template>
+                        </li>
+                    </ul>
+                </div>
+
                 <!--  <div class="prod_pricerange" v-if="Object.keys(JSON.parse($route.query.prodDet)).indexOf(priceStartsFrom) != -1">
                     From <strong>{{JSON.parse($route.query.prodDet).priceStartsFrom}}</strong>Rupee
                   </div> -->
