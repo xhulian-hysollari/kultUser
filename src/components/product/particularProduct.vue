@@ -56,11 +56,11 @@
                     <ul class="dropdown-menu">
                         <template v-for="i in prodArr">
                             <li v-if="selected.key === i.key" class="active"  @click="$store.state.particularProduct.selected = i">
-                                <i><img :src="i.det.swatchImgUrl"></i>
+                                <i v-if="i.det.swatchImgUrl !== ''"><img :src="i.det.swatchImgUrl"></i>
                                 <span>{{i.key}}</span>
                             </li>
                             <li v-else @click="$store.state.particularProduct.selected = i">
-                                <i><img :src="i.det.swatchImgUrl"></i>
+                                <i v-if="i.det.swatchImgUrl !== ''"><img :src="i.det.swatchImgUrl"></i>
                                 <span>{{i.key}}</span>
                             </li>
                         </template>
