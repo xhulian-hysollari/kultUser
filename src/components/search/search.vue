@@ -5,7 +5,7 @@
               <div class="search_form">
                <!--@blur="closeDropdown4()"-->
                 <div>
-                  <input type="text"  v-model="input" @keydown.enter="sayHi" @keyup="showDropdown4(),search()" placeholder="What are you looking for?" class="form-control" @blur="closeDropdown4()" >
+                  <input type="text"  v-model="input" @keydown.enter="sayHi" @keyup="" placeholder="What are you looking for?" class="form-control" @blur="closeDropdown4()" >
                   <button ><img src="/static/images/search.svg" alt="search"></button>
                   <img class="search_close" src="/static/images/64-px-close.svg" alt="search">
                 </div>
