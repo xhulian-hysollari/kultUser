@@ -85,3 +85,28 @@
   font-size: 10px;
   color: #ffffff;
 }
+
+.filter_cont {
+  max-height: 200px;
+  margin-bottom: 20px;
+  overflow: auto;
+}
+.filter_cont .radio {
+  padding-left: 0;
+}
+
+.grid-content {
+  margin-bottom: 60px;
+}
+
+.prod_image {
+  display: block;
+}
+.prod_image img {
+  display: block;
+  width: auto;
+  height: 200px;
+  max-height: 100%;
+  max-width: 100%;
+  margin: 0 auto;
+}

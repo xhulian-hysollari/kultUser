@@ -182,13 +182,13 @@
                 </div>
               </div>
               <div class="cat_prodarea">
-                <el-row :gutter="15" >
+                <el-row :gutter="60" >
                   <el-col :xs="12" :sm="12" :md="8" :lg="8" v-for="(pDet, pId) in products"
                   >
                     <div>
                       <div class="grid-content pa-2" >
                         <a class="prod_image"   @click="$router.push({path:`/particularProduct/${pId}`})">
-                          <img :src="pDet.pBasicDetail.pPicUrl"  style="height:286px " alt="product">
+                          <img :src="pDet.pBasicDetail.pPicUrl"  alt="product">
                         </a>
                         <div class="prod_cont"  @click="$router.push({path:`/particularProduct/${pId}`})">
                           <h4><a >{{pDet.pBasicDetail.pBrand}}</a></h4>
