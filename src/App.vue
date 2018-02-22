@@ -500,6 +500,8 @@
   @import './assets/css/jquery-ui.css';
   @import './assets/css/jquery.fancybox.css';
   @import './assets/cssLib/googleFont.css';
+  @import './assets/css/font-awesome.min.css';
+  @import './assets/css/style-overwritten.css';
   .opts{
     display: none;
   }
