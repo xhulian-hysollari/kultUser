@@ -59,7 +59,7 @@
                                 <i><img :src="i.det.swatchImgUrl"></i>
                                 <span>{{i.key}}</span>
                             </li>
-                            <li v-else  @click="$store.state.particularProduct.selected = i">
+                            <li v-else @click="$store.state.particularProduct.selected = i">
                                 <i><img :src="i.det.swatchImgUrl"></i>
                                 <span>{{i.key}}</span>
                             </li>
