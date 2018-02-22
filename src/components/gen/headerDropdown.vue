@@ -58,8 +58,8 @@
                       </div>
                     </div>
                   </div>
-                  <h6 style="color: #080808" @click="$router.push(`/globalBestSeller/shopOption/${sel}`)">KULT PICKS</h6>
-                  <h6 style="color: #080808" @click="$router.push(`/kultPick/shopOption/${sel}`)">GLOBAL BEST SELLERS</h6>
+                  <h6 style="color: #080808" @click="$router.push(`/kultPick/shopOption/${sel}`)">KULT PICKS</h6>
+                  <h6 style="color: #080808" @click="$router.push(`/globalBestSeller/shopOption/${sel}`)">GLOBAL BEST SELLERS</h6>
                 </div>
               </div>
             </div>

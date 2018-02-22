@@ -31,8 +31,7 @@
                       </span>
                  </div>
                </div>
-
-           </div>
+              </div>
  </nav>
  </div>
  <!--a-- @click="goTo('/')"  class="logo hidden-xs float_right" ><img src="/static/images/logo.svg" alt="logo"></a-->

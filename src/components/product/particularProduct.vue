@@ -87,7 +87,7 @@
                   <ul class="prod_shoplinks list-unstyled" v-if="!isLoggedIn " >
                     <li v-for="(l,k) in selected.det.affliateDomains" >
                       <a @click="$store.state.auth.showLoginPopup=true;
-                      $store.state.particularProduct.selectedLink = newLink(l.link)"
+                      $store.state.particularProduct.selectedLink = newLink(l.link,k)"
                          target="_blank"
                          v-if="k != 'amazon' && l.price.indexOf('999999999') == -1 "
                       >
@@ -141,7 +141,7 @@
                   </ul>
                   <ul class="prod_shoplinks list-unstyled" v-if="isLoggedIn && email" >
                     <li  v-for="(l,k) in selected.det.affliateDomains" class="box">
-                      <a :href='newLink(l.link)' target="_blank"
+                      <a :href='newLink(l.link,k)' target="_blank"
                          v-if="k != 'amazon' && l.price.indexOf('999999999') == -1 "
                       >
                         <span class="aff_name">{{k.toUpperCase()}}</span>
@@ -180,7 +180,7 @@
                   <!--$store.state.particularProduct.selectedLink =l.link -->
                   <ul class="prod_shoplinks list-unstyled" v-if="isLoggedIn &&   !email" >
                     <li  v-for="(l,k) in selected.det.affliateDomains" >
-                      <a @click="dialog=true;changeToDeepLink(l.link); "
+                      <a @click="dialog=true; $store.state.particularProduct.selectedLink= newLink(l.link,k)"
                          v-if="k != 'amazon' && l.price.indexOf('999999999') == -1 "
                       >
                         <span class="aff_name">{{k.toUpperCase()}}</span>
@@ -654,22 +654,33 @@
         'addWishlist',
         'removeWishlist'
       ]),
-      newLink(link){
-        let subid= this.$store.state.auth.user.email
-        return 'https://ad.admitad.com/g/1ocifeg24mf70acd494689d7fe25ba/?subid='+subid+'&ulp='+link
-      },
-      changeToDeepLink(link){
+      newLink(link,k){
         let vm = this
-        let subid = ''
+        let subid=''
         if(this.$store.state.auth.isLoggedIn && vm.email){
           subid= this.$store.state.auth.user.email
         }else{
-          subid='notLoggedIn@kult.com'
+          subid= ''
         }
-        console.log('============>'+link)
-        vm.$store.state.particularProduct.selectedLink ='https://ad.admitad.com/g/1ocifeg24mf70acd494689d7fe25ba/?subid='+subid+'&ulp='+link
+        if(k == 'nykaa'){
+          return 'https://ad.admitad.com/g/1ocifeg24mf70acd494689d7fe25ba/?subid='+subid+'&ulp='+link
+        }else if(k == 'flipkart'){
+         // return link
+          return 'https://ad.admitad.com/g/rb1qie435bf70acd4946a80d05f527/?subid='+subid+'&ulp='+link
+        }else if(k == 'myntra'){
+          return 'https://ad.admitad.com/g/s56leml8ckf70acd494623d5247706/?subid='+subid+'&ulp='+link
+        }else if(k == 'nnow'){
+         return  'https://ad.admitad.com/g/f6dgh64z7uf70acd4946f448324775/?subid='+subid+'&ulp='+link
+        }else if(k == 'shoppersstop'){
+          return 'https://ad.admitad.com/g/4ez4f2n9r7f70acd49468ff14b2938/?subid='+subid+'&ulp='+link
+        }else{
+          return link
+        }
 
-       // console.log('https://ad.admitad.com/g/1ocifeg24mf70acd494689d7fe25ba/?subid='+subid+'&ulp='+link)
+
+
+
+      // console.log('https://ad.admitad.com/g/1ocifeg24mf70acd494689d7fe25ba/?subid='+subid+'&ulp='+link)
       },
       emptyLink(){
        setTimeout(()=>{

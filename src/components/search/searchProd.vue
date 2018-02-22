@@ -85,6 +85,7 @@
     },
     watch:{
       $route:function () {
+        this.noProd=false
         let vm = this
         this.sLoader=true
         axios.get('https://us-central1-kult-2.cloudfunctions.net/searchResults?qStr='+ vm.$route.query.qStr).then(function (response) {

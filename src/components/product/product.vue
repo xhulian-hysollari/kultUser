@@ -234,7 +234,7 @@
                     <button class="login_btn load_more_btn" @click="loadMoreProducts({
                       routePath: routeDet.routePath
                     })" v-if="Object.keys(products).length !== totalProds && !loadMoreLoader && Object.keys(products).length !== 0">
-                      Load {{totalProds - Object.keys(products).length}} More Products
+                      Load <!--{{totalProds - Object.keys(products).length}}--> More Products
                     </button>
 
                   </div>
