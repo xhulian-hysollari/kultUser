@@ -257,16 +257,7 @@ const mutations = {
       .then(()=>{
         //
         //
-        actions.checkIfPhSaved().then(function (res) {
-          if(res==='t'){
-            state.showRefCode=true
-            state.loginBtnLoader=false
-            state.showLoginPopup=false
-          }else{
-            state.loginBtnLoader=false
-            state.showLoginPopup=false
-          }
-        })
+
       }).catch(function(error) {
       // Handle Errors here.
       var errorCode = error.code;
@@ -274,8 +265,29 @@ const mutations = {
       //
       // ...
       state.loginBtnLoader=false
-      No
+     // No
       Notification.error("Error: " + error.message)
+    }).then(function () {
+      setTimeout(function () {
+        console.log(state.user)
+        if(state.isLoggedIn){
+          actions.checkIfPhSaved().then(function (res) {
+            if(res==='t'){
+              state.showRefCode=false
+              state.loginBtnLoader=false
+              state.showLoginPopup=false
+            }else{
+              state.showLoginPopup=false
+              state.showRefCode=true
+              state.loginBtnLoader=false
+            }
+          })
+        }
+      },100)
+      /*
+        console.log(state.user)
+
+       */
     })
   },
   //
@@ -322,11 +334,13 @@ const mutations = {
 const actions = {
   checkIfPhSaved(){
     return new Promise(function (resolve) {
+      console.log(state.user.uid)
       axios.get('https://us-central1-kult-2.cloudfunctions.net/isPhoneNumberSaved', {
         params: {
           uid:state.user.uid
         }
       }).then(function (response) {
+        console.log(response.data)
         state.isRefGiven = response.data
         resolve('done')
       }).catch(function (err) {
