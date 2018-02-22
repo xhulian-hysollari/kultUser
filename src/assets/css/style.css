@@ -382,17 +382,18 @@ body.searching::before {
   transform: rotate(180deg);
   opacity: 0.45;
 }
-.home_hero {
-  padding: 94px 0 84px;
-  background-color: #f5e3e7;
-  position: relative;
-  margin-bottom: 60px;
-   background-image: url('../images/girl-model@2x.jpg'), url('../images/cosmetics@2x.jpg');
- /* background-image: url('../images/girl-model@2x.jpg'), url('../images/cosmetics@2x.jpg');*/
-  background-position: left center, 99% center;
-  -webkit-background-size: 640px, 440px;
-  background-size: 640px, 440px;
-  background-repeat: no-repeat;
+@media(min-width:767px){
+  .home_hero {
+    padding: 94px 0 84px;
+    background-color: #f5e3e7;
+    position: relative;
+    margin-bottom: 60px;
+    background-image: url('/static/images/homeBanners/Desktop/kultpics_desktop_84k.jpg');
+    background-position: left center, 99% center;
+    -webkit-background-size: 640px, 440px;
+    background-size: 640px, 440px;
+    background-repeat: no-repeat;
+  }
 }
 .home_hero::after {
   height: 16px;
@@ -739,17 +740,33 @@ body.searching::before {
   padding: 84px 0 92px;
   position: relative;
 }
-.home_high::after {
-  position: absolute;
-  right: 0;
-  width: 50%;
-  height: 100%;
-  top: 0;
-  content: "";
-  background: url('../images/cashback-5@2x.jpg') center no-repeat;
-  background-color: #f6e3e7;
-  -webkit-background-size: contain;
-  background-size: contain;
+@media(min-width: 768px){
+  .home_high::after {
+    position: absolute;
+    right: 0;
+    width: 50%;
+    height: 100%;
+    top: 0;
+    content: "";
+    background: url('/static/images/homeBanners/Desktop/skincareallages-desktop.jpg') center no-repeat;
+    background-color: #f6e3e7;
+    -webkit-background-size: contain;
+    background-size: contain;
+  }
+}
+@media(max-width: 767px){
+  .home_high::after {
+    position: absolute;
+    right: 0;
+    width: 50%;
+    height: 100%;
+    top: 0;
+    content: "";
+    background: url('/static/images/homeBanners/Mobile/skincareallages-mobile.jpg') center no-repeat;
+    background-color: #f6e3e7;
+    -webkit-background-size: contain;
+    background-size: contain;
+  }
 }
 .high_cont {
   max-width: 350px;

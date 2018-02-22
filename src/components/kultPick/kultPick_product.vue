@@ -14,14 +14,6 @@
     >
     </product>
 
-    <br>
-    SHOP OPTION =>
-    <div
-      v-for="(shopOptionDet, shopOption) in shopOptions"
-      @click="goTo('/kultPick/shopOption/' + shopOption)"
-    >
-      {{shopOption}}
-    </div>
 
   </div>
 </template>

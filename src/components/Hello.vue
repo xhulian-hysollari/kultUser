@@ -99,11 +99,28 @@
     </div>
     <div class="home_intro">
       <div>
-        <img class="main_img hidden-xs"  src="/static/images/homeBanners/Desktop/kultpics_desktop_84k.jpg" alt="hero" @click="$router.push('/kultPick')">
+        <img class="main_img hidden-xs" style="height:390px" src="/static/images/homeBanners/Desktop/kultpics_desktop_84k.jpg" alt="hero" @click="$router.push('/kultPick')">
         <img class="main_img visible-xs"  src="/static/images/homeBanners/Mobile/kultpics_mobile_30k.jpg" alt="hero"  @click="$router.push('/kultPick')">
       </div>
     </div>
-    <div class="visible-xs" @click="$router.push('/bGuide/SKINCARE')">
+    <div class="home_high" @click="$router.push('/bGuide/skincare')">
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-5 col-xs-12">
+            <div class="high_cont">
+              <h2>Skincare</h2>
+              <p>
+                Weve handpicked products to maintain and
+                improve your skin whatever your stage in life.
+                Select your age to get started.
+              </p>
+              <a class="more_btn">SHOP NOW</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--div-- class="visible-xs" @click="$router.push('/bGuide/SKINCARE')">
       <div class="container" style="width: 100% !important;height: 100% !important;">
         <div class="row">
           <div class="col-sm-6 col-xs-12" style="padding:0px">
@@ -113,20 +130,7 @@
         </div>
       </div>
       <img src="/static/images/cashback-5@2x.jpg" style="height: 400px" @click="$router.push('/cashback')">
-    </div>
-    <div class=" hidden-xs">
-      <div class="container" style="width: 100% !important;height: 100% !important;">
-        <div class="row">
-          <div class="col-sm-6 col-xs-12" style="padding:0px">
-            <img src="/static/images/homeBanners/Desktop/skincareallages-desktop.jpg" style="height: 400px" class="hidden-xs" @click="$router.push('/bGuide/SKINCARE')">
-            <img src="/static/images/homeBanners/Mobile/skincareallages-mobile.jpg" style="height: 400px" class="visible-xs">
-          </div>
-          <div class="col-sm-6 col-xs-12" @click="$router.push('/cashback')">
-            <img src="/static/images/cashback-5@2x.jpg" style="height: 400px"  alt="item">
-          </div>
-        </div>
-      </div>
-    </div>
+    </div-->
     <div class="home_cats">
       <div class="container-fluid text-center">
         <div class="comm_title" @click="$router.push('/brandAll')">
@@ -471,18 +475,6 @@
     opacity:1;
     filter:alpha(opacity=100);
   }
-  .home_high::after {
-    position: absolute;
-    right: 0;
-    width: 50%;
-    height: 100%;
-    top: 0;
-    content: "";
-    background: url(/static/images/cashback-5@2x.jpg) center no-repeat;
-    background-color: #f6e3e7;
-    -webkit-background-size: contain;
-    background-size: contain;
-  }
   .hovereffect:hover h2,.hovereffect:hover a.info {
     opacity:1;
     filter:alpha(opacity=100);
@@ -509,7 +501,7 @@
   }
   .home_hero2 {
     /* padding: 94px 0 84px; */
-    background-color: #f5e3e7;
+    background-color: #ffffff;
     position: relative;
     margin-bottom: 60px;
     /* background-image: url(../images/girl-model@2x.jpg), url(../images/cosmetics@2x.jpg); */
@@ -518,10 +510,5 @@
     background-size: 640px, 440px;
     background-repeat: no-repeat;
   }
-  .home_high {
-    background: #f2f4f7;
-     padding: 0px 0 0px !important;
-    position: relative;
-    height: 400px !important;
-  }
+
 </style>
