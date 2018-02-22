@@ -48,7 +48,7 @@
                 <div class="product-color-list dropdown">
                     <div class="dropdown-toggle" data-toggle="dropdown">
                         <template v-for="i in prodArr" v-if="selected.key===i.key">
-                            <i><img :src="i.det.swatchImgUrl"></i>
+                            <i v-if="i.det.swatchImgUrl !== ''"><img :src="i.det.swatchImgUrl"></i>
                             <span>{{i.key}}</span>
                             <em class="fa fa-angle-down"></em>
                         </template>
@@ -56,11 +56,11 @@
                     <ul class="dropdown-menu">
                         <template v-for="i in prodArr">
                             <li v-if="selected.key === i.key" class="active"  @click="$store.state.particularProduct.selected = i">
-                                <i><img :src="i.det.swatchImgUrl"></i>
+                                <i v-if="i.det.swatchImgUrl !== ''"><img :src="i.det.swatchImgUrl"></i>
                                 <span>{{i.key}}</span>
                             </li>
                             <li v-else @click="$store.state.particularProduct.selected = i">
-                                <i><img :src="i.det.swatchImgUrl"></i>
+                                <i v-if="i.det.swatchImgUrl !== ''"><img :src="i.det.swatchImgUrl"></i>
                                 <span>{{i.key}}</span>
                             </li>
                         </template>
