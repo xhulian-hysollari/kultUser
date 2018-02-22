@@ -579,12 +579,10 @@
                   console.log("[%%] => ", window.thisOfVueComp.amazonLinkPrice)
                   console.log('==============3')
                   console.log(vm.amazonPriceLoader)
-                  setTimeout(() => {
                     vm.amazonPriceLoader = false
                     console.log(window.thisOfVueComp)
                     vm.$forceUpdate()
                     console.log(vm.amazonPriceLoader)
-                  }, 6000)
                   //show out of stock on dom
                 } else {
                   console.log("[save] => ", result_2)  // show result on dom //this is price of amazon link
@@ -593,11 +591,9 @@
                   console.log("[%] => ", window.thisOfVueComp.amazonLinkPrice)
                   console.log('==============4')
                   console.log(vm.amazonPriceLoader)
-                  setTimeout(() => {
                     vm.amazonPriceLoader = false
                     console.log(window.thisOfVueComp)
                     vm.$forceUpdate()
-                  }, 6000)
                   //
                   window.thisOfVueComp.$store.dispatch('axiosReq', {
                     params: {
