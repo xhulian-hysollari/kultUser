@@ -120,7 +120,7 @@ const mutations = {
   //
   getRecProducts(){
     axios.get('https://us-central1-kult-2.cloudfunctions.net/recommendedProducts').then(function (response) {
-      //console.log(response.data)
+      console.log(response.data)
       state.recProducts=response.data
       state.pTypeLoader=false
     }).catch(function (error) {
