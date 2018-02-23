@@ -13,7 +13,7 @@
               <div class="container text-center">
                 <p @click="goTo('/cashback')">
                   <img src="/static/images/price.svg" alt="price">
-                  Get 5% Cashback on all your purchases.
+                  Get 10% Cashback on all your purchases.
                   <img src="/static/images/arrow.svg" alt="price">
                   <a >Learn more</a>
                 </p>
