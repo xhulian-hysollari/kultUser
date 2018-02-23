@@ -337,17 +337,17 @@
             </div>
           </div>
           <div class="prod_rel_cats text-center">
-            <div class="comm_title">
+            <div>
               <h3>Recommended</h3>
             </div>
-            <el-row :gutter="10" >
+            <el-row :gutter="15" >
               <el-col :xs="12" :sm="12" :md="6" :lg="6" v-for="(pDet, pId) in recProducts"
                       v-if="parseInt(pDet.priceStartsFrom) != 999999999"
               >
-                <div>
-                  <div class="grid-content pa-2" >
+                <div >
+                  <div class="grid-content pa-2 rec_prod" >
                     <a class="prod_image"   @click="$router.push({path:`/particularProduct/${pId}`})">
-                      <img :src="pDet.pBasicDetail.pPicUrl"  style="height:286px " alt="product">
+                      <img :src="pDet.pBasicDetail.pPicUrl"  style="height:200px; max-width: 276.656px" alt="product">
                     </a>
                     <div class="prod_cont"  @click="$router.push({path:`/particularProduct/${pId}`})">
                       <h4><a >{{pDet.pBasicDetail.pBrand}}</a></h4>
@@ -855,6 +855,10 @@
     right: 13px;
      top: 0px;
     text-align: left;
+  }
+  .rec_prod{
+    height: 342px;
+    width: 276.66px;
   }
 
 </style>

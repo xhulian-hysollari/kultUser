@@ -99,7 +99,7 @@
     </div>
     <div class="home_intro">
       <div>
-        <img class="main_img hidden-xs" style="height:390px" src="/static/images/homeBanners/Desktop/kultpics_desktop_84k.jpg" alt="hero" @click="$router.push('/kultPick')">
+        <img class="main_img hidden-xs" style="height:390px" src="/static/images/homeBanners/Desktop/Kultpick%20Banner%20Scriptscale(1).jpg" alt="hero" @click="$router.push('/kultPick')">
         <img class="main_img visible-xs"  src="/static/images/homeBanners/Mobile/kultpics_mobile_30k.jpg" alt="hero"  @click="$router.push('/kultPick')">
       </div>
     </div>
