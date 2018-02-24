@@ -74,6 +74,7 @@ const mutations = {
                      // alert('Request Sent !')
                       //
                       mutations.getAmazonCashbackRec()
+                      $('#reqModal').modal('hide')
                       //
                     }).catch(function (error) {
                       //console.log(error);

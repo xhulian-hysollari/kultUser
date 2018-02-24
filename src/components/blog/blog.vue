@@ -1,17 +1,16 @@
 <template xmlns="http://www.w3.org/1999/html">
-  <div>
+  <div >
     <div class="banner_strip"></div>
     <div class="comm_pagebreads">
       <div class="container">
-        <div class="max_width">
+        <div >
           <div class="row">
             <div class="col-sm-5 col-xs-12 comm_page_title">
               <span>Welcome</span>
               <h2>Kult Blog</h2>
             </div>
             <div class="col-sm-7 col-xs-12 text-right cust_left">
-              <loader v-if="blogTagLoader"></loader>
-              <ul class="comm_pagemenus blog_tags" v-if="!blogTagLoader">
+              <ul class="comm_pagemenus blog_tags" >
                 <span   v-for="(blogTagDet, blogTagName) in blogTags"
                        @click="getBlogsOfThisTag({
                           tagName: blogTagName
@@ -27,7 +26,7 @@
     </div>
     <div class="comm_pagearea">
       <div class="container">
-        <div class="max_width">
+        <div class="min_height">
           <div class="row">
             <div class="col-sm-7 col-xs-12 blog_left">
               <loader v-if="blogsAtHomeLoader"></loader>
@@ -169,12 +168,14 @@
   import {mapGetters} from 'vuex'
   import {mapMutations} from 'vuex'
   import moment from 'moment'
-  import loader from '@/components/gen/loader'
+  import loader from '@/components/gen/searchLoader'
+  import tagLoader from '@/components/gen/recloader'
   //
   export default {
     //
     components:{
-      loader
+      loader,
+      tagLoader
     },
     created(){
       window.thisOfVueComp = this
@@ -221,11 +222,14 @@
     }
   }
 </script>
-<style>
+<style scoped>
   .img_size{
 
     height: 109.531px;
     width: 91.266px;
 
+  }
+  .min_height{
+    min-height: 900px;
   }
 </style>

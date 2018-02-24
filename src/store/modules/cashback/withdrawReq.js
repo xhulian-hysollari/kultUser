@@ -1,6 +1,7 @@
 import gen from '../gen'
 import auth from '../auth'
 import axios from 'axios'
+import myOrder from './myOrder'
 
 const state = {
   pay_accHolderName: '',
@@ -51,6 +52,8 @@ const mutations = {
                     alert('Request Sent !')
                     //
                     //
+                    myOrder.mutations.getMyOrders(state)
+                    $('#reqModal').modal('hide')
                     //
                   }).catch(function (error) {
                     //console.log(error);

@@ -1,8 +1,7 @@
 <template>
   <div>
 
-    <loader v-if="productsLoader"></loader>
-    <div v-if="!productsLoader">
+    <div class="min_height_prod">
 
       <div class="top_sortarea">
         <div class="container min_hight_prod">
@@ -25,11 +24,11 @@
         <div class="container">
           <div class="row">
             <div >
-
-              <div class="side_filterbox">
+              <div class="side_filterbox" >
                 <div class="tv_left"  v-if="$route.path.indexOf('global') != -1 || $route.path.indexOf('/kultPick') != -1">
                   <div class="howto">Shop</div>
-                  <ul v-for="(shopOptionDet, shopOption) in shopOptions" >
+                  <comp-loader v-show="filterLoader"></comp-loader>
+                  <ul v-for="(shopOptionDet, shopOption) in shopOptions" v-show="!filterLoader">
                     <li  class="active" v-if="$route.params.shopOption===shopOption" >
                       <a>
                         <span >{{shopOption}}</span>
@@ -54,7 +53,8 @@
 
 
                 <div class="tv_left"  v-if=" $route.name == 'Brand Product' ">
-                  <div v-for="(bCatDet, bCat) in brandCat" >
+                  <comp-loader v-show="filterLoader"></comp-loader>
+                  <div v-for="(bCatDet, bCat) in brandCat"   v-show="!filterLoader">
                     <br><div class="howto">{{bCat}}</div><br>
                     <ul v-for="(bNameDet, bName) in bCatDet" @click="$router.push('/brandProduct/'+bName)">
                       <li >
@@ -71,9 +71,10 @@
 
                 <div class="filter_title">
                   <span class="hide_toggler">{{toggler}}</span>
-                  <a>ACTIVE FILTER <span>{{cnt}}</span></a>
+                  <comp-loader v-show="filterLoader"></comp-loader>
+                  <a v-show="!filterLoader">ACTIVE FILTER <span>{{cnt}}</span></a>
                 </div>
-                <div v-for="(filteNameContent, filterName) in filter">
+                <div v-for="(filteNameContent, filterName) in filter" v-show="!filterLoader">
                   <div v-show="filterBoxes[filterName]===false">
                     <div class="filter_box" >
                       <div class="filter_title">
@@ -145,8 +146,7 @@
                           </div>
                         </div>
                       </div-->
-
-                      <div class="filter_cont">
+                      <div v-show="!filterLoader" class="filter_cont">
                         <div class="comm_radio">
                           <div class="radio radio-primary" v-for="(fitlerParaContent, filterPara) in filteNameContent" @click="sel_disSel_thisFilter({
                             sel_filterDetail : {
@@ -183,19 +183,20 @@
               </div>
               <div class="cat_prodarea">
                 <el-row :gutter="60" >
+                  <comp-loader v-show="productsLoader"></comp-loader>
                   <el-col :xs="12" :sm="12" :md="8" :lg="8" v-for="(pDet, pId) in products"
-                          v-if="parseInt(pDet.priceStartsFrom) != 999999999"
+                          v-if="parseInt(pDet.priceStartsFrom) != 999999999" v-show="!productsLoader"
                   >
                     <div>
                       <div class="grid-content pa-2" >
-                        <a class="prod_image"   @click="$router.push({path:`/particularProduct/${pId}`})">
+                        <a class="prod_image"   @click="$router.push({path:`/particularProduct/${pId}`, query:{varient:'notSelected'}})">
                           <img :src="pDet.pBasicDetail.pPicUrl"  alt="product">
                         </a>
-                        <div class="prod_cont"  @click="$router.push({path:`/particularProduct/${pId}`})">
+                        <div class="prod_cont"  @click="$router.push({path:`/particularProduct/${pId}`, query:{varient:'notSelected'}})">
                           <h4><a >{{pDet.pBasicDetail.pBrand}}</a></h4>
                           <span v-for="(i,k) in pDet.pBasicDetail.pName" v-if="k < 20">{{i}}</span><span v-if="pDet.pBasicDetail.pName.length > 20">...</span>
                         </div>
-                        <div class="prod_misc"  @click="$router.push({path:`/particularProduct/${pId}`})">
+                        <div class="prod_misc" @click="$router.push({path:`/particularProduct/${pId}`, query:{varient:'notSelected'}})">
                           <div class="float" ><rating :num="Math.round(pDet.pBasicDetail.pRating)" ></rating></div>
                           <div class="half text-right" >
                               <span v-if="parseInt(pDet.priceStartsFrom) == 999999999" style="float: right" class="half text-right">
@@ -208,7 +209,7 @@
                             <div v-else></div>
                           </div>
                         </div>
-                        <a  class="prod_compare" v-if="isLoggedIn"><span @click="$router.push({path:`/particularProduct/${pId}`})">Compare price</span>
+                        <a  class="prod_compare" v-if="isLoggedIn"><span @click="$router.push({path:`/particularProduct/${pId}`, query:{varient:'notSelected'}})">Compare price</span>
                           <img src="/static/images/wishlist-add.svg" alt="wishlist-add" v-if="Object.keys(wishlistObj).indexOf(pId) === -1" @click="addWishlist({pId,pDet}); wishlistObj[pId] = pDet; $forceUpdate()">
                           <img src="/static/images/wishlist-hover.svg" alt="wishlist-hover" v-if="Object.keys(wishlistObj).indexOf(pId) !== -1" @click="removeWishlist({pId,pDet}); delete wishlistObj[pId]; $forceUpdate()">
                         </a>
@@ -233,7 +234,9 @@
 
                     <button class="login_btn load_more_btn" @click="loadMoreProducts({
                       routePath: routeDet.routePath
-                    })" v-if="Object.keys(products).length !== totalProds && !loadMoreLoader && Object.keys(products).length !== 0">
+                    })" v-if="Object.keys(products).length !== totalProds && !loadMoreLoader && Object.keys(products).length !== 0"
+
+                    >
                       Load <!--{{totalProds - Object.keys(products).length}}--> More Products
                     </button>
 
@@ -299,6 +302,7 @@
   } from 'vuex'
   import rating from '@/components/rating'
   import loader from '@/components/gen/loader'
+  import compLoader from '@/components/gen/comp_loader'
   //
   import productNfilter from '../../mixins/productNfilter'
   import VIcon from "vuetify/es5/components/VIcon/VIcon";
@@ -327,7 +331,8 @@
       VIcon,
       rating,
       infiniteLoading: InfiniteLoading,
-      loader
+      loader,
+      compLoader
     },
     mixins: [productNfilter],
     props: ['routeDet'],

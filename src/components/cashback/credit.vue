@@ -29,8 +29,31 @@
           <div class="acount_btm">
             <loader v-if="myOrderLoader"></loader>
             <div v-else class="text-center">
-              <img src="/static/images/coins.svg" alt="credit" class="acount_icon">
-              <h4>You have &#x20b9; {{myOrders.walletAmount}} Credits</h4>
+
+                <div class="row">
+                  <div class="col-xs-12">
+                    <!--div class="order_commit with_btn">
+                      <button data-toggle="modal" data-target="#reqModal">ADD REQUEST</button>
+                      <input style="visibility: hidden;" type="text" placeholder="Search" class="form-control">
+                    </div-->
+
+                    <div class="order_commit">
+                      <p>Total Cashback Amount &#x20b9; {{parseInt(myOrders.confirmedCashback) +
+                      parseInt(myOrders.unconfirmedCashback)}}</p>
+                      <p class="sm">
+                        <span>₹ {{myOrders.confirmedCashback}}</span> Confirmed &nbsp;
+                        <span>₹ {{myOrders.unconfirmedCashback}}</span> Unconfirmed</p>
+                    </div>
+
+                  </div>
+                </div>
+
+              <br><br>
+
+              <div class="row">
+                <img src="/static/images/coins.svg" alt="credit" class="acount_icon">
+                <h4>You have &#x20b9; {{myOrders.walletAmount}} Credits</h4>
+              </div>
             </div>
           </div>
 
@@ -45,7 +68,7 @@
   import {mapGetters} from 'vuex'
   import  {mapMutations} from 'vuex'
   //
-  import loader from '@/components/gen/loader'
+  import loader from '@/components/gen/recLoader'
   import btnLoader from '@/components/gen/btnLoader'
   //
   export default {

@@ -1,42 +1,17 @@
 <template>
   <div >
-    <loader v-if="shopOptionLoader || brandCatLoader"></loader>
-    <div class="container hidden-xs" v-else>
+
+    <div class="container hidden-xs " >
       <div class="xs-menu-cont">
         <a id="menutoggle" @click="menuToggle"><i class="fa fa-align-justify"></i> </a>
-        <nav class="xs-menu displaynone">
-          <ul>
-            <li >
-              <a >Home</a>
-            </li>
-            <li>
-              <a >About</a>
-            </li>
-            <li>
-              <a >Services</a>
-            </li>
-            <li>
-              <a >Team</a>
-            </li>
-            <li>
-              <a >Portfolio</a>
-            </li>
-            <li>
-              <a >Blog</a>
-            </li>
-            <li>
-              <a >Contact</a>
-            </li>
-
-          </ul>
-        </nav>
       </div>
       <nav class="menu" >
         <ul >
           <li class="drop-down" @mouseover="showDropdown()" @mouseleave="closeDropdown()" >
             <a >SHOP</a>
-            <div class="mega-menu fadeIn animated" style="z-index: 999;text-align: left;margin-top: -1px;box-shadow: 1px 1px 3px #aaaaaa " >
-              <div class="mm-3column">
+            <div class="mega-menu fadeIn animated min_height" style="z-index: 999;text-align: left;margin-top: -1px;box-shadow: 1px 1px 3px #aaaaaa ">
+              <loader v-if="shopOptionLoader"></loader>
+              <div class="mm-3column"  v-if="!shopOptionLoader">
 								<span class="left-images" style="color: #888888" >
 								    <div v-for="(shop,i) in shopArr" @mouseover="sel = shop" class="shop_opt">
                       {{shop}}
@@ -44,7 +19,7 @@
 				        </span>
               </div>
               <div class="categories-list " style="line-height: 20px">
-                <div class="row make-columns">
+                <div class="row make-columns" v-if="!shopOptionLoader">
                   {{sel}}
                   <div class="col-xs-3 col-md-6 " v-for="j in Object.keys(shopOptions[sel])" v-if="sel !== '' ">
                     <div   >
@@ -67,8 +42,9 @@
           </li>
           <li class="drop-down"  @mouseover="showDropdown2()" @mouseleave="closeDropdown2()">
             <a >BRANDS</a>
-            <div class="mega-menu2 fadeIn animated" style="z-index: 999;margin-top: -1px;width: 10%;box-shadow: 1px 1px 3px #aaaaaa" >
-              <div >
+            <div class="mega-menu2 fadeIn animated min_height" style="z-index: 999;margin-top: -1px;width: 10%;box-shadow: 1px 1px 3px #aaaaaa" >
+              <brand-loader v-if="brandCatLoader"></brand-loader>
+              <div v-else>
 								<span class="left-images" style="color: #888888; text-align: left; line-height: 20px" >
                   <h6 @click="goTo(`/brandAll`)" style="color: #080808;    margin-top: 7px;"> A TO Z BRANDS</h6>
 								    <div v-for="(shop,i) in Object.keys(brandCat)" style="color: #080808;    margin-top: 7px;">
@@ -158,12 +134,14 @@
   </div>
 </template>
 <script>
-  import loader from '@/components/gen/loader'
+  import brandLoader from '@/components/gen/brandDropdownLoader'
+  import loader from '@/components/gen/dropdownLoader'
   import {mapGetters} from 'vuex'
   import {mapMutations} from 'vuex'
   export default{
     components:{
-      loader
+      loader,
+      brandLoader
     },
     data(){
       return {
@@ -370,6 +348,9 @@
     display:none;
 
 
+  }
+  .min_height{
+    min-height: 300px;
   }
   #menutoggle i {
     color: #fff;

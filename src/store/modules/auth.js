@@ -111,6 +111,8 @@ const mutations = {
   //
   //GOOGLE - LOGIN
   googleP(state2, payload){ // p => provider
+    state.showLoginPopup=false
+    state.showRegisterPopup=false
     ////console.log(payload)
     //
     let provider = new firebase.auth.GoogleAuthProvider();
@@ -123,6 +125,8 @@ const mutations = {
   //
   //FB - LOGIN
   fbP(state2, payload){
+    state.showLoginPopup=false
+    state.showRegisterPopup=false
     ////console.log(payload)
     //
     let provider = new firebase.auth.FacebookAuthProvider();
@@ -170,6 +174,14 @@ const mutations = {
       var user = result.user;
       // ...
       //
+      console.log(result.user)
+      actions.checkIfPhSaved(state, result.user).then(function (res) {
+        if(state.isRefGiven == 'f'){
+          state.showLoginPopup=true
+          state.showRefCode=true
+          console.log('=========>>>>>', state.showRefCode)
+        }
+      })
     }).catch(function(error) {
       // Handle Errors here.
       var errorCode = error.code;
@@ -188,7 +200,7 @@ const mutations = {
       }else{
        Notification.error(error.message)
       }
-    });
+    })
   },
   //
   //email & password => signup
@@ -271,13 +283,12 @@ const mutations = {
       setTimeout(function () {
         console.log(state.user)
         if(state.isLoggedIn){
-          actions.checkIfPhSaved().then(function (res) {
+          actions.checkIfPhSaved(state,state.user).then(function (res) {
             if(res==='t'){
               state.showRefCode=false
               state.loginBtnLoader=false
               state.showLoginPopup=false
             }else{
-              state.showLoginPopup=false
               state.showRefCode=true
               state.loginBtnLoader=false
             }
@@ -332,12 +343,12 @@ const mutations = {
 }
 
 const actions = {
-  checkIfPhSaved(){
+  checkIfPhSaved(state,user){
     return new Promise(function (resolve) {
-      console.log(state.user.uid)
+     // console.log(state.user.uid)
       axios.get('https://us-central1-kult-2.cloudfunctions.net/isPhoneNumberSaved', {
         params: {
-          uid:state.user.uid
+          uid:user.uid
         }
       }).then(function (response) {
         console.log(response.data)

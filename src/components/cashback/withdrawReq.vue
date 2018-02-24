@@ -85,7 +85,7 @@
       <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content comm_modal">
           <button type="button" class="modal_close" data-dismiss="modal" aria-label="Close"><img src="/static/images/close.svg" alt="close"></button>
-          <h4>Amazon Request</h4>
+          <h4>Withdrawal Request</h4>
           <div class="amazon_form">
             <label>Account Holder Name</label>
             <input type="text" class="form-control" v-model="$store.state.withdrawReq.pay_accHolderName">
@@ -123,7 +123,7 @@
   import {mapGetters} from 'vuex'
   import  {mapMutations} from 'vuex'
   //
-  import loader from '@/components/gen/loader'
+  import loader from '@/components/gen/recLoader'
   import btnLoader from '@/components/gen/btnLoader'
   //
   $(document).ready(function(){

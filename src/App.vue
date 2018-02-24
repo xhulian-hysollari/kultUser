@@ -95,51 +95,10 @@
                     <img src="/static/images/logo.svg" alt="logo">
                   </a>
                   <search class="col-sm-7 col-xs-12 " style="margin-top: -5px;"></search>
-                <!--a @click="goTo('/')"  class="logo hidden-xs"><img src="/static/images/logo.svg" alt="logo"></a>
-
-                <!--div-- class="col-sm-8 col-xs-12 pull-left">
-                  <div class="search_form">
-                    <a @click="goTo('/')"  class="logo hidden-xs"><img src="/static/images/logo.svg" alt="logo"></a>
-                    <div>
-                      <input type="text" v-model="input" @keyup="search()" placeholder="What are you looking for?" class="form-control">
-                      <button ><img src="/static/images/search.svg" alt="search"></button>
-                      <img class="search_close" src="/static/images/64-px-close.svg" alt="search">
-                    </div>
-                    <el-card class="box-card" v-show=" searchList !== {} && input !== ''">
-                      <div v-for="(search,key) in searchList" class="text item" @click="getSearchDet({key,search}); input = ''">
-                        <!--{{search}}-->
-                        <!--img :src="search.pBasicDetail.pPicUrl" style="width:50px;height: 50px;">
-                        <span v-for="(i,j) in search.pBasicDetail.pName" v-show="j < 26">
-                          <span>{{i}}</span>
-                        </span>
-                        <span v-if="search.pBasicDetail.pName.length > 25">...</span>
-                      </div>
-                    </el-card>
-                  </div>
-                </div-->
               </div>
             </div>
             <br>
             <dropdown></dropdown>
-            <div  @mouseleave="showdiv=false" v-if="showdiv" style="min-height: 1000px">
-              <div  v-for="(shop,i) in Object.keys(shopOptions)" class="shop_pa">
-                <el-card class="shop_pa">
-                  <span class="shop_pa">{{shop.toUpperCase()}}</span>
-                  <div class="row make-columns shop_child">
-                    <div class="col-xs-6 col-md-4 col-lg-6 col-lg-push-4"  v-for="j in Object.keys(shopOptions[shop])" >
-                      <div class="panel panel-default">
-                        <div >
-                          <b @click="goTo(`/productSubCategory/${shop}/${j}`)">{{j.toUpperCase()}}</b>
-                          <div v-for="k in Object.keys(shopOptions[shop][j])" v-if="k.toUpperCase() !== 'DUMMY'" @click="goTo(`/productSubCategory/${shop}/${j}/${k}`)">
-                            {{k.toUpperCase()}}
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </el-card>
-              </div>
-            </div>
             <nav class="navbar navbar-inverse navbar-fixed-top visible-xs" id="sidebar-wrapper" role="navigation" >
               <ul class="nav sidebar-nav"  >
                 <v-expansion-panel expand >
