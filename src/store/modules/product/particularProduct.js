@@ -1,6 +1,7 @@
 import gen from '../gen'
 import product from './product'
 import axios from 'axios'
+import router from '@/router'
 
 const state = {
   pTypes: {},
@@ -12,7 +13,8 @@ const state = {
   amazonLoader:false,
   //
   amazonLinkPrice: '',
-  recProducts:{}
+  recProducts:{},
+  recLoader:false
 }
 
 const getters = {
@@ -25,7 +27,8 @@ const getters = {
   amazonLoader:state=>state.amazonLoader,
   //
   amazonLinkPrice: state => state.amazonLinkPrice,
-  recProducts:state=>state.recProducts
+  recProducts:state=>state.recProducts,
+  recLoader:state=>state.recLoader
 }
 
 const mutations = {
@@ -35,6 +38,7 @@ const mutations = {
     //console.log(payload) // product id, get from url
     //
     state.pTypeLoader = true
+    state.recLoader=true
     //
     //
     gen.state.firestore
@@ -100,10 +104,18 @@ const mutations = {
             //force update dom
             window.thisOfVueComp.$forceUpdate()
             actions.getProd().then(function (snap) {
-              state.selected = state.prodArr[0]
+              if(router.currentRoute.query.varient == 'notSelected'){
+                state.selected = state.prodArr[0]
+              }else{
+                for(let i in state.prodArr){
+                  if(state.prodArr[i].key == router.currentRoute.query.varient){
+                    state.selected=state.prodArr[i]
+                  }
+                }
+              }
               console.log("[selected] => ", state.selected)
             }).then(function () {
-              //state.pTypeLoader = false //stop loader
+              state.pTypeLoader = false //stop loader
             })
             //
             /*mutations.fetchAmazonPrice(state,{
@@ -119,13 +131,16 @@ const mutations = {
   },
   //
   getRecProducts(){
+    state.recLoader=true
     axios.get('https://us-central1-kult-2.cloudfunctions.net/recommendedProducts').then(function (response) {
       console.log(response.data)
       state.recProducts=response.data
-      state.pTypeLoader=false
+       state.recLoader=false
+     //state.pTypeLoader=false
     }).catch(function (error) {
      // console.log(error)
-      state.pTypeLoader=false
+      state.recLoader=false
+     // state.pTypeLoader=false
     })
   },
   fetchAmazonPrice(state2, payload){

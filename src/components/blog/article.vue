@@ -1,11 +1,10 @@
 <template>
   <div>
-    <loader v-if="articleLoader"></loader>
-    <div v-else>
+    <div >
       <div class="banner_strip"></div>
       <div class="comm_pagebreads">
         <div class="container">
-          <div class="max_width">
+          <div >
             <div class="row">
               <div class="col-sm-5 col-xs-12 comm_page_title">
                 <span>Welcome</span>
@@ -217,5 +216,8 @@
     color: #fff;
     letter-spacing: 1px;
     z-index: 3;
+  }
+  .max_width{
+    min-height: 900px;
   }
 </style>

@@ -2,8 +2,7 @@
   <div>
 
     <!--{{selected}}-->
-    <loader v-if="pTypeLoader "></loader>
-    <div v-if="!pTypeLoader ">
+    <div >
       <!--{{ amazonLinkPrice}}-->
       <div class="banner_strip"></div>
       <div class="go_back">
@@ -12,15 +11,17 @@
         </div>
       </div>
       <div class="prod_single">
-        <div class="container">
-          <div class="row">
-            <div class="col-md-5 col-xs-12">
-              <div class="prod_left">
-                <div class="prod_leftmisc">
-                  <h2>{{pDets[$router.currentRoute.params.pId].pBasicDetail.pBrand}}</h2>
-                  <h3>{{pDets[$router.currentRoute.params.pId].pBasicDetail.pName}}</h3>
-                  <div class="prod_wishadd">
-                    <div class="prod_rate float">
+        <div class="container"  >
+          <div class="min_height">
+            <comp-loader v-if="pTypeLoader "></comp-loader>
+            <div class="row" v-if="!pTypeLoader " style="min-height: 700px">
+              <div class="col-md-5 col-xs-12" style="min-height: 700px">
+                <div class="prod_left">
+                  <div class="prod_leftmisc">
+                    <h2>{{pDets[$router.currentRoute.params.pId].pBasicDetail.pBrand}}</h2>
+                    <h3>{{pDets[$router.currentRoute.params.pId].pBasicDetail.pName}}</h3>
+                    <div class="prod_wishadd">
+                      <div class="prod_rate float">
 
                         <span v-for="icon in 5" >
                           <span v-if="icon <= Math.round(pDets[$router.currentRoute.params.pId].pBasicDetail.pRating)"  >
@@ -30,93 +31,99 @@
                               <i class="material-icons p_star_unchecked" >star</i>
                           </span>
                       </span>
-                    </div>
-                    <a v-if="isLoggedIn" class="ml_24" >
-                      <img src="/static/images/wishlist-add.svg" alt="wishlist-add" v-if="Object.keys(wishlistObj).indexOf($router.currentRoute.params.pId) === -1"
-                           @click="addWishlist({pId:$router.currentRoute.params.pId,pDet:pDets[$router.currentRoute.params.pId]});
+                      </div>
+                      <a v-if="isLoggedIn" class="ml_24" >
+                        <img src="/static/images/wishlist-add.svg" alt="wishlist-add" v-if="Object.keys(wishlistObj).indexOf($router.currentRoute.params.pId) === -1"
+                             @click="addWishlist({pId:$router.currentRoute.params.pId,pDet:pDets[$router.currentRoute.params.pId]});
                            wishlistObj[$router.currentRoute.params.pId] = pDets[$router.currentRoute.params.pId]; $forceUpdate()">
-                      <img src="/static/images/wishlist-hover.svg" alt="wishlist-hover" v-if="Object.keys(wishlistObj).indexOf($router.currentRoute.params.pId) !== -1"
-                           @click="removeWishlist({pId:$router.currentRoute.params.pId,pDet:pDets[$router.currentRoute.params.pId]});
+                        <img src="/static/images/wishlist-hover.svg" alt="wishlist-hover" v-if="Object.keys(wishlistObj).indexOf($router.currentRoute.params.pId) !== -1"
+                             @click="removeWishlist({pId:$router.currentRoute.params.pId,pDet:pDets[$router.currentRoute.params.pId]});
                            delete wishlistObj[$router.currentRoute.params.pId]; $forceUpdate()">
-                    </a>
-                    <a v-if="!isLoggedIn" class="ml_24">
-                      <img src="/static/images/wishlist-add.svg" alt="wishlist-add" @click="$store.state.auth.showLoginPopup = true">
-                    </a>
+                      </a>
+                      <a v-if="!isLoggedIn" class="ml_24">
+                        <img src="/static/images/wishlist-add.svg" alt="wishlist-add" @click="$store.state.auth.showLoginPopup = true">
+                      </a>
+                    </div>
                   </div>
-                </div>
-
-                <div class="product-color-list dropdown">
+                  <div class="product-color-list dropdown" v-if="prodArr.length > 1">
                     <div class="dropdown-toggle" data-toggle="dropdown">
-                        <template v-for="i in prodArr" v-if="selected.key===i.key">
-                            <i v-if="i.det.swatchImgUrl !== ''"><img :src="i.det.swatchImgUrl"></i>
-                            <span>{{i.key}}</span>
-                            <em class="fa fa-angle-down"></em>
-                        </template>
+                      <template v-for="i in prodArr" v-if="selected.key===i.key">
+                        <i v-if="i.det.swatchImgUrl !== ''"><img :src="i.det.swatchImgUrl"></i>
+                        <span>{{i.key}}</span>
+                        <em class="fa fa-angle-down"></em>
+                      </template>
                     </div>
                     <ul class="dropdown-menu">
-                        <template v-for="i in prodArr">
-                            <li v-if="selected.key === i.key" class="active"  @click="$store.state.particularProduct.selected = i">
-                                <i v-if="i.det.swatchImgUrl !== ''"><img :src="i.det.swatchImgUrl"></i>
-                                <span>{{i.key}}</span>
-                            </li>
-                            <li v-else @click="$store.state.particularProduct.selected = i">
-                                <i v-if="i.det.swatchImgUrl !== ''"><img :src="i.det.swatchImgUrl"></i>
-                                <span>{{i.key}}</span>
-                            </li>
-                        </template>
-                    </ul>
-                </div>
-
-                <div class="product-color-swatch">
-                    <ul>
-                        <li v-for="i in prodArr" v-if="i.det.swatchImgUrl !== ''" @click="$store.state.particularProduct.selected = i">
-                            <template v-if="selected.key === i.key" class="active">
-                                <i>
-                                    <img :src="i.det.swatchImgUrl">
-                                    <em class="fa fa-check"></em>
-                                </i>
-                            </template>
-                            <template v-else>
-                                <i><img :src="i.det.swatchImgUrl"></i>
-                            </template>
+                      <template v-for="i in prodArr">
+                        <li v-if="selected.key === i.key" class="active"  @click="$store.state.particularProduct.selected = i">
+                          <i v-if="i.det.swatchImgUrl !== ''"><img :src="i.det.swatchImgUrl"></i>
+                          <span>{{i.key}}</span>
                         </li>
+                        <li v-else @click="$store.state.particularProduct.selected = i; $router.replace({path:`/particularProduct/${$router.currentRoute.params.pId}`, query:{varient:i.key}})">
+                          <i v-if="i.det.swatchImgUrl !== ''"><img :src="i.det.swatchImgUrl"></i>
+                          <span>{{i.key}}</span>
+                        </li>
+                      </template>
                     </ul>
-                </div>
-
-                <!--  <div class="prod_pricerange" v-if="Object.keys(JSON.parse($route.query.prodDet)).indexOf(priceStartsFrom) != -1">
-                    From <strong>{{JSON.parse($route.query.prodDet).priceStartsFrom}}</strong>Rupee
-                  </div> -->
-                <div class="prod_storelinks">
-                  <div class="store_nos">
-                    <!--img src="/static/images/price-2.svg" alt="price">
-                    <span>3 - Stores</span>
-                    <img src="/static/images/infos.svg" alt="info"-->
                   </div>
-                  <!--div class="prod_pricerange">
-                    From <strong>2,036</strong> to <strong>7,999</strong> Rupee
-                  </div-->
-                  <ul class="prod_shoplinks list-unstyled" v-if="!isLoggedIn " >
-                    <li v-for="(l,k) in selected.det.affliateDomains" >
-                      <a @click="$store.state.auth.showLoginPopup=true;
+                  <div class="product-color-list" v-if="prodArr.length == 1">
+                    <div  >
+                      <template v-for="i in prodArr" v-if="selected.key===i.key">
+                        <i v-if="i.det.swatchImgUrl !== ''"><img :src="i.det.swatchImgUrl"></i>
+                        <span>{{i.key}}</span>
+                      </template>
+                    </div>
+                  </div>
+                  <div class="product-color-swatch">
+                    <ul>
+                      <li v-for="i in prodArr" v-if="i.det.swatchImgUrl !== ''" @click="$store.state.particularProduct.selected = i; $router.replace({path:`/particularProduct/${$router.currentRoute.params.pId}`, query:{varient:i.key}})">
+                        <template v-if="selected.key === i.key" class="active">
+                          <i>
+                            <img :src="i.det.swatchImgUrl">
+                            <em class="fa fa-check"></em>
+                          </i>
+                        </template>
+                        <template v-else>
+                          <i><img :src="i.det.swatchImgUrl"></i>
+                        </template>
+                      </li>
+                    </ul>
+                  </div>
+
+                  <!--  <div class="prod_pricerange" v-if="Object.keys(JSON.parse($route.query.prodDet)).indexOf(priceStartsFrom) != -1">
+                      From <strong>{{JSON.parse($route.query.prodDet).priceStartsFrom}}</strong>Rupee
+                    </div> -->
+                  <div class="prod_storelinks min_height">
+                    <div class="store_nos">
+                      <!--img src="/static/images/price-2.svg" alt="price">
+                      <span>3 - Stores</span>
+                      <img src="/static/images/infos.svg" alt="info"-->
+                    </div>
+                    <!--div class="prod_pricerange">
+                      From <strong>2,036</strong> to <strong>7,999</strong> Rupee
+                    </div-->
+                    <ul class="prod_shoplinks list-unstyled" v-if="!isLoggedIn " >
+                      <li v-for="(l,k) in selected.det.affliateDomains" >
+                        <a @click="$store.state.auth.showLoginPopup=true;
                       $store.state.particularProduct.selectedLink = newLink(l.link,k)"
-                         target="_blank"
-                         v-if="k != 'amazon' && l.price.indexOf('999999999') == -1 "
-                      >
-                        <span class="aff_name">{{k.toUpperCase()}}</span>
-                        <span class="aff_price">₹{{l.price}}</span>
-                        <span style="margin-top: 17px">BUY NOW</span>
-                      </a>
-                      <a @click="$store.state.auth.showLoginPopup=true;
+                           target="_blank"
+                           v-if="k != 'amazon' && l.price.indexOf('999999999') == -1 "
+                        >
+                          <span class="aff_name">{{k.toUpperCase()}}</span>
+                          <span class="aff_price">₹{{l.price}}</span>
+                          <span style="margin-top: 17px">BUY NOW</span>
+                        </a>
+                        <a @click="$store.state.auth.showLoginPopup=true;
                       $store.state.particularProduct.selectedLink = l.link"
-                         target="_blank" v-if="k == 'amazon' && amazonLinkPrice != 'Out Of Stock' ">
-                        <span class="aff_name">{{k.toUpperCase()}}</span>
-                        <span style="margin-top: 22px;" v-if="amazonPriceLoader">Fetching Price...</span>
-                        <span class="aff_price" v-if="amazonLinkPrice != 'Out Of Stock'" v-show="!amazonPriceLoader">₹{{amazonLinkPrice}}</span>
-                        <span style="margin-top: 17px" v-show="!amazonPriceLoader">BUY NOW</span>
-                      </a>
-                      <!--a @click="$store.state.auth.showLoginPopup=true; $store.state.particularProduct.selectedLink =l.link"target="_blank" v-if="parseInt(l.price) < 10001 || parseInt(amazonLinkPrice) <10001 &&  parseInt(amazonLinkPrice) != -1" class="box">
-                        <span class="aff_name">{{k.toUpperCase()}}</span>
-                        <!--span class="aff_price" v-if="l.price===undefined || l.price===999999999"> Out Of Stock</span-->
+                           target="_blank" v-if="k == 'amazon' && amazonLinkPrice != 'Out Of Stock' ">
+                          <span class="aff_name">{{k.toUpperCase()}}</span>
+                          <span style="margin-top: 22px;" v-if="amazonPriceLoader">Fetching Price...</span>
+                          <span class="aff_price" v-if="amazonLinkPrice != 'Out Of Stock'" v-show="!amazonPriceLoader">₹{{amazonLinkPrice}}</span>
+                          <span style="margin-top: 17px" v-show="!amazonPriceLoader">BUY NOW</span>
+                        </a>
+                        <!--a @click="$store.state.auth.showLoginPopup=true; $store.state.particularProduct.selectedLink =l.link"target="_blank" v-if="parseInt(l.price) < 10001 || parseInt(amazonLinkPrice) <10001 &&  parseInt(amazonLinkPrice) != -1" class="box">
+                          <span class="aff_name">{{k.toUpperCase()}}</span>
+                          <!--span class="aff_price" v-if="l.price===undefined || l.price===999999999"> Out Of Stock</span-->
                         <!--div class="show_price" v-if="k !== 'amazon'">
                           <span class="aff_price" > ₹ {{l.price}}</span>
                           <span>
@@ -148,212 +155,215 @@
                         </span>
                         </div>
                       </a-->
-                    </li>
-                  </ul>
-                  <ul class="prod_shoplinks list-unstyled" v-if="isLoggedIn && email" >
-                    <li  v-for="(l,k) in selected.det.affliateDomains" class="box">
-                      <a :href='newLink(l.link,k)' target="_blank"
-                         v-if="k != 'amazon' && l.price.indexOf('999999999') == -1 "
-                      >
-                        <span class="aff_name">{{k.toUpperCase()}}</span>
-                        <span class="aff_price">₹{{l.price}}</span>
-                        <span style="margin-top: 17px">BUY NOW</span>
-                      </a>
-                      <a :href="l.link + '&subid=' + $store.state.auth.user.email" target="_blank"
-                        v-if="k == 'amazon' && amazonLinkPrice != 'Out Of Stock' ">
-                        <span class="aff_name">{{k.toUpperCase()}}</span>
-                        <span  style="margin-top: 22px;"v-if="amazonPriceLoader">Fetching Price...</span>
-                        <span class="aff_price" v-if="amazonLinkPrice != 'Out Of Stock'" v-show="!amazonPriceLoader">₹{{amazonLinkPrice}}</span>
-                        <span style="margin-top: 17px" v-show="!amazonPriceLoader">BUY NOW</span>
-                      </a>
-                    </li>
-                  </ul>
-                      <!--a v-else-if="(parseInt(l.price) || parseInt(amazonLinkPrice)) == ('999999999' ||  999999999)" class="box">
-                        <span class="aff_name">{{k.toUpperCase()}}</span>
-                        <div  class="show_price" >
-                          <span class="aff_price" ></span>
-                          <span>
-                            <strong style="float: right">Out Of Stock</strong>
+                      </li>
+                    </ul>
+                    <ul class="prod_shoplinks list-unstyled" v-if="isLoggedIn && email" >
+                      <li  v-for="(l,k) in selected.det.affliateDomains" class="box">
+                        <a :href='newLink(l.link,k)' target="_blank"
+                           v-if="k != 'amazon' && l.price.indexOf('999999999') == -1 "
+                        >
+                          <span class="aff_name">{{k.toUpperCase()}}</span>
+                          <span class="aff_price">₹{{l.price}}</span>
+                          <span style="margin-top: 17px">BUY NOW</span>
+                        </a>
+                        <a :href="l.link + '&subid=' + $store.state.auth.user.email" target="_blank"
+                           v-if="k == 'amazon' && amazonLinkPrice != 'Out Of Stock' ">
+                          <span class="aff_name">{{k.toUpperCase()}}</span>
+                          <span  style="margin-top: 22px;"v-if="amazonPriceLoader">Fetching Price...</span>
+                          <span class="aff_price" v-if="amazonLinkPrice != 'Out Of Stock'" v-show="!amazonPriceLoader">₹{{amazonLinkPrice}}</span>
+                          <span style="margin-top: 17px" v-show="!amazonPriceLoader">BUY NOW</span>
+                        </a>
+                      </li>
+                    </ul>
+                    <!--a v-else-if="(parseInt(l.price) || parseInt(amazonLinkPrice)) == ('999999999' ||  999999999)" class="box">
+                      <span class="aff_name">{{k.toUpperCase()}}</span>
+                      <div  class="show_price" >
+                        <span class="aff_price" ></span>
+                        <span>
+                          <strong style="float: right">Out Of Stock</strong>
+                        </span>
+                      </div>
+                    </a>
+                    <a v-else :href="l.link + '&subid=' + $store.state.auth.user.email" class="box">
+                      <span class="aff_name">{{k.toUpperCase()}}</span>
+                      <div class="show_price" >
+                        <span class="aff_price" ></span>
+                        <span>
+                          <strong>BUY NOW</strong>
+                      </span>
+                      </div>
+                    </a>
+                  </li>
+                </ul-->
+                    <!--$store.state.particularProduct.selectedLink =l.link -->
+                    <ul class="prod_shoplinks list-unstyled" v-if="isLoggedIn &&   !email" >
+                      <li  v-for="(l,k) in selected.det.affliateDomains" >
+                        <a @click="dialog=true; $store.state.particularProduct.selectedLink= newLink(l.link,k)"
+                           v-if="k != 'amazon' && l.price.indexOf('999999999') == -1 "
+                        >
+                          <span class="aff_name">{{k.toUpperCase()}}</span>
+                          <span class="aff_price">₹{{l.price}}</span>
+                          <span style="margin-top: 17px">BUY NOW</span>
+                        </a>
+                        <a @click="dialog=true;$store.state.particularProduct.selectedLink =l.link "
+                           v-if="k == 'amazon' && amazonLinkPrice != 'Out Of Stock' ">
+                          <span class="aff_name">{{k.toUpperCase()}}</span>
+                          <span  style="margin-top: 22px;"v-if="amazonPriceLoader">Fetching Price...</span>
+                          <span class="aff_price" v-if="amazonLinkPrice != 'Out Of Stock'" v-show="!amazonPriceLoader">₹{{amazonLinkPrice}}</span>
+                          <span style="margin-top: 17px" v-show="!amazonPriceLoader">BUY NOW</span>
+                        </a>
+                        <!--a @click="dialog=true;$store.state.particularProduct.selectedLink =l.link "  class="box" v-if="amazonLinkPrice != 'Out Of Stock' || l.price.indexOf('999999999') != -1">
+                          <span v-if="k != 'amazon'">
+                            <span  class="aff_price" v-if="!isNaN(l.price) && l.price > 0 && l.price <= 10000"> <span class="rupee">₹</span> {{l.price}}</span>
+                            <strong  v-else-if="l.price.indexOf('999999999') != -1 ">OUT OF STOCK</strong>
+                            <span class="show_price" v-else></span>
+                              <strong v-if="l.price.indexOf('999999999') == -1 ">BUY NOW</strong>
                           </span>
-                        </div>
-                      </a>
-                      <a v-else :href="l.link + '&subid=' + $store.state.auth.user.email" class="box">
-                        <span class="aff_name">{{k.toUpperCase()}}</span>
-                        <div class="show_price" >
-                          <span class="aff_price" ></span>
-                          <span>
-                            <strong>BUY NOW</strong>
-                        </span>
-                        </div>
-                      </a>
-                    </li>
-                  </ul-->
-                  <!--$store.state.particularProduct.selectedLink =l.link -->
-                  <ul class="prod_shoplinks list-unstyled" v-if="isLoggedIn &&   !email" >
-                    <li  v-for="(l,k) in selected.det.affliateDomains" >
-                      <a @click="dialog=true; $store.state.particularProduct.selectedLink= newLink(l.link,k)"
-                         v-if="k != 'amazon' && l.price.indexOf('999999999') == -1 "
-                      >
-                        <span class="aff_name">{{k.toUpperCase()}}</span>
-                        <span class="aff_price">₹{{l.price}}</span>
-                        <span style="margin-top: 17px">BUY NOW</span>
-                      </a>
-                      <a @click="dialog=true;$store.state.particularProduct.selectedLink =l.link "
-                         v-if="k == 'amazon' && amazonLinkPrice != 'Out Of Stock' ">
-                        <span class="aff_name">{{k.toUpperCase()}}</span>
-                        <span  style="margin-top: 22px;"v-if="amazonPriceLoader">Fetching Price...</span>
-                        <span class="aff_price" v-if="amazonLinkPrice != 'Out Of Stock'" v-show="!amazonPriceLoader">₹{{amazonLinkPrice}}</span>
-                        <span style="margin-top: 17px" v-show="!amazonPriceLoader">BUY NOW</span>
-                      </a>
-                      <!--a @click="dialog=true;$store.state.particularProduct.selectedLink =l.link "  class="box" v-if="amazonLinkPrice != 'Out Of Stock' || l.price.indexOf('999999999') != -1">
-                        <span v-if="k != 'amazon'">
-                          <span  class="aff_price" v-if="!isNaN(l.price) && l.price > 0 && l.price <= 10000"> <span class="rupee">₹</span> {{l.price}}</span>
-                          <strong  v-else-if="l.price.indexOf('999999999') != -1 ">OUT OF STOCK</strong>
-                          <span class="show_price" v-else></span>
-                            <strong v-if="l.price.indexOf('999999999') == -1 ">BUY NOW</strong>
-                        </span>
-                        <span v-else>
-                         <!-- {{amazonPriceLoader}}-->
-                          <!--strong v-show="amazonPriceLoader">Fetching Price...</strong>
-                          <span class="aff_price" v-if="amazonLinkPrice != 'Out Of Stock'" v-show="!amazonPriceLoader">{{amazonLinkPrice}}</span>
-                           <strong v-if="amazonLinkPrice != 'Out Of Stock' && !amazonPriceLoader">BUY NOW</strong>
-                          <strong  v-else v-show="!amazonPriceLoader" >OUT OF STOCK</strong>
-                        </span>
-                      </a-->
-                    </li>
-                  </ul>
-                  <el-dialog
-                    :visible.sync="dialog"
-                    width="40%"
-                   >
+                          <span v-else>
+                           <!-- {{amazonPriceLoader}}-->
+                        <!--strong v-show="amazonPriceLoader">Fetching Price...</strong>
+                        <span class="aff_price" v-if="amazonLinkPrice != 'Out Of Stock'" v-show="!amazonPriceLoader">{{amazonLinkPrice}}</span>
+                         <strong v-if="amazonLinkPrice != 'Out Of Stock' && !amazonPriceLoader">BUY NOW</strong>
+                        <strong  v-else v-show="!amazonPriceLoader" >OUT OF STOCK</strong>
+                      </span>
+                    </a-->
+                      </li>
+                    </ul>
+                    <el-dialog
+                      :visible.sync="dialog"
+                      width="40%"
+                    >
                     <span slot="footer" class="dialog-footer">
                        <h5>Account Not Verified!!! Click to continue and you will losse the cashback</h5>
                        <p class="forgot_pass" @click="dialog=false"><a @click="emptyLink()">Continue Anyway</a></p>
                     </span>
-                  </el-dialog>
-                  <!--el-dialog
-                    :visible.sync="dialog"
+                    </el-dialog>
+                    <!--el-dialog
+                      :visible.sync="dialog"
+                    >
+                      <span>
+                           <div  v-if="selectedLink !== ''">
+                           <a :href="selectedLink" target="_blank" @click="$store.state.particularProduct.selectedLink=''; dialog=false">
+                              <h5>>Account Not Verified!!! Click to continue and you will losse the cashback</h5>
+                               <el-button>Continue Anyway</el-button>
+                           </a>
+                          </div>
+                      </span>
+                    </el-dialog-->
+                    <!---*********************** Show when Price is available for affliate!!! To Do once price is uploaded*******---->
+                    <!--li class="prod_shoplinks list-unstyled"  v-if="!isLoggedIn">
+                      <a  @click="$store.state.auth.showLoginPopup=true"
+                          v-for="(l,k) in selected.det.affliateDomains"
+                      >
+                        <span >{{k}}</span>
+                        <span  style="float: right" >
+                            <strong>BUY NOW</strong>
+                        </span>
+                        <br>
+                      </a>
+                    </li>
+                    <li class="prod_shoplinks list-unstyled"  v-if="isLoggedIn && email">
+                      <a v-for="(j,k) in selected.det.affliateDomains"
+                         target="_blank"
+                         :href="j.link + '&subid=' + $store.state.auth.user.email"
+                      >
+                        <span >{{k}}</span>
+                        <span  style="float: right" >
+                            <strong>BUY NOW</strong>
+                        </span>
+                        <br>
+                      </a>
+                    </li>
+                    <li class="prod_shoplinks list-unstyled"  v-if="isLoggedIn &&   !email">
+                      <a v-for="(j,k) in selected.det.affliateDomains"
+                         @click="alertEmailNotVerified()"
+                      >
+                        <span >{{k}}</span>
+                        <span  style="float: right" >
+                            <strong>BUY NOW</strong>
+                        </span>
+                        <br>
+                      </a>
+                    </li-->
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-7 col-xs-12 min_height" style="min-height: 700px">
+                <div class="prod_gallery">
+                  <div class="gall_main" v-if="selected.det !== undefined">
+                    <a >
+                      <img  :src="selected.det.pTypeImgUrl" >
+                    </a>
+                    <el-button @click="dialog2=true" icon="el-icon-zoom-in"></el-button>
+                  </div>
+                  <el-dialog
+                    width="80%"
+                    :visible.sync="dialog2"
                   >
-                    <span>
-                         <div  v-if="selectedLink !== ''">
-                         <a :href="selectedLink" target="_blank" @click="$store.state.particularProduct.selectedLink=''; dialog=false">
-                            <h5>>Account Not Verified!!! Click to continue and you will losse the cashback</h5>
-                             <el-button>Continue Anyway</el-button>
-                         </a>
-                        </div>
-                    </span>
-                  </el-dialog-->
-                  <!---*********************** Show when Price is available for affliate!!! To Do once price is uploaded*******---->
-                  <!--li class="prod_shoplinks list-unstyled"  v-if="!isLoggedIn">
-                    <a  @click="$store.state.auth.showLoginPopup=true"
-                        v-for="(l,k) in selected.det.affliateDomains"
-                    >
-                      <span >{{k}}</span>
-                      <span  style="float: right" >
-                          <strong>BUY NOW</strong>
-                      </span>
-                      <br>
-                    </a>
-                  </li>
-                  <li class="prod_shoplinks list-unstyled"  v-if="isLoggedIn && email">
-                    <a v-for="(j,k) in selected.det.affliateDomains"
-                       target="_blank"
-                       :href="j.link + '&subid=' + $store.state.auth.user.email"
-                    >
-                      <span >{{k}}</span>
-                      <span  style="float: right" >
-                          <strong>BUY NOW</strong>
-                      </span>
-                      <br>
-                    </a>
-                  </li>
-                  <li class="prod_shoplinks list-unstyled"  v-if="isLoggedIn &&   !email">
-                    <a v-for="(j,k) in selected.det.affliateDomains"
-                       @click="alertEmailNotVerified()"
-                    >
-                      <span >{{k}}</span>
-                      <span  style="float: right" >
-                          <strong>BUY NOW</strong>
-                      </span>
-                      <br>
-                    </a>
-                  </li-->
-                </div>
-              </div>
-            </div>
-            <div class="col-md-7 col-xs-12">
-              <div class="prod_gallery">
-                <div class="gall_main" v-if="selected.det !== undefined">
-                  <a >
-                    <img  :src="selected.det.pTypeImgUrl" >
-                  </a>
-                  <el-button @click="dialog2=true" icon="el-icon-zoom-in"></el-button>
-                </div>
-                <el-dialog
-                  width="80%"
-                  :visible.sync="dialog2"
-                >
-                        <img class="main_image" :src="selected.det.pTypeImgUrl" alt="gallery" >
-                </el-dialog>
-                <div class="gall_thumbs">
+                    <img class="main_image" :src="selected.det.pTypeImgUrl" alt="gallery" >
+                  </el-dialog>
+                  <div class="gall_thumbs">
 
-                  <!--ul>
-                    <li class="active">
-                      <a :href="selected.det.pTypeImgUrl">
-                        <img src="/static/images/rectangle-18@2x.jpg" alt="gallery">
-                      </a>
-                    </li>
-                    <li>
-                      <a :href="selected.det.pTypeImgUrl">
-                        <img src="/static/images/rectangle-18-copy@2x.jpg" alt="gallery">
-                      </a>
-                    </li>
-                    <li>
-                      <a :href="selected.det.pTypeImgUrl">
-                        <img src="/static/images/rectangle-18-copy-19@2x.jpg" alt="gallery">
-                      </a>
-                    </li>
-                    <li>
-                      <a :href="selected.det.pTypeImgUrl">
-                        <img src="/static/images/rectangle-18-copy-20@2x.jpg" alt="gallery">
-                      </a>
-                    </li>
-                  </ul-->
-                  <div class="clearfix"></div>
+                    <!--ul>
+                      <li class="active">
+                        <a :href="selected.det.pTypeImgUrl">
+                          <img src="/static/images/rectangle-18@2x.jpg" alt="gallery">
+                        </a>
+                      </li>
+                      <li>
+                        <a :href="selected.det.pTypeImgUrl">
+                          <img src="/static/images/rectangle-18-copy@2x.jpg" alt="gallery">
+                        </a>
+                      </li>
+                      <li>
+                        <a :href="selected.det.pTypeImgUrl">
+                          <img src="/static/images/rectangle-18-copy-19@2x.jpg" alt="gallery">
+                        </a>
+                      </li>
+                      <li>
+                        <a :href="selected.det.pTypeImgUrl">
+                          <img src="/static/images/rectangle-18-copy-20@2x.jpg" alt="gallery">
+                        </a>
+                      </li>
+                    </ul-->
+                    <div class="clearfix"></div>
+                  </div>
                 </div>
+                <div class="prod_inncont" >
+                  <h3>Overview</h3>
+                  <div v-html="pDets[$router.currentRoute.params.pId].pOtherDetail.pAbout" class="min_height"></div>
+                  <h3>Product Details</h3>
+                </div>
+                <ul class="prod_social">
+                  <li><a href="https://www.instagram.com/kult.in/" target="_blank"><i class="fa fa-instagram"></i></a></li>
+                  <li><a href="https://goo.gl/UHWH1o" target="_blank"><i class="fa fa-youtube-play"></i></a></li>
+                  <!--li><a  target="_blank"><i class="fa fa-facebook"></i></a></li>
+                  <li><a  target="_blank"><i class="fa fa-pinterest"></i></a></li>
+                  <li><a  target="_blank"><i class="fa fa-twitter"></i></a></li-->
+                </ul>
               </div>
-              <div class="prod_inncont">
-                <h3>Overview</h3>
-                <div v-html="pDets[$router.currentRoute.params.pId].pOtherDetail.pAbout"></div>
-                <h3>Product Details</h3>
-              </div>
-              <ul class="prod_social">
-                <li><a href="https://www.instagram.com/kult.in/" target="_blank"><i class="fa fa-instagram"></i></a></li>
-                <li><a href="https://goo.gl/UHWH1o" target="_blank"><i class="fa fa-youtube-play"></i></a></li>
-                <!--li><a  target="_blank"><i class="fa fa-facebook"></i></a></li>
-                <li><a  target="_blank"><i class="fa fa-pinterest"></i></a></li>
-                <li><a  target="_blank"><i class="fa fa-twitter"></i></a></li-->
-              </ul>
             </div>
           </div>
-          <div class="prod_rel_cats text-center">
+          <div class="prod_rel_cats text-center" >
             <div>
               <h3>Recommended</h3>
             </div>
+            <rec-loader v-if="recLoader"></rec-loader>
             <el-row :gutter="15" >
               <el-col :xs="12" :sm="12" :md="6" :lg="6" v-for="(pDet, pId) in recProducts"
                       v-if="parseInt(pDet.priceStartsFrom) != 999999999"
+                      v-show="!recLoader"
               >
                 <div >
                   <div class="grid-content pa-2 rec_prod" >
-                    <a class="prod_image"   @click="$router.push({path:`/particularProduct/${pId}`})">
+                    <a class="prod_image"  @click="$router.push({path:`/particularProduct/${pId}`, query:{varient:'notSelected'}})">
                       <img :src="pDet.pBasicDetail.pPicUrl"  style="height:200px; max-width: 276.656px" alt="product">
                     </a>
-                    <div class="prod_cont"  @click="$router.push({path:`/particularProduct/${pId}`})">
+                    <div class="prod_cont"  @click="$router.push({path:`/particularProduct/${pId}`, query:{varient:'notSelected'}})">
                       <h4><a >{{pDet.pBasicDetail.pBrand}}</a></h4>
                       <span v-for="(i,k) in pDet.pBasicDetail.pName" v-if="k < 20">{{i}}</span><span v-if="pDet.pBasicDetail.pName.length > 20">...</span>
                     </div>
-                    <div class="prod_misc"  @click="$router.push({path:`/particularProduct/${pId}`})">
+                    <div class="prod_misc"  @click="$router.push({path:`/particularProduct/${pId}`, query:{varient:'notSelected'}})">
                       <div class="float" ><rating :num="Math.round(pDet.pBasicDetail.pRating)" ></rating></div>
                       <div class="half text-right" >
                               <span v-if="parseInt(pDet.priceStartsFrom) == 999999999" style="float: right" class="half text-right">
@@ -366,7 +376,7 @@
                         <div v-else></div>
                       </div>
                     </div>
-                    <a  class="prod_compare" v-if="isLoggedIn"><span @click="$router.push({path:`/particularProduct/${pId}`})" >Compare price</span>
+                    <a  class="prod_compare" v-if="isLoggedIn"><span @click="$router.push({path:`/particularProduct/${pId}`, query:{varient:'notSelected'}})" >Compare price</span>
                       <img src="/static/images/wishlist-add.svg" alt="wishlist-add" v-if="Object.keys(wishlistObj).indexOf(pId) === -1" @click="addWishlist({pId,pDet}); wishlistObj[pId] = pDet; $forceUpdate()">
                       <img src="/static/images/wishlist-hover.svg" alt="wishlist-hover" v-if="Object.keys(wishlistObj).indexOf(pId) !== -1" @click="removeWishlist({pId,pDet}); delete wishlistObj[pId]; $forceUpdate()">
                     </a>
@@ -439,7 +449,8 @@
                 <a  class="prod_compare">Compare price <img src="/static/images/wishlist-add.svg" alt="wishlist-add"></a>
                 <a  class="go_store">Go to store</a>
               </div>
-            </div-->
+            </div>
+          <!--/div-->
           </div>
         </div>
       </div>
@@ -456,6 +467,8 @@
 </template>
 
 <script>
+  import recLoader from '@/components/gen/recLoader'
+  import compLoader from '@/components/gen/comp_loader'
   import rating from '@/components/rating'
   import {mapGetters} from 'vuex'
   import loader from '@/components/gen/loader'
@@ -479,7 +492,9 @@
     },
     components:{
       loader,
-      rating
+      rating,
+      compLoader,
+      recLoader
     },
     computed:{
       ...mapGetters([
@@ -492,6 +507,7 @@
         'isLoggedIn',
         'selectedLink',
         'amazonLoader',
+        'recLoader'
         //
         //'amazonLinkPrice' //show this ******
       ]),
@@ -509,7 +525,7 @@
          },1000)
        }
      },
-      $route:function () {
+      '$route.params.pId':function () {
        let vm = this
         this.$store.commit('getRecProducts')
         this.$store.commit('getTypeNLinkOfThisProduct', {
@@ -740,7 +756,7 @@
     },
   }
 </script>
-<style>
+<style scoped>
   .splash-banner {
     background: #1b70d3;
     position: absolute;
@@ -829,7 +845,9 @@
     margin: 0px 0 !important;
     list-style: none;
   }
-
+.min_height{
+  min-height: 500px;
+}
   /*ul, ol {
     margin-top: 0;
     margin-bottom: 10px !important;

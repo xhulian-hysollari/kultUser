@@ -53,7 +53,7 @@
               </div>
             </div>
 
-            <div  class="table-responsive">
+            <div  class="table-responsive" v-if="!myOrderLoader">
               <table class="table">
 
                 <tr>
@@ -107,7 +107,7 @@
   import {mapGetters} from 'vuex'
   import  {mapMutations} from 'vuex'
   //
-  import loader from '@/components/gen/loader'
+  import loader from '@/components/gen/recLoader'
   import btnLoader from '@/components/gen/btnLoader'
   //
   export default {
