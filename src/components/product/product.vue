@@ -25,130 +25,130 @@
           <div class="row">
             <div >
               <div class="side_filterbox" >
-                <div class="tv_left"  v-if="$route.path.indexOf('global') != -1 || $route.path.indexOf('/kultPick') != -1">
-                  <div class="howto">Shop</div>
-                  <comp-loader v-show="filterLoader"></comp-loader>
-                  <ul v-for="(shopOptionDet, shopOption) in shopOptions" v-show="!filterLoader">
-                    <li  class="active" v-if="$route.params.shopOption===shopOption" >
-                      <a>
-                        <span >{{shopOption}}</span>
-                      </a>
-                    </li>
-                    <li v-else>
-                      <a   @click="goTo('/globalBestSeller/shopOption/' + shopOption);
-                   $route.params.shopOption=shopOption"
-                           v-if="$route.path.indexOf('global') != -1"
-                      >
-                        <span >{{shopOption}}</span>
-                      </a>
-                      <a   @click="goTo('/kultPick/shopOption/' + shopOption);
-                   $route.params.shopOption=shopOption"
-                           v-if="$route.path.indexOf('/kultPick') != -1"
-                      >
-                        <span >{{shopOption}}</span>
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-
-
-                <div class="tv_left"  v-if=" $route.name == 'Brand Product' ">
-                  <comp-loader v-show="filterLoader"></comp-loader>
-                  <div v-for="(bCatDet, bCat) in brandCat"   v-show="!filterLoader">
-                    <br><div class="howto">{{bCat}}</div><br>
-                    <ul v-for="(bNameDet, bName) in bCatDet" @click="$router.push('/brandProduct/'+bName)">
-                      <li >
+                <recloader v-if="filterLoader"></recloader>
+                <div v-else>
+                  <div class="tv_left"  v-if="$route.path.indexOf('global') != -1 || $route.path.indexOf('/kultPick') != -1">
+                    <div class="howto">Shop</div>
+                    <comp-loader v-show="filterLoader"></comp-loader>
+                    <ul v-for="(shopOptionDet, shopOption) in shopOptions" v-show="!filterLoader">
+                      <li  class="active" v-if="$route.params.shopOption===shopOption" >
                         <a>
-                          <span > {{bName}}</span>
+                          <span >{{shopOption}}</span>
+                        </a>
+                      </li>
+                      <li v-else>
+                        <a   @click="goTo('/globalBestSeller/shopOption/' + shopOption);
+                   $route.params.shopOption=shopOption"
+                             v-if="$route.path.indexOf('global') != -1"
+                        >
+                          <span >{{shopOption}}</span>
+                        </a>
+                        <a   @click="goTo('/kultPick/shopOption/' + shopOption);
+                   $route.params.shopOption=shopOption"
+                             v-if="$route.path.indexOf('/kultPick') != -1"
+                        >
+                          <span >{{shopOption}}</span>
                         </a>
                       </li>
                     </ul>
                   </div>
-                </div>
-
-                <br>
 
 
-                <div class="filter_title">
-                  <span class="hide_toggler">{{toggler}}</span>
-                  <comp-loader v-show="filterLoader"></comp-loader>
-                  <a v-show="!filterLoader">ACTIVE FILTER <span>{{cnt}}</span></a>
-                </div>
-                <div v-for="(filteNameContent, filterName) in filter" v-show="!filterLoader">
-                  <div v-show="filterBoxes[filterName]===false">
-                    <div class="filter_box" >
-                      <div class="filter_title">
-                        <a  @click="closeFilter(filterName)">{{filterName}}</a>
-                      </div>
+                  <div class="tv_left"  v-if=" $route.name == 'Brand Product' ">
+                    <div v-for="(bCatDet, bCat) in brandCat"   v-show="!filterLoader">
+                      <br><div class="howto">{{bCat}}</div><br>
+                      <ul v-for="(bNameDet, bName) in bCatDet" @click="$router.push('/brandProduct/'+bName)">
+                        <li >
+                          <a>
+                            <span > {{bName}}</span>
+                          </a>
+                        </li>
+                      </ul>
                     </div>
                   </div>
-                  <div v-show="filterBoxes[filterName]===true || filterBoxes[filterName]===undefined">
-                    <div class="filter_box active" >
-                      <div class="filter_title">
-                        <a  @click="closeFilter(filterName)">{{filterName}}</a>
-                      </div>
+
+                  <br>
 
 
-
-                      <!--div v-for="(filteNameContent, filterName) in filter">
-                        {{filterName}}
-                        <div v-for="(fitlerParaContent, filterPara) in filteNameContent">
-                          <div @click="sel_disSel_thisFilter({
-        sel_filterDetail : {
-          filterName : filterName,
-          filterPara: filterPara,
-        },
-        //
-        routePath: routeDet.routePath , //add filter later
-        //
-        compRoutePath: routeDet.compRoutePath
-        })"
-                          >
-                            {{filterPara}}
-
-                            <span v-if=" Object.keys(selectedFilters).indexOf(filterName) != -1 ">
-          <span v-if=" Object.keys(selectedFilters[filterName]).indexOf(filterPara) != -1 ">
-            tick !
-          </span>
-        </span>
-
-                          </div>
+                  <div class="filter_title">
+                    <span class="hide_toggler">{{toggler}}</span>
+                    <a v-show="!filterLoader">ACTIVE FILTER <span>{{cnt}}</span></a>
+                  </div>
+                  <div v-for="(filteNameContent, filterName) in filter" v-show="!filterLoader">
+                    <div v-show="filterBoxes[filterName]===false">
+                      <div class="filter_box" >
+                        <div class="filter_title">
+                          <a  @click="closeFilter(filterName)">{{filterName}}</a>
                         </div>
-                      </div-->
-                      <!--div class="filter_cont">
-                        <div class="comm_radio">
-                          <div class="radio radio-primary" v-for="para in priceArr" @click="sel_disSel_thisFilter({
-                          sel_filterDetail : {
-                            filterName : 'priceRange',
-                            filterPara: priceArr[para],
-                          },
+                      </div>
+                    </div>
+                    <div v-show="filterBoxes[filterName]===true || filterBoxes[filterName]===undefined">
+                      <div class="filter_box active" >
+                        <div class="filter_title">
+                          <a  @click="closeFilter(filterName)">{{filterName}}</a>
+                        </div>
 
-                            routePath: routeDet.routePath , //add filter later
-                            //
-                            compRoutePath: routeDet.compRoutePath
-                            })">
-                           <span v-if=" Object.keys(selectedFilters).indexOf('priceRange') != -1 ">
-                            <span v-if=" Object.keys(selectedFilters[priceArr[para]]).indexOf(priceArr[para]) != -1 ">
-                              <div class="selected_filter" >
-                                <span><i class="material-icons ">radio_button_checked</i></span>
-                                <span class="radio_btn">{{priceArr[para]}}</span>
-                              </div>
-                            </span>
-                             <div v-else class="unselected_filter">
-                               <span><i class="material-icons" >radio_button_unchecked</i></span>
-                               <span class="radio_btn" >{{priceArr[para]}}</span>
-                             </div>
-                          </span>
-                            <div v-else class="unselected_filter">
-                              <span><i class="material-icons" >radio_button_unchecked</i></span>
-                              <span class="radio_btn" >{{fpriceArr[para]}}</span>
+
+
+                        <!--div v-for="(filteNameContent, filterName) in filter">
+                          {{filterName}}
+                          <div v-for="(fitlerParaContent, filterPara) in filteNameContent">
+                            <div @click="sel_disSel_thisFilter({
+          sel_filterDetail : {
+            filterName : filterName,
+            filterPara: filterPara,
+          },
+          //
+          routePath: routeDet.routePath , //add filter later
+          //
+          compRoutePath: routeDet.compRoutePath
+          })"
+                            >
+                              {{filterPara}}
+
+                              <span v-if=" Object.keys(selectedFilters).indexOf(filterName) != -1 ">
+            <span v-if=" Object.keys(selectedFilters[filterName]).indexOf(filterPara) != -1 ">
+              tick !
+            </span>
+          </span>
+
                             </div>
                           </div>
-                        </div>
-                      </div-->
-                      <div v-show="!filterLoader" class="filter_cont">
-                        <div class="comm_radio">
-                          <div class="radio radio-primary" v-for="(fitlerParaContent, filterPara) in filteNameContent" @click="sel_disSel_thisFilter({
+                        </div-->
+                        <!--div class="filter_cont">
+                          <div class="comm_radio">
+                            <div class="radio radio-primary" v-for="para in priceArr" @click="sel_disSel_thisFilter({
+                            sel_filterDetail : {
+                              filterName : 'priceRange',
+                              filterPara: priceArr[para],
+                            },
+
+                              routePath: routeDet.routePath , //add filter later
+                              //
+                              compRoutePath: routeDet.compRoutePath
+                              })">
+                             <span v-if=" Object.keys(selectedFilters).indexOf('priceRange') != -1 ">
+                              <span v-if=" Object.keys(selectedFilters[priceArr[para]]).indexOf(priceArr[para]) != -1 ">
+                                <div class="selected_filter" >
+                                  <span><i class="material-icons ">radio_button_checked</i></span>
+                                  <span class="radio_btn">{{priceArr[para]}}</span>
+                                </div>
+                              </span>
+                               <div v-else class="unselected_filter">
+                                 <span><i class="material-icons" >radio_button_unchecked</i></span>
+                                 <span class="radio_btn" >{{priceArr[para]}}</span>
+                               </div>
+                            </span>
+                              <div v-else class="unselected_filter">
+                                <span><i class="material-icons" >radio_button_unchecked</i></span>
+                                <span class="radio_btn" >{{fpriceArr[para]}}</span>
+                              </div>
+                            </div>
+                          </div>
+                        </div-->
+                        <div v-show="!filterLoader" class="filter_cont">
+                          <div class="comm_radio">
+                            <div class="radio radio-primary" v-for="(fitlerParaContent, filterPara) in filteNameContent" @click="sel_disSel_thisFilter({
                             sel_filterDetail : {
                               filterName : filterName,
                               filterPara: filterPara,
@@ -170,9 +170,10 @@
                                  <span class="radio_btn" >{{filterPara}}</span>
                                </div>
                             </span>
-                            <div v-else class="unselected_filter">
-                              <span><i class="material-icons" >radio_button_unchecked</i></span>
-                              <span class="radio_btn" >{{filterPara}}</span>
+                              <div v-else class="unselected_filter">
+                                <span><i class="material-icons" >radio_button_unchecked</i></span>
+                                <span class="radio_btn" >{{filterPara}}</span>
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -243,7 +244,7 @@
                   </div>
                   <div v-else>
 
-                    <div v-if=" Object.keys(JSON.parse($route.query.selFilters)).length == 0 "> <!-- no fil sel -->
+                    <div v-if=" Object.keys(JSON.parse($route.query.selFilters)).length == 0 " v-show="!productsLoader"> <!-- no fil sel -->
 
                       <!-- show load more -->
 
@@ -301,7 +302,7 @@
     mapGetters
   } from 'vuex'
   import rating from '@/components/rating'
-  import loader from '@/components/gen/loader'
+  import recloader from '@/components/gen/filterLoader'
   import compLoader from '@/components/gen/comp_loader'
   //
   import productNfilter from '../../mixins/productNfilter'
@@ -331,7 +332,7 @@
       VIcon,
       rating,
       infiniteLoading: InfiniteLoading,
-      loader,
+      recloader,
       compLoader
     },
     mixins: [productNfilter],

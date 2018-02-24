@@ -6,7 +6,7 @@
     </div>
   </div>
 </template>
-<style>
+<style scoped>
   .pre-icon {
     width: 32px !important;
     height: 32px !important;

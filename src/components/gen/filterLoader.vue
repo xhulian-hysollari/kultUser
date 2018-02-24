@@ -5,10 +5,8 @@
   .spinner {
     width: 40px;
     height: 40px;
-    top:50%;
-    left: 50%;
-    margin-left: 50% !important;
-    margin-top: 350px !important;
+    margin-left: 15%  ! important;
+    margin-top:10vh   !important;
     background-color: #333;
 
     border-radius: 100%;
