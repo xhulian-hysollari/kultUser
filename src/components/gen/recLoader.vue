@@ -1,7 +1,7 @@
 <template>
   <div class="spinner"></div>
 </template>
-<style>
+<style scoped>
   .spinner {
     width: 40px;
     height: 40px;

@@ -1,8 +1,7 @@
 <template>
   <div>
     <div class="banner_strip"></div>
-
-    <div class="main_catarea">
+    <div class="main_catarea" >
       <div class="container">
         <div class="row">
           <div class="col-xs-12">
@@ -24,123 +23,122 @@
             </div>
             <el-tabs  v-model="activeName" @tab-click="handleClick">
               <el-tab-pane label="20" name="first">
-                <div class="min_height">
-                  <loader v-if="loader"></loader>
-                  <div class="cat_prodarea buy_guide" v-if="!loader">
-                    <div class="comm_title text-center">
-                      <h3> Treat </h3>
-                    </div>
-                    <el-row :gutter="15" >
-                      <el-col :xs="12" :sm="12" :md="8" :lg="8"  v-if="parseInt(pDet.priceStartsFrom) != 999999999"  v-for="(pDet, pId) in prod_20_treat"
-                      >
-                        <div>
-                          <div class="grid-content pa-2" >
-                            <a class="prod_image"   @click="$router.push({path:`/particularProduct/${pId}`})">
-                              <img :src="pDet.pBasicDetail.pPicUrl"  style="height:286px " alt="product">
-                            </a>
-                            <div class="prod_cont"  @click="$router.push({path:`/particularProduct/${pId}`})">
-                              <h4><a >{{pDet.pBasicDetail.pBrand}}</a></h4>
-                              <span v-for="(i,k) in pDet.pBasicDetail.pName" v-if="k < 20">{{i}}</span><span v-if="pDet.pBasicDetail.pName.length > 20">...</span>
-                            </div>
-                            <div class="prod_misc"  @click="$router.push({path:`/particularProduct/${pId}`})">
-                              <div class="float" ><rating :num="Math.round(pDet.pBasicDetail.pRating)" ></rating></div>
-                              <div class="half text-right" >
+                <loader v-if="loader"></loader>
+                <div class="cat_prodarea buy_guide" v-if="!loader">
+                  <div class="comm_title text-center">
+                    <h3> Treat </h3>
+                  </div>
+                  <el-row :gutter="15" >
+                    <el-col :xs="12" :sm="12" :md="8" :lg="8"  v-if="parseInt(pDet.priceStartsFrom) != 999999999"  v-for="(pDet, pId) in prod_20_treat"
+                    >
+                      <div>
+                        <div class="grid-content pa-2" >
+                          <a class="prod_image"   @click="$router.push({path:`/particularProduct/${pId}`})">
+                            <img :src="pDet.pBasicDetail.pPicUrl"  style="height:286px " alt="product">
+                          </a>
+                          <div class="prod_cont"  @click="$router.push({path:`/particularProduct/${pId}`})">
+                            <h4><a >{{pDet.pBasicDetail.pBrand}}</a></h4>
+                            <span v-for="(i,k) in pDet.pBasicDetail.pName" v-if="k < 20">{{i}}</span><span v-if="pDet.pBasicDetail.pName.length > 20">...</span>
+                          </div>
+                          <div class="prod_misc"  @click="$router.push({path:`/particularProduct/${pId}`})">
+                            <div class="float" ><rating :num="Math.round(pDet.pBasicDetail.pRating)" ></rating></div>
+                            <div class="half text-right" >
                               <span v-if="parseInt(pDet.priceStartsFrom) == 999999999" style="float: right" class="half text-right">
                                 Out Of Stock
                               </span>
-                                <div v-else-if="parseInt(pDet.priceStartsFrom) <= 10000 ">
-                                  From <img src="/static/images/rupee-2.svg" alt="currency" >
-                                  {{pDet.priceStartsFrom}}
-                                </div>
-                                <div v-else></div>
+                              <div v-else-if="parseInt(pDet.priceStartsFrom) <= 10000 ">
+                                From <img src="/static/images/rupee-2.svg" alt="currency" >
+                                {{pDet.priceStartsFrom}}
                               </div>
+                              <div v-else></div>
                             </div>
-                            <a  class="prod_compare" v-if="isLoggedIn"><span @click="$router.push({path:`/particularProduct/${pId}`})">Compare price</span>
-                              <img src="/static/images/wishlist-add.svg" alt="wishlist-add" v-if="Object.keys(wishlistObj).indexOf(pId) === -1" @click="addWishlist({pId,pDet}); wishlistObj[pId] = pDet; $forceUpdate()">
-                              <img src="/static/images/wishlist-hover.svg" alt="wishlist-hover" v-if="Object.keys(wishlistObj).indexOf(pId) !== -1" @click="removeWishlist({pId,pDet}); delete wishlistObj[pId]; $forceUpdate()">
-                            </a>
-                            <a  class="prod_compare" v-if="!isLoggedIn"><span @click="$router.push({path:`/particularProduct/${pId}`})">Compare price</span>
-                              <img src="/static/images/wishlist-add.svg" alt="wishlist-add" @click="$store.state.auth.showLoginPopup = true">
-                            </a>
                           </div>
+                          <a  class="prod_compare" v-if="isLoggedIn"><span @click="$router.push({path:`/particularProduct/${pId}`})">Compare price</span>
+                            <img src="/static/images/wishlist-add.svg" alt="wishlist-add" v-if="Object.keys(wishlistObj).indexOf(pId) === -1" @click="addWishlist({pId,pDet}); wishlistObj[pId] = pDet; $forceUpdate()">
+                            <img src="/static/images/wishlist-hover.svg" alt="wishlist-hover" v-if="Object.keys(wishlistObj).indexOf(pId) !== -1" @click="removeWishlist({pId,pDet}); delete wishlistObj[pId]; $forceUpdate()">
+                          </a>
+                          <a  class="prod_compare" v-if="!isLoggedIn"><span @click="$router.push({path:`/particularProduct/${pId}`})">Compare price</span>
+                            <img src="/static/images/wishlist-add.svg" alt="wishlist-add" @click="$store.state.auth.showLoginPopup = true">
+                          </a>
                         </div>
-                      </el-col>
+                      </div>
+                    </el-col>
 
 
 
-                      <!-- {{$route.query}}
-                      {{Object.keys(JSON.parse($route.query.selFilters)).length}} -->
-                      <!-- load more -->
-                      <!-- no filter sel -->
+                    <!-- {{$route.query}}
+                    {{Object.keys(JSON.parse($route.query.selFilters)).length}} -->
+                    <!-- load more -->
+                    <!-- no filter sel -->
 
-                      <!-- show load more -->
+                    <!-- show load more -->
 
-                      <!-- load more ends -->
+                    <!-- load more ends -->
 
 
-                    </el-row>
-                    <div class="divider"></div>
+                  </el-row>
+                  <div class="divider"></div>
+                </div>
+                <div class="cat_prodarea buy_guide" v-if="!loader">
+                  <div class="comm_title text-center">
+                    <h3> Moisturize</h3>
                   </div>
-                  <div class="cat_prodarea buy_guide" v-if="!loader">
-                    <div class="comm_title text-center">
-                      <h3> Moisturize</h3>
-                    </div>
-                    <el-row :gutter="15" >
-                      <el-col :xs="12" :sm="12" :md="8" :lg="8"  v-if="parseInt(pDet.priceStartsFrom) != 999999999"  v-for="(pDet, pId) in prod_20_moisturize"
+                  <el-row :gutter="15" >
+                    <el-col :xs="12" :sm="12" :md="8" :lg="8"  v-if="parseInt(pDet.priceStartsFrom) != 999999999"  v-for="(pDet, pId) in prod_20_moisturize"
 
-                      >
-                        <div>
-                          <div class="grid-content pa-2" >
-                            <a class="prod_image"   @click="$router.push({path:`/particularProduct/${pId}`})">
-                              <img :src="pDet.pBasicDetail.pPicUrl"  style="height:286px " alt="product">
-                            </a>
-                            <div class="prod_cont"  @click="$router.push({path:`/particularProduct/${pId}`})">
-                              <h4><a >{{pDet.pBasicDetail.pBrand}}</a></h4>
-                              <span v-for="(i,k) in pDet.pBasicDetail.pName" v-if="k < 20">{{i}}</span><span v-if="pDet.pBasicDetail.pName.length > 20">...</span>
-                            </div>
-                            <div class="prod_misc"  @click="$router.push({path:`/particularProduct/${pId}`})">
-                              <div class="float" ><rating :num="Math.round(pDet.pBasicDetail.pRating)" ></rating></div>
-                              <div class="half text-right" >
+                    >
+                      <div>
+                        <div class="grid-content pa-2" >
+                          <a class="prod_image"   @click="$router.push({path:`/particularProduct/${pId}`})">
+                            <img :src="pDet.pBasicDetail.pPicUrl"  style="height:286px " alt="product">
+                          </a>
+                          <div class="prod_cont"  @click="$router.push({path:`/particularProduct/${pId}`})">
+                            <h4><a >{{pDet.pBasicDetail.pBrand}}</a></h4>
+                            <span v-for="(i,k) in pDet.pBasicDetail.pName" v-if="k < 20">{{i}}</span><span v-if="pDet.pBasicDetail.pName.length > 20">...</span>
+                          </div>
+                          <div class="prod_misc"  @click="$router.push({path:`/particularProduct/${pId}`})">
+                            <div class="float" ><rating :num="Math.round(pDet.pBasicDetail.pRating)" ></rating></div>
+                            <div class="half text-right" >
                               <span v-if="parseInt(pDet.priceStartsFrom) == 999999999" style="float: right" class="half text-right">
                                 Out Of Stock
                               </span>
-                                <div v-else-if="parseInt(pDet.priceStartsFrom) <= 10000 ">
-                                  From <img src="/static/images/rupee-2.svg" alt="currency" >
-                                  {{pDet.priceStartsFrom}}
-                                </div>
-                                <div v-else></div>
+                              <div v-else-if="parseInt(pDet.priceStartsFrom) <= 10000 ">
+                                From <img src="/static/images/rupee-2.svg" alt="currency" >
+                                {{pDet.priceStartsFrom}}
                               </div>
+                              <div v-else></div>
                             </div>
-                            <a  class="prod_compare" v-if="isLoggedIn"><span @click="$router.push({path:`/particularProduct/${pId}`})">Compare price</span>
-                              <img src="/static/images/wishlist-add.svg" alt="wishlist-add" v-if="Object.keys(wishlistObj).indexOf(pId) === -1" @click="addWishlist({pId,pDet}); wishlistObj[pId] = pDet; $forceUpdate()">
-                              <img src="/static/images/wishlist-hover.svg" alt="wishlist-hover" v-if="Object.keys(wishlistObj).indexOf(pId) !== -1" @click="removeWishlist({pId,pDet}); delete wishlistObj[pId]; $forceUpdate()">
-                            </a>
-                            <a  class="prod_compare" v-if="!isLoggedIn"><span @click="$router.push({path:`/particularProduct/${pId}`})">Compare price</span>
-                              <img src="/static/images/wishlist-add.svg" alt="wishlist-add" @click="$store.state.auth.showLoginPopup = true">
-                            </a>
                           </div>
+                          <a  class="prod_compare" v-if="isLoggedIn"><span @click="$router.push({path:`/particularProduct/${pId}`})">Compare price</span>
+                            <img src="/static/images/wishlist-add.svg" alt="wishlist-add" v-if="Object.keys(wishlistObj).indexOf(pId) === -1" @click="addWishlist({pId,pDet}); wishlistObj[pId] = pDet; $forceUpdate()">
+                            <img src="/static/images/wishlist-hover.svg" alt="wishlist-hover" v-if="Object.keys(wishlistObj).indexOf(pId) !== -1" @click="removeWishlist({pId,pDet}); delete wishlistObj[pId]; $forceUpdate()">
+                          </a>
+                          <a  class="prod_compare" v-if="!isLoggedIn"><span @click="$router.push({path:`/particularProduct/${pId}`})">Compare price</span>
+                            <img src="/static/images/wishlist-add.svg" alt="wishlist-add" @click="$store.state.auth.showLoginPopup = true">
+                          </a>
                         </div>
-                      </el-col>
+                      </div>
+                    </el-col>
 
 
 
-                      <!-- {{$route.query}}
-                      {{Object.keys(JSON.parse($route.query.selFilters)).length}} -->
-                      <!-- load more -->
-                      <!-- no filter sel -->
+                    <!-- {{$route.query}}
+                    {{Object.keys(JSON.parse($route.query.selFilters)).length}} -->
+                    <!-- load more -->
+                    <!-- no filter sel -->
 
-                      <!-- show load more -->
+                    <!-- show load more -->
 
-                      <!-- load more ends -->
+                    <!-- load more ends -->
 
 
-                    </el-row>
-                    <div class="divider"></div>
-                  </div>
+                  </el-row>
+                  <div class="divider"></div>
                 </div>
               </el-tab-pane>
               <el-tab-pane label="30" name="second">
-                <div class="cat_prodarea buy_guide" >
+                <loader v-if="loader"></loader>
+                <div class="cat_prodarea buy_guide" v-if="!loader">
                   <div class="comm_title text-center">
                     <h3> Treat </h3>
                   </div>
@@ -195,7 +193,7 @@
                   </el-row>
                   <div class="divider"></div>
                 </div>
-                <div class="cat_prodarea buy_guide">
+                <div class="cat_prodarea buy_guide" v-if="!loader">
                   <div class="comm_title text-center">
                     <h3> Moisturize</h3>
                   </div>
@@ -252,7 +250,8 @@
                 </div>
               </el-tab-pane>
               <el-tab-pane label="40" name="third">
-                <div class="cat_prodarea buy_guide">
+                <loader v-if="loader"></loader>
+                <div class="cat_prodarea buy_guide"v-if="!loader">
                   <div class="comm_title text-center">
                     <h3> Treat </h3>
                   </div>
@@ -307,7 +306,7 @@
                   </el-row>
                   <div class="divider"></div>
                 </div>
-                <div class="cat_prodarea buy_guide">
+                <div class="cat_prodarea buy_guide" v-if="!loader">
                   <div class="comm_title text-center">
                     <h3> Moisturize</h3>
                   </div>
@@ -364,7 +363,8 @@
                 </div>
               </el-tab-pane>
               <el-tab-pane label="50" name="fourth">
-                <div class="cat_prodarea buy_guide">
+                <loader v-if="loader"></loader>
+                <div class="cat_prodarea buy_guide" v-if="!loader">
                   <div class="comm_title text-center">
                     <h3> Treat </h3>
                   </div>
@@ -419,7 +419,7 @@
                   </el-row>
                   <div class="divider"></div>
                 </div>
-                <div class="cat_prodarea buy_guide">
+                <div class="cat_prodarea buy_guide" v-if="!loader">
                   <div class="comm_title text-center">
                     <h3> Moisturize</h3>
                   </div>
@@ -577,7 +577,7 @@
     }
   }
 </script>
-<style scoped>
+<style>
   .el-tabs__content {
     overflow: visible !important;
     position: relative;
@@ -592,7 +592,4 @@
     float: left;
     z-index: 2;
   }
-   .min_height{
-     min-height: 400px;
-   }
 </style>

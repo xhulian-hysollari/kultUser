@@ -4,9 +4,9 @@
 
     <div class="banner_strip"></div>
     <div class="comm_pagebreads">
-      <loader v-if="howToVidLoader"></loader>
-      <div class="container" v-if="!howToVidLoader">
-        <div class="max_width">
+
+      <div class="container" >
+        <div >
           <div class="row">
             <div class="col-sm-5 col-xs-12 comm_page_title">
               <span>Welcome</span>
@@ -21,8 +21,7 @@
         <div class="max_width">
           <div class="tv_left">
             <div class="howto">HOW TO’S</div>
-            <loader v-if="howToCatLoader"></loader>
-            <ul v-for="(vidCatDet ,vidCatName) in howToCat" v-else>
+            <ul v-for="(vidCatDet ,vidCatName) in howToCat" >
               <li @click="getHowToCatVid({howToCat: vidCatName })" v-if=" $route.query.selVidCat == vidCatName " class="active">
                 <a>
                   <span >{{vidCatName}}</span>
@@ -37,8 +36,9 @@
               </li>
             </ul>
           </div>
-          <div class="tv_right">
-            <div class="row" >
+          <div class="tv_right min_height">
+            <loader v-if="howToVidLoader"></loader>
+            <div class="row" v-else>
               <div class="col-md-6 col-xs-12 comm_imp col-lg-6" v-for="(vidDet, vidName) in howToVid" style="height: 285px;"
 
               >
@@ -175,7 +175,7 @@
   import {mapGetters} from 'vuex'
   import {mapMutations} from 'vuex'
   import rating from '@/components/rating.vue'
-  import loader from '@/components/gen/loader'
+  import loader from '@/components/gen/recLoader'
   import ElCard from "../../../node_modules/element-ui/packages/card/src/main.vue";
   //
   export default {
@@ -258,6 +258,9 @@
   }
 </script>
 <style scoped>
+  .min_height{
+    min-height: 500px;
+  }
   .scroll_card{
     max-height: 500px;
     overflow: scroll
