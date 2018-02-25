@@ -159,7 +159,7 @@
                   </v-expansion-panel-content>
                 </v-expansion-panel>
                 <v-expansion-panel  v-for="name in headerCatNames">
-                  <v-expansion-panel-content v-if="name.name!=='beauty guide'">
+                  <v-expansion-panel-content v-if="name.name!=='BEAUTY GUIDE'">
                     <div slot="header"  class="white ml_5"  @click="goTo(name.funcPath)">{{name.name}}</div>
                     <v-card flat v-if="name.name==='beauty guide'" class="white ml_20" >
                       <v-card-text v-for="guide in beautyGuideArr">
@@ -169,7 +169,7 @@
                   </v-expansion-panel-content>
                   <v-expansion-panel-content v-else>
                     <div slot="header"  class="white ml_5" >{{name.name}}</div>
-                    <v-card flat v-if="name.name==='beauty guide'" class="white ml_20" >
+                    <v-card flat class="white ml_20" >
                       <v-card-text v-for="(guide,i) in beautyGuideArr" @click="goTo('/bGuide/'+ beautyGuideArr[i])">
                         {{guide}}
                       </v-card-text>
