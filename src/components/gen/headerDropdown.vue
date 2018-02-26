@@ -1,12 +1,13 @@
 <template>
   <div >
 
-    <div class="container hidden-xs " >
+    <div class="header-container hidden-xs " >
       <div class="xs-menu-cont">
         <a id="menutoggle" @click="menuToggle"><i class="fa fa-align-justify"></i> </a>
       </div>
       <nav class="menu" >
-        <ul >
+        <div class="container">
+        <ul class="main-nav-holder" >
           <li class="drop-down" @mouseover="showDropdown()" @mouseleave="closeDropdown()" >
             <a >SHOP</a>
             <div class="mega-menu fadeIn animated min_height" style="z-index: 999;text-align: left;margin-top: -1px;box-shadow: 1px 1px 3px #aaaaaa ">
@@ -33,8 +34,8 @@
                       </div>
                     </div>
                   </div>
-                  <h6 style="color: #080808" @click="$router.push(`/kultPick/shopOption/${sel}`)">KULT PICKS</h6>
-                  <h6 style="color: #080808" @click="$router.push(`/globalBestSeller/shopOption/${sel}`)">GLOBAL BEST SELLERS</h6>
+                  <h6 style="color: #080808; padding-left:20px" @click="$router.push(`/kultPick/shopOption/${sel}`)">KULT PICKS</h6>
+                  <h6 style="color: #080808; padding-left:20px" @click="$router.push(`/globalBestSeller/shopOption/${sel}`)">GLOBAL BEST SELLERS</h6>
                 </div>
               </div>
             </div>
@@ -75,6 +76,7 @@
           <li ><a @click="goTo('/howTo')">KULT TV</a></li>
 
         </ul>
+        </div>
       </nav>
 
       <!--ul class="main_menu">
@@ -221,38 +223,13 @@
   .shop_opt:hover{
     color: black;
   }
-  html, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
-    margin: 0;
-    padding: 0;
-    border: 0;
-    font-size: 100%;
-    font: inherit;
-    vertical-align: baseline;
-  }/* HTML5 display-role reset for older browsers */
-  article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
-    display: block;
-  }
-  ol, ul {
-    list-style: none;
-  }
-  blockquote, q {
-    quotes: none;
-  }
-  blockquote:before, blockquote:after, q:before, q:after {
-    content: '';
-    content: none;
-  }
-  table {
-    border-collapse: collapse;
-    border-spacing: 0;
-  }
   header h2 {
     margin: 25px 10px;
     font-size: 28px;
     text-align: center;
     color: cornsilk;
   }
-  .container {
+  .header-container {
     margin-top: 20px ;
     display: table;
     width: 100%;
@@ -266,21 +243,28 @@
     min-height: 35px;
     text-align: center;
   }
+  .main-nav-holder{
+    margin: 0;
+    padding: 0;
+  }
 
-  .menu > ul > li {
+  .menu .main-nav-holder > li {
     list-style: none;
-    display: inline-block;
     color: #fff;
     line-height: 40px;
+    flex: auto;
+    -webkit-flex: auto;
 
   }
-  .menu > ul li a, .xs-menu li a {
+
+  .menu .main-nav-holder li a, .xs-menu li a {
     text-decoration: none;
     color: #fff;
     display:block;
-    padding: 0px 1.2vh;
+    cursor: pointer;
+    padding: 0 1.2vh;
   }
-  .menu > ul li a:hover {
+  .menu .main-nav-holder li a:hover {
     background:#444;
     color: #fff;
   }
@@ -295,6 +279,7 @@
     display:none;
   }
   .xs-menu-cont > a {
+
     background: none repeat scroll 0 0 #ff7f50;
     border-radius: 3px;
     padding: 3px 6px;
@@ -317,6 +302,7 @@
   }
   .xs-menu  a{
     text-decoration:none;
+    cursor: pointer;
   }
   .mega-menu {
     left:10%;
