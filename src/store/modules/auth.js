@@ -68,6 +68,7 @@ const mutations = {
         gen.state.btnLoader = false
         state.showRefCode=false
         state.showLoginPopup=false
+        state.showRegisterPopup=false
         Notification.success('Details Saved !')
        // window.thisOfVueComp_2.$forceUpdate()
       })
