@@ -169,7 +169,7 @@
   import {mapMutations} from 'vuex'
   import moment from 'moment'
   import loader from '@/components/gen/searchLoader'
-  import tagLoader from '@/components/gen/recloader'
+  import tagLoader from '@/components/gen/recLoader'
   //
   export default {
     //
