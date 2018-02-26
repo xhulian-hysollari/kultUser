@@ -52,7 +52,7 @@
                         <div class="clearfix"></div>
                         <div class="col-xs-12">
                           <label>Refral Code</label>
-                          <input type="text" v-model="$store.state.editProfile.uRefcode" class="form-control">
+                          <input type="text" disabled v-model="$store.state.editProfile.uRefcode" class="form-control">
                         </div>
                         <div class="clearfix"></div>
                       </div>
@@ -74,7 +74,7 @@
                   <div class="col-md-4 col-lg-offset-1 text-right sm_left cust_left col-xs-12">
                     <div class="connect_social text-center">
                       <a class="fb" @click="fbP({todo: 'linkAcc'})"><i class="fa fa-facebook"></i>CONNECT MY FACEBOOK</a>
-                      <a class="google" @click="googleP({todo: 'linkAcc'})"><i class="fa fa-google"></i>CONNECT MY GMAIL</a>
+                      <a class="google" @click="googleP({todo: 'linkAcc'})"><i class="fa fa-google"></i>CONNECT MY GOOGLE</a>
                     </div>
                   </div>
                 </div>
