@@ -83,6 +83,7 @@ const mutations = {
   //
   //LOGIN STATUS
   getLoginStatus(state2){
+    console.log("firebase => ", firebase)
     firebase.auth().onAuthStateChanged(function(user) {
       if (user) {
        // //console.log("// User is signed in.", user.uid)
@@ -108,7 +109,9 @@ const mutations = {
         //
       }
       //
-      state.authLoader = false
+      //setTimeout(()=>{
+        state.authLoader = false
+      //},1000)
     });
   },
   //
