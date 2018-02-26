@@ -30,6 +30,7 @@ const mutations = {
                   //
                   ////console.log(payload)
                   //
+                  //
                   axios.get('https://us-central1-kult-2.cloudfunctions.net/reqCashbackMoney', {
                     //
                     params: {
