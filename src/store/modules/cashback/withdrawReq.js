@@ -30,34 +30,43 @@ const mutations = {
                   //
                   ////console.log(payload)
                   //
-                  //
-                  axios.get('https://us-central1-kult-2.cloudfunctions.net/reqCashbackMoney', {
-                    //
-                    params: {
-                      accHolderName: payload.accHolderName,
-                      accNo: payload.accNo,
-                      ifscCode: payload.ifscCode,
-                      amt: payload.amt,
-                      email : auth.state.user.email
+                  axios.get('https://us-central1-kult-2.cloudfunctions.net/getRefCode',{
+                    params:{
+                      uid:auth.state.user.uid
                     }
-                    //
-                  }).then(function (response) {
-                    //console.log(response);
-                    //
-                    state.pay_accHolderName = ''
-                    state.pay_accNo = ''
-                    state.pay_ifscCode = ''
-                    //
-                    gen.state.btnLoader = false
-                    //
-                    alert('Request Sent !')
-                    //
-                    //
-                    myOrder.mutations.getMyOrders(state)
-                    $('#reqModal').modal('hide')
-                    //
-                  }).catch(function (error) {
-                    //console.log(error);
+                  }).then(function (res) {
+                    console.log(res.data)
+                    axios.get('https://us-central1-kult-2.cloudfunctions.net/reqCashbackMoney', {
+                      //
+                      params: {
+                        accHolderName: payload.accHolderName,
+                        accNo: payload.accNo,
+                        ifscCode: payload.ifscCode,
+                        amt: payload.amt,
+                        email : auth.state.user.email,
+                        refCode:res.data
+                      }
+                      //
+                    }).then(function (response) {
+                      //console.log(response);
+                      //
+                      state.pay_accHolderName = ''
+                      state.pay_accNo = ''
+                      state.pay_ifscCode = ''
+                      //
+                      gen.state.btnLoader = false
+                      //
+                      alert('Request Sent !')
+                      //
+                      //
+                      myOrder.mutations.getMyOrders(state)
+                      $('#reqModal').modal('hide')
+                      //
+                    }).catch(function (error) {
+                      //console.log(error);
+                    })
+                  }).catch(function (err) {
+                    console.log(err)
                   })
                   //
                 }else{
