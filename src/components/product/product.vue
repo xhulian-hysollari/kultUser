@@ -191,10 +191,11 @@
                     <div>
                       <div class="grid-content pa-2" >
                         <a class="prod_image"   @click="$router.push({path:`/particularProduct/${pId}`, query:{varient:'notSelected'}})">
-                          <img :src="pDet.pBasicDetail.pPicUrl"  alt="product">
+                          <figure style="width: 169px; height: 250px; background-size: contain; background-position: center; background-repeat: no-repeat" :style="{'background-image': 'url('+pDet.pBasicDetail.pPicUrl+')'}"></figure>
+                          <!--<img :src="pDet.pBasicDetail.pPicUrl"  alt="product">-->
                         </a>
                         <div class="prod_cont"  @click="$router.push({path:`/particularProduct/${pId}`, query:{varient:'notSelected'}})">
-                          <h4><a >{{pDet.pBasicDetail.pBrand}}</a></h4>
+                          <h4><a ><span v-for="(i,k) in pDet.pBasicDetail.pBrand" v-if="k < 14">{{i}}</span><span v-if="pDet.pBasicDetail.pBrand.length > 14">...</span></a></h4>
                           <span v-for="(i,k) in pDet.pBasicDetail.pName" v-if="k < 20">{{i}}</span><span v-if="pDet.pBasicDetail.pName.length > 20">...</span>
                         </div>
                         <div class="prod_misc" @click="$router.push({path:`/particularProduct/${pId}`, query:{varient:'notSelected'}})">
@@ -431,6 +432,18 @@
   }
 </script>
 <style scoped>
+  .el-col.el-col-24.el-col-xs-12.el-col-sm-12.el-col-md-8.el-col-lg-8:nth-child(odd) {
+    padding-left: 4px !important;
+    padding-right: 15px !important;
+  }
+  .el-col.el-col-24.el-col-xs-12.el-col-sm-12.el-col-md-8.el-col-lg-8:nth-child(even) {
+    padding-right: 4px !important;
+    padding-left: 15px !important;
+  }
+
+  .el-row{
+    margin:0 !important;
+  }
   .hide_toggler {
     visibility: hidden;
   }
