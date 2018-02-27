@@ -45,13 +45,13 @@
                                     </div>
                                 </div>
                                 <div class="product-color-list dropdown" v-if="prodArr.length > 1">
-                                    <div class="dropdown-toggle" data-toggle="dropdown">
+                                    <button class="dropdown-toggle" data-toggle="dropdown" style="background-color: transparent; width: 100%">
                                         <template v-for="i in prodArr" v-if="selected.key===i.key">
                                             <i v-if="i.det.swatchImgUrl !== ''"><img :src="i.det.swatchImgUrl"></i>
-                                            <span>{{i.key}}</span>
+                                            <span style="text-align: left">{{i.key}}</span>
                                             <em class="fa fa-angle-down"></em>
                                         </template>
-                                    </div>
+                                    </button>
                                     <ul class="dropdown-menu">
                                         <template v-for="i in prodArr">
                                             <li v-if="selected.key === i.key" class="active"
