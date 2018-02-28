@@ -105,21 +105,28 @@
                                       From <strong>2,036</strong> to <strong>7,999</strong> Rupee
                                     </div-->
                                     <ul class="prod_shoplinks list-unstyled" v-if="!isLoggedIn ">
-                                        <li v-for="(l,k) in selected.det.affliateDomains">
+                                        <li v-for="(l,k) in selected.det.affliateDomains" >
                                             <a @click="$store.state.auth.showLoginPopup=true;
                       $store.state.particularProduct.selectedLink = newLink(l.link,k)"
                                                target="_blank"
                                                v-if="k != 'amazon' && l.price.indexOf('999999999') == -1 "
+                                               style="padding-bottom: 30px"
                                             >
-                                                <span class="aff_name">{{k.toUpperCase()}}</span>
+                                              <img src="/static/images/shoppersstop%20.png" class="shoppersstop_img"  alt="shoppersstop" v-if="k=='shoppersstop'">
+                                              <img src="/static/images/New-Flipkart-Logo.jpeg" class="flipkart_img"  alt="flipkart" v-if="k=='flipkart'">
+                                              <img src="/static/images/nykaa.png" class="flipkart_img"  alt="nykaa" v-if="k=='nykaa'">
+                                              <img src="/static/images/nnnow.png" class="nnnow_img"  alt="nnnow" v-if="k=='nnnow'">'
+                                              <img src="/static/images/myntra.jpg" class="flipkart_img"  alt="myntra" v-if="k=='myntra'">
+                                                <!--span class="aff_name" v-else>{{k.toUpperCase()}}</span-->
                                                 <span class="aff_price">₹{{l.price}}</span>
                                                 <span style="margin-top: 17px">BUY NOW</span>
                                             </a>
                                             <a @click="$store.state.auth.showLoginPopup=true;
                       $store.state.particularProduct.selectedLink = l.link"
                                                target="_blank"
+                                               style="padding-bottom: 50px"
                                                v-if="k == 'amazon' && amazonLinkPrice != 'Out Of Stock' ">
-                                                <span class="aff_name">{{k.toUpperCase()}}</span>
+                                              <img src="/static/images/amazon.jpg" class="amazon_img"  alt="amazon" v-if="k=='amazon'">
                                                 <span style="margin-top: 22px;" v-if="amazonPriceLoader">Fetching Price...</span>
                                                 <span class="aff_price" v-if="amazonLinkPrice != 'Out Of Stock'"
                                                       v-show="!amazonPriceLoader">₹{{amazonLinkPrice}}</span>
@@ -166,14 +173,19 @@
                                         <li v-for="(l,k) in selected.det.affliateDomains" class="box">
                                             <a :href='newLink(l.link,k)' target="_blank"
                                                v-if="k != 'amazon' && l.price.indexOf('999999999') == -1 "
+                                               style="padding-bottom: 30px"
                                             >
-                                                <span class="aff_name">{{k.toUpperCase()}}</span>
+                                              <img src="/static/images/New-Flipkart-Logo.jpeg" class="flipkart_img"  alt="flipkart" v-if="k=='flipkart'">
+                                              <img src="/static/images/shoppersstop%20.png" class="shoppersstop_img"  alt="shoppersstop" v-if="k=='shoppersstop'">
+                                              <img src="/static/images/nykaa.png" class="flipkart_img"  alt="nykaa" v-if="k=='nykaa'">
+                                              <img src="/static/images/nnnow.png" class="nnnow_img"  alt="nnnow" v-if="k=='nnnow'">'
+                                              <img src="/static/images/myntra.jpg" class="flipkart_img"  alt="myntra" v-if="k=='myntra'">
                                                 <span class="aff_price">₹{{l.price}}</span>
                                                 <span style="margin-top: 17px">BUY NOW</span>
                                             </a>
                                             <a :href="l.link + '&subid=' + $store.state.auth.user.email" target="_blank"
-                                               v-if="k == 'amazon' && amazonLinkPrice != 'Out Of Stock' ">
-                                                <span class="aff_name">{{k.toUpperCase()}}</span>
+                                               v-if="k == 'amazon' && amazonLinkPrice != 'Out Of Stock' "  style="padding-bottom: 50px">
+                                              <img src="/static/images/amazon.jpg" class="amazon_img"  alt="amazon" v-if="k=='amazon'">
                                                 <span style="margin-top: 22px;" v-if="amazonPriceLoader">Fetching Price...</span>
                                                 <span class="aff_price" v-if="amazonLinkPrice != 'Out Of Stock'"
                                                       v-show="!amazonPriceLoader">₹{{amazonLinkPrice}}</span>
@@ -207,14 +219,19 @@
                                         <li v-for="(l,k) in selected.det.affliateDomains">
                                             <a @click="dialog=true; $store.state.particularProduct.selectedLink= newLink(l.link,k)"
                                                v-if="k != 'amazon' && l.price.indexOf('999999999') == -1 "
+                                               style="padding-bottom: 30px"
                                             >
-                                                <span class="aff_name">{{k.toUpperCase()}}</span>
+                                              <img src="/static/images/New-Flipkart-Logo.jpeg" class="flipkart_img"  alt="flipkart" v-if="k=='flipkart'">
+                                              <img src="/static/images/nykaa.png" class="flipkart_img"  alt="nykaa" v-if="k=='nykaa'">
+                                              <img src="/static/images/shoppersstop%20.png" class="shoppersstop_img"  alt="shoppersstop" v-if="k=='shoppersstop'">
+                                              <img src="/static/images/nnnow.png" class="nnnow_img"  alt="nnnow" v-if="k=='nnnow'">'
+                                              <img src="/static/images/myntra.jpg" class="flipkart_img"  alt="myntra" v-if="k=='myntra'">
                                                 <span class="aff_price">₹{{l.price}}</span>
                                                 <span style="margin-top: 17px">BUY NOW</span>
                                             </a>
                                             <a @click="dialog=true;$store.state.particularProduct.selectedLink =l.link "
-                                               v-if="k == 'amazon' && amazonLinkPrice != 'Out Of Stock' ">
-                                                <span class="aff_name">{{k.toUpperCase()}}</span>
+                                               v-if="k == 'amazon' && amazonLinkPrice != 'Out Of Stock' "  style="padding-bottom: 50px">
+                                              <img src="/static/images/amazon.jpg" class="amazon_img"  alt="amazon" v-if="k=='amazon'">
                                                 <span style="margin-top: 22px;" v-if="amazonPriceLoader">Fetching Price...</span>
                                                 <span class="aff_price" v-if="amazonLinkPrice != 'Out Of Stock'"
                                                       v-show="!amazonPriceLoader">₹{{amazonLinkPrice}}</span>
@@ -240,12 +257,13 @@
                                     </ul>
                                     <el-dialog
                                             :visible.sync="dialog"
-                                            width="40%"
-                                    >
-                    <span slot="footer" class="dialog-footer">
-                       <h5>Account Not Verified!!! Click to continue and you will losse the cashback</h5>
-                       <p class="forgot_pass" @click="dialog=false"><a @click="emptyLink()">Continue Anyway</a></p>
-                    </span>
+                                                    width="40%"
+                                            >
+                                              <span slot="footer" class="dialog-footer">
+                                                 <h5>Account Not Verified!!! Click to continue and you will losse the cashback</h5>
+                                                <button class="login_btn" @click="sendVerLink">Resend Verification Email</button>
+                                                 <p class="forgot_pass" @click="dialog=false"><a @click="emptyLink()">Continue Anyway</a></p>
+                                              </span>
                                     </el-dialog>
                                     <!--el-dialog
                                       :visible.sync="dialog"
@@ -700,7 +718,8 @@
         methods: {
             ...mapMutations([
                 'addWishlist',
-                'removeWishlist'
+                'removeWishlist',
+                'sendVerLink',
             ]),
             newLink(link, k) {
                 let vm = this
@@ -918,6 +937,25 @@
         height: 342px;
         width: 276.66px;
     }
-
+  .flipkart_img{
+    height: 30px;
+    width: 90px;
+    margin-top: -9px;
+  }
+    .amazon_img{
+      height: 30px;
+      margin-top: -3px;
+      width: 90px;
+    }
+    .nnnow_img{
+      height: 30px;
+      width: 80px;
+      margin-top: -9px;
+    }
+  .shoppersstop_img{
+    height: 35px;
+    width: 100px;
+    margin-top: -9px;
+  }
 </style>
 
