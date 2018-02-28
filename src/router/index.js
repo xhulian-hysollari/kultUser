@@ -202,8 +202,8 @@ const sunscreen = resolve => {
   });
 };
 const skincare = resolve => {
-  require.ensure(['@/components/beautyGuide/skincare'],()=>{
-    resolve(require('@/components/beautyGuide/skincare'));
+  require.ensure(['@/components/beautyGuide/skinCare'],()=>{
+    resolve(require('@/components/beautyGuide/skinCare'));
   });
 };
 const searchProd = resolve => {

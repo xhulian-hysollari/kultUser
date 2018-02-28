@@ -29,7 +29,8 @@ const state = {
   showRegisterPopup:false,
   loginBtnLoader:false,
   resendEmail:false,
-  isRefGiven:false
+  isRefGiven:false,
+  showRefField:false
 }
 
 const getters = {
@@ -48,7 +49,8 @@ const getters = {
   showRegisterPopup:state=>state.showRegisterPopup,
   loginBtnLoader:state=>state.loginBtnLoader,
   resendEmail:state=>state.resendEmail,
-  isRefGiven:state=>state.isRefGiven
+  isRefGiven:state=>state.isRefGiven,
+  showRefField:state=>state.showRefField
 
 }
 
@@ -81,6 +83,7 @@ const mutations = {
   //
   //LOGIN STATUS
   getLoginStatus(state2){
+    console.log("firebase => ", firebase)
     firebase.auth().onAuthStateChanged(function(user) {
       if (user) {
        // //console.log("// User is signed in.", user.uid)
@@ -106,7 +109,9 @@ const mutations = {
         //
       }
       //
-      state.authLoader = false
+      //setTimeout(()=>{
+        state.authLoader = false
+      //},1000)
     });
   },
   //
@@ -168,6 +173,7 @@ const mutations = {
   pLogin(state2, payload){
     ////console.log("[provider] => ", payload)
     //
+    let resUser = {}
     firebase.auth().signInWithPopup(payload.provider).then(function(result) {
       // This gives you a Facebook Access Token. You can use it to access the Facebook API.
       var token = result.credential.accessToken;
@@ -176,13 +182,7 @@ const mutations = {
       // ...
       //
       console.log(result.user)
-      actions.checkIfPhSaved(state, result.user).then(function (res) {
-        if(state.isRefGiven == 'f'){
-          state.showLoginPopup=true
-          state.showRefCode=true
-          console.log('=========>>>>>', state.showRefCode)
-        }
-      })
+      resUser=result.user
     }).catch(function(error) {
       // Handle Errors here.
       var errorCode = error.code;
@@ -201,6 +201,37 @@ const mutations = {
       }else{
        Notification.error(error.message)
       }
+    }).then(function () {
+        axios.get('https://us-central1-kult-2.cloudfunctions.net/loginTimestamp', {
+          params: {
+            uid:resUser.uid,
+            email:resUser.email
+          }
+        }).then(function () {
+            axios.get('https://us-central1-kult-2.cloudfunctions.net/getLoginCount', {
+              params: {
+                uid:resUser.uid,
+                email:resUser.email
+              }
+            }).then(function (response) {
+              console.log(response.data)
+              if(response.data == 1){
+                state.showRefField=true
+              }else{
+                state.showRefField=false
+              }
+            }).catch(function (err) {
+              console.log(err)
+            }).then(function () {
+              actions.checkIfPhSaved(state, resUser).then(function (res) {
+                if(state.isRefGiven == 'f'){
+                  state.showLoginPopup=true
+                  state.showRefCode=true
+                  console.log('=========>>>>>', state.showRefCode)
+                }
+              })
+            })
+        })
     })
   },
   //
@@ -224,15 +255,38 @@ const mutations = {
               .set({
                 dob: payload.dob,
              //   phone : payload.phone
-              }).then(()=>{
-              console.log(state.user, '=======2')
-              state.showRefCode=true
-              console.log(window.thisOfAppComp)
-              window.thisOfAppComp.$forceUpdate()
-              // state.showRegisterPopup= false
-              //console.log("dob updated!")
-              gen.state.btnLoader=false
-             // state.showAuthPopup=false
+              }).then(function () {
+              axios.get('https://us-central1-kult-2.cloudfunctions.net/loginTimestamp', {
+                params: {
+                  uid:state.user.uid,
+                  email:state.user.email
+                }
+              }).then(function () {
+                axios.get('https://us-central1-kult-2.cloudfunctions.net/getLoginCount', {
+                  params: {
+                    uid:state.user.uid,
+                    email:state.user.email
+                  }
+                }).then(function (response) {
+                  console.log(response.data)
+                  if(response.data == 1){
+                    state.showRefField=true
+                  }else{
+                    state.showRefField=false
+                  }
+                }).catch(function (err) {
+                  console.log(err)
+                }).then(()=>{
+                  console.log(state.user, '=======2')
+                  state.showRefCode=true
+                  console.log(window.thisOfAppComp)
+                  window.thisOfAppComp.$forceUpdate()
+                  // state.showRegisterPopup= false
+                  //console.log("dob updated!")
+                  gen.state.btnLoader=false
+                  // state.showAuthPopup=false
+                })
+              })
             })
           },100)
           //
@@ -286,6 +340,7 @@ const mutations = {
         if(state.isLoggedIn){
           actions.checkIfPhSaved(state,state.user).then(function (res) {
             if(res==='t'){
+              state.showRefField=false
               state.showRefCode=false
               state.loginBtnLoader=false
               state.showLoginPopup=false

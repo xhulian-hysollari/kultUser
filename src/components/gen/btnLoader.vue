@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-progress :show-text="false" type="circle" :percentage="0" width="20"></el-progress>
+    <i class='fa fa-spinner fa-spin ' ></i>
   </div>
 </template>
 
