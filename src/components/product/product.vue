@@ -1,6 +1,5 @@
 <template>
   <div>
-
     <div class="min_height_prod">
 
       <div class="top_sortarea">
@@ -410,7 +409,7 @@
     //
     updated() {
       let vm = this
-      this.$store.commit('getLoadMoreCnt', vm.routeDet.routePath)
+     // this.$store.commit('getLoadMoreCnt', vm.routeDet.routePath)
       //console.log(this.$store.state.product.products)
       if (this.$router.currentRoute.fullPath.indexOf('selFilters') !== -1) {
         if (this.$router.currentRoute.fullPath.indexOf('selFilters=%7B%7D') === -1)

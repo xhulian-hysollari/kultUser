@@ -28,7 +28,7 @@ const mutations = {
     //console.log(payload)
     state.productsLoader = true
     //
-    ////console.log("[Firestore] in product_category =>", gen.state.firestore)
+    console.log("[Firestore] in product_category =>", gen.state.firestore)
     //
     gen.state.firestore //Query 1
     //.collection("shopOption").doc(payload.shopOption)
@@ -40,6 +40,7 @@ const mutations = {
       .get().then((queryproducts)=>{
 
       //
+      console.log(queryproducts.size)
       if(queryproducts.size == 0){
         //turn loader off
         state.productsLoader = false
@@ -84,7 +85,7 @@ const mutations = {
     //
     ////console.log("[Firestore] in product_category =>", gen.state.firestore)
     //
-    ////console.log("last queried product was [in Load More 1] =====> ", state.lastQueried_product);
+    console.log("last queried product was [in Load More 1] =====> ", state.lastQueried_product);
     //
     gen.state.firestore //Query 1
     //.collection("shopOption").doc(payload.shopOption)
@@ -140,6 +141,7 @@ const mutations = {
       }
     }).then(function (response) {
       state.totalProds=response.data
+      window.thisOfVueComp.$forceUpdate()
     }).catch(function (error) {
       //console.log(error)
     })
@@ -170,15 +172,15 @@ const mutations = {
         }
       }
 
-      ////console.log('cCategoryProduct => ' + state.cProduct + ' | ' + 'queryproducts.size => ' + payload.cProductSize)
-      if(state.cProduct == payload.cProductSize){
+      console.log('cCategoryProduct => ' + state.cProduct + ' | ' + 'queryproducts.size => ' + payload.cProductSize)
+      if(state.cProduct >= payload.cProductSize){
         //
         state.loadMoreLoader=false
         state.productsLoader = false
         //
         ////console.log("***** PRODUCT QUERIED *****")
         //
-        //console.log('[PRODUCT QUERIED FINAL]', state.products)
+        console.log('[PRODUCT QUERIED FINAL]', state.products)
         window.thisOfVueComp.$forceUpdate()
       }
 
