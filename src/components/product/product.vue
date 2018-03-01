@@ -392,11 +392,17 @@
         let vm = this
         this.$store.commit('getLoadMoreCnt', vm.routeDet.routePath)
         //
-        this.productsOrFilterProducts_initCompCreatedFunc({
+
+      },
+      'routeDet.routePath':()=>{
+        //
+        console.log('[FILTER CALLING...]')
+        //
+        window.thisOfVueComp.productsOrFilterProducts_initCompCreatedFunc({
           //
-          thisOfVueComp: this, //
-          routePath: this.routeDet.routePath, // (1) these should be props
-          routeQuery: this.routeDet.routeQuery // (2)
+          thisOfVueComp: window.thisOfVueComp, //
+          routePath: window.thisOfVueComp.routeDet.routePath, // (1) these should be props
+          routeQuery: window.thisOfVueComp.routeDet.routeQuery // (2)
           //
         })
       }
