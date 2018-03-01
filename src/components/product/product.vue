@@ -221,8 +221,9 @@
                       </div>
                     </div>
                     </el-col>
+                  {{totalProds}} {{Object.keys(products).length}}
                     <button class="login_btn load_more_btn"
-                    v-if="loadMoreLoader">
+                    v-if="loadMoreLoader && Object.keys(products).length !== totalProds && cnt != 0 ">
                       <i class='fa fa-spinner fa-spin ' ></i>
                     </button>
 
@@ -236,7 +237,7 @@
 
                     <button class="login_btn load_more_btn" @click="loadMoreProducts({
                       routePath: routeDet.routePath
-                    })" v-if="Object.keys(products).length !== totalProds && !loadMoreLoader && Object.keys(products).length !== 0"
+                    })" v-if="Object.keys(products).length !== totalProds && !loadMoreLoader && Object.keys(products).length !== 0 && cnt != 0 "
 
                     >
                       Load <!--{{totalProds - Object.keys(products).length}}--> More Products
@@ -391,6 +392,14 @@
       $route: function() {
         let vm = this
         this.$store.commit('getLoadMoreCnt', vm.routeDet.routePath)
+        //
+        this.productsOrFilterProducts_initCompCreatedFunc({
+          //
+          thisOfVueComp: this, //
+          routePath: this.routeDet.routePath, // (1) these should be props
+          routeQuery: this.routeDet.routeQuery // (2)
+          //
+        })
       }
     },
     //
