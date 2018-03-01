@@ -98,7 +98,7 @@ const mutations ={
                     cnt++
                     state.filter['priceRange'][temp[i]]={}
                     if(cnt === temp.length){
-                      //console.log("[Filter Queried Final] => ", state.filter)
+                      console.log("[Filter Queried Final] => ", state.filter)
                     }
                   }
                   //console.log(temp)
