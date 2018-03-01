@@ -221,7 +221,6 @@
                       </div>
                     </div>
                     </el-col>
-                  {{totalProds}} {{Object.keys(products).length}}
                     <button class="login_btn load_more_btn"
                     v-if="loadMoreLoader && Object.keys(products).length !== totalProds && cnt != 0 ">
                       <i class='fa fa-spinner fa-spin ' ></i>
