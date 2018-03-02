@@ -225,7 +225,7 @@
                       <div class="float" ><rating :num="Math.round(pDet.pBasicDetail.pRating)" ></rating></div>
                       <div class="half text-right" >
                       <span v-if="parseInt(pDet.priceStartsFrom) == 999999999" style="float: right" class="half text-right">
-                  
+
                       </span>
                         <div v-else-if="parseInt(pDet.priceStartsFrom) <= 10000 ">
                           From <img src="/static/images/rupee-2.svg" alt="currency" >
