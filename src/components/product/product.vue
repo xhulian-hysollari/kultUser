@@ -182,7 +182,7 @@
                 </div>
               </div>
               <div class="cat_prodarea">
-                <el-row :gutter="60" >
+                <el-row :gutter="40" >
                   <comp-loader v-show="productsLoader"></comp-loader>
                   <el-col :xs="12" :sm="12" :md="8" :lg="8" v-for="(pDet, pId) in products"
                           v-if="parseInt(pDet.priceStartsFrom) != 999999999" v-show="!productsLoader"
@@ -190,8 +190,8 @@
                     <div>
                       <div class="grid-content pa-2" >
                         <a class="prod_image"   @click="$router.push({path:`/particularProduct/${pId}`, query:{varient:'notSelected'}})">
-                          <figure style="width: 169px; height: 250px; background-size: contain; background-position: center; background-repeat: no-repeat" :style="{'background-image': 'url('+pDet.pBasicDetail.pPicUrl+')'}"></figure>
-                          <!--<img :src="pDet.pBasicDetail.pPicUrl"  alt="product">-->
+                          <!--figure style="width: 169px; height: 250px; background-size: contain; background-position: center; background-repeat: no-repeat" :style="{'background-image': 'url('+pDet.pBasicDetail.pPicUrl+')'}"></figure-->
+                          <img :src="pDet.pBasicDetail.pPicUrl" style="width: 169px; height: 250px;" alt="product">
                         </a>
                         <div class="prod_cont"  @click="$router.push({path:`/particularProduct/${pId}`, query:{varient:'notSelected'}})">
                           <h4><a ><span v-for="(i,k) in pDet.pBasicDetail.pBrand" v-if="k < 14">{{i}}</span><span v-if="pDet.pBasicDetail.pBrand.length > 14">...</span></a></h4>
@@ -446,12 +446,12 @@
 </script>
 <style scoped>
   .el-col.el-col-24.el-col-xs-12.el-col-sm-12.el-col-md-8.el-col-lg-8:nth-child(odd) {
-    padding-left: 4px !important;
-    padding-right: 15px !important;
+  /*  padding-left: 4px !important;
+    padding-right: 15px !important; */
   }
   .el-col.el-col-24.el-col-xs-12.el-col-sm-12.el-col-md-8.el-col-lg-8:nth-child(even) {
-    padding-right: 4px !important;
-    padding-left: 15px !important;
+  /*  padding-right: 4px !important;
+    padding-left: 15px !important;*/
   }
 
   .el-row{
