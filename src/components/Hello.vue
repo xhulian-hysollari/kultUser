@@ -73,7 +73,7 @@
                       <div class="float" ><rating :num="Math.round(pDet.pBasicDetail.pRating)" ></rating></div>
                       <div class="half text-right" >
                       <span v-if="parseInt(pDet.priceStartsFrom) == 999999999" style="float: right" class="half text-right">
-                        Out Of Stock
+
                       </span>
                         <div v-else-if="parseInt(pDet.priceStartsFrom) <= 10000 ">
                           From <img src="/static/images/rupee-2.svg" alt="currency" >
@@ -210,7 +210,7 @@
           <div >
             <el-row :gutter="15" >
               <el-col :xs="12" :sm="12" :md="6" :lg="6" v-for="(pDet, pId) in homeJustArrived"
-                      v-if="parseInt(pDet.priceStartsFrom) != 999999999"
+
               >
                 <div>
                   <div class="grid-content pa-2" >
@@ -225,7 +225,7 @@
                       <div class="float" ><rating :num="Math.round(pDet.pBasicDetail.pRating)" ></rating></div>
                       <div class="half text-right" >
                       <span v-if="parseInt(pDet.priceStartsFrom) == 999999999" style="float: right" class="half text-right">
-                        Out Of Stock
+                  
                       </span>
                         <div v-else-if="parseInt(pDet.priceStartsFrom) <= 10000 ">
                           From <img src="/static/images/rupee-2.svg" alt="currency" >
