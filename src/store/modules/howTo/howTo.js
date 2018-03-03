@@ -163,6 +163,7 @@ const mutations = {
           })
           //
         })
+        window.thisOfVueComp7.$forceUpdate()
       })
   }
 }

@@ -15,7 +15,8 @@ const actions = {
           console.log(response)
           resolve(response.data)
         }else{
-          article.state.articleLikes=response.data
+          article.state.articleLike=response.data
+          console.log("like====>" ,article.state.articleLike)
           resolve(response.data)
         }
       }).catch(function (error) {

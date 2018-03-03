@@ -109,7 +109,7 @@
                                             <a @click="$store.state.auth.showLoginPopup=true;
                       $store.state.particularProduct.selectedLink = newLink(l.link,k)"
                                                target="_blank"
-                                               v-if="k != 'amazon' && l.price.indexOf('999999999') == -1 "
+                                               v-if="k != 'amazon' && l.price.toString().indexOf('999999999') == -1 "
                                                style="padding-bottom: 30px"
                                             >
                                               <img src="/static/images/shoppersstop%20.png" class="shoppersstop_img"  alt="shoppersstop" v-if="k=='shoppersstop'">
@@ -172,7 +172,7 @@
                                     <ul class="prod_shoplinks list-unstyled" v-if="isLoggedIn && email">
                                         <li v-for="(l,k) in selected.det.affliateDomains" class="box">
                                             <a :href='newLink(l.link,k)' target="_blank"
-                                               v-if="k != 'amazon' && l.price.indexOf('999999999') == -1 "
+                                               v-if="k != 'amazon' && l.price.toString().indexOf('999999999') == -1 "
                                                style="padding-bottom: 30px"
                                             >
                                               <img src="/static/images/New-Flipkart-Logo.jpeg" class="flipkart_img"  alt="flipkart" v-if="k=='flipkart'">
@@ -218,7 +218,7 @@
                                     <ul class="prod_shoplinks list-unstyled" v-if="isLoggedIn &&   !email">
                                         <li v-for="(l,k) in selected.det.affliateDomains">
                                             <a @click="dialog=true; $store.state.particularProduct.selectedLink= newLink(l.link,k)"
-                                               v-if="k != 'amazon' && l.price.indexOf('999999999') == -1 "
+                                               v-if="k != 'amazon' && l.price.toString().indexOf('999999999') == -1 "
                                                style="padding-bottom: 30px"
                                             >
                                               <img src="/static/images/New-Flipkart-Logo.jpeg" class="flipkart_img"  alt="flipkart" v-if="k=='flipkart'">
@@ -379,7 +379,9 @@
                         <h3>Recommended</h3>
                     </div>
                     <rec-loader v-if="recLoader"></rec-loader>
-                  <open :loopObj="recProducts" :md_lg_val="6"></open>
+                  <div v-else>
+                    <open :loopObj="recProducts" :md_lg_val="6"></open>
+                  </div>
                     <!--el-row :gutter="15">
                         <el-col :xs="24" :sm="24" :md="6" :lg="6" v-for="(pDet, pId) in recProducts"
                                 v-if="parseInt(pDet.priceStartsFrom) != 999999999"
@@ -573,6 +575,7 @@
             },
             '$route.params.pId': function () {
                 let vm = this
+                window.scroll(0, 0)
                 this.$store.commit('getRecProducts')
                 this.$store.commit('getTypeNLinkOfThisProduct', {
                     pId: this.$router.currentRoute.params.pId
