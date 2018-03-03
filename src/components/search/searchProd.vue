@@ -10,7 +10,8 @@
     <div v-else>
       <h4 v-if="noProd">No Results Found</h4>
       <div class="padding_20" v-else>
-        <el-row :gutter="48" >
+        <open :loopObj="searchProds" :md_lg_val="6"></open>
+        <!--el-row :gutter="48" >
           <el-col :xs="12" :sm="12" :md="6" :lg="6" v-for="(pDet, pId) in searchProds"
                   v-if="parseInt(pDet.priceStartsFrom) != 999999999"
                   style="height: 455px"
@@ -48,12 +49,13 @@
             </div>
           </el-col>
           <!-- load more ends -->
-        </el-row>
+        <!--/el-row-->
       </div>
     </div>
   </div>
 </template>
 <script>
+  import open from '@/components/openTabProd'
   import rating from '@/components/rating'
   import {mapGetters} from 'vuex'
   import loader from '@/components/gen/searchLoader'
@@ -69,7 +71,8 @@
     },
     components:{
       loader,
-      rating
+      rating,
+      open
     },
     methods: {
       ...mapMutations([

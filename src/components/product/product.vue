@@ -187,34 +187,36 @@
                   <el-col :xs="12" :sm="12" :md="8" :lg="8" v-for="(pDet, pId) in products"
                           v-if="parseInt(pDet.priceStartsFrom) != 999999999" v-show="!productsLoader"
                   >
-                    <div>
+                    <div >
                       <div class="grid-content pa-2" >
-                        <a class="prod_image"   @click="$router.push({path:`/particularProduct/${pId}`, query:{varient:'notSelected'}})">
-                          <!--figure style="width: 169px; height: 250px; background-size: contain; background-position: center; background-repeat: no-repeat" :style="{'background-image': 'url('+pDet.pBasicDetail.pPicUrl+')'}"></figure-->
-                          <img :src="pDet.pBasicDetail.pPicUrl" style="width: 169px; height: 250px;" alt="product">
-                        </a>
-                        <div class="prod_cont"  @click="$router.push({path:`/particularProduct/${pId}`, query:{varient:'notSelected'}})">
-                          <h4><a ><span v-for="(i,k) in pDet.pBasicDetail.pBrand" v-if="k < 14">{{i}}</span><span v-if="pDet.pBasicDetail.pBrand.length > 14">...</span></a></h4>
-                          <span v-for="(i,k) in pDet.pBasicDetail.pName" v-if="k < 20">{{i}}</span><span v-if="pDet.pBasicDetail.pName.length > 20">...</span>
-                        </div>
-                        <div class="prod_misc" @click="$router.push({path:`/particularProduct/${pId}`, query:{varient:'notSelected'}})">
-                          <div class="float" ><rating :num="Math.round(pDet.pBasicDetail.pRating)" ></rating></div>
-                          <div class="half text-right" >
+                        <router-link :to="{path:`/particularProduct/${pId}`, query:{varient:'notSelected'}}">
+                          <a class="prod_image"   @click="$router.push({path:`/particularProduct/${pId}`, query:{varient:'notSelected'}})">
+                            <!--figure style="width: 169px; height: 250px; background-size: contain; background-position: center; background-repeat: no-repeat" :style="{'background-image': 'url('+pDet.pBasicDetail.pPicUrl+')'}"></figure-->
+                            <img :src="pDet.pBasicDetail.pPicUrl" style="width: 169px; height: 250px;" alt="product">
+                          </a>
+                          <div class="prod_cont"  @click="$router.push({path:`/particularProduct/${pId}`, query:{varient:'notSelected'}})">
+                            <h4><a ><span v-for="(i,k) in pDet.pBasicDetail.pBrand" v-if="k < 14">{{i}}</span><span v-if="pDet.pBasicDetail.pBrand.length > 14">...</span></a></h4>
+                            <span v-for="(i,k) in pDet.pBasicDetail.pName" v-if="k < 20">{{i}}</span><span v-if="pDet.pBasicDetail.pName.length > 20">...</span>
+                          </div>
+                          <div class="prod_misc" @click="$router.push({path:`/particularProduct/${pId}`, query:{varient:'notSelected'}})">
+                            <div class="float" ><rating :num="Math.round(pDet.pBasicDetail.pRating)" ></rating></div>
+                            <div class="half text-right" >
                               <span v-if="parseInt(pDet.priceStartsFrom) == 999999999" style="float: right" class="half text-right">
                                 Out Of Stock
                               </span>
-                            <div v-else-if="pDet.priceStartsFrom <= 10000 ">
-                              From <img src="/static/images/rupee-2.svg" alt="currency" >
-                              {{pDet.priceStartsFrom}}
+                              <div v-else-if="pDet.priceStartsFrom <= 10000 ">
+                                From <img src="/static/images/rupee-2.svg" alt="currency" >
+                                {{pDet.priceStartsFrom}}
+                              </div>
+                              <div v-else></div>
                             </div>
-                            <div v-else></div>
                           </div>
-                        </div>
-                        <a  class="prod_compare" v-if="isLoggedIn"><span @click="$router.push({path:`/particularProduct/${pId}`, query:{varient:'notSelected'}})">Compare price</span>
+                        </router-link>
+                        <a  class="prod_compare" v-if="isLoggedIn"><router-link :to="{path:`/particularProduct/${pId}`, query:{varient:'notSelected'}}">Compare price</router-link>
                           <img src="/static/images/wishlist-add.svg" alt="wishlist-add" v-if="Object.keys(wishlistObj).indexOf(pId) === -1" @click="addWishlist({pId,pDet}); wishlistObj[pId] = pDet; $forceUpdate()">
                           <img src="/static/images/wishlist-hover.svg" alt="wishlist-hover" v-if="Object.keys(wishlistObj).indexOf(pId) !== -1" @click="removeWishlist({pId,pDet}); delete wishlistObj[pId]; $forceUpdate()">
                         </a>
-                        <a  class="prod_compare" v-if="!isLoggedIn"><span  @click="$router.push({path:`/particularProduct/${pId}`, query:{varient:'notSelected'}})">Compare price</span>
+                        <a  class="prod_compare" v-if="!isLoggedIn"><router-link  :to="{path:`/particularProduct/${pId}`, query:{varient:'notSelected'}}">Compare price</router-link>
                           <img src="/static/images/wishlist-add.svg" alt="wishlist-add" @click="$store.state.auth.showLoginPopup = true">
                         </a>
                       </div>
