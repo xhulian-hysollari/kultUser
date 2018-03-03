@@ -28,11 +28,11 @@
                 </div>
               </div>
             </router-link>
-            <a  class="prod_compare" v-if="isLoggedIn"><router-link :to="{path:`/particularProduct/${pId}`, query:{varient:'notSelected'}}" class="float">Compare price</router-link>
+            <a  class="prod_compare" v-if="isLoggedIn" style="display: flex"><router-link :to="{path:`/particularProduct/${pId}`, query:{varient:'notSelected'}}" class="float">Compare price</router-link>
               <img src="/static/images/wishlist-add.svg" alt="wishlist-add" v-if="Object.keys(wishlistObj).indexOf(pId) === -1" @click="addWishlist({pId,pDet}); wishlistObj[pId] = pDet; $forceUpdate()">
               <img src="/static/images/wishlist-hover.svg" alt="wishlist-hover" v-if="Object.keys(wishlistObj).indexOf(pId) !== -1" @click="removeWishlist({pId,pDet}); delete wishlistObj[pId]; $forceUpdate()">
             </a>
-            <a  class="prod_compare"  v-if="!isLoggedIn"><router-link :to="{path:`/particularProduct/${pId}`, query:{varient:'notSelected'}}" class="float">Compare price</router-link>
+            <a  class="prod_compare"  v-if="!isLoggedIn" style="display: flex"><router-link :to="{path:`/particularProduct/${pId}`, query:{varient:'notSelected'}}" class="float">Compare price</router-link>
               <img src="/static/images/wishlist-add.svg" alt="wishlist-add" @click="$store.state.auth.showLoginPopup = true">
             </a>
           </div>
