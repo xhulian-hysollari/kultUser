@@ -71,7 +71,8 @@
                     <div class="grid-content pa-2" >
                       <router-link :to="{path:`/particularProduct/${pDet.key}`, query:{varient:'notSelected'}}">
                         <a class="prod_image" @click="$router.push({path:`/particularProduct/${pDet.key}`, query:{varient:'notSelected'}})">
-                          <img :src="pDet.pBasicDetail.pPicUrl" style="height:286px "  alt="product">
+                          <figure style="width: 169px; height: 250px; background-size: contain; background-position: center; background-repeat: no-repeat" :style="{'background-image': 'url('+pDet.pBasicDetail.pPicUrl+')'}"></figure>
+                          <!--img :src="pDet.pBasicDetail.pPicUrl" style="height:286px "  alt="product"-->
                         </a>
                         <div class="prod_cont" @click="$router.push({path:`/particularProduct/${pDet.key}`, query:{varient:'notSelected'}})">
                           <h4><a >{{pDet.pBasicDetail.pBrand}}</a></h4>

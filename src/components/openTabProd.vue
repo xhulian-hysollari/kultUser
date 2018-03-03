@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-row :gutter="15" >
+    <el-row :gutter="10" >
       <el-col :xs="12" :sm="12" :md="md_lg_val" :lg="md_lg_val" v-for="(pDet, pId) in loopObj"
 
       >
@@ -8,7 +8,7 @@
           <div class="grid-content " >
             <router-link :to="{path:`/particularProduct/${pId}`, query:{varient:'notSelected'}}">
               <a class="prod_image"  @click="$router.push({path:`/particularProduct/${pId}`, query:{varient:'notSelected'}})">
-                <img :src="pDet.pBasicDetail.pPicUrl"  style="height:286px !important" alt="product">
+                <figure style="width: 169px; height: 250px; background-size: contain; background-position: center; background-repeat: no-repeat" :style="{'background-image': 'url('+pDet.pBasicDetail.pPicUrl+')'}"></figure>
               </a>
               <div class="prod_cont" @click="$router.push({path:`/particularProduct/${pId}`, query:{varient:'notSelected'}})">
                 <h4><a >{{pDet.pBasicDetail.pBrand}}</a></h4>
@@ -64,3 +64,8 @@
     }
   }
 </script>
+<style>
+  .float{
+    margin-left: -30px;
+  }
+</style>

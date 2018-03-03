@@ -182,7 +182,7 @@
                 </div>
               </div>
               <div class="cat_prodarea">
-                <el-row :gutter="40" >
+                <el-row :gutter="10" >
                   <comp-loader v-show="productsLoader"></comp-loader>
                   <el-col :xs="12" :sm="12" :md="8" :lg="8" v-for="(pDet, pId) in products"
                           v-if="parseInt(pDet.priceStartsFrom) != 999999999" v-show="!productsLoader"
@@ -191,8 +191,8 @@
                       <div class="grid-content pa-2" >
                         <router-link :to="{path:`/particularProduct/${pId}`, query:{varient:'notSelected'}}">
                           <a class="prod_image"   @click="$router.push({path:`/particularProduct/${pId}`, query:{varient:'notSelected'}})">
-                            <!--figure style="width: 169px; height: 250px; background-size: contain; background-position: center; background-repeat: no-repeat" :style="{'background-image': 'url('+pDet.pBasicDetail.pPicUrl+')'}"></figure-->
-                            <img :src="pDet.pBasicDetail.pPicUrl" style="width: 169px; height: 250px;" alt="product">
+                            <figure style="width: 169px; height: 250px; background-size: contain; background-position: center; background-repeat: no-repeat" :style="{'background-image': 'url('+pDet.pBasicDetail.pPicUrl+')'}"></figure>
+                            <!--img :src="pDet.pBasicDetail.pPicUrl" style="width: 169px; height: 250px;background-size: contain; background-position: center; background-repeat: no-repeat" alt="product"-->
                           </a>
                           <div class="prod_cont"  @click="$router.push({path:`/particularProduct/${pId}`, query:{varient:'notSelected'}})">
                             <h4><a ><span v-for="(i,k) in pDet.pBasicDetail.pBrand" v-if="k < 14">{{i}}</span><span v-if="pDet.pBasicDetail.pBrand.length > 14">...</span></a></h4>
