@@ -157,7 +157,7 @@
                     <div slot="header" class='ml_5'>BRANDS</div>
                     <v-card flat>
                       <v-card-text class="">
-                        <div style="padding: 12px 0 12px 30px" class="" @click="goTo('/brandAll')" >BRANDS A TO Z</div>
+                        <div style="padding: 12px 0 12px 30px" class="" @click="goTo('/brandAll'); hamburger_cross()" >BRANDS A TO Z</div>
                         <!--v-expansion-panel >
                           <v-expansion-panel-content >
                           </v-expansion-panel-content>

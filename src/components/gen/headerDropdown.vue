@@ -27,8 +27,7 @@
                                          v-if="sel !== '' ">
                                         <div>
                                             <div>
-                                                <h6 style="color: #080808; cursor: pointer"
-                                                    @click="closeDropdown(); goTo(`/productCategory/${sel}/${j}`);">
+                                                <h6 style="color: #080808;">
                                                     {{j}}</h6>
                                                 <div v-for="k in Object.keys(shopOptions[sel][j])"
                                                      v-if="k!= 'DUMMY'" style="color: #888888; cursor: pointer"
