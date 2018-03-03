@@ -99,23 +99,46 @@
             </div>
             <br>
             <dropdown></dropdown>
-            <nav class="navbar navbar-inverse navbar-fixed-top visible-xs" id="sidebar-wrapper" role="navigation" >
-              <ul class="nav sidebar-nav"  >
+            <nav class="navbar navbar-inverse navbar-fixed-top visible-xs" id="sidebar-wrapper" role="navigation">
+              <ul class="nav sidebar-nav"  style="background-color: transparent; padding-top: 0">
+                <v-expansion-panel style="background-color: black; padding-top:15px;">
+                  <v-expansion-panel-content v-if="!isLoggedIn">
+                    <div slot="header"  class="white ml_5" >LOGIN/REGISTER</div>
+                    <v-card flat class="white" >
+                      <v-card-text >
+                        <li style="padding: 12px 12px 12px 30px" @click="hamburger_cross() ; $store.state.auth.showLoginPopup=true;$store.state.particularProduct.selectedLink =''" > LOGIN</li>
+                      </v-card-text>
+                      <v-card-text >
+                        <li style="padding: 12px 12px 12px 30px" @click="hamburger_cross() ; $store.state.auth.showRegisterPopup=true  "> CREATE AN ACCOUNT</li>
+                      </v-card-text>
+                    </v-card>
+                  </v-expansion-panel-content>
+                </v-expansion-panel>
+                <v-expansion-panel style="background-color: black">
+                  <v-expansion-panel-content v-if="isLoggedIn" >
+                    <div slot="header"  class="white ml_5" @click="goTo('/editProfile')">MY PROFILE</div>
+                  </v-expansion-panel-content>
+                </v-expansion-panel>
+                <v-expansion-panel style="background-color: black">
+                  <v-expansion-panel-content v-if="isLoggedIn">
+                    <div slot="header"  class="white ml_5" @click="logout">LOGOUT</div>
+                  </v-expansion-panel-content>
+                </v-expansion-panel>
                 <v-expansion-panel expand >
-                  <v-expansion-panel-content >
-                    <div slot="header" class="white ml_5"   >SHOP</div>
+                  <v-expansion-panel-content class="first_level">
+                    <div slot="header" class="ml_5">SHOP</div>
                     <v-card flat>
-                      <v-card-text  class="white" >
+                      <v-card-text  class="">
                         <v-expansion-panel expand v-for="(shop,i) in Object.keys(shopOptions)">
-                          <v-expansion-panel-content >
-                            <div slot="header" class="white"  >{{shop}}</div>
+                          <v-expansion-panel-content class="second_level">
+                            <div slot="header" class="">{{shop}}</div>
                             <v-card flat>
-                              <v-card-text  class="white" >
-                                <v-expansion-panel expand  v-for="j in Object.keys(shopOptions[shop])">
-                                  <v-expansion-panel-content >
-                                    <div slot="header" class="white" @click="goTo(`/productCategory/${shop}/${j}`)">{{j}}</div>
+                              <v-card-text  class="" >
+                                <v-expansion-panel expand v-for="j in Object.keys(shopOptions[shop])">
+                                  <v-expansion-panel-content class="third_level">
+                                    <div slot="header" class="" @click="goTo(`/productCategory/${shop}/${j}`)">{{j}}</div>
                                     <v-card>
-                                      <v-card-text  class="white" v-for="k in Object.keys(shopOptions[shop][j])">
+                                      <v-card-text class="" v-for="k in Object.keys(shopOptions[shop][j])">
                                         <div class="ml_20" v-if="k != 'DUMMY'" @click="goTo(`/productSubCategory/${shop}/${j}/${k}`)">{{k}}</div>
                                       </v-card-text>
                                     </v-card>
@@ -129,25 +152,24 @@
                     </v-card>
                   </v-expansion-panel-content>
                 </v-expansion-panel>
-                <v-expansion-panel expand >
-                  <v-expansion-panel-content >
-                    <div slot="header" class='white ml_5'  >BRANDS</div>
+                <v-expansion-panel expand>
+                  <v-expansion-panel-content class="first_level">
+                    <div slot="header" class='ml_5'>BRANDS</div>
                     <v-card flat>
-                      <v-card-text  class="white">
-                        <div class="white" @click="goTo('/brandAll')" >BRANDS A TO Z</div>
+                      <v-card-text class="">
+                        <div style="padding: 12px 0 12px 30px" class="" @click="goTo('/brandAll')" >BRANDS A TO Z</div>
                         <!--v-expansion-panel >
                           <v-expansion-panel-content >
-
                           </v-expansion-panel-content>
                         </v-expansion-panel-->
                         <v-expansion-panel v-for="(shop,i) in Object.keys(brandCat)">
-                          <v-expansion-panel-content >
-                            <div slot="header" class="white" >{{shop}}</div>
+                          <v-expansion-panel-content class="second_level">
+                            <div slot="header" class="">{{shop}}</div>
                             <v-card flat>
-                              <v-card-text  class="white" >
-                                <div  v-for="j in Object.keys(brandCat[shop])">
-                                  <div >
-                                    <div  class="white ml_20"   @click="goTo(`/brandProduct/${j}`)">{{j}}</div>
+                              <v-card-text class="">
+                                <div v-for="j in Object.keys(brandCat[shop])">
+                                  <div>
+                                    <div class="ml_20" @click="goTo(`/brandProduct/${j}`)">{{j}}</div>
                                   </div>
                                 </div>
                               </v-card-text>
@@ -159,44 +181,21 @@
                   </v-expansion-panel-content>
                 </v-expansion-panel>
                 <v-expansion-panel  v-for="name in headerCatNames">
-                  <v-expansion-panel-content v-if="name.name!=='BEAUTY GUIDE'">
-                    <div slot="header"  class="white ml_5"  @click="goTo(name.funcPath)">{{name.name}}</div>
-                    <v-card flat v-if="name.name==='beauty guide'" class="white ml_20" >
-                      <v-card-text v-for="guide in beautyGuideArr">
+                  <v-expansion-panel-content v-if="name.name!=='BEAUTY GUIDE'" class="first_level">
+                    <div slot="header"  class="ml_5"  @click="goTo(name.funcPath)">{{name.name}}</div>
+                    <v-card flat v-if="name.name==='beauty guide'" >
+                      <v-card-text v-for="guide in beautyGuideArr" class="ml_20">
                         {{guide}}
                       </v-card-text>
                     </v-card>
                   </v-expansion-panel-content>
-                  <v-expansion-panel-content v-else>
-                    <div slot="header"  class="white ml_5" >{{name.name}}</div>
-                    <v-card flat class="white ml_20" >
-                      <v-card-text v-for="(guide,i) in beautyGuideArr" @click="goTo('/bGuide/'+ beautyGuideArr[i])">
+                  <v-expansion-panel-content v-else class="first_level">
+                    <div slot="header"  class="ml_5" >{{name.name}}</div>
+                    <v-card flat >
+                      <v-card-text v-for="(guide,i) in beautyGuideArr" @click="goTo('/bGuide/'+ beautyGuideArr[i])" class="bguide">
                         {{guide}}
                       </v-card-text>
                     </v-card>
-                  </v-expansion-panel-content>
-                </v-expansion-panel>
-                <v-expansion-panel >
-                  <v-expansion-panel-content v-if="!isLoggedIn">
-                    <div slot="header"  class="white ml_5" >LOGIN/REGISTER</div>
-                    <v-card flat class="white ml_20" >
-                      <v-card-text >
-                       <li  @click="hamburger_cross() ; $store.state.auth.showLoginPopup=true;$store.state.particularProduct.selectedLink =''" > LOGIN</li>
-                      </v-card-text>
-                      <v-card-text >
-                        <li @click="hamburger_cross() ; $store.state.auth.showRegisterPopup=true  "> CREATE AN ACCOUNT</li>
-                      </v-card-text>
-                    </v-card>
-                  </v-expansion-panel-content>
-                </v-expansion-panel>
-                <v-expansion-panel >
-                  <v-expansion-panel-content v-if="isLoggedIn" >
-                    <div slot="header"  class="white ml_5" @click="goTo('/editProfile')">MY PROFILE</div>
-                  </v-expansion-panel-content>
-                </v-expansion-panel>
-                <v-expansion-panel >
-                  <v-expansion-panel-content v-if="isLoggedIn">
-                    <div slot="header"  class="white ml_5" @click="logout">LOGOUT</div>
                   </v-expansion-panel-content>
                 </v-expansion-panel>
               </ul>
@@ -462,6 +461,39 @@
   @import './assets/cssLib/googleFont.css';
   @import './assets/css/font-awesome.min.css';
   @import './assets/css/style-overwritten.css';
+  li.expansion-panel__container.first_level.expansion-panel__container--active{
+    background-color: #FDE0E2;
+  }
+  li.expansion-panel__container.second_level.expansion-panel__container--active{
+    background-color: #FCEAEA;
+  }
+  li.expansion-panel__container.third_level.expansion-panel__container--active{
+    background-color: #FFF6F7;
+  }
+  .expansion-panel__header{
+    padding:12px;
+  }
+  .second_level > .expansion-panel__header{
+    background-color: #FCEAEA;
+    padding-left: 30px;
+  }
+  .third_level > .expansion-panel__header{
+    background-color: #FFF6F7;
+    padding-left: 40px;
+  }
+  .ml_20 {
+    margin-left: 40px;
+    padding: 10px;
+  }
+  .sidebar-nav li:before{
+    background-color: transparent;
+  }
+  .card__text{
+    padding: 0;
+  }
+  .card__text.bguide{
+    padding: 12px 12px 12px 30px;
+  }
   .opts{
     display: none;
   }
@@ -488,9 +520,6 @@
   }
   .white{
     color:white
-  }
-  .ml_20{
-    margin-left: 20px;
   }
   .ml_5{
     margin-left: 5px;
