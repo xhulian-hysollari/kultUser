@@ -120,6 +120,7 @@
       $route:function () {
         let vm = this
         this.$store.commit('articleContents')
+        this.$store.dispatch('getLikes',{blogCat:vm.$route.query.cat, blogName:vm.$route.query.name})
         if(vm.$store.state.auth.user){
           this.$store.dispatch('getLikeStatus',{
             blogCat: vm.$router.currentRoute.query.cat,
@@ -168,7 +169,10 @@
       window.thisOfVueComp=this
       this.$store.commit('articleContents')
       //alert(vm.$store.state.auth.user.uid)
+      this.$store.dispatch('getLikes',{blogCat:vm.$route.query.cat, blogName:vm.$route.query.name})
       setTimeout(()=>{
+        console.log(vm.$route)
+       //
         if(vm.$store.state.auth.user){
           this.$store.dispatch('getLikeStatus',{
             blogCat: vm.$router.currentRoute.query.cat,

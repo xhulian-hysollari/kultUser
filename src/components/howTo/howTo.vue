@@ -77,7 +77,6 @@
               </el-card>
               <button type="button" class="modal_close" data-dismiss="modal" aria-label="Close"><img src="/static/images/close.svg" alt="close"></button>
               <div class="modal_video" v-show="Object.keys(products).length != 0" >
-
                 <div class="embed-responsive embed-responsive-16by9" v-show="!vidLoader">
                   <iframe class="embed-responsive-item" width="560" height="315"  @load="loaded" :src="selectedLink" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
                 </div>
@@ -88,8 +87,7 @@
                 </div>
               </div>
               <div class="modal_video_right hidden-xs hidden-sm  scroll_card " v-show="Object.keys(products).length != 0" v-if="!vidLoader">
-                <div v-for="(p,k) in products" class="modal_video_right hidden-xs hidden-sm padding_class" v-if="parseInt(p.priceStartsFrom) == 999999999">
-
+                <div v-for="(p,k) in products" class="modal_video_right hidden-xs hidden-sm padding_class" v-if="parseInt(p.priceStartsFrom) != 999999999">
                   <div class="prod_repeat padding_class">
                     <loader v-if="productsLoader" ></loader>
                     <div class="padding_class" >
