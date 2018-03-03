@@ -130,6 +130,7 @@ const mutations = {
           ){
             //console.log("ShopOptions [Final] ==>", state.shopOptions)
             window.thisOfVueComp_2.$forceUpdate()
+            window.thisOfAppNav.$forceUpdate()
             if( Object.keys(window).indexOf('thisOfVueComp_3') != -1 ){
               window.thisOfVueComp_3.$forceUpdate()
             }

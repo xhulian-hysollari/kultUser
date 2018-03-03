@@ -80,6 +80,7 @@ const mutations = {
                   //
                   //////console.log("****BRAND CATEGORY QUERIED****")
                   ////console.log("Brand Category [Final]", state.brandCat)
+                  window.thisOfAppNav.$forceUpdate()
                   window.thisOfVueComp_2.$forceUpdate()
                 }
               }

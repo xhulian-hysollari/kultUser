@@ -414,6 +414,7 @@
       }
     },
     created(){
+      window.thisOfAppNav=this
       window.thisOfAppComp= this
       window.thisOfVueComp_2 = this
       this.$store.commit('getGlobalBestSellersOnHomePage')
