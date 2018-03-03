@@ -3,7 +3,7 @@
 
     <div class="home_hero2">
       <div class="container2">
-        <img src="/static/images/homeBanners/Desktop/beautyfulricher-desktop.jpg" class=" hidden-xs " @click="$router.push('kultPick/shopOption/MAKEUP')">
+        <img style="cursor: pointer" src="/static/images/homeBanners/Desktop/beautyfulricher-desktop.jpg" class=" hidden-xs " @click="$router.push('kultPick/shopOption/MAKEUP')">
         <img src="/static/images/homeBanners/Mobile/beautyfulricher-mobile.jpg" class="visible-xs " @click="$router.push('kultPick/shopOption/MAKEUP')">
       </div>
     </div>
@@ -11,22 +11,22 @@
       <div class="container">
         <ul>
           <li>
-            <img src="/static/images/wallet-2.svg" alt="wallet">
+            <img style="cursor: pointer" src="/static/images/wallet-2.svg" alt="wallet">
             <strong>Shop beauty</strong>
             Assorted products to choose from
           </li>
           <li>
-            <img src="/static/images/price-1.svg" alt="price">
+            <img style="cursor: pointer" src="/static/images/price-1.svg" alt="price">
             <strong>The best price</strong>
             Compare and get the best price
           </li>
           <li>
-            <img src="/static/images/thumbs-up.svg" alt="thumbs-up">
+            <img style="cursor: pointer" src="/static/images/thumbs-up.svg" alt="thumbs-up">
             <strong>Trusted vendor</strong>
             Top rated sellers based on reviews
           </li>
           <li>
-            <img src="/static/images/protect.svg" alt="protect">
+            <img style="cursor: pointer" src="/static/images/protect.svg" alt="protect">
             <strong>Customer protection</strong>
             Over   6,500 purchases is protected
           </li>
@@ -64,11 +64,11 @@
     </div>
     <div class="home_intro">
       <div>
-        <img class="main_img hidden-xs" style="height:390px" src="/static/images/homeBanners/Desktop/Kultpick%20Banner%20Scriptscale(1).jpg" alt="hero" @click="$router.push('/kultPick')">
+        <img class="main_img hidden-xs" style="height:390px; cursor: pointer" src="/static/images/homeBanners/Desktop/Kultpick%20Banner%20Scriptscale(1).jpg" alt="hero" @click="$router.push('/kultPick')">
         <img class="main_img visible-xs"  src="/static/images/homeBanners/Mobile/kultpics_mobile_30k.jpg" alt="hero"  @click="$router.push('/kultPick')">
       </div>
     </div>
-    <div class="home_high" @click="$router.push('/bGuide/skincare')">
+    <div class="home_high" style="cursor: pointer" @click="$router.push('/bGuide/skincare')">
       <div class="container">
         <div class="row">
           <div class="col-sm-5 col-xs-12">
@@ -183,25 +183,25 @@
         <div class="row">
           <div class="col-md-6 col-xs-12 col-sm-6  comm_imp" @click="$router.push('/howTo?selVidCat=NAILS')">
             <div class="image_box" style="height: 275px !important;">
-            <img class="hidden-xs hidden-sm" style="height: 275px !important;" src="/static/images/video%20banners/Desktop/01.jpg" alt="player">
+            <img class="hidden-xs hidden-sm" style="cursor:pointer; height: 275px !important;" src="/static/images/video%20banners/Desktop/01.jpg" alt="player">
              <img class="visible-xs visible-sm" style="height: 275px !important;" src="/static/images/video%20banners/Mobile/01mobile.jpg" alt="player">
             </div>
           </div>
           <div class="col-md-6 col-xs-12 col-sm-6  comm_imp" @click="$router.push('/howTo?selVidCat=MAKEUP')">
             <div class="image_box" >
-             <img class="hidden-xs hidden-sm"  style="height: 275px !important; " src="/static/images/video%20banners/Desktop/02.jpg" alt="player">
+             <img class="hidden-xs hidden-sm"  style="cursor:pointer; height: 275px !important; " src="/static/images/video%20banners/Desktop/02.jpg" alt="player">
              <img class="visible-xs visible-sm" style="height: 275px !important; "src="/static/images/video%20banners/Mobile/02mobile.jpg" alt="player">
             </div>
           </div>
           <div class="col-md-6 col-xs-12 col-sm-6 comm_imp" @click="$router.push('/howTo?selVidCat=MAKEUP')">
             <div class="image_box" style="height: 275px !important;">
-            <img class="hidden-xs hidden-sm"  style="height: 275px !important;" src="/static/images/video%20banners/Desktop/03.jpg" alt="player">
+            <img class="hidden-xs hidden-sm"  style="cursor:pointer; height: 275px !important;" src="/static/images/video%20banners/Desktop/03.jpg" alt="player">
               <img class="visible-xs visible-sm" style="height: 275px !important;" src="/static/images/video%20banners/Mobile/03mobile.jpg" alt="player">
             </div>
           </div>
           <div class="col-md-6 col-xs-12 col-sm-6 comm_imp" @click="$router.push('/howTo?selVidCat=HAIR')">
             <div class="image_box" style="height: 275px !important;">
-              <img  class="hidden-xs hidden-sm" style="height: 275px !important;" src="/static/images/video%20banners/Desktop/04.jpg" alt="player">
+              <img  class="hidden-xs hidden-sm" style="cursor:pointer; height: 275px !important;" src="/static/images/video%20banners/Desktop/04.jpg" alt="player">
              <img class="visible-xs visible-sm" style="height: 275px !important;" src="/static/images/video%20banners/Mobile/04mobile.jpg" alt="player">
             </div>
           </div>

@@ -116,12 +116,12 @@
                 </v-expansion-panel>
                 <v-expansion-panel style="background-color: black">
                   <v-expansion-panel-content v-if="isLoggedIn" >
-                    <div slot="header"  class="white ml_5" @click="goTo('/editProfile')">MY PROFILE</div>
+                    <div slot="header"  class="white ml_5" @click="goTo('/editProfile'); hamburger_cross()">MY PROFILE</div>
                   </v-expansion-panel-content>
                 </v-expansion-panel>
                 <v-expansion-panel style="background-color: black">
                   <v-expansion-panel-content v-if="isLoggedIn">
-                    <div slot="header"  class="white ml_5" @click="logout">LOGOUT</div>
+                    <div slot="header"  class="white ml_5" @click="logout; hamburger_cross()">LOGOUT</div>
                   </v-expansion-panel-content>
                 </v-expansion-panel>
                 <v-expansion-panel expand >
@@ -136,10 +136,10 @@
                               <v-card-text  class="" >
                                 <v-expansion-panel expand v-for="j in Object.keys(shopOptions[shop])">
                                   <v-expansion-panel-content class="third_level">
-                                    <div slot="header" class="" @click="goTo(`/productCategory/${shop}/${j}`)">{{j}}</div>
+                                    <div slot="header" class="" @click="goTo(`/productCategory/${shop}/${j}`);">{{j}}</div>
                                     <v-card>
                                       <v-card-text class="" v-for="k in Object.keys(shopOptions[shop][j])">
-                                        <div class="ml_20" v-if="k != 'DUMMY'" @click="goTo(`/productSubCategory/${shop}/${j}/${k}`)">{{k}}</div>
+                                        <div class="ml_20" v-if="k != 'DUMMY'" @click="goTo(`/productSubCategory/${shop}/${j}/${k}`); hamburger_cross()">{{k}}</div>
                                       </v-card-text>
                                     </v-card>
                                   </v-expansion-panel-content>
@@ -169,7 +169,7 @@
                               <v-card-text class="">
                                 <div v-for="j in Object.keys(brandCat[shop])">
                                   <div>
-                                    <div class="ml_20" @click="goTo(`/brandProduct/${j}`)">{{j}}</div>
+                                    <div class="ml_20" @click="goTo(`/brandProduct/${j}`); hamburger_cross()">{{j}}</div>
                                   </div>
                                 </div>
                               </v-card-text>
@@ -182,7 +182,7 @@
                 </v-expansion-panel>
                 <v-expansion-panel  v-for="name in headerCatNames">
                   <v-expansion-panel-content v-if="name.name!=='BEAUTY GUIDE'" class="first_level">
-                    <div slot="header"  class="ml_5"  @click="goTo(name.funcPath)">{{name.name}}</div>
+                    <div slot="header"  class="ml_5"  @click="goTo(name.funcPath); hamburger_cross()">{{name.name}}</div>
                     <v-card flat v-if="name.name==='beauty guide'" >
                       <v-card-text v-for="guide in beautyGuideArr" class="ml_20">
                         {{guide}}
@@ -192,7 +192,7 @@
                   <v-expansion-panel-content v-else class="first_level">
                     <div slot="header"  class="ml_5" >{{name.name}}</div>
                     <v-card flat >
-                      <v-card-text v-for="(guide,i) in beautyGuideArr" @click="goTo('/bGuide/'+ beautyGuideArr[i])" class="bguide">
+                      <v-card-text v-for="(guide,i) in beautyGuideArr" @click="goTo('/bGuide/'+ beautyGuideArr[i]); hamburger_cross()" class="bguide">
                         {{guide}}
                       </v-card-text>
                     </v-card>
@@ -461,6 +461,9 @@
   @import './assets/cssLib/googleFont.css';
   @import './assets/css/font-awesome.min.css';
   @import './assets/css/style-overwritten.css';
+  a:hover{
+    cursor: pointer !important;
+  }
   li.expansion-panel__container.first_level.expansion-panel__container--active{
     background-color: #FDE0E2;
   }

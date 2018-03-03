@@ -27,11 +27,12 @@
                                          v-if="sel !== '' ">
                                         <div>
                                             <div>
-                                                <h6 style="color: #080808"
-                                                    @click="goTo(`/productCategory/${sel}/${j}`)">{{j}}</h6>
+                                                <h6 style="color: #080808; cursor: pointer"
+                                                    @click="closeDropdown(); goTo(`/productCategory/${sel}/${j}`);">
+                                                    {{j}}</h6>
                                                 <div v-for="k in Object.keys(shopOptions[sel][j])"
-                                                     v-if="k!= 'DUMMY'" style="color: #888888"
-                                                     @click="goTo(`/productSubCategory/${sel}/${j}/${k}`)">
+                                                     v-if="k!= 'DUMMY'" style="color: #888888; cursor: pointer"
+                                                     @click="closeDropdown(); goTo(`/productSubCategory/${sel}/${j}/${k}`);">
                                                     {{k}}
                                                 </div>
                                             </div>
@@ -51,12 +52,13 @@
                             <brand-loader v-if="brandCatLoader"></brand-loader>
                             <div v-else>
 								<span class="left-images" style="color: #888888; text-align: left; line-height: 20px">
-                  <h6 @click="goTo(`/brandAll`)" style="color: #080808;    margin-top: 7px;"> A TO Z BRANDS</h6>
+                  <h6 @click="closeDropdown2(); goTo(`/brandAll`); "
+                      style="color: #080808; cursor: pointer; margin-top: 7px;"> A TO Z BRANDS</h6>
 								    <div v-for="(shop,i) in Object.keys(brandCat)"
                                          style="color: #080808;    margin-top: 7px;">
                       <h6>{{shop}}</h6>
-                      <div v-for="j in Object.keys(brandCat[shop])" style="color: #888888"
-                           @click="$router.push('/brandProduct/'+j)">
+                      <div v-for="j in Object.keys(brandCat[shop])" style="color: #888888; cursor: pointer"
+                           @click="closeDropdown2(); $router.push('/brandProduct/'+j); ">
                         {{j}}
                       </div>
                     </div>
@@ -64,24 +66,25 @@
                             </div>
                         </div>
                     </li>
-                    <li @click="goTo('/kultPick')"><a>KULT PICKS</a></li>
-                    <li @click="goTo('/globalBestseller')"><a>GLOBAL BESTSELLERS</a></li>
+                    <li @click="goTo('/kultPick'); "><a>KULT PICKS</a></li>
+                    <li @click="goTo('/globalBestseller'); "><a>GLOBAL BESTSELLERS</a></li>
                     <li class="drop-down" @mouseover="showDropdown3()" @mouseleave="closeDropdown3();">
                         <a>BEAUTY GUIDE</a>
                         <div class="mega-menu3 fadeIn animated"
                              style="z-index: 999;margin-top: -1px; width: 10%;box-shadow: 1px 1px 3px #aaaaaa">
                             <div>
-								<span class="left-images" style="color: #888888; text-align: left;  line-height: 20px">
+								<span class="left-images"
+                                      style="color: #888888; text-align: left;  line-height: 20px; cursor: pointer">
 								    <div v-for="(guide,i) in beautyGuideArr"
-                                         @click="goTo('/bGuide/'+ beautyGuideArr[i])">
+                                         @click="closeDropdown3(); goTo('/bGuide/'+ beautyGuideArr[i]); ">
                      {{beautyGuideArr[i]}}
                     </div>
 				        </span>
                             </div>
                         </div>
                     </li>
-                    <li><a @click="goTo('/blog')">EDITOR’S BLOG</a></li>
-                    <li><a @click="goTo('/howTo')">KULT TV</a></li>
+                    <li><a @click="goTo('/blog'); ">EDITOR’S BLOG</a></li>
+                    <li><a @click="goTo('/howTo'); ">KULT TV</a></li>
 
                 </ul>
             </nav>
