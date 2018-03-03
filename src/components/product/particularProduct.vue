@@ -379,7 +379,8 @@
                         <h3>Recommended</h3>
                     </div>
                     <rec-loader v-if="recLoader"></rec-loader>
-                    <el-row :gutter="15">
+                  <open :loopObj="recProducts" :md_lg_val="6"></open>
+                    <!--el-row :gutter="15">
                         <el-col :xs="24" :sm="24" :md="6" :lg="6" v-for="(pDet, pId) in recProducts"
                                 v-if="parseInt(pDet.priceStartsFrom) != 999999999"
                                 v-show="!recLoader"
@@ -432,7 +433,7 @@
                             </div>
                         </el-col>
                         <!-- load more ends -->
-                    </el-row>
+                    <!--/el-row-->
                     <!--div class="prod_repeater">
                       <div class="prod_repeat prod_repeat1">
                         <a class="prod_image" >
@@ -510,6 +511,7 @@
 </template>
 
 <script>
+    import open from '@/components/openTabProd'
     import recLoader from '@/components/gen/recLoader'
     import compLoader from '@/components/gen/comp_loader'
     import rating from '@/components/rating'
@@ -537,7 +539,8 @@
             loader,
             rating,
             compLoader,
-            recLoader
+            recLoader,
+            open
         },
         computed: {
             ...mapGetters([

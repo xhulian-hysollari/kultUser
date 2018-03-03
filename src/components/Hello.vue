@@ -57,42 +57,7 @@
         </div>
         <div >
           <div >
-            <el-row :gutter="15" >
-              <el-col :xs="12" :sm="12" :md="6" :lg="6" v-for="(pDet, pId) in homeGlobalProd"
-              >
-                <div>
-                  <div class="grid-content pa-2" >
-                    <a class="prod_image" @click="$router.push({path:`/particularProduct/${pId}`, query:{varient:'notSelected'}})">
-                      <img :src="pDet.pBasicDetail.pPicUrl"  style="height:286px " alt="product">
-                    </a>
-                    <div class="prod_cont"  @click="$router.push({path:`/particularProduct/${pId}`, query:{varient:'notSelected'}})">
-                      <h4><a >{{pDet.pBasicDetail.pBrand}}</a></h4>
-                      <span v-for="(i,k) in pDet.pBasicDetail.pName" v-if="k < 20">{{i}}</span><span v-if="pDet.pBasicDetail.pName.length > 20">...</span>
-                    </div>
-                    <div class="prod_misc"  @click="$router.push({path:`/particularProduct/${pId}`, query:{varient:'notSelected'}})">
-                      <div class="float" ><rating :num="Math.round(pDet.pBasicDetail.pRating)" ></rating></div>
-                      <div class="half text-right" >
-                      <span v-if="parseInt(pDet.priceStartsFrom) == 999999999" style="float: right" class="half text-right">
-
-                      </span>
-                        <div v-else-if="parseInt(pDet.priceStartsFrom) <= 10000 ">
-                          From <img src="/static/images/rupee-2.svg" alt="currency" >
-                          {{pDet.priceStartsFrom}}
-                        </div>
-                        <div v-else></div>
-                      </div>
-                    </div>
-                    <a  class="prod_compare" v-if="isLoggedIn"><span @click="$router.push({path:`/particularProduct/${pId}`, query:{varient:'notSelected'}})" class="float">Compare price</span>
-                      <img src="/static/images/wishlist-add.svg" alt="wishlist-add" v-if="Object.keys(wishlistObj).indexOf(pId) === -1" @click="addWishlist({pId,pDet}); wishlistObj[pId] = pDet; $forceUpdate()">
-                      <img src="/static/images/wishlist-hover.svg" alt="wishlist-hover" v-if="Object.keys(wishlistObj).indexOf(pId) !== -1" @click="removeWishlist({pId,pDet}); delete wishlistObj[pId]; $forceUpdate()">
-                    </a>
-                    <a  class="prod_compare"  v-if="!isLoggedIn"><span @click="$router.push({path:`/particularProduct/${pId}`, query:{varient:'notSelected'}})" class="float">Compare price</span>
-                      <img src="/static/images/wishlist-add.svg" alt="wishlist-add" @click="$store.state.auth.showLoginPopup = true">
-                    </a>
-                  </div>
-                </div>
-              </el-col>
-            </el-row>
+            <open :loopObj="homeGlobalProd" :md_lg_val="6"></open>
           </div>
         </div>
       </div>
@@ -208,43 +173,7 @@
         </div>
         <div >
           <div >
-            <el-row :gutter="15" >
-              <el-col :xs="12" :sm="12" :md="6" :lg="6" v-for="(pDet, pId) in homeJustArrived"
-
-              >
-                <div>
-                  <div class="grid-content pa-2" >
-                    <a class="prod_image"  @click="$router.push({path:`/particularProduct/${pId}`, query:{varient:'notSelected'}})">
-                      <img :src="pDet.pBasicDetail.pPicUrl"  style="height:286px " alt="product">
-                    </a>
-                    <div class="prod_cont" @click="$router.push({path:`/particularProduct/${pId}`, query:{varient:'notSelected'}})">
-                      <h4><a >{{pDet.pBasicDetail.pBrand}}</a></h4>
-                      <span v-for="(i,k) in pDet.pBasicDetail.pName" v-if="k < 20">{{i}}</span><span v-if="pDet.pBasicDetail.pName.length > 20">...</span>
-                    </div>
-                    <div class="prod_misc" @click="$router.push({path:`/particularProduct/${pId}`, query:{varient:'notSelected'}})">
-                      <div class="float" ><rating :num="Math.round(pDet.pBasicDetail.pRating)" ></rating></div>
-                      <div class="half text-right" >
-                      <span v-if="parseInt(pDet.priceStartsFrom) == 999999999" style="float: right" class="half text-right">
-
-                      </span>
-                        <div v-else-if="parseInt(pDet.priceStartsFrom) <= 10000 ">
-                          From <img src="/static/images/rupee-2.svg" alt="currency" >
-                          {{pDet.priceStartsFrom}}
-                        </div>
-                        <div v-else></div>
-                      </div>
-                    </div>
-                    <a  class="prod_compare" v-if="isLoggedIn"><span @click="$router.push({path:`/particularProduct/${pId}`, query:{varient:'notSelected'}})" class="float">Compare price</span>
-                      <img src="/static/images/wishlist-add.svg" alt="wishlist-add" v-if="Object.keys(wishlistObj).indexOf(pId) === -1" @click="addWishlist({pId,pDet}); wishlistObj[pId] = pDet; $forceUpdate()">
-                      <img src="/static/images/wishlist-hover.svg" alt="wishlist-hover" v-if="Object.keys(wishlistObj).indexOf(pId) !== -1" @click="removeWishlist({pId,pDet}); delete wishlistObj[pId]; $forceUpdate()">
-                    </a>
-                    <a  class="prod_compare"  v-if="!isLoggedIn"><span @click="$router.push({path:`/particularProduct/${pId}`, query:{varient:'notSelected'}})" class="float">Compare price</span>
-                      <img src="/static/images/wishlist-add.svg" alt="wishlist-add" @click="$store.state.auth.showLoginPopup = true">
-                    </a>
-                  </div>
-                </div>
-              </el-col>
-            </el-row>
+            <open :loopObj="homeJustArrived" :md_lg_val="6"></open>
           </div>
         </div>
       </div>
@@ -340,6 +269,7 @@
 </template>
 
 <script>
+  import open from '@/components/openTabProd'
   import rating from '@/components/rating'
   import {mapGetters} from 'vuex'
   import {mapMutations} from 'vuex'
@@ -378,7 +308,8 @@
 
     },
     components:{
-      rating
+      rating,
+      open
     },
     computed:{
       ...mapGetters([

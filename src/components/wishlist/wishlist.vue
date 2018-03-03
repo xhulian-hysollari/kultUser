@@ -69,28 +69,30 @@
 
                   <div >
                     <div class="grid-content pa-2" >
-                      <a class="prod_image" @click="$router.push({path:`/particularProduct/${pDet.key}`})">
-                        <img :src="pDet.pBasicDetail.pPicUrl" style="height:286px "  alt="product">
-                      </a>
-                      <div class="prod_cont" @click="$router.push({path:`/particularProduct/${pDet.key}`})">
-                        <h4><a >{{pDet.pBasicDetail.pBrand}}</a></h4>
-                        <span v-for="(i,k) in pDet.pBasicDetail.pName" v-if="k < 30">{{i}}</span><span v-if="pDet.pBasicDetail.pName.length > 30">...</span>
-                      </div>
-                      <div class="prod_misc" @click="$router.push({path:`/particularProduct/${pDet.key}`})">
-                        <div class="float"><rating :num="Math.round(pDet.pBasicDetail.pRating)" ></rating></div>
-                        <div class="half text-right" >
+                      <router-link :to="{path:`/particularProduct/${pDet.key}`, query:{varient:'notSelected'}}">
+                        <a class="prod_image" @click="$router.push({path:`/particularProduct/${pDet.key}`, query:{varient:'notSelected'}})">
+                          <img :src="pDet.pBasicDetail.pPicUrl" style="height:286px "  alt="product">
+                        </a>
+                        <div class="prod_cont" @click="$router.push({path:`/particularProduct/${pDet.key}`, query:{varient:'notSelected'}})">
+                          <h4><a >{{pDet.pBasicDetail.pBrand}}</a></h4>
+                          <span v-for="(i,k) in pDet.pBasicDetail.pName" v-if="k < 30">{{i}}</span><span v-if="pDet.pBasicDetail.pName.length > 30">...</span>
+                        </div>
+                        <div class="prod_misc" @click="$router.push({path:`/particularProduct/${pDet.key}`, query:{varient:'notSelected'}})">
+                          <div class="float"><rating :num="Math.round(pDet.pBasicDetail.pRating)" ></rating></div>
+                          <div class="half text-right" >
                               <span v-if="parseInt(pDet.priceStartsFrom) == 999999999" style="float: right" class="half text-right">
                                 Out Of Stock
                               </span>
-                          <div v-else-if="parseInt(pDet.priceStartsFrom) <= 10000 ">
-                            From <img src="/static/images/rupee-2.svg" alt="currency" >
-                            {{pDet.priceStartsFrom}}
+                            <div v-else-if="parseInt(pDet.priceStartsFrom) <= 10000 ">
+                              From <img src="/static/images/rupee-2.svg" alt="currency" >
+                              {{pDet.priceStartsFrom}}
+                            </div>
+                            <div v-else></div>
                           </div>
-                          <div v-else></div>
-                        </div>
 
-                      </div>
-                      <a  class="prod_compare" v-if="isLoggedIn"><span @click="$router.push({path:`/particularProduct/${pDet.key}`})">Compare price</span>
+                        </div>
+                      </router-link>
+                      <a  class="prod_compare" v-if="isLoggedIn"><router-link :to="{path:`/particularProduct/${pDet.key}`, query:{varient:'notSelected'}}">Compare price</router-link>
                         <img src="/static/images/wishlist-hover.svg" alt="wishlist-hover" @click="removeWishlist({pId:pDet.key,pDet});delete wishlistObj[pDet.key]; removeFromWishArr(index);$forceUpdate">
                       </a>
                     </div>
@@ -138,6 +140,7 @@
   //
   import productNfilter from '../../mixins/productNfilter'
   import VIcon from "vuetify/es5/components/VIcon/VIcon";
+  import open from '@/components/openTabProd'
   //
   export default{
     //
@@ -161,7 +164,8 @@
       VIcon,
       rating,
       infiniteLoading:InfiniteLoading,
-      loader
+      loader,
+      open
     },
     //
     methods:{

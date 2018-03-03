@@ -93,31 +93,33 @@
                   <div class="prod_repeat padding_class">
                     <loader v-if="productsLoader" ></loader>
                     <div class="padding_class" >
-                      <a data-dismiss="modal" class="prod_image" @click="$router.push({path:`/particularProduct/${k}`, query:{varient:'notSelected'}})">
-                        <img :src="p.pBasicDetail.pPicUrl" alt="product" >
-                      </a>
-                      <div data-dismiss="modal" class="prod_cont" @click="$router.push({path:`/particularProduct/${k}`, query:{varient:'notSelected'}})">
-                        <h4><a >{{p.pBasicDetail.pBrand}}</a></h4>
-                        <p>{{p.pBasicDetail.pName}}</p>
-                      </div>
-                      <div data-dismiss="modal" class="prod_misc" @click="$router.push({path:`/particularProduct/${k}`, query:{varient:'notSelected'}})">
-                        <rating :num="Math.round(p.pBasicDetail.pRating)" class="float" ></rating>
-                        <div  class="half text-right" style="float:right" @click="$router.push({path:`/particularProduct/${k}`, query:{varient:'notSelected'}})">
+                      <router-link :to="{path:`/particularProduct/${k}`, query:{varient:'notSelected'}}">
+                        <a data-dismiss="modal" class="prod_image" @click="$router.push({path:`/particularProduct/${k}`, query:{varient:'notSelected'}})">
+                          <img :src="p.pBasicDetail.pPicUrl" alt="product" >
+                        </a>
+                        <div data-dismiss="modal" class="prod_cont" @click="$router.push({path:`/particularProduct/${k}`, query:{varient:'notSelected'}})">
+                          <h4><a >{{p.pBasicDetail.pBrand}}</a></h4>
+                          <p>{{p.pBasicDetail.pName}}</p>
+                        </div>
+                        <div data-dismiss="modal" class="prod_misc" @click="$router.push({path:`/particularProduct/${k}`, query:{varient:'notSelected'}})">
+                          <rating :num="Math.round(p.pBasicDetail.pRating)" class="float" ></rating>
+                          <div  class="half text-right" style="float:right" @click="$router.push({path:`/particularProduct/${k}`, query:{varient:'notSelected'}})">
                               <span v-if="parseInt(p.priceStartsFrom) == 999999999" style="float:right" class="half text-right">
                                 Out Of Stock
                               </span>
-                          <div v-else-if="parseInt(p.priceStartsFrom) <= 10000 ">
-                            From <img src="/static/images/rupee-2.svg" alt="currency" >
-                            {{p.priceStartsFrom}}
+                            <div v-else-if="parseInt(p.priceStartsFrom) <= 10000 ">
+                              From <img src="/static/images/rupee-2.svg" alt="currency" >
+                              {{p.priceStartsFrom}}
+                            </div>
+                            <div v-else></div>
                           </div>
-                          <div v-else></div>
                         </div>
-                      </div>
-                      <a  class="prod_compare" v-if="isLoggedIn" ><span  data-dismiss="modal" @click="$router.push({path:`/particularProduct/${k}`, query:{varient:'notSelected'}})">Compare price</span>
+                      </router-link>
+                      <a  class="prod_compare" v-if="isLoggedIn" ><router-link  data-dismiss="modal" :to="{path:`/particularProduct/${k}`, query:{varient:'notSelected'}}">Compare price</router-link>
                         <img src="/static/images/wishlist-add.svg" alt="wishlist-add" v-if="Object.keys(wishlistObj).indexOf(k) === -1" @click="addWishlist(k),$forceUpdate();wishlistObj[k] = p">
                         <img src="/static/images/wishlist-hover.svg" alt="wishlist-hover" v-if="Object.keys(wishlistObj).indexOf(k) !== -1" @click="removeWishlist(k),$forceUpdate(); delete wishlistObj[k];">
                       </a>
-                      <a  class="prod_compare" v-if="!isLoggedIn"  ><span data-dismiss="modal" @click="$router.push({path:`/particularProduct/${k}`, query:{varient:'notSelected'}})">Compare price</span>
+                      <a  class="prod_compare" v-if="!isLoggedIn"  ><router-link data-dismiss="modal" :to="{path:`/particularProduct/${k}`, query:{varient:'notSelected'}}">Compare price</router-link>
                         <img src="/static/images/wishlist-add.svg" alt="wishlist-add" @click="$store.state.auth.showLoginPopup = true">
                       </a>
                     </div>
