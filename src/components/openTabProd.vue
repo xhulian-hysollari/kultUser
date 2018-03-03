@@ -66,6 +66,6 @@
 </script>
 <style>
   .float{
-    margin-left: -30px;
+    /*margin-left: -30px;*/
   }
 </style>
