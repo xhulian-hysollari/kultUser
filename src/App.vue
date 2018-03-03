@@ -136,7 +136,7 @@
                               <v-card-text  class="" >
                                 <v-expansion-panel expand v-for="j in Object.keys(shopOptions[shop])">
                                   <v-expansion-panel-content class="third_level">
-                                    <div slot="header" class="" @click="goTo(`/productCategory/${shop}/${j}`);">{{j}}</div>
+                                    <div slot="header" class="">{{j}}</div>
                                     <v-card>
                                       <v-card-text class="" v-for="k in Object.keys(shopOptions[shop][j])">
                                         <div class="ml_20" v-if="k != 'DUMMY'" @click="goTo(`/productSubCategory/${shop}/${j}/${k}`); hamburger_cross()">{{k}}</div>
